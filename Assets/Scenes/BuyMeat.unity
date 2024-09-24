@@ -5225,7 +5225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083a7e7fe7965dd4d8d42c5e4e789248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreMax: 3
+  scoreMax: 5
   scoreMin: 0
   WinScene: {fileID: 247919143}
   scoreText: {fileID: 540781940}

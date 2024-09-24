@@ -13,6 +13,9 @@ TagManager:
   - Sick
   - Test1
   - Test2
+  - GoodMeat
+  - BadMeat
+  - ItemBox
   layers:
   - Default
   - TransparentFX
