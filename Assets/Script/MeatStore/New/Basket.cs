@@ -6,6 +6,15 @@ public class Basket : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(collision.gameObject);
+        if (collision.CompareTag("BadMeat"))
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Bad Meat");
+        }
+        else if (collision.CompareTag("GoodMeat"))
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Good Meat");
+        }
     }
 }

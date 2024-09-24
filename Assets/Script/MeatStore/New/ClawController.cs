@@ -7,13 +7,14 @@ public class ClawController : MonoBehaviour
     public GameObject claw;  // The claw object
     public GameObject goodItemPrefab;  // Prefab for good items
     public GameObject badItemPrefab;  // Prefab for bad items
-    public GameObject itemBox; // The box where the claw gets items
+    public GameObject returnBox; // The box where the claw gets items
     public GameObject itemSpawnPoint;
 
     private GameObject currentItem;  // Item currently attached to the claw
     private bool hasItem = false;  // Tracks if an item is held
     private bool isMovingDown = false;  // Tracks if claw is moving down
-    private bool isReturning = false;  // Tracks if claw is returning up
+    private bool isReturning = false; // Tracks if claw is returning up
+    private bool canReturnItem = false;
 
     public float clawSpeed = 5f;  // Speed of horizontal movement
     public float verticalMoveSpeed = 2f;  // Speed of vertical claw movement
@@ -44,8 +45,14 @@ public class ClawController : MonoBehaviour
             }
             else if (hasItem && !isMovingDown && !isReturning)  // Drop item if holding one and over the basket
             {
-                DropItem();
+                StartCoroutine(MoveClawDown());
             }
+        }
+
+        if (currentItem == null)
+        {
+            hasItem = false;
+            returnBox.SetActive(false);
         }
     }
 
@@ -78,6 +85,7 @@ public class ClawController : MonoBehaviour
 
         isMovingDown = false;
         isReturning = false;
+        
     }
 
     // Generate either a good or bad item
@@ -105,21 +113,7 @@ public class ClawController : MonoBehaviour
             currentItem.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
             hasItem = true;
-        }
-    }
-
-    // Drop the item into the basket
-    void DropItem()
-    {
-        if (hasItem)
-        {
-            // Drop the item
-            currentItem.transform.SetParent(null);
-            
-            // Enable gravity so the item falls naturally into the basket
-            currentItem.GetComponent<Rigidbody2D>().gravityScale = 1f;
-            currentItem = null;
-            hasItem = false;
+            StartCoroutine(WaitToReturnItem());
         }
     }
 
@@ -131,7 +125,12 @@ public class ClawController : MonoBehaviour
             Debug.Log("Hit box");
             // Claw touched the item box, generate an item
             GenerateItem();
-            Debug.Log("Hit box");
         }
+    }
+
+    IEnumerator WaitToReturnItem()
+    {
+        yield return new WaitForSeconds(0.5f);
+        returnBox.SetActive(true);
     }
 }
