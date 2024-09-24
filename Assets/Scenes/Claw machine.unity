@@ -277,6 +277,7 @@ MonoBehaviour:
   verticalMoveSpeed: 5
   clawDownPositionY: -0.5
   startPosition: {x: 0, y: 0}
+  goodItemChance: 0.2
 --- !u!50 &43559483
 Rigidbody2D:
   serializedVersion: 4
