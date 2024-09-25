@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7548977822116213915}
   - component: {fileID: 1139486178166676530}
   m_Layer: 0
-  m_Name: Good
+  m_Name: Good 2
   m_TagString: GoodMeat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.14971161, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.7187753, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

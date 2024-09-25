@@ -6,15 +6,15 @@ public class ClawController : MonoBehaviour
 {
     [Header("Claw Settings")]
     [SerializeField,Tooltip("The claw object that will pick up items.")]
-    private GameObject claw; 
-    [SerializeField,Tooltip("Prefab for good items that can be collected.")]
-    private GameObject goodItemPrefab;  
-    [SerializeField,Tooltip("Prefab for bad items that may decrease health.")]
-    private GameObject badItemPrefab;  
+    private GameObject claw;
     [SerializeField,Tooltip("The box where the claw returns the picked items.")]
     private GameObject returnBox; 
     [SerializeField,Tooltip("Spawn point for items that the claw can pick up.")]
     private GameObject itemSpawnPoint; 
+    [SerializeField,Tooltip("Array of prefab for good items that can be collected.")]
+    private GameObject[] goodItemPrefabs;  
+    [SerializeField,Tooltip("Array of prefab for bad items that may decrease health.")]
+    private GameObject[] badItemPrefabs; 
 
     [Header("Movement Settings")]
     [SerializeField,Tooltip("Speed of horizontal movement for the claw.")]
@@ -46,7 +46,7 @@ public class ClawController : MonoBehaviour
         HandleHorizontalMovement();
         HandleClawAction();
 
-        if (currentItem == null)
+        if (currentItem == null && !isMovingDown && !isReturning)//test
         {
             hasItem = false;
             returnBox.SetActive(false);
@@ -64,16 +64,13 @@ public class ClawController : MonoBehaviour
     
     private void HandleClawAction()
     {
-        if (Input.GetKey(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space) && !isMovingDown && !isReturning) 
         {
-            if (!isMovingDown && !isReturning) 
-            {
-                StartCoroutine(MoveClawDown());
-            }
+            StartCoroutine(MoveClawDown());
         }
     }
-    
-    IEnumerator MoveClawDown()
+
+    private IEnumerator MoveClawDown()
     {
         isMovingDown = true;
         
@@ -85,8 +82,8 @@ public class ClawController : MonoBehaviour
         
         StartCoroutine(MoveClawUp());
     }
-    
-    IEnumerator MoveClawUp()
+
+    private IEnumerator MoveClawUp()
     {
         isReturning = true;
 
@@ -99,16 +96,28 @@ public class ClawController : MonoBehaviour
         isMovingDown = false;
         isReturning = false;
         
+        if (hasItem)
+        {
+            returnBox.SetActive(true);
+        }
     }
     
-    void GenerateItem()
+    private void GenerateItem()
     {
         if (!hasItem)
         {
             
             bool isGoodItem = Random.Range(0f, 1f) < goodItemChance;
-            currentItem = Instantiate(isGoodItem ? goodItemPrefab : badItemPrefab,
-                itemSpawnPoint.transform.position, Quaternion.identity);
+            if (isGoodItem)
+            {
+                int randomIndex = Random.Range(0, goodItemPrefabs.Length);
+                currentItem = Instantiate(goodItemPrefabs[randomIndex], itemSpawnPoint.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                int randomIndex = Random.Range(0, badItemPrefabs.Length);
+                currentItem = Instantiate(badItemPrefabs[randomIndex], itemSpawnPoint.transform.position, Quaternion.identity);
+            }
 
             currentItem.transform.SetParent(claw.transform);
             currentItem.transform.position = itemSpawnPoint.transform.position;
@@ -131,9 +140,12 @@ public class ClawController : MonoBehaviour
         }
     }
 
-    IEnumerator WaitToReturnItem()
+    private IEnumerator WaitToReturnItem()
     {
         yield return new WaitForSeconds(0.5f);
-        returnBox.SetActive(true);
+        if (hasItem)
+        {
+            returnBox.SetActive(true);
+        }
     }
 }
