@@ -12,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/chapter1.unity
     guid: d5951bc972deb4b468900b397b3f5de4
   - enabled: 1
-    path: Assets/Scenes/BuyMeat.unity
-    guid: 3065361db708a974b8e0b70090a9e87a
+    path: Assets/Scenes/Claw machine.unity
+    guid: d3c55d205514bb74fa1701f2ce0db307
   - enabled: 1
     path: Assets/Scenes/FirstAid.unity
     guid: 7733e29fe7f492f469ef5257ca216ee0

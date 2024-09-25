@@ -24,7 +24,11 @@ public class ClawController : MonoBehaviour
     [SerializeField,Tooltip("Y position where the claw reaches down to pick items.")]
     private float clawDownPositionY; 
     [SerializeField,Tooltip("Initial position of the claw when the game starts.")]
-    private Vector2 startPosition; 
+    private Vector2 startPosition;
+    [SerializeField, Tooltip("The minimum X position the claw can reach.")]
+    private float minMovementLimitX;
+    [SerializeField, Tooltip("The maximum X position the claw can reach.")]
+    private float maxMovementLimitX;
     
     [Header("Item Generation Settings")]
     [SerializeField,Tooltip("Chance of generating a good item (0 to 1).")]
@@ -35,6 +39,11 @@ public class ClawController : MonoBehaviour
     private bool hasItem = false;  // Tracks if an item is held
     private bool isMovingDown = false;  // Tracks if claw is moving down
     private bool isReturning = false; // Tracks if claw is returning up
+    
+    // Button control variables
+    private bool isMovingLeft = false;
+    private bool isMovingRight = false;
+    private bool isMovingDownByButton = false;
 
     void Start()
     {
@@ -57,14 +66,29 @@ public class ClawController : MonoBehaviour
     {
         if (!isMovingDown && !isReturning) 
         {
-            float moveX = Input.GetAxis("Horizontal") * clawSpeed * Time.deltaTime;
-            claw.transform.Translate(new Vector2(moveX, 0));
+            float moveX = 0f;
+            
+            moveX += Input.GetAxis("Horizontal") * clawSpeed * Time.deltaTime;
+            
+            if (isMovingLeft)
+            {
+                moveX = -clawSpeed * Time.deltaTime;
+            }
+            else if (isMovingRight)
+            {
+                moveX = clawSpeed * Time.deltaTime;
+            }
+            
+            Vector2 newPosition = claw.transform.position;
+            newPosition.x += moveX;
+            newPosition.x = Mathf.Clamp(newPosition.x, minMovementLimitX, maxMovementLimitX);
+            claw.transform.position = newPosition;
         }
     }
     
     private void HandleClawAction()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isMovingDown && !isReturning) 
+        if ((Input.GetKeyDown(KeyCode.Space) || isMovingDownByButton) && !isMovingDown && !isReturning)
         {
             StartCoroutine(MoveClawDown());
         }
@@ -73,6 +97,7 @@ public class ClawController : MonoBehaviour
     private IEnumerator MoveClawDown()
     {
         isMovingDown = true;
+        isMovingDownByButton = false;
         
         while (claw.transform.position.y > clawDownPositionY)
         {
@@ -127,7 +152,6 @@ public class ClawController : MonoBehaviour
             itemRigidbody.velocity = Vector2.zero;
 
             hasItem = true;
-            StartCoroutine(WaitToReturnItem());
         }
     }
     
@@ -139,13 +163,39 @@ public class ClawController : MonoBehaviour
             GenerateItem();
         }
     }
-
-    private IEnumerator WaitToReturnItem()
+    
+    public void SetChance0to1(float chance)
     {
-        yield return new WaitForSeconds(0.5f);
-        if (hasItem)
+        goodItemChance = chance;
+    }
+    
+    public void MoveLeftButtonDown()
+    {
+        isMovingLeft = true;
+    }
+
+    public void MoveLeftButtonUp()
+    {
+        isMovingLeft = false;
+    }
+
+    public void MoveRightButtonDown()
+    {
+        isMovingRight = true;
+    }
+
+    public void MoveRightButtonUp()
+    {
+        isMovingRight = false;
+    }
+
+    public void MoveDownButtonPressed()
+    {
+        if (!isMovingDown && !isReturning)
         {
-            returnBox.SetActive(true);
+            isMovingDownByButton = true;
         }
     }
+    
+    
 }

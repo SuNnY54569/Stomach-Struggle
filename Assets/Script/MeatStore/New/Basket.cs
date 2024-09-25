@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Basket : MonoBehaviour
 {
+    [SerializeField] private Health health;
+    [SerializeField] private ScoreMeatShop scoreMeatShop;
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("BadMeat"))
         {
             Destroy(collision.gameObject);
-            Debug.Log("Bad Meat");
+            health.DecreaseHealth(1);
         }
         else if (collision.CompareTag("GoodMeat"))
         {
             Destroy(collision.gameObject);
-            Debug.Log("Good Meat");
+            scoreMeatShop.ScoreUp(1);
         }
     }
 }
