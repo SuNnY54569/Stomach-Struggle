@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5618952320948189660}
   - component: {fileID: 3648543911629219475}
   - component: {fileID: 4740956300647507103}
+  - component: {fileID: -9148800272000410822}
   m_Layer: 0
   m_Name: Bad
   m_TagString: BadMeat
@@ -158,3 +159,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-9148800272000410822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833592423724286684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c6a031475e08f47bafed3d70d516dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: {fileID: 0}
