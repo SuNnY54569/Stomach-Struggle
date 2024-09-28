@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1719595334960479830}
   - component: {fileID: 5134051192098825308}
   - component: {fileID: 6376013615293016196}
+  - component: {fileID: 8349774986328864771}
+  - component: {fileID: 7061499889016792865}
   m_Layer: 0
   m_Name: Raw Food
   m_TagString: Raw
@@ -98,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ad2053cdc36cd4ca085ea1d0e7b195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteractable: 1
 --- !u!61 &6376013615293016196
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,3 +146,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8349774986328864771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836158698998753788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22294ae431b479e4fab4f28a5f0b0c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingTime: 5
+  overcookedTime: 8
+  cookingTimer: 0
+  isCooking: 0
+--- !u!114 &7061499889016792865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836158698998753788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93ef89ccdbcc394e8848d862e559ee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rawSprite: {r: 1, g: 0, b: 0, a: 1}
+  cookedSprite: {r: 0.11532295, g: 1, b: 0, a: 1}
+  overcookedSprite: {r: 0, g: 0, b: 0, a: 1}
