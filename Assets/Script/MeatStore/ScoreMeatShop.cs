@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class ScoreMeatShop : MonoBehaviour
 {
-    public static int scoreValue = 0;
+    [SerializeField] private int scoreValue = 0;
     [SerializeField] private int scoreMax;
     [SerializeField] private int scoreMin;
     [SerializeField] private GameObject WinScene;
@@ -19,13 +19,6 @@ public class ScoreMeatShop : MonoBehaviour
         UpdateScoreText();
     }
 
-    void Update()
-    {
-        scoreValue = Mathf.Clamp(scoreValue, scoreMin, scoreMax);
-        UpdateScoreText();
-        CheckWin();
-    }
-
     void UpdateScoreText()
     {
         if (scoreText != null)
@@ -38,6 +31,14 @@ public class ScoreMeatShop : MonoBehaviour
         {
             WinScene.gameObject.SetActive(true);
         }
+    }
+    
+    public void ScoreUp(int amount)
+    {
+        scoreValue += amount;
+        scoreValue = Mathf.Clamp(scoreValue, scoreMin, scoreMax);
+        UpdateScoreText();
+        CheckWin();
     }
 
     

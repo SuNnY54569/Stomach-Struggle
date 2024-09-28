@@ -20,7 +20,6 @@ public class MeatButton : MonoBehaviour
     {
         if (gameObject.CompareTag("GoodMeat"))
         {
-            ScoreMeatShop.scoreValue++;
             Destroy(gameObject);
         }
         else
