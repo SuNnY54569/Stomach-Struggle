@@ -170,10 +170,10 @@ MonoBehaviour:
   itemPrefab:
   - {fileID: 2833592423724286684, guid: 076f0107b77a948438c5ec78df48c497, type: 3}
   - {fileID: 3126161383067482225, guid: 978adf751906db24b87da05deb85a028, type: 3}
-  secondSpawn: 2
+  secondSpawn: 1.5
   minTras: -8
   maxTras: 8
-  speeds: 2
+  speeds: 2.5
 --- !u!1 &605392617
 GameObject:
   m_ObjectHideFlags: 0
