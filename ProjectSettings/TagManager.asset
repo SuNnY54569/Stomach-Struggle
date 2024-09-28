@@ -16,6 +16,12 @@ TagManager:
   - GoodMeat
   - BadMeat
   - ItemBox
+  - Grill
+  - Plate
+  - Raw
+  - Cooking
+  - Cooked
+  - Overcooked
   layers:
   - Default
   - TransparentFX
