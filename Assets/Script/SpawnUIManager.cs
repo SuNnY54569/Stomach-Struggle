@@ -5,29 +5,34 @@ using TMPro;
 public class SpawnUIManager : MonoBehaviour
 {
     [Header("UI Prefab References")]
-    [SerializeField] private GameObject uiPrefab; // Prefab ของ UI ที่จะ spawn
-    [SerializeField] private Transform uiParent; // Parent ที่จะวาง UI (เช่น Canvas)
+    [SerializeField] private GameObject uiPrefab;
+    [SerializeField] private Transform uiParent;
 
     [Header("Image Settings")]
-    [SerializeField] private Sprite[] randomImages; // รูปภาพที่สามารถสุ่มได้
+    [SerializeField] private Sprite[] randomImages;
 
     [Header("Time Settings")]
-    [SerializeField] private int minHour = 0; // ชั่วโมงต่ำสุด
-    [SerializeField] private int maxHour = 23; // ชั่วโมงสูงสุด
-    [SerializeField] private int minMinute = 0; // นาทีต่ำสุด
-    [SerializeField] private int maxMinute = 59; // นาทีสูงสุด
+    [SerializeField] private int minHour;
+    [SerializeField] private int maxHour;
+    [SerializeField] private int minMinute;
+    [SerializeField] private int maxMinute;
 
     private void Start()
     {
-        SpawnRandomUI(); // เรียกใช้เมื่อเริ่มเกม
+        SpawnRandomUI();
     }
 
     public void SpawnRandomUI()
     {
-        // สร้าง UI ใหม่
+        if (ScoreGuitar.scoreValue >= FindObjectOfType<ScoreGuitar>().ScoreMax)
+        {
+            Debug.Log("Maximum score reached. No new UI spawned.");
+            return;
+        }
+
+
         GameObject newUI = Instantiate(uiPrefab, uiParent);
 
-        // สุ่มรูปภาพ
         Image imageComponent = newUI.transform.Find("Food").GetComponent<Image>();
         if (imageComponent != null && randomImages.Length > 0)
         {
@@ -35,7 +40,6 @@ public class SpawnUIManager : MonoBehaviour
             imageComponent.sprite = randomImages[randomIndex];
         }
 
-        // สุ่มเวลา
         TextMeshProUGUI timeText = newUI.transform.Find("Time").GetComponent<TextMeshProUGUI>();
         if (timeText != null)
         {

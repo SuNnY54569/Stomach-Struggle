@@ -84,6 +84,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4245265815105152606}
+  - component: {fileID: -8555825259888130421}
+  - component: {fileID: 3607460719161875744}
   m_Layer: 5
   m_Name: foodRandomPrefab
   m_TagString: Untagged
@@ -113,6 +115,31 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 450, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &-8555825259888130421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3950502002470530762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf95951f11b93fe4683a71d0b19d7139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+--- !u!225 &3607460719161875744
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3950502002470530762}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8300308517402684834
 GameObject:
   m_ObjectHideFlags: 0
