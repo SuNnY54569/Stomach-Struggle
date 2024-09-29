@@ -8,12 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PreTest.unity
     guid: 0fa932fb64de15543aa0bd8226fb0c9f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/chapter1.unity
     guid: d5951bc972deb4b468900b397b3f5de4
   - enabled: 1
     path: Assets/Scenes/Claw machine.unity
     guid: d3c55d205514bb74fa1701f2ce0db307
+  - enabled: 1
+    path: Assets/Scenes/Chapter1.2.2.unity
+    guid: 5d47b7d36a7ea42439f33cae710aa883
   - enabled: 1
     path: Assets/Scenes/FirstAid.unity
     guid: 7733e29fe7f492f469ef5257ca216ee0
