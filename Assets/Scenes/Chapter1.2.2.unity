@@ -1387,7 +1387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1543239218}
-  remainingTime: 60
+  remainingTime: 360
   gameOver: {fileID: 1058441864}
 --- !u!1 &1543239216
 GameObject:
@@ -1406,7 +1406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1543239217
 RectTransform:
   m_ObjectHideFlags: 0

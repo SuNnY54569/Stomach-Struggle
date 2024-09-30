@@ -24,9 +24,8 @@ public class SpawnUIManager : MonoBehaviour
 
     public void SpawnRandomUI()
     {
-        if (ScoreGuitar.scoreValue >= FindObjectOfType<ScoreGuitar>().ScoreMax)
+        if (ScoreGuitar.scoreValue >= FindObjectOfType<ScoreGuitar>().ScoreMax || FindObjectOfType<Health>().HealthValue <= 0)
         {
-            Debug.Log("Maximum score reached. No new UI spawned.");
             return;
         }
 
