@@ -171,7 +171,7 @@ public class FoodCooking : MonoBehaviour
     {
         StopCooking(); 
         
-        if (topSideCookingTimer >= cookingTime && bottomSideCookingTimer >= cookingTime)
+        if (topSideCookingTimer >= cookingTime && bottomSideCookingTimer >= cookingTime && topSideCookingTimer < overcookedTime && bottomSideCookingTimer < overcookedTime)
         {
             HandleCooked();
         }

@@ -128,8 +128,13 @@ public class DragFood : MonoBehaviour
         if (foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked())
         {
             isInteractable = false;
+            collider2D.enabled = false;
         }
-        collider2D.enabled = false;
+        if (foodCooking.IsBottomSideOvercooked() || foodCooking.IsTopSideOvercooked())
+        {
+            isInteractable = true;
+            collider2D.enabled = true;
+        }
     }
 
     private void PlaceOnTrash()
