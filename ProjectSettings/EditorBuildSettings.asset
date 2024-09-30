@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Chapter1.2.2.unity
     guid: 5d47b7d36a7ea42439f33cae710aa883
   - enabled: 1
+    path: Assets/Scenes/Chapter1.5.unity
+    guid: 909242f124be0cb49a293410937a1877
+  - enabled: 1
     path: Assets/Scenes/FirstAid.unity
     guid: 7733e29fe7f492f469ef5257ca216ee0
   - enabled: 1
