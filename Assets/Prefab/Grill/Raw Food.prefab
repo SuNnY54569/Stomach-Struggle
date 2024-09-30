@@ -89,7 +89,6 @@ GameObject:
   - component: {fileID: 5134051192098825308}
   - component: {fileID: 8349774986328864771}
   - component: {fileID: 7061499889016792865}
-  - component: {fileID: 6334449227034323585}
   m_Layer: 0
   m_Name: Raw Food
   m_TagString: Raw
@@ -222,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ad2053cdc36cd4ca085ea1d0e7b195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foodSpawners: []
   isInteractable: 1
 --- !u!114 &8349774986328864771
 MonoBehaviour:
@@ -255,18 +255,6 @@ MonoBehaviour:
   rawSprite: {r: 1, g: 0, b: 0, a: 1}
   cookedSprite: {r: 0.11532295, g: 1, b: 0, a: 1}
   overcookedSprite: {r: 0, g: 0, b: 0, a: 1}
---- !u!114 &6334449227034323585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1836158698998753788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 510be58190723284e9a7347265ce5c5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2180788710246720760
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +390,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &849858788775625289
 MonoBehaviour:

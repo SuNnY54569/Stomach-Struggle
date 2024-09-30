@@ -6,27 +6,35 @@ using UnityEngine.UI;
 
 public class FoodCooking : MonoBehaviour
 {
+    #region Cooking Settings
     [Header("Cooking Settings")]
-    [SerializeField,Tooltip("Time it takes to cook the food.")] 
+    [SerializeField, Tooltip("Time it takes to cook the food.")]
     private float cookingTime;
     
-    [SerializeField,Tooltip("Time after which the food is considered overcooked.")] 
+    [SerializeField, Tooltip("Time after which the food is considered overcooked.")]
     private float overcookedTime;
     
     private float cookingTimer;
+    #endregion
     
+    #region UI Components
     [Header("UI Components")]
-    [SerializeField,Tooltip("Slider representing the cooking progress.")] 
+    [SerializeField, Tooltip("Slider representing the cooking progress.")]
     private Slider cookingProgressBar;
-    [SerializeField,Tooltip("Image component to change the color of the progress bar.")] 
+    
+    [SerializeField, Tooltip("Image component to change the color of the progress bar.")]
     private Image progressBarFill;
+    #endregion
     
+    #region Cooking State
     [Header("Cooking State")]
+    [Tooltip("Is the food currently cooking?")]
     public bool isCooking;
-    
+
     private Color rawColor = Color.red;
     private Color cookedColor = Color.green;
     private Color overcookedColor = Color.black;
+    #endregion
 
     private void Start()
     {
@@ -54,6 +62,7 @@ public class FoodCooking : MonoBehaviour
         }
     }
     
+    #region Progress Bar Methods
     private void InitializeProgressBar()
     {
         if (cookingProgressBar != null)
@@ -61,9 +70,10 @@ public class FoodCooking : MonoBehaviour
             cookingProgressBar.maxValue = cookingTime;
             cookingProgressBar.value = 0;
             progressBarFill.color = rawColor;
+            ShowProgressBar(false);
         }
     }
-    
+
     private void UpdateProgressBar()
     {
         if (cookingProgressBar == null) return;
@@ -71,7 +81,7 @@ public class FoodCooking : MonoBehaviour
         cookingProgressBar.value = cookingTimer; 
         progressBarFill.color = CalculateProgressColor();
     }
-    
+
     private Color CalculateProgressColor()
     {
         if (cookingTimer <= cookingTime)
@@ -85,7 +95,9 @@ public class FoodCooking : MonoBehaviour
             return Color.Lerp(cookedColor, overcookedColor, t);
         }
     }
+    #endregion
     
+    #region Cooking State Methods
     private void MarkAsRaw()
     {
         gameObject.tag = "Raw";
@@ -101,27 +113,29 @@ public class FoodCooking : MonoBehaviour
         gameObject.tag = "Overcooked";
         StopCooking();
     }
-    
+
     public void StartCooking()
     {
         isCooking = true;
         ShowProgressBar(true);
     }
-    
+
     public void StopCooking()
     {
         isCooking = false;
         ShowProgressBar(false);
     }
-    
-    private void ShowProgressBar(bool show)
+
+    public void ShowProgressBar(bool show)
     {
         if (cookingProgressBar != null)
         {
             cookingProgressBar.gameObject.SetActive(show);
         }
     }
+    #endregion
     
+    #region Interaction Methods
     public void PlaceOnPlate()
     {
         StopCooking(); 
@@ -160,4 +174,5 @@ public class FoodCooking : MonoBehaviour
     {
         Health.Instance.DecreaseHealth(1);
     }
+    #endregion
 }

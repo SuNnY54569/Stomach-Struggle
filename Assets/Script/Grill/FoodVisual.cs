@@ -5,11 +5,19 @@ using UnityEngine;
 
 public class FoodVisual : MonoBehaviour
 {
-    public Color rawSprite;
-    public Color cookedSprite;
-    public Color overcookedSprite;
+    #region Visual Settings
+    [Header("Food Colors")]
+    [SerializeField,Tooltip("Color for the raw food state.")]
+    private Color rawSprite;
+    
+    [SerializeField,Tooltip("Color for the cooked food state.")]
+    private Color cookedSprite;
+    
+    [SerializeField,Tooltip("Color for the overcooked food state.")]
+    private Color overcookedSprite;
     
     private SpriteRenderer spriteRenderer;
+    #endregion
 
     private void Awake()
     {
@@ -17,9 +25,15 @@ public class FoodVisual : MonoBehaviour
         spriteRenderer.color = rawSprite;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        UpdateFoodVisual();
+    }
+    
+    #region Update Visuals
+    private void UpdateFoodVisual()
+    {
+        // Change the sprite color based on the tag of the food
         if (gameObject.CompareTag("Cooked"))
         {
             spriteRenderer.color = cookedSprite;
@@ -29,4 +43,5 @@ public class FoodVisual : MonoBehaviour
             spriteRenderer.color = overcookedSprite;
         }
     }
+    #endregion
 }

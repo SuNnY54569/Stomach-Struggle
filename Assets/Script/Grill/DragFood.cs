@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class DragFood : MonoBehaviour
 {
+    #region Drag Settings
     [Header("Settings")]
+    [SerializeField, Tooltip("Array of food spawners.")]
+    private GameObject[] foodSpawners;
+
     [Tooltip("Can the player interact with this food item?")]
     public bool isInteractable = true;
     
@@ -13,10 +17,13 @@ public class DragFood : MonoBehaviour
     private Camera mainCamera;
     private Vector3 startPosition;
     private bool isOnGrill;
+    private bool wasOnGrillBeforeDrag;
     private FoodCooking foodCooking;
+    #endregion
 
     private void Awake()
     {
+        foodSpawners = GameObject.FindGameObjectsWithTag("FoodSpawner");
         collider2D = GetComponent<Collider2D>();
         foodCooking = GetComponent<FoodCooking>();
         mainCamera = Camera.main;
@@ -31,18 +38,19 @@ public class DragFood : MonoBehaviour
         }
     }
 
+    #region Mouse Events
     private void OnMouseDown()
     {
         if (!isInteractable) return;
-        FoodPickUp foodPickUp = gameObject.GetComponent<FoodPickUp>();
-        //foodPickUp.PickUp();
         offset = transform.position - MouseWorldPosition();
         isDragging = true;
+        wasOnGrillBeforeDrag = isOnGrill;
+        foodCooking.StopCooking();
     }
 
     private void OnMouseDrag()
     {
-        if (isDragging)
+        if (isDragging && isInteractable)
         {
             transform.position = MouseWorldPosition() + offset;
         }
@@ -50,6 +58,7 @@ public class DragFood : MonoBehaviour
     
     private void OnMouseUp()
     {
+        if (!isInteractable) return;
         isDragging = false;
         collider2D.enabled = false;
         
@@ -58,6 +67,10 @@ public class DragFood : MonoBehaviour
         if (hitInfo.collider != null)
         {
             HandleDrop(hitInfo);
+            foreach (var foodSpawner in foodSpawners)
+            {
+                foodSpawner.GetComponent<FoodSpawner>().SpawnFood();
+            }
         }
         else
         {
@@ -66,7 +79,9 @@ public class DragFood : MonoBehaviour
 
         collider2D.enabled = true;
     }
+    #endregion
     
+    #region Drop Handling
     private void HandleDrop(RaycastHit2D hitInfo)
     {
         switch (hitInfo.transform.tag)
@@ -110,9 +125,15 @@ public class DragFood : MonoBehaviour
     private void ResetPosition()
     {
         transform.position = startPosition;
+        if (wasOnGrillBeforeDrag)
+        {
+            isOnGrill = true;
+            foodCooking.StartCooking();
+        }
     }
-
-
+    #endregion
+    
+    #region Utility Methods
     private Vector3 MouseWorldPosition()
     {
         var mouseScreenPos = Input.mousePosition;
@@ -136,4 +157,5 @@ public class DragFood : MonoBehaviour
             foodCooking.StopCooking();
         }
     }
+    #endregion
 }

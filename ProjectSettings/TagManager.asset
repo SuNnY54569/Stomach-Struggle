@@ -23,6 +23,7 @@ TagManager:
   - Cooked
   - Overcooked
   - Trash
+  - FoodSpawner
   layers:
   - Default
   - TransparentFX
