@@ -2669,7 +2669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minHour: 14
-  maxHour: 16
+  maxHour: 18
   playerHealth: {fileID: 1441052543}
   spawnUIManager: {fileID: 1925444025}
 --- !u!1 &1925444020
@@ -2800,9 +2800,9 @@ MonoBehaviour:
   - {fileID: 721924625, guid: 48ab9604fd11256429f0a6d073b2a20d, type: 3}
   - {fileID: -5745737, guid: 576bccdd308d7fe4bb255e7a0c6ad01e, type: 3}
   - {fileID: -1215873689, guid: 6746c6fd9dd1e3f4ba206c4c24932797, type: 3}
-  minHour: 6
-  maxHour: 16
-  minMinute: 0
+  minHour: 0
+  maxHour: 24
+  minMinute: 59
   maxMinute: 59
 --- !u!1 &1956751290
 GameObject:
@@ -2815,7 +2815,7 @@ GameObject:
   - component: {fileID: 1956751291}
   - component: {fileID: 1956751294}
   - component: {fileID: 1956751293}
-  - component: {fileID: 1956751292}
+  - component: {fileID: 1956751295}
   m_Layer: 5
   m_Name: slotWarm
   m_TagString: Untagged
@@ -2843,22 +2843,6 @@ RectTransform:
   m_AnchoredPosition: {x: 540, y: -375}
   m_SizeDelta: {x: 550, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1956751292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1956751290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f2fbf9f46e52d49a8cae2f0093ee70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minHour: 6
-  maxHour: 14
-  playerHealth: {fileID: 1441052543}
-  spawnUIManager: {fileID: 1925444025}
 --- !u!114 &1956751293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2897,6 +2881,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956751290}
   m_CullTransparentMesh: 1
+--- !u!114 &1956751295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956751290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75739fc6f5bac754ba11ea6db197b7f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minHour: 14
+  maxHour: 18
+  playerHealth: {fileID: 1441052543}
+  spawnUIManager: {fileID: 1925444025}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -18,7 +18,6 @@ public class ItemClickHandler : MonoBehaviour
     {
         if (gameObject.CompareTag("GoodMeat"))
         {
-            ScoreGuitar.scoreValue += 1;
             Destroy(gameObject);
         }
         else if (gameObject.CompareTag("BadMeat"))
@@ -29,5 +28,20 @@ public class ItemClickHandler : MonoBehaviour
             }
             Destroy(gameObject);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Health playerHealth = FindObjectOfType<Health>();
+        if (gameObject.CompareTag("GoodMeat"))
+        {
+            playerHealth.DecreaseHealth(1);
+        }
+        else if (gameObject.CompareTag("BadMeat"))
+        {
+            playerHealth.DecreaseHealth(0);
+        }
+
+        Destroy(this.gameObject);
     }
 }

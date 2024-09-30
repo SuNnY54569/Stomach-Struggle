@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,21 +7,40 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float remainingTime;
+    private bool isGameOver = false;
 
     public GameOver gameOver;
+    private Health playerHealth;
+
+    private void Start()
+    {
+        remainingTime = 60f;
+        playerHealth = FindObjectOfType<Health>();
+    }
     void Update()
     {
-        if (remainingTime > 0)
+        if (!isGameOver && playerHealth.HealthValue > 0)
         {
-            remainingTime -= Time.deltaTime;
+            if (remainingTime > 0)
+            {
+                remainingTime -= Time.deltaTime;
+            }
+            else
+            {
+                remainingTime = 0;
+                gameOver.setUp();
+                isGameOver = true;
+            }
+
+            int minutes = Mathf.FloorToInt(remainingTime / 60);
+            int seconds = Mathf.FloorToInt(remainingTime % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
-        else if (remainingTime <= 0)
+        else if (playerHealth.HealthValue <= 0)
         {
-            remainingTime = 0;
-            gameOver.setUp();
+            isGameOver = true;
+            timerText.text = "00:00";
         }
-        int minutes = Mathf.FloorToInt(remainingTime / 60);
-        int seconds = Mathf.FloorToInt(remainingTime % 60);
-        timerText.text = string.Format("{0:00}:{1:00}",minutes,seconds);
+
     }
 }
