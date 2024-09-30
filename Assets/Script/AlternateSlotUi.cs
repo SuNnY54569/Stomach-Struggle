@@ -6,14 +6,16 @@ using UnityEngine.EventSystems;
 
 public class AlternateSlotUi : MonoBehaviour, IDropHandler
 {
-    [SerializeField] private float minHour;
-    [SerializeField] private float maxHour;
+    [SerializeField] private int minHour;
+    [SerializeField] private int maxHour;
+    [SerializeField] private int minMinute;
+    [SerializeField] private int maxMinute;
+
     [SerializeField] private Health playerHealth;
     [SerializeField] private SpawnUIManager spawnUIManager;
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("OnDrop");
         if (eventData.pointerDrag != null)
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
@@ -23,20 +25,19 @@ public class AlternateSlotUi : MonoBehaviour, IDropHandler
             if (timeText != null)
             {
                 string[] timeParts = timeText.text.Split(':');
-                float hour = float.Parse(timeParts[0]);
+                int hour = int.Parse(timeParts[0]);
+                int minute = int.Parse(timeParts[1]);
 
-                if (hour < minHour || hour > maxHour)
-                {
-                    ScoreGuitar.scoreValue += 1;
-                    Debug.Log("Time outside the range! Score +1");
-                }
-                else
+                if ((hour > minHour || (hour == minHour && minute >= minMinute)) && (hour < maxHour || (hour == maxHour && minute <= maxMinute)))
                 {
                     if (playerHealth != null)
                     {
                         playerHealth.DecreaseHealth(1);
-                        Debug.Log("Time within the range! Health -1");
                     }
+                }
+                else
+                {
+                    ScoreGuitar.scoreValue += 1;
                 }
 
                 Destroy(eventData.pointerDrag.gameObject);

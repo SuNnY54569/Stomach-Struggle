@@ -8,11 +8,13 @@ public class slotUi : MonoBehaviour, IDropHandler
 {
     [SerializeField] private float minHour;
     [SerializeField] private float maxHour;
+    [SerializeField] private float minMinute;
+    [SerializeField] private float maxMinute;
+
     [SerializeField] private Health playerHealth;
     [SerializeField] private SpawnUIManager spawnUIManager;
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("OnDrop");
         if (eventData.pointerDrag != null)
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
@@ -23,8 +25,9 @@ public class slotUi : MonoBehaviour, IDropHandler
             {
                 string[] timeParts = timeText.text.Split(':');
                 float hour = float.Parse(timeParts[0]);
+                int minute = int.Parse(timeParts[1]);
 
-                if (hour >= minHour && hour <= maxHour)
+                if ((hour > minHour || (hour == minHour && minute >= minMinute)) && (hour < maxHour || (hour == maxHour && minute <= maxMinute)))
                 {
                     ScoreGuitar.scoreValue += 1;
                 }

@@ -2670,6 +2670,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minHour: 14
   maxHour: 18
+  minMinute: 0
+  maxMinute: 0
   playerHealth: {fileID: 1441052543}
   spawnUIManager: {fileID: 1925444025}
 --- !u!1 &1925444020
@@ -2801,8 +2803,8 @@ MonoBehaviour:
   - {fileID: -5745737, guid: 576bccdd308d7fe4bb255e7a0c6ad01e, type: 3}
   - {fileID: -1215873689, guid: 6746c6fd9dd1e3f4ba206c4c24932797, type: 3}
   minHour: 0
-  maxHour: 24
-  minMinute: 59
+  maxHour: 23
+  minMinute: 0
   maxMinute: 59
 --- !u!1 &1956751290
 GameObject:
@@ -2895,6 +2897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minHour: 14
   maxHour: 18
+  minMinute: 0
+  maxMinute: 0
   playerHealth: {fileID: 1441052543}
   spawnUIManager: {fileID: 1925444025}
 --- !u!1660057539 &9223372036854775807
