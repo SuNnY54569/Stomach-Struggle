@@ -207,7 +207,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &5134051192098825308
 MonoBehaviour:
@@ -237,6 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cookingTime: 10
   overcookedTime: 20
+  isTopSideCooking: 1
   cookingProgressBar: {fileID: 3140450211251715927}
   progressBarFill: {fileID: 1583009579106544498}
   isCooking: 0

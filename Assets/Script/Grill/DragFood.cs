@@ -42,10 +42,22 @@ public class DragFood : MonoBehaviour
     private void OnMouseDown()
     {
         if (!isInteractable) return;
+        
         offset = transform.position - MouseWorldPosition();
-        isDragging = true;
-        wasOnGrillBeforeDrag = isOnGrill;
-        foodCooking.StopCooking();
+        
+        if (isOnGrill)
+        {
+            foodCooking.FlipFood();
+            isDragging = true;
+            wasOnGrillBeforeDrag = isOnGrill;
+            foodCooking.StopCooking();
+        }
+        else
+        {
+            isDragging = true;
+            wasOnGrillBeforeDrag = isOnGrill;
+            foodCooking.StopCooking();
+        }
     }
 
     private void OnMouseDrag()
@@ -113,7 +125,10 @@ public class DragFood : MonoBehaviour
     {
         foodCooking.PlaceOnPlate();
         startPosition = transform.position;
-        isInteractable = false;
+        if (foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked())
+        {
+            isInteractable = false;
+        }
         collider2D.enabled = false;
     }
 

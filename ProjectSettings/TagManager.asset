@@ -19,11 +19,13 @@ TagManager:
   - Grill
   - Plate
   - Raw
-  - Cooking
   - Cooked
   - Overcooked
   - Trash
   - FoodSpawner
+  - Cooking
+  - TopCooked
+  - BottomCooked
   layers:
   - Default
   - TransparentFX

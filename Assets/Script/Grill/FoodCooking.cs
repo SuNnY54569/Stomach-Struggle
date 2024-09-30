@@ -14,7 +14,11 @@ public class FoodCooking : MonoBehaviour
     [SerializeField, Tooltip("Time after which the food is considered overcooked.")]
     private float overcookedTime;
     
-    private float cookingTimer;
+    private float topSideCookingTimer;
+    private float bottomSideCookingTimer;
+    
+    public bool isTopSideCooking = true;
+    private bool isFlipped;
     #endregion
     
     #region UI Components
@@ -45,20 +49,33 @@ public class FoodCooking : MonoBehaviour
     {
         if (!isCooking) return;
         
-        cookingTimer += Time.deltaTime;
-        UpdateProgressBar();
-        
-        if (cookingTimer >= overcookedTime)
+        if (isTopSideCooking)
         {
-            MarkAsOvercooked();
-        }
-        else if (cookingTimer >= cookingTime && cookingTimer < overcookedTime)
-        {
-            MarkAsCooked();
+            topSideCookingTimer += Time.deltaTime;
+            UpdateProgressBar(topSideCookingTimer);
+            
+            if (topSideCookingTimer >= overcookedTime)
+            {
+                MarkAsOvercooked();
+            }
+            else if (topSideCookingTimer >= cookingTime && topSideCookingTimer < overcookedTime)
+            {
+                MarkAsCooked();
+            }
         }
         else
         {
-            MarkAsRaw();
+            bottomSideCookingTimer += Time.deltaTime;
+            UpdateProgressBar(bottomSideCookingTimer);
+            
+            if (bottomSideCookingTimer >= overcookedTime)
+            {
+                MarkAsOvercooked();
+            }
+            else if (bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime)
+            {
+                MarkAsCooked();
+            }
         }
     }
     
@@ -74,44 +91,58 @@ public class FoodCooking : MonoBehaviour
         }
     }
 
-    private void UpdateProgressBar()
+    private void UpdateProgressBar(float timer)
     {
         if (cookingProgressBar == null) return;
         
-        cookingProgressBar.value = cookingTimer; 
-        progressBarFill.color = CalculateProgressColor();
+        cookingProgressBar.value = timer; 
+        progressBarFill.color = CalculateProgressColor(timer);
     }
 
-    private Color CalculateProgressColor()
+    private Color CalculateProgressColor(float timer)
     {
-        if (cookingTimer <= cookingTime)
+        if (timer <= cookingTime)
         {
-            float t = cookingTimer / cookingTime;
+            float t = timer / cookingTime;
             return Color.Lerp(rawColor, cookedColor, t);
         }
-        else 
+        else
         {
-            float t = (cookingTimer - cookingTime) / (overcookedTime - cookingTime);
+            float t = (timer - cookingTime) / (overcookedTime - cookingTime);
             return Color.Lerp(cookedColor, overcookedColor, t);
         }
     }
     #endregion
     
     #region Cooking State Methods
-    private void MarkAsRaw()
+    /*private void MarkAsRaw()
     {
         gameObject.tag = "Raw";
-    }
+    }*/
 
     private void MarkAsCooked()
     {
-        gameObject.tag = "Cooked";
+        if (isTopSideCooking)
+        {
+            gameObject.tag = "TopCooked";
+        }
+        else
+        {
+            gameObject.tag = "BottomCooked";
+        }
     }
 
     private void MarkAsOvercooked()
     {
         gameObject.tag = "Overcooked";
         StopCooking();
+    }
+    
+    public void FlipFood()
+    {
+        isTopSideCooking = !isTopSideCooking;
+        cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
+        progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
     }
 
     public void StartCooking()
@@ -140,13 +171,13 @@ public class FoodCooking : MonoBehaviour
     {
         StopCooking(); 
         
-        if (cookingTimer < cookingTime)
-        {
-            HandleUndercooked();
-        }
-        else if (cookingTimer < overcookedTime)
+        if (topSideCookingTimer >= cookingTime && bottomSideCookingTimer >= cookingTime)
         {
             HandleCooked();
+        }
+        else if (topSideCookingTimer < cookingTime || bottomSideCookingTimer < cookingTime)
+        {
+            HandleUndercooked();
         }
         else
         {
@@ -175,4 +206,11 @@ public class FoodCooking : MonoBehaviour
         Health.Instance.DecreaseHealth(1);
     }
     #endregion
+    
+    public bool IsTopSideCooked() => topSideCookingTimer >= cookingTime;
+    public bool IsBottomSideCooked() => bottomSideCookingTimer >= cookingTime;
+
+    public bool IsTopSideOvercooked() => topSideCookingTimer >= overcookedTime;
+    public bool IsBottomSideOvercooked() => bottomSideCookingTimer >= overcookedTime;
+    
 }
