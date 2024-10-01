@@ -14,14 +14,14 @@ public class ScoreVisual : MonoBehaviour
         scoreMeatShop = FindObjectOfType<ScoreMeatShop>();
     }
 
-    void Start()
+    private void Start()
     {
         slider.maxValue = scoreMeatShop.scoreMax;
         slider.minValue = scoreMeatShop.scoreMin;
     }
 
     // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
         slider.value = scoreMeatShop.GetScore();
     }

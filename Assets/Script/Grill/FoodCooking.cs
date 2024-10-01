@@ -203,9 +203,8 @@ public class FoodCooking : MonoBehaviour
     }
     #endregion
     
-    public bool IsTopSideCooked() => topSideCookingTimer >= cookingTime;
-    public bool IsBottomSideCooked() => bottomSideCookingTimer >= cookingTime;
-
+    public bool IsTopSideCooked() => topSideCookingTimer >= cookingTime && topSideCookingTimer < overcookedTime;
+    public bool IsBottomSideCooked() => bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime;
     public bool IsTopSideOvercooked() => topSideCookingTimer >= overcookedTime;
     public bool IsBottomSideOvercooked() => bottomSideCookingTimer >= overcookedTime;
     
