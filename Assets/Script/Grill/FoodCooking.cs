@@ -115,11 +115,7 @@ public class FoodCooking : MonoBehaviour
     #endregion
     
     #region Cooking State Methods
-    /*private void MarkAsRaw()
-    {
-        gameObject.tag = "Raw";
-    }*/
-
+    
     private void MarkAsCooked()
     {
         if (isTopSideCooking)

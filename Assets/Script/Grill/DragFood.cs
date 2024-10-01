@@ -11,8 +11,8 @@ public class DragFood : MonoBehaviour
     [Tooltip("Can the player interact with this food item?")]
     public bool isInteractable = true;
     
-    private Vector3 offset;
     private Collider2D collider2D;
+    private Vector3 offset;
     private bool isDragging;
     private Camera mainCamera;
     private Vector3 startPosition;
@@ -128,7 +128,8 @@ public class DragFood : MonoBehaviour
         if (foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked())
         {
             isInteractable = false;
-            collider2D.enabled = false;
+            Destroy(collider2D);
+            return;
         }
         if (foodCooking.IsBottomSideOvercooked() || foodCooking.IsTopSideOvercooked())
         {
