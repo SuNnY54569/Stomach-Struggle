@@ -43,52 +43,51 @@ public class FoodVisual : MonoBehaviour
         
         if (isTopOvercooked && isBottomOvercooked)
         {
-            spriteRenderer.color = overcookedSprite; // If overcooked
+            spriteRenderer.color = overcookedSprite; 
             return;
         }
         
         if (isTopOvercooked)
         {
-            if (isBottomCooked) // Top is overcooked, bottom is cooked
+            if (isBottomCooked) 
             {
-                spriteRenderer.color = isTopCooking ? cookedSprite : overcookedSprite; // Display cooked color for both sides
+                spriteRenderer.color = isTopCooking ? cookedSprite : overcookedSprite; 
             }
-            else // Top is overcooked, bottom is raw
+            else 
             {
-                spriteRenderer.color = isTopCooking ? rawSprite : overcookedSprite; // Show the correct color
+                spriteRenderer.color = isTopCooking ? rawSprite : overcookedSprite; 
             }
             return;
         }
         
         if (isBottomOvercooked)
         {
-            if (isTopCooked) // Bottom is overcooked, top is cooked
+            if (isTopCooked) 
             {
-                spriteRenderer.color = isTopCooking ? overcookedSprite : cookedSprite; // Display cooked color for both sides
+                spriteRenderer.color = isTopCooking ? overcookedSprite : cookedSprite; 
             }
-            else // Bottom is overcooked, top is raw
+            else 
             {
-                spriteRenderer.color = !isTopCooking ? overcookedSprite : rawSprite; // Show the correct color
+                spriteRenderer.color = !isTopCooking ? overcookedSprite : rawSprite; 
             }
             return;
         }
         
-        // Determine the color based on the cooking status if neither side is overcooked
         if (isTopCooked && isBottomCooked)
         {
-            spriteRenderer.color = cookedSprite; // Both sides cooked
+            spriteRenderer.color = cookedSprite; 
         }
         else if (isTopCooked)
         {
-            spriteRenderer.color = isTopCooking ? rawSprite : cookedSprite; // Top cooked, bottom raw
+            spriteRenderer.color = isTopCooking ? rawSprite : cookedSprite; 
         }
         else if (isBottomCooked)
         {
-            spriteRenderer.color = isTopCooking ? cookedSprite : rawSprite; // Bottom cooked, top raw
+            spriteRenderer.color = isTopCooking ? cookedSprite : rawSprite; 
         }
         else
         {
-            spriteRenderer.color = rawSprite; // Both sides raw
+            spriteRenderer.color = rawSprite; 
         }
     }
     #endregion
