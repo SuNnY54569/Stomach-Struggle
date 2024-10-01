@@ -39,11 +39,6 @@ public class ClawController : MonoBehaviour
     private bool hasItem = false;  // Tracks if an item is held
     private bool isMovingDown = false;  // Tracks if claw is moving down
     private bool isReturning = false; // Tracks if claw is returning up
-    
-    // Button control variables
-    private bool isMovingLeft = false;
-    private bool isMovingRight = false;
-    private bool isMovingDownByButton = false;
 
     void Start()
     {
@@ -66,29 +61,23 @@ public class ClawController : MonoBehaviour
     {
         if (!isMovingDown && !isReturning) 
         {
-            float moveX = 0f;
-            
-            moveX += Input.GetAxis("Horizontal") * clawSpeed * Time.deltaTime;
-            
-            if (isMovingLeft)
-            {
-                moveX = -clawSpeed * Time.deltaTime;
-            }
-            else if (isMovingRight)
-            {
-                moveX = clawSpeed * Time.deltaTime;
-            }
-            
+            float moveX = Input.GetAxis("Horizontal") * clawSpeed * Time.deltaTime;
+
+            // Get current position and apply movement
             Vector2 newPosition = claw.transform.position;
             newPosition.x += moveX;
+
+            // Clamp the X position to stay within the minX and maxX limits
             newPosition.x = Mathf.Clamp(newPosition.x, minMovementLimitX, maxMovementLimitX);
+
+            // Apply the clamped position back to the claw
             claw.transform.position = newPosition;
         }
     }
     
     private void HandleClawAction()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) || isMovingDownByButton) && !isMovingDown && !isReturning)
+        if (Input.GetKeyDown(KeyCode.Space) && !isMovingDown && !isReturning)
         {
             StartCoroutine(MoveClawDown());
         }
@@ -97,7 +86,6 @@ public class ClawController : MonoBehaviour
     private IEnumerator MoveClawDown()
     {
         isMovingDown = true;
-        isMovingDownByButton = false;
         
         while (claw.transform.position.y > clawDownPositionY)
         {
@@ -167,34 +155,6 @@ public class ClawController : MonoBehaviour
     public void SetChance0to1(float chance)
     {
         goodItemChance = chance;
-    }
-    
-    public void MoveLeftButtonDown()
-    {
-        isMovingLeft = true;
-    }
-
-    public void MoveLeftButtonUp()
-    {
-        isMovingLeft = false;
-    }
-
-    public void MoveRightButtonDown()
-    {
-        isMovingRight = true;
-    }
-
-    public void MoveRightButtonUp()
-    {
-        isMovingRight = false;
-    }
-
-    public void MoveDownButtonPressed()
-    {
-        if (!isMovingDown && !isReturning)
-        {
-            isMovingDownByButton = true;
-        }
     }
     
     

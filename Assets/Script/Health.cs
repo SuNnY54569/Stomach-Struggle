@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    public static Health Instance { get; private set; }
+    
     [SerializeField] private int health;
     public int HealthValue => health;
     [SerializeField] private int currentHealth;
@@ -16,6 +19,17 @@ public class Health : MonoBehaviour
 
     public GameOver gameOver;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     private void Start()
     {
