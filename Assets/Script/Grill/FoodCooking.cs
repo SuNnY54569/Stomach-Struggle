@@ -189,17 +189,17 @@ public class FoodCooking : MonoBehaviour
     
     private void HandleUndercooked()
     {
-        Health.Instance.DecreaseHealth(1);
+        GameManager.Instance.DecreaseHealth(1);
     }
 
     private void HandleCooked()
     {
-        ScoreMeatShop.Instance.ScoreUp(1);
+        GameManager.Instance.IncreaseScore(1);
     }
 
     private void HandleOvercooked()
     {
-        Health.Instance.DecreaseHealth(1);
+        GameManager.Instance.DecreaseHealth(1);
     }
     #endregion
     
