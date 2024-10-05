@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite emptyHeart;
 
     [Header("Score Settings")]
-    public int scoreValue = 0;
+    private int scoreValue = 0;
     public int scoreMax;
     [SerializeField] private TextMeshProUGUI scoreText;
 
@@ -100,23 +101,30 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
-    private void GameOver()
+    public void GameOver()
     {
-        scoreValue = 0;
-        currentHealth = maxHealth;
-        UpdateHeartsUI();
-        UpdateScoreText();
+        ResetScore();
         gameOverPanel.SetActive(true);
     }
 
-    private void WinGame()
+    public void WinGame()
     {
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
-        scoreValue = 0;
+        ResetScore();
+        ResetHealth();
+        winPanel.SetActive(true);
+    }
+
+    public void ResetHealth()
+    {
         currentHealth = maxHealth;
         UpdateHeartsUI();
+    }
+
+    private void ResetScore()
+    {
+        scoreValue = 0;
         UpdateScoreText();
-        winPanel.SetActive(true);
     }
 }

@@ -7,19 +7,22 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float remainingTime;
-    private bool isGameOver = false;
-
-    public GameOver gameOver;
-    private Health playerHealth;
+    public bool isGameOver = false;
 
     private void Start()
     {
         remainingTime = 60f;
-        playerHealth = FindObjectOfType<Health>();
     }
     void Update()
     {
-        if (!isGameOver && playerHealth.HealthValue > 0)
+        if (GameManager.Instance.currentHealth <= 0)
+        {
+            isGameOver = true;
+            timerText.text = "00:00";
+            return;
+        }
+        
+        if (!isGameOver && GameManager.Instance.currentHealth > 0)
         {
             if (remainingTime > 0)
             {
@@ -28,18 +31,13 @@ public class Timer : MonoBehaviour
             else
             {
                 remainingTime = 0;
-                gameOver.setUp();
+                GameManager.Instance.WinGame();
                 isGameOver = true;
             }
 
             int minutes = Mathf.FloorToInt(remainingTime / 60);
             int seconds = Mathf.FloorToInt(remainingTime % 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        }
-        else if (playerHealth.HealthValue <= 0)
-        {
-            isGameOver = true;
-            timerText.text = "00:00";
         }
 
     }

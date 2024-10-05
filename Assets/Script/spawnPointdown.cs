@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class spawnPointdown : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] GameObject[] itemPrefab;
+    [SerializeField] private Timer timer;
     [Header("Settings")]
     [SerializeField] float secondSpawn = 1.5f;
     [SerializeField] float minTras;
@@ -16,11 +19,12 @@ public class spawnPointdown : MonoBehaviour
     {
         StartCoroutine(itemSpawn());
     }
-
+    
     IEnumerator itemSpawn()
     {
-        while (true)
+        while (!timer.isGameOver)
         {
+            
             float wanted = Random.Range(minTras, maxTras);
             var position = new Vector3(wanted,transform.position.y);
 
@@ -34,7 +38,7 @@ public class spawnPointdown : MonoBehaviour
 
     IEnumerator MoveObjectDown(GameObject obj)
     {
-        while (obj != null)
+        while (obj != null && !timer.isGameOver)
         {
             obj.transform.Translate(Vector3.down * Time.deltaTime * speeds);
             yield return null;
