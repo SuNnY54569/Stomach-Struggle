@@ -156,6 +156,11 @@ public class ClawController : MonoBehaviour
     {
         goodItemChance = chance;
     }
-    
-    
+
+    public void RePosition()
+    {
+        claw.transform.position = startPosition;
+    }
+
+
 }

@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     [Header("Win, lose Panel")]
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject winPanel;
+
+    [SerializeField] private int totalHeart;
+    [SerializeField] private int totalHeartLeft;
     
     
     private void Awake()
@@ -108,6 +111,8 @@ public class GameManager : MonoBehaviour
 
     private void WinGame()
     {
+        totalHeart += maxHealth;
+        totalHeartLeft += currentHealth;
         scoreValue = 0;
         currentHealth = maxHealth;
         UpdateHeartsUI();
