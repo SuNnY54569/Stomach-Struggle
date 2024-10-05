@@ -132,15 +132,29 @@ public class ClawController : MonoBehaviour
                 currentItem = Instantiate(badItemPrefabs[randomIndex], itemSpawnPoint.transform.position, Quaternion.identity);
             }
 
-            currentItem.transform.SetParent(claw.transform);
-            currentItem.transform.position = itemSpawnPoint.transform.position;
-            
-            Rigidbody2D itemRigidbody = currentItem.GetComponent<Rigidbody2D>();
-            itemRigidbody.gravityScale = 0f;
-            itemRigidbody.velocity = Vector2.zero;
-
-            hasItem = true;
+            if (claw.activeInHierarchy)
+            {
+                StartCoroutine(SetItemParentAfterFrame());
+            }
+            else
+            {
+                Debug.LogWarning("Claw is inactive, cannot start coroutine.");
+            }
         }
+    }
+    
+    private IEnumerator SetItemParentAfterFrame()
+    {
+        yield return null;  
+
+        currentItem.transform.SetParent(claw.transform);
+        currentItem.transform.position = itemSpawnPoint.transform.position;
+
+        Rigidbody2D itemRigidbody = currentItem.GetComponent<Rigidbody2D>();
+        itemRigidbody.gravityScale = 0f;
+        itemRigidbody.velocity = Vector2.zero;
+
+        hasItem = true;
     }
     
     private void OnTriggerExit2D(Collider2D collision)
@@ -159,6 +173,18 @@ public class ClawController : MonoBehaviour
 
     public void RePosition()
     {
+        StopAllCoroutines();
+         
+        isMovingDown = false;
+        isReturning = false;
+        
+        if (currentItem != null)
+        {
+            Destroy(currentItem);  
+            currentItem = null;    
+            hasItem = false; 
+        }
+        
         claw.transform.position = startPosition;
     }
 
