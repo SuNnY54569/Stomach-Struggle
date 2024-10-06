@@ -25,7 +25,7 @@ public class spawnFoodRandom : MonoBehaviour
 
     private void Update()
     {
-        if (ScoreGuitar.scoreValue >= FindObjectOfType<ScoreGuitar>().ScoreMax)
+        if (ScoreGuitar.scoreValue >= FindObjectOfType<ScoreGuitar>().ScoreMax || FindObjectOfType<Health>().HealthValue <= 0)
         {
             return;
         }

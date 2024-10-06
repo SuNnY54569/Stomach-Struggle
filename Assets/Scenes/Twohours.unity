@@ -1114,7 +1114,7 @@ MonoBehaviour:
   - {fileID: 39616387}
   - {fileID: 1026049378}
   - {fileID: 670262127}
-  countdownTime: 30
+  countdownTime: 5
   timerText: {fileID: 923241628}
 --- !u!1 &923241626
 GameObject:
