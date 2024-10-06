@@ -41,7 +41,6 @@ public class dragFoodTwoH : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            Debug.Log("Collider found: " + collider.gameObject.name);
 
             slotCanEat slotEat = collider.GetComponent<slotCanEat>();
             slotWarm slotWarm = collider.GetComponent<slotWarm>();

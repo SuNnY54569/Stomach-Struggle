@@ -25,6 +25,11 @@ public class spawnFoodRandom : MonoBehaviour
 
     private void Update()
     {
+        if (ScoreGuitar.scoreValue >= FindObjectOfType<ScoreGuitar>().ScoreMax)
+        {
+            return;
+        }
+
         GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
 
         if (foodObjects.Length == 0)
@@ -36,7 +41,7 @@ public class spawnFoodRandom : MonoBehaviour
         if (timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
-            timerText.text = $"{timeLeft:F1}";
+            timerText.text = Mathf.Ceil(timeLeft).ToString();
         }
         else
         {
