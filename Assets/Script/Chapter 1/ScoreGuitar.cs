@@ -12,6 +12,7 @@ public class ScoreGuitar : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public int ScoreMax => scoreMax;
+
     void Start()
     {
         scoreValue = 0;
