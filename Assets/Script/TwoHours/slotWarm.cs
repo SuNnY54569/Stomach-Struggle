@@ -19,18 +19,16 @@ public class slotWarm : MonoBehaviour
 
         bool isWithinTimeRange = foodRandom.IsTimeInRange(foodHour, foodMinute, startHour, startMinute, endHour, endMinute);
 
-        Health playerHealth = FindObjectOfType<Health>();
-
         if (isWithinTimeRange)
         {
-            if (playerHealth != null)
+            if (GameManager.Instance != null)
             {
-                playerHealth.DecreaseHealth(1);
+                GameManager.Instance.DecreaseHealth(1);
             }
         }
         else
         {
-            ScoreGuitar.scoreValue += 1;
+            GameManager.Instance.IncreaseScore(1);
         }
 
         Destroy(foodObject.gameObject);
