@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -8,24 +8,39 @@ public class spawnFoodRandom : MonoBehaviour
     [Header("Spawn Settings")]
     [SerializeField] private GameObject foodPrefab;
 
-    [Header("Spawn Points Food")]
+    [Header("Spawn Points")]
     [SerializeField] private Transform[] spawnPoints;
 
     [Header("Timer Settings")]
     [SerializeField] private float countdownTime = 30f;
     [SerializeField] private TextMeshProUGUI timerText;
 
-    private void Start()    
+    private float timeLeft;
+
+    private void Start()
     {
-        StartCoroutine(StartGame());
+        timeLeft = countdownTime;
+        SpawnAllFood();
     }
 
-    private IEnumerator StartGame()
+    private void Update()
     {
-        while (true)
+        GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
+
+        if (foodObjects.Length == 0)
         {
             SpawnAllFood();
-            yield return StartCoroutine(CountdownTimer());
+            timeLeft = countdownTime;
+        }
+
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            timerText.text = $"{timeLeft:F1}";
+        }
+        else
+        {
+            HandleTimeUp();
         }
     }
 
@@ -46,40 +61,22 @@ public class spawnFoodRandom : MonoBehaviour
         }
     }
 
-    private IEnumerator CountdownTimer()
-    {
-        float timeLeft = countdownTime;
-
-        while (timeLeft > 0)
-        {
-            timerText.text = $"{timeLeft:F1}";
-            yield return new WaitForSeconds(0.1f);
-            timeLeft -= 0.1f;
-        }
-
-        HandleTimeUp();
-    }
-
     private void HandleTimeUp()
     {
-        GameObject[] foodWarm = GameObject.FindGameObjectsWithTag("WarmBeforeEat");
-        GameObject[] foodEat = GameObject.FindGameObjectsWithTag("CanEat");
+        GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
 
-        List<GameObject> foodsToDestroy = new List<GameObject>();
-        foodsToDestroy.AddRange(foodWarm);
-        foodsToDestroy.AddRange(foodEat);
-
-        foreach (GameObject food in foodsToDestroy)
+        foreach (GameObject food in foodObjects)
         {
             Destroy(food);
         }
-
 
         Health playerHealth = FindObjectOfType<Health>();
         if (playerHealth != null)
         {
             playerHealth.DecreaseHealth(1);
         }
-    }
 
+        timeLeft = countdownTime;
+        SpawnAllFood();
+    }
 }

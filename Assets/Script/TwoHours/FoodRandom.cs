@@ -39,6 +39,7 @@ public class FoodRandom : MonoBehaviour
 
     private void Start()
     {
+        gameObject.tag = "Food";
         RandomizeFoodAndTime();
     }
 
@@ -58,18 +59,9 @@ public class FoodRandom : MonoBehaviour
             string formattedTime = $"{randomHour:00}:{randomMinute:00}";
             timeText.text = formattedTime;
         }
-
-        if (IsTimeInRange(randomHour, randomMinute, 14, 0, 18, 0))
-        {
-            gameObject.tag = "CanEat";
-        }
-        else
-        {
-            gameObject.tag = "WarmBeforeEat";
-        }
     }
 
-    private bool IsTimeInRange(int hour, int minute, int startHour, int startMinute, int endHour, int endMinute)
+    public bool IsTimeInRange(int hour, int minute, int startHour, int startMinute, int endHour, int endMinute)
     {
         int timeInMinutes = hour * 60 + minute;
         int startTimeInMinutes = startHour * 60 + startMinute;
@@ -78,13 +70,13 @@ public class FoodRandom : MonoBehaviour
         return timeInMinutes >= startTimeInMinutes && timeInMinutes <= endTimeInMinutes;
     }
 
-    public string GetTimeText() // New method to get the time text
+    public string GetTimeText()
     {
         if (timeText != null)
         {
-            return timeText.text; // Return the current time text
+            return timeText.text;
         }
-        return "00:00"; // Default return if something goes wrong
+        return "00:00";
     }
 
 }

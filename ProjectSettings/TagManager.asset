@@ -26,8 +26,7 @@ TagManager:
   - Cooking
   - TopCooked
   - BottomCooked
-  - CanEat
-  - WarmBeforeEat
+  - Food
   layers:
   - Default
   - TransparentFX
