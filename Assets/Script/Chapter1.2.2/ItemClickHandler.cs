@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class ItemClickHandler : MonoBehaviour
 {
-    public Health playerHealth;
-
-    private void Start()
-    {
-        if (playerHealth == null)
-        {
-            playerHealth = FindObjectOfType<Health>();
-        }
-    }
-
     private void OnMouseDown()
     {
         if (gameObject.CompareTag("GoodMeat"))
@@ -22,9 +12,9 @@ public class ItemClickHandler : MonoBehaviour
         }
         else if (gameObject.CompareTag("BadMeat"))
         {
-            if (playerHealth != null)
+            if (GameManager.Instance != null)
             {
-                playerHealth.DecreaseHealth(1);
+                GameManager.Instance.DecreaseHealth(1);
             }
             Destroy(gameObject);
         }
@@ -32,14 +22,13 @@ public class ItemClickHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Health playerHealth = FindObjectOfType<Health>();
         if (gameObject.CompareTag("GoodMeat"))
         {
-            playerHealth.DecreaseHealth(1);
+            GameManager.Instance.DecreaseHealth(1);
         }
         else if (gameObject.CompareTag("BadMeat"))
         {
-            playerHealth.DecreaseHealth(0);
+            GameManager.Instance.DecreaseHealth(0);
         }
 
         Destroy(this.gameObject);

@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Chapter1.5.unity
     guid: 909242f124be0cb49a293410937a1877
   - enabled: 1
+    path: Assets/Scenes/Grill.unity
+    guid: d04b7b2c99f2a3046a7ccc407366da5c
+  - enabled: 1
     path: Assets/Scenes/FirstAid.unity
     guid: 7733e29fe7f492f469ef5257ca216ee0
   - enabled: 1

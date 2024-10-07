@@ -11,12 +11,12 @@ public class Basket : MonoBehaviour
         if (collision.CompareTag("BadMeat"))
         {
             Destroy(collision.gameObject);
-            health.DecreaseHealth(1);
+            GameManager.Instance.DecreaseHealth(1);
         }
         else if (collision.CompareTag("GoodMeat"))
         {
             Destroy(collision.gameObject);
-            scoreMeatShop.ScoreUp(1);
+            GameManager.Instance.IncreaseScore(1);
         }
     }
 }

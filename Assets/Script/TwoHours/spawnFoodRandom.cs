@@ -25,7 +25,7 @@ public class spawnFoodRandom : MonoBehaviour
 
     private void Update()
     {
-        if (ScoreGuitar.scoreValue >= FindObjectOfType<ScoreGuitar>().ScoreMax || FindObjectOfType<Health>().HealthValue <= 0)
+        if (GameManager.Instance.GetScore() >= GameManager.Instance.scoreMax || GameManager.Instance.currentHealth <= 0)
         {
             return;
         }
@@ -74,11 +74,10 @@ public class spawnFoodRandom : MonoBehaviour
         {
             Destroy(food);
         }
-
-        Health playerHealth = FindObjectOfType<Health>();
-        if (playerHealth != null)
+        
+        if (GameManager.Instance != null)
         {
-            playerHealth.DecreaseHealth(1);
+            GameManager.Instance.DecreaseHealth(1);
         }
 
         timeLeft = countdownTime;

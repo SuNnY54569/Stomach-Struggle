@@ -17,17 +17,15 @@ public class slotCanEat : MonoBehaviour
 
         bool isWithinTimeRange = foodRandom.IsTimeInRange(foodHour, foodMinute, startHour, startMinute, endHour, endMinute);
 
-        Health playerHealth = FindObjectOfType<Health>();
-
         if (isWithinTimeRange)
         {
-                ScoreGuitar.scoreValue += 1;
+                GameManager.Instance.IncreaseScore(1);
         }
         else
         {
-            if (playerHealth != null)
+            if (GameManager.Instance != null)
             {
-                playerHealth.DecreaseHealth(1);
+                GameManager.Instance.DecreaseHealth(1);
             }
         }
 

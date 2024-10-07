@@ -4,25 +4,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SceneManagerClass : MonoBehaviour
 {
-    public float progress;
-    public void LoadScene(string sceneName)
+    public void LoadMenuScene() 
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
+    
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
+    public void ReloadScene() 
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadThisScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-    public IEnumerator LoadSceneGame(string sceneName)
-    {
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
-        async.allowSceneActivation = false;
-        while (!async.isDone)
-        {
-            float progress = Mathf.Clamp01(async.progress / 0.9f);
-            Debug.Log("Loading progress: " + (progress * 100).ToString("n0") + "%");
-
-            if (progress == 1f)
-            {
-                async.allowSceneActivation = true;
-            }
-            yield return null;
-        }
     }
 }

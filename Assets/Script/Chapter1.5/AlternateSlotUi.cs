@@ -10,8 +10,6 @@ public class AlternateSlotUi : MonoBehaviour, IDropHandler
     [SerializeField] private int maxHour;
     [SerializeField] private int minMinute;
     [SerializeField] private int maxMinute;
-
-    [SerializeField] private Health playerHealth;
     [SerializeField] private SpawnUIManager spawnUIManager;
 
     public void OnDrop(PointerEventData eventData)
@@ -30,14 +28,11 @@ public class AlternateSlotUi : MonoBehaviour, IDropHandler
 
                 if ((hour > minHour || (hour == minHour && minute >= minMinute)) && (hour < maxHour || (hour == maxHour && minute <= maxMinute)))
                 {
-                    if (playerHealth != null)
-                    {
-                        playerHealth.DecreaseHealth(1);
-                    }
+                    GameManager.Instance.DecreaseHealth(1);
                 }
                 else
                 {
-                    ScoreGuitar.scoreValue += 1;
+                    GameManager.Instance.IncreaseScore(1);
                 }
 
                 Destroy(eventData.pointerDrag.gameObject);
