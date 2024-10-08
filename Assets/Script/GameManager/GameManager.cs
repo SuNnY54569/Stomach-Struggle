@@ -111,8 +111,6 @@ public class GameManager : MonoBehaviour
     {
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
-        ResetScore();
-        ResetHealth();
         winPanel.SetActive(true);
     }
 
@@ -122,7 +120,7 @@ public class GameManager : MonoBehaviour
         UpdateHeartsUI();
     }
 
-    private void ResetScore()
+    public void ResetScore()
     {
         scoreValue = 0;
         UpdateScoreText();
