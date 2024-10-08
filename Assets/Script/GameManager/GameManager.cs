@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public bool isGamePaused;
     
     [Header("Health Settings")]
     public int maxHealth = 3;
@@ -124,5 +125,19 @@ public class GameManager : MonoBehaviour
     {
         scoreValue = 0;
         UpdateScoreText();
+    }
+
+    public void PauseGame()
+    {
+        isGamePaused = !isGamePaused;
+
+        if (isGamePaused)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
 }
