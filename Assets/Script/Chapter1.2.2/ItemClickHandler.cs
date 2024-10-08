@@ -6,6 +6,8 @@ public class ItemClickHandler : MonoBehaviour
 {
     private void OnMouseDown()
     {
+        if (GameManager.Instance.isGamePaused) return;
+        
         if (gameObject.CompareTag("GoodMeat"))
         {
             Destroy(gameObject);

@@ -19,16 +19,19 @@ public class ShopButton : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.gray;
     }
 
     private void OnMouseExit()
     {
+        if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.white;
     }
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance.isGamePaused) return;
         foreach (var objectToClose in objectsToClose)
         {
             objectToClose.SetActive(false);
