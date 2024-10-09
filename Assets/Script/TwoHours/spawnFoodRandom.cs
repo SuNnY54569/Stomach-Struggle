@@ -25,6 +25,7 @@ public class spawnFoodRandom : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.SetScoreTextActive(false);
         timeLeft = countdownTime;
         UpdateSpawnCountUI();
     }

@@ -140,4 +140,15 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
+
+    public void SetScoreTextActive(bool isActive)
+    {
+        scoreText.gameObject.SetActive(isActive);
+    }
+
+    public void CloseAllPanel()
+    {
+        winPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+    }
 }

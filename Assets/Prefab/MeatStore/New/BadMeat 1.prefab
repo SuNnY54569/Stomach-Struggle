@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7150511899025758013}
   - component: {fileID: 6422094573795391010}
   - component: {fileID: 561137326666230551}
+  - component: {fileID: 1374880758887536599}
   m_Layer: 0
   m_Name: BadMeat 1
   m_TagString: BadMeat
@@ -41,7 +42,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6563514030213412507}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -129,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.79, y: 5.35}
+  m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
 --- !u!50 &561137326666230551
 Rigidbody2D:
@@ -158,3 +159,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1374880758887536599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563514030213412507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49519b7164b9fd14e8e7e75e7f3dc87b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meatSprite: {fileID: 21300000, guid: b547d824cf155ce4e942304b450b39f6, type: 3}

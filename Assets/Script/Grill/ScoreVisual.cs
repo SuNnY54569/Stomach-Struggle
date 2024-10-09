@@ -10,6 +10,7 @@ public class ScoreVisual : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.SetScoreTextActive(false);
         slider.maxValue = GameManager.Instance.scoreMax;
         slider.minValue = 0;
     }
