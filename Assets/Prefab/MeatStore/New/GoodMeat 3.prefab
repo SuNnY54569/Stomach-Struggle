@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5228365673812474143}
   - component: {fileID: 1804454880181036205}
   - component: {fileID: 995104115046558092}
+  - component: {fileID: -4696437093566957586}
   m_Layer: 0
   m_Name: GoodMeat 3
   m_TagString: GoodMeat
@@ -41,7 +42,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2430547327530668956}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -129,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.79, y: 5.35}
+  m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
 --- !u!50 &995104115046558092
 Rigidbody2D:
@@ -158,3 +159,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-4696437093566957586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430547327530668956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49519b7164b9fd14e8e7e75e7f3dc87b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meatSprite: {fileID: 1930639155, guid: 3fd775e2ec0f99248a09c9aa143b278a, type: 3}

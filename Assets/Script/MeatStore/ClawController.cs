@@ -14,7 +14,11 @@ public class ClawController : MonoBehaviour
     [SerializeField,Tooltip("Array of prefab for good items that can be collected.")]
     private GameObject[] goodItemPrefabs;  
     [SerializeField,Tooltip("Array of prefab for bad items that may decrease health.")]
-    private GameObject[] badItemPrefabs; 
+    private GameObject[] badItemPrefabs;
+    [SerializeField, Tooltip("Claw Sprite")]
+    private SpriteRenderer clawSprite;
+    [SerializeField, Tooltip("Default Claw Sprite")]
+    private Sprite defaultClawSprite;
 
     [Header("Movement Settings")]
     [SerializeField,Tooltip("Speed of horizontal movement for the claw.")]
@@ -141,6 +145,10 @@ public class ClawController : MonoBehaviour
             {
                 Debug.LogWarning("Claw is inactive, cannot start coroutine.");
             }
+            
+            MeatObject meat = currentItem.GetComponent<MeatObject>();
+
+            clawSprite.sprite = meat.meatSprite;
         }
     }
     
@@ -189,5 +197,8 @@ public class ClawController : MonoBehaviour
         claw.transform.position = startPosition;
     }
 
-
+    public void SetDefaultSprite()
+    {
+        clawSprite.sprite = defaultClawSprite;
+    }
 }
