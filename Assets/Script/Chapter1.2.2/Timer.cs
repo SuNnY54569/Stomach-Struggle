@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] float remainingTime;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private float remainingTime;
     public bool isGameOver = false;
 
     private void Start()
     {
         remainingTime = 60f;
     }
-    void Update()
+
+    private void Update()
     {
         if (GameManager.Instance.currentHealth <= 0)
         {
@@ -33,6 +34,7 @@ public class Timer : MonoBehaviour
                 remainingTime = 0;
                 GameManager.Instance.WinGame();
                 isGameOver = true;
+                timerText.gameObject.SetActive(false);
             }
 
             int minutes = Mathf.FloorToInt(remainingTime / 60);

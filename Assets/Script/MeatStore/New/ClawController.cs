@@ -43,6 +43,7 @@ public class ClawController : MonoBehaviour
     void Start()
     {
         startPosition = claw.transform.position;
+        GameManager.Instance.SetScoreTextActive(true);
     }
 
     void Update()
