@@ -16,6 +16,8 @@ public class dragFoodTwoH : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.isGamePaused) return;
+        
         if (_isDragging)
         {
             Vector3 mousePos = Input.mousePosition;
@@ -31,6 +33,7 @@ public class dragFoodTwoH : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance.isGamePaused) return;
         _isDragging = true;
     }
 

@@ -41,6 +41,7 @@ public class DragFood : MonoBehaviour
     #region Mouse Events
     private void OnMouseDown()
     {
+        if (GameManager.Instance.isGamePaused) return;
         if (!isInteractable) return;
         
         offset = transform.position - MouseWorldPosition();
@@ -62,6 +63,7 @@ public class DragFood : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (GameManager.Instance.isGamePaused) return;
         if (isDragging && isInteractable)
         {
             transform.position = MouseWorldPosition() + offset;
@@ -70,6 +72,7 @@ public class DragFood : MonoBehaviour
     
     private void OnMouseUp()
     {
+        if (GameManager.Instance.isGamePaused) return;
         if (!isInteractable) return;
         isDragging = false;
         collider2D.enabled = false;

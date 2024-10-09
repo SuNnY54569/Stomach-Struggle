@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public bool isGamePaused;
     
     [Header("Health Settings")]
     public int maxHealth = 3;
@@ -111,8 +112,6 @@ public class GameManager : MonoBehaviour
     {
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
-        ResetScore();
-        ResetHealth();
         winPanel.SetActive(true);
     }
 
@@ -122,9 +121,23 @@ public class GameManager : MonoBehaviour
         UpdateHeartsUI();
     }
 
-    private void ResetScore()
+    public void ResetScore()
     {
         scoreValue = 0;
         UpdateScoreText();
+    }
+
+    public void PauseGame()
+    {
+        isGamePaused = !isGamePaused;
+
+        if (isGamePaused)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
 }

@@ -14,6 +14,7 @@ public class spawnFoodRandom : MonoBehaviour
     [Header("Timer Settings")]
     [SerializeField] private float countdownTime = 30f;
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI[] instructionText;
 
     private float timeLeft;
 
@@ -25,8 +26,13 @@ public class spawnFoodRandom : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.GetScore() >= GameManager.Instance.scoreMax || GameManager.Instance.currentHealth <= 0)
+        if (GameManager.Instance.GetScore() >= GameManager.Instance.scoreMax || GameManager.Instance.currentHealth <= 0 || GameManager.Instance.GetScore() >= GameManager.Instance.scoreMax)
         {
+            timerText.gameObject.SetActive(false);
+            foreach (var text in instructionText)
+            {
+                text.gameObject.SetActive(false);
+            }
             return;
         }
 
