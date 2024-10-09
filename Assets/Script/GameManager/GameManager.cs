@@ -145,4 +145,10 @@ public class GameManager : MonoBehaviour
     {
         scoreText.gameObject.SetActive(isActive);
     }
+
+    public void CloseAllPanel()
+    {
+        winPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+    }
 }
