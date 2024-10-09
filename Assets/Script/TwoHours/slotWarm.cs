@@ -6,12 +6,11 @@ public class slotWarm : MonoBehaviour
 {
     [SerializeField] private int startHour = 14;
     [SerializeField] private int startMinute = 0;
-    [SerializeField] private int endHour = 16;
+    [SerializeField] private int endHour = 18;
     [SerializeField] private int endMinute = 0;
 
     public void OnDrop(dragFoodTwoH foodObject, FoodRandom foodRandom)
     {
-        Debug.Log("slotWarm OnDrop called");
 
         string[] timeParts = foodRandom.GetTimeText().Split(':');
         int foodHour = int.Parse(timeParts[0]);
@@ -28,7 +27,7 @@ public class slotWarm : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.IncreaseScore(1);
+            GameManager.Instance.IncreaseScore(0);
         }
 
         Destroy(foodObject.gameObject);

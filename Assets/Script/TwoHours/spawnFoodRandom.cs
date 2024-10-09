@@ -16,25 +16,50 @@ public class spawnFoodRandom : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI[] instructionText;
 
+    [Header("UI Settings")]
+    [SerializeField] private TextMeshProUGUI spawnCountText;
+
     private float timeLeft;
+    private int spawnCount = 0;
+    private const int maxSpawns = 4;
 
     private void Start()
     {
         timeLeft = countdownTime;
-        SpawnAllFood();
+        UpdateSpawnCountUI();
     }
 
     private void Update()
     {
-        if (GameManager.Instance.GetScore() >= GameManager.Instance.scoreMax || GameManager.Instance.currentHealth <= 0 || GameManager.Instance.GetScore() >= GameManager.Instance.scoreMax)
+        if (spawnCount >= maxSpawns)
         {
+            if (GameManager.Instance.currentHealth <= 0)
+            {
+                GameManager.Instance.GameOver();
+            }
+            else 
+            {
+                GameManager.Instance.WinGame();
+            }
+
             timerText.gameObject.SetActive(false);
+            spawnCountText.gameObject.SetActive(false);
+
             foreach (var text in instructionText)
             {
                 text.gameObject.SetActive(false);
             }
+
             return;
         }
+
+        if (GameManager.Instance.currentHealth <= 0)
+        {
+            timerText.gameObject.SetActive(false);
+            spawnCountText.gameObject.SetActive(false);
+            return;
+        }
+
 
         GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
 
@@ -70,6 +95,8 @@ public class spawnFoodRandom : MonoBehaviour
                 }
             }
         }
+        spawnCount++;
+        UpdateSpawnCountUI();
     }
 
     private void HandleTimeUp()
@@ -80,13 +107,25 @@ public class spawnFoodRandom : MonoBehaviour
         {
             Destroy(food);
         }
-        
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.DecreaseHealth(1);
         }
 
         timeLeft = countdownTime;
-        SpawnAllFood();
+
+        if (spawnCount < maxSpawns)
+        {
+            SpawnAllFood();
+        }
+    }
+
+    private void UpdateSpawnCountUI()
+    {
+        if (spawnCountText != null)
+        {
+            spawnCountText.text = $"{spawnCount} / 3";
+        }
     }
 }

@@ -6,7 +6,7 @@ public class slotCanEat : MonoBehaviour
 {
     [SerializeField] private int startHour = 14;
     [SerializeField] private int startMinute = 0;
-    [SerializeField] private int endHour = 16;
+    [SerializeField] private int endHour = 18;
     [SerializeField] private int endMinute = 0;
 
     public void OnDrop(dragFoodTwoH foodObject, FoodRandom foodRandom)
@@ -19,7 +19,7 @@ public class slotCanEat : MonoBehaviour
 
         if (isWithinTimeRange)
         {
-                GameManager.Instance.IncreaseScore(1);
+                GameManager.Instance.IncreaseScore(0);
         }
         else
         {
