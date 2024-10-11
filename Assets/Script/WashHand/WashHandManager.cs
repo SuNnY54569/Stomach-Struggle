@@ -22,6 +22,7 @@ public class WashHandManager : MonoBehaviour
     [SerializeField] private Animator centralAnimator;
     [SerializeField] private int currentObjectIndex = 1;
     private List<GameObject> startPositions = new List<GameObject>();
+    private bool isBlinking = false;
 
     private void Awake()
     {
@@ -35,6 +36,27 @@ public class WashHandManager : MonoBehaviour
         }
         
         GameManager.Instance.SetScoreTextActive(false);
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.currentHealth > 1)
+        {
+            isBlinking = false; // Reset when health is more than 1
+            return;
+        }
+        
+        if (isBlinking) return;
+        foreach (var objectClick in objects)
+        {
+            var objectClickComponent = objectClick.GetComponent<ObjectClick>();
+            if (objectClickComponent != null && objectClickComponent.objectIndex == currentObjectIndex)
+            {
+                objectClickComponent.BlinkObject(); // Make the correct object blink
+                isBlinking = true; // Set to true so it doesn't repeatedly trigger
+                break;
+            }
+        }
     }
 
     public void StartGame()
@@ -85,6 +107,8 @@ public class WashHandManager : MonoBehaviour
         }
         
         obj.transform.position = targetPosition.transform.position;
+        
+        
         if (objCollider != null)
         {
             objCollider.enabled = true;
@@ -103,20 +127,11 @@ public class WashHandManager : MonoBehaviour
                 ob.GetComponent<Collider2D>().enabled = false;
             }
             StartCoroutine(MoveToBondedPosition());
-            currentObjectIndex++; 
+            currentObjectIndex++;
         }
         else
         {
             GameManager.Instance.DecreaseHealth(1);
-            foreach (var objectClick in objects)
-            {
-                var objectClickComponent = objectClick.GetComponent<ObjectClick>();
-                if (objectClickComponent != null && objectClickComponent.objectIndex == currentObjectIndex)
-                {
-                    objectClickComponent.BlinkObject(); // Make the correct object blink
-                    break;
-                }
-            }
         }
         
         if (currentObjectIndex >= objects.Count + 1)
@@ -140,6 +155,7 @@ public class WashHandManager : MonoBehaviour
         {
             StartCoroutine(MoveObjectToPosition(objects[i], startPositions[i]));
         }
+        isBlinking = false;
     }
 
     private IEnumerator WaitToWin()

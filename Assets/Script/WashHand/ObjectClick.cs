@@ -51,36 +51,35 @@ public class ObjectClick : MonoBehaviour
 
         float blinkTime = 0; // Time tracker for smooth scaling
 
-        for (int i = 0; i < blinkCount; i++)
+        while (GameManager.Instance.currentHealth == 1) // Continue blinking while health == 1
         {
-            float duration = blinkDuration / 2f; // Duration for each scaling up and down cycle
+            float duration = blinkDuration / 2f;
 
-            // Smoothly scale up
+            // Smoothly scale up and down during the blink
             while (blinkTime < duration)
             {
-                // Smooth scaling using Mathf.Sin() for smooth transitions
-                float scaleFactor =
-                    1 + Mathf.Sin(blinkTime * Mathf.PI / duration) * (scaleAmount - 1); // Smooth scaling
+                // Use Mathf.Sin() for smooth transitions
+                float scaleFactor = 1 + Mathf.Sin(blinkTime * Mathf.PI / duration) * (scaleAmount - 1);
                 gameObject.transform.localScale = originalScale * scaleFactor;
 
-                // Blink to the hint color while scaling
+                // Change color to the hint color while scaling
                 objectRenderer.material.color = blinkColor;
 
                 blinkTime += Time.deltaTime;
                 yield return null;
             }
 
-            // Reset the scale and color
+            // Reset the scale and color after blinking
             gameObject.transform.localScale = originalScale;
             objectRenderer.material.color = originalColor;
 
-            // Wait before starting the next blink cycle
-            blinkTime = 0; // Reset time tracker
+            // Reset the time tracker
+            blinkTime = 0;
             yield return new WaitForSeconds(blinkDuration / 2f);
-
-            // Ensure the object returns to its original state
-            objectRenderer.material.color = originalColor;
-            gameObject.transform.localScale = originalScale;
         }
+
+        // Ensure object returns to original state if health is no longer 1
+        objectRenderer.material.color = originalColor;
+        gameObject.transform.localScale = originalScale;
     }
 }
