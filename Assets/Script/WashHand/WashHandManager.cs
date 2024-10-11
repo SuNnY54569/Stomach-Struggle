@@ -1,21 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 public class WashHandManager : MonoBehaviour
 {
     public static WashHandManager Instance;
     
-    [Tooltip("List of positions where the objects can be placed.")]
-    public List<Transform> positions;  // Positions for the objects
-    [Tooltip("Objects that need to be placed at random positions.")]
-    public List<GameObject> objects;   // Objects to be placed
-    [Tooltip("The speed at which the objects move to their positions.")]
-    public float moveSpeed = 2f;
+    [SerializeField,Tooltip("List of positions where the objects can be placed.")]
+    private List<GameObject> positions;
+    [SerializeField,Tooltip("Objects that need to be placed at random positions.")]
+    private List<GameObject> objects;
+    [SerializeField,Tooltip("The speed at which the objects move to their positions.")]
+    private float moveSpeed = 2f;
+    [SerializeField,Tooltip("The image in the center that plays animations.")]
+    private GameObject centralImage;
     
+    [SerializeField] private Animator centralAnimator;
     [SerializeField] private int currentObjectIndex = 1;
+    private List<GameObject> startPositions = new List<GameObject>();
 
     private void Awake()
     {
@@ -27,6 +33,8 @@ public class WashHandManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        GameManager.Instance.SetScoreTextActive(false);
     }
 
     public void StartGame()
@@ -36,20 +44,20 @@ public class WashHandManager : MonoBehaviour
             Debug.LogError("The number of positions and objects must be equal.");
             return;
         }
-
-        // Shuffle the positions
-        List<Transform> shuffledPositions = new List<Transform>(positions);
+        
+        List<GameObject> shuffledPositions = new List<GameObject>(positions);
         ShuffleList(shuffledPositions);
-
-        // Assign each object to a unique position
+        
         for (int i = 0; i < objects.Count; i++)
         {
-            StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i].position));
+            startPositions.Add(shuffledPositions[i]);  // Store random start positions
+            StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
         }
-    }
 
-    // Shuffle algorithm (Fisher-Yates Shuffle)
-    private void ShuffleList(List<Transform> list)
+        centralAnimator = centralImage.GetComponent<Animator>();
+    }
+    
+    private void ShuffleList(List<GameObject> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
         {
@@ -58,46 +66,87 @@ public class WashHandManager : MonoBehaviour
         }
     }
     
-    private IEnumerator MoveObjectToPosition(GameObject obj, Vector3 targetPosition)
+    private IEnumerator MoveObjectToPosition(GameObject obj, GameObject targetPosition)
     {
+        Collider2D objCollider = obj.GetComponent<Collider2D>();
+        if (objCollider != null)
+        {
+            objCollider.enabled = false;
+        }
+        
         float elapsedTime = 0f;
         Vector3 startingPosition = obj.transform.position;
 
         while (elapsedTime < 1f)
         {
-            // Lerp movement
-            obj.transform.position = Vector3.Lerp(startingPosition, targetPosition, elapsedTime);
-
-            // Increment elapsed time by the fraction of the moveSpeed
+            obj.transform.position = Vector3.Lerp(startingPosition, targetPosition.transform.position, elapsedTime);
             elapsedTime += Time.deltaTime * moveSpeed;
-
             yield return null;  // Wait for the next frame
         }
-
-        // Ensure final position is exactly the target position
-        obj.transform.position = targetPosition;
+        
+        obj.transform.position = targetPosition.transform.position;
+        if (objCollider != null)
+        {
+            objCollider.enabled = true;
+        }
     }
     
-    public void OnObjectClicked(int objectIndex, GameObject obj)
+    public void OnObjectClicked(int objectIndex, string animationName, GameObject obj)
     {
         if (objectIndex == currentObjectIndex)
         {
-            // Correct object clicked, destroy it
-            Destroy(obj);
-            currentObjectIndex++;  // Move to the next object in the sequence
+            //centralAnimator.SetTrigger(animationName);
+            
+            obj.SetActive(false);
+            foreach (var ob in objects)
+            {
+                ob.GetComponent<Collider2D>().enabled = false;
+            }
+            StartCoroutine(MoveToBondedPosition());
+            currentObjectIndex++; 
         }
         else
         {
-            // Incorrect object clicked, handle it (e.g., decrease health or show a message)
-            Debug.Log("Wrong object clicked!");
-            // You can add your logic here for incorrect clicks (like losing health)
+            GameManager.Instance.DecreaseHealth(1);
+            foreach (var objectClick in objects)
+            {
+                var objectClickComponent = objectClick.GetComponent<ObjectClick>();
+                if (objectClickComponent != null && objectClickComponent.objectIndex == currentObjectIndex)
+                {
+                    objectClickComponent.BlinkObject(); // Make the correct object blink
+                    break;
+                }
+            }
         }
-
-        // Check if all objects are destroyed (win condition)
+        
         if (currentObjectIndex >= objects.Count + 1)
         {
-            Debug.Log("All objects destroyed, you win!");
-            // Trigger any win logic here
+            StartCoroutine(WaitToWin());
         }
     }
+    
+    private IEnumerator MoveToBondedPosition()
+    {
+        for (int i = 0; i < objects.Count; i++)
+        {
+            GameObject boundedPosition = startPositions[i].gameObject.GetComponent<PositionBond>().bondedPosition;
+            StartCoroutine(MoveObjectToPosition(objects[i], boundedPosition));
+        }
+        
+        //yield return new WaitForSeconds(centralAnimator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(3f);
+        
+        for (int i = 0; i < objects.Count; i++)
+        {
+            StartCoroutine(MoveObjectToPosition(objects[i], startPositions[i]));
+        }
+    }
+
+    private IEnumerator WaitToWin()
+    {
+        //yield return new WaitForSeconds(centralAnimator.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(3f);
+        GameManager.Instance.WinGame();
+    }
+    
 }
