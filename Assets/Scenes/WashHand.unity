@@ -230,7 +230,6 @@ MonoBehaviour:
   objectRenderer: {fileID: 0}
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   blinkDuration: 1
-  blinkCount: 3
   scaleAmount: 1.25
 --- !u!61 &18442477
 BoxCollider2D:
@@ -875,7 +874,6 @@ MonoBehaviour:
   objectRenderer: {fileID: 0}
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   blinkDuration: 1
-  blinkCount: 3
   scaleAmount: 1.25
 --- !u!61 &289807242
 BoxCollider2D:
@@ -1060,7 +1058,6 @@ MonoBehaviour:
   objectRenderer: {fileID: 0}
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   blinkDuration: 1
-  blinkCount: 3
   scaleAmount: 1.25
 --- !u!61 &402846056
 BoxCollider2D:
@@ -1418,7 +1415,6 @@ MonoBehaviour:
   objectRenderer: {fileID: 0}
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   blinkDuration: 1
-  blinkCount: 3
   scaleAmount: 1.25
 --- !u!61 &600795600
 BoxCollider2D:
@@ -2114,7 +2110,6 @@ MonoBehaviour:
   objectRenderer: {fileID: 0}
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   blinkDuration: 1
-  blinkCount: 3
   scaleAmount: 1.25
 --- !u!61 &742991108
 BoxCollider2D:
@@ -3168,7 +3163,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &1123118595
 RectTransform:
@@ -3467,7 +3462,6 @@ MonoBehaviour:
   objectRenderer: {fileID: 0}
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   blinkDuration: 1
-  blinkCount: 3
   scaleAmount: 1.25
 --- !u!61 &1291725210
 BoxCollider2D:
@@ -4823,7 +4817,6 @@ MonoBehaviour:
   objectRenderer: {fileID: 0}
   blinkColor: {r: 1, g: 0, b: 0, a: 1}
   blinkDuration: 1
-  blinkCount: 3
   scaleAmount: 1.25
 --- !u!61 &2098986471
 BoxCollider2D:

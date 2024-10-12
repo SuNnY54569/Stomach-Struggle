@@ -12,7 +12,6 @@ public class ObjectClick : MonoBehaviour
     [SerializeField] private SpriteRenderer objectRenderer; // Renderer to control object color
     [SerializeField] private Color blinkColor = Color.red; // Color to blink
     [SerializeField] private float blinkDuration = 1f; // Duration of each blink cycle
-    [SerializeField] private int blinkCount = 3;
     [SerializeField] private float scaleAmount = 1.25f;
 
     private Color originalColor;
