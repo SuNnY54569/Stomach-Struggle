@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,15 @@ public class Tools : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+    }
+
+    private void Update()
+    {
+        if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax)
+        {
+            DeselectTool();
+        }
     }
 
     public void SetCurrentTool(ToolType tool)
@@ -47,10 +57,10 @@ public class Tools : MonoBehaviour
         switch (tool)
         {
             case ToolType.Tongs:
-                Cursor.SetCursor(tongsCursor, cursorHotspot, CursorMode.Auto);
+                Cursor.SetCursor(tongsCursor, cursorHotspot, CursorMode.ForceSoftware);
                 break;
             case ToolType.Spatula:
-                Cursor.SetCursor(spatulaCursor, cursorHotspot, CursorMode.Auto);
+                Cursor.SetCursor(spatulaCursor, cursorHotspot, CursorMode.ForceSoftware);
                 break;
             case ToolType.None:
             default:

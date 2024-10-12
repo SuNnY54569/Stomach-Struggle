@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,28 +14,22 @@ public class Steak : MonoBehaviour
     
     [SerializeField] private float topSideCookingTimer = 0f;
     [SerializeField] private float bottomSideCookingTimer = 0f;
-    private bool isTopSideCooking = true;
+    public bool isTopSideCooking = true;
     private bool isCooking = false;
     private bool isDragging = false;
     private Vector2 originalPosition;
     private Tools.ToolType currentTool;
+    private SteakSpawner steakSpawner;
     #endregion
-    
-    #region UI Components
-    [Header("UI Components")]
-    [SerializeField] private Slider cookingProgressBar;
-    [SerializeField] private Image progressBarFill;
-    [SerializeField] private TMP_Text cookingClockText;
-    
-    private Color rawColor = Color.red;
-    private Color cookedColor = Color.green;
-    private Color overcookedColor = Color.black;
-    #endregion
-    
+
+    private void Awake()
+    {
+        steakSpawner = FindObjectOfType<SteakSpawner>().GetComponent<SteakSpawner>();
+    }
+
     private void Start()
     {
         originalPosition = transform.position;
-        InitializeProgressBar();
     }
     
     private void Update()
@@ -73,17 +68,34 @@ public class Steak : MonoBehaviour
     
     private void OnMouseUp()
     {
-        if (isDragging)
-        {
-            isDragging = false;
+        if (!isDragging) return;
+        isDragging = false;
 
-            if (currentTool == Tools.ToolType.Tongs)
+        if (currentTool == Tools.ToolType.Tongs || currentTool == Tools.ToolType.Spatula)
+        {
+            if (IsDroppedOnTrashCan())
+            {
+                DestroySteak();
+                steakSpawner.HandleSteakLost();
+                Tools.Instance.DeselectTool();
+            }
+            else if (currentTool == Tools.ToolType.Tongs)
             {
                 if (IsDroppedOnPan())
                 {
+                    if (Tools.Instance.currentlyCookingSteak != null)
+                    {
+                        ResetPosition();
+                        return;
+                    }
                     SnapToPanCenter();
                     originalPosition = transform.position;
                     StartCooking();
+                    Tools.Instance.DeselectTool();
+                }
+                else if (IsDroppedOnPlate())
+                {
+                    PlaceOnPlate();
                 }
                 else
                 {
@@ -136,15 +148,9 @@ public class Steak : MonoBehaviour
         return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("PanLayer")) != null;
     }
     
-    private void InitializeProgressBar()
+    private bool IsDroppedOnTrashCan()
     {
-        if (cookingProgressBar != null)
-        {
-            cookingProgressBar.maxValue = cookingTime;
-            cookingProgressBar.value = 0;
-            progressBarFill.color = rawColor;
-            ShowProgressBar(false);
-        }
+        return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("TrashLayer")) != null;
     }
     
     private void UpdateCookingProgress()
@@ -161,8 +167,6 @@ public class Steak : MonoBehaviour
             bottomSideCookingTimer = currentTimer;
         }
 
-        UpdateProgressBar(currentTimer);
-
         if (currentTimer >= overcookedTime)
         {
             MarkAsOvercooked();
@@ -173,56 +177,28 @@ public class Steak : MonoBehaviour
         }
     }
     
-    private void UpdateProgressBar(float timer)
-    {
-        if (cookingProgressBar != null)
-        {
-            cookingProgressBar.value = timer;
-            progressBarFill.color = CalculateProgressColor(timer);
-        }
-    }
-    
-    private Color CalculateProgressColor(float timer)
-    {
-        if (timer <= cookingTime)
-        {
-            float t = timer / cookingTime;
-            return Color.Lerp(rawColor, cookedColor, t);
-        }
-        else
-        {
-            float t = (timer - cookingTime) / (overcookedTime - cookingTime);
-            return Color.Lerp(cookedColor, overcookedColor, t);
-        }
-    }
-    
     public void StartCooking()
     {
         if (Tools.Instance.currentlyCookingSteak == null) // Only start cooking if no steak is currently cooking
         {
             Tools.Instance.SetCurrentlyCookingSteak(this); // Set this steak as currently cooking
             isCooking = true;
-            ShowProgressBar(true);
         }
         else if(Tools.Instance.IsCurrentlyCookingSteak(this) && isCooking == false)
         {
             ResetPosition();
             isCooking = true;
-            ShowProgressBar(true);
         }
     }
 
     public void StopCooking()
     {
         isCooking = false;
-        ShowProgressBar(false);
     }
     
     public void FlipFood()
     {
         isTopSideCooking = !isTopSideCooking;
-        cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
-        progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
     }
     
     public void ResetPosition()
@@ -249,30 +225,31 @@ public class Steak : MonoBehaviour
         }
         
         Tools.Instance.ClearCurrentlyCookingSteak();
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        Tools.Instance.DeselectTool();
     }
 
     private void HandleUndercooked()
     {
         GameManager.Instance.DecreaseHealth(1);
+        ResetPosition();
+        if (Tools.Instance.currentlyCookingSteak == gameObject && IsOnPan())
+        {
+            StartCooking();
+        }
     }
 
     private void HandleCooked()
     {
         GameManager.Instance.IncreaseScore(1);
+        Tools.Instance.ClearCurrentlyCookingSteak();
+        gameObject.GetComponent<Collider2D>().enabled = false;
+        steakSpawner.HandleSteakLost();
     }
 
     private void HandleOvercooked()
     {
         GameManager.Instance.DecreaseHealth(1);
-    }
-    
-    public void ShowProgressBar(bool show)
-    {
-        if (cookingProgressBar != null)
-        {
-            cookingProgressBar.gameObject.SetActive(show);
-        }
+        ResetPosition();
     }
     
     private void MarkAsCooked()
@@ -284,7 +261,6 @@ public class Steak : MonoBehaviour
     {
         gameObject.tag = "Overcooked";
         isCooking = false;
-        ShowProgressBar(false);
     }
     
     public bool IsCooked()
@@ -292,19 +268,21 @@ public class Steak : MonoBehaviour
         return topSideCookingTimer >= cookingTime && bottomSideCookingTimer >= cookingTime;
     }
     
-    public float CookingTimeRemaining()
+    public float CookingTimeElapsed()
     {
-        float remainingTime = 0f;
-        if (isTopSideCooking)
-        {
-            remainingTime = cookingTime - topSideCookingTimer;
-        }
-        else
-        {
-            remainingTime = cookingTime - bottomSideCookingTimer;
-        }
-        
-        return Mathf.Max(remainingTime, 0);
+        float elapsedTime = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
+        return elapsedTime;
+    }
+    
+    private void DestroySteak()
+    {
+        Destroy(gameObject);
+    }
+    
+    public float GetTotalCookingProgress()
+    {
+        float currentTimer = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
+        return Mathf.Clamp01(currentTimer / overcookedTime);
     }
     
     public bool IsCooking()

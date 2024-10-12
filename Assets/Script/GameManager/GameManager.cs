@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
         return scoreValue;
     }
 
-    private void UpdateScoreText()
+    public void UpdateScoreText()
     {
         if (scoreText != null)
             scoreText.text = scoreValue + $"/{scoreMax}";
@@ -150,5 +150,10 @@ public class GameManager : MonoBehaviour
     {
         winPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+    }
+
+    public void SetMaxScore(int maxScore)
+    {
+        scoreMax = maxScore;
     }
 }

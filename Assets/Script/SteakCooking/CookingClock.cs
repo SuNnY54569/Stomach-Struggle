@@ -29,12 +29,10 @@ public class CookingClock : MonoBehaviour
     {
         if (currentlyCookingSteak != null)
         {
-            float timeLeft = currentlyCookingSteak.CookingTimeRemaining();
+            float timeElapsed = currentlyCookingSteak.CookingTimeElapsed();
             
-            if (timeLeft < 0) timeLeft = 0;
-            
-            int minutes = Mathf.FloorToInt(timeLeft / 60);
-            int seconds = Mathf.FloorToInt(timeLeft % 60);
+            int minutes = Mathf.FloorToInt(timeElapsed); // Treat elapsed seconds as minutes
+            int seconds = 0;
             cookingTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
         else
