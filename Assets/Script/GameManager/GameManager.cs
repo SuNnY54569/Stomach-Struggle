@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject winPanel;
 
-    [SerializeField] private int totalHeart;
-    [SerializeField] private int totalHeartLeft;
+     public int totalHeart;
+     public int totalHeartLeft;
     
     
     private void Awake()
