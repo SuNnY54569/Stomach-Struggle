@@ -2396,6 +2396,11 @@ MonoBehaviour:
   winPanel: {fileID: 2498101482384833761}
   totalHeart: 0
   totalHeartLeft: 0
+  scenesToDeactivate:
+  - Start scene
+  - PreTest
+  - PostTest
+  - Summary
 --- !u!114 &6330731320766605027
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -46,6 +46,7 @@ public class Steak : MonoBehaviour
     
     private void OnMouseDown()
     {
+        if (GameManager.Instance.isGamePaused) return;
         if ((currentTool == Tools.ToolType.Tongs && !isCooking) ||
             (currentTool == Tools.ToolType.Spatula && isCooking && IsCooked()))
         {
@@ -61,6 +62,7 @@ public class Steak : MonoBehaviour
     
     private void OnMouseDrag()
     {
+        if (GameManager.Instance.isGamePaused) return;
         if (!isDragging) return;
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = mousePosition;
@@ -68,6 +70,7 @@ public class Steak : MonoBehaviour
     
     private void OnMouseUp()
     {
+        if (GameManager.Instance.isGamePaused) return;
         if (!isDragging) return;
         isDragging = false;
 

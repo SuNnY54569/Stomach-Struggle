@@ -39,6 +39,10 @@ public class Tools : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.isGamePaused) 
+        {
+            DeselectTool();
+        }
         if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax)
         {
             DeselectTool();
@@ -53,7 +57,6 @@ public class Tools : MonoBehaviour
 
     private void UpdateCursorIcon(ToolType tool)
     {
-        // Change the cursor icon based on the selected tool
         switch (tool)
         {
             case ToolType.Tongs:

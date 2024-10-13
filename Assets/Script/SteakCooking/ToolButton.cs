@@ -9,6 +9,7 @@ public class ToolButton : MonoBehaviour
 
     public void OnMouseDown()
     {
+        if (GameManager.Instance.isGamePaused) return;
         Tools.Instance.SetCurrentTool(toolType);
     }
 }
