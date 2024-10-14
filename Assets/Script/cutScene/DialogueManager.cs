@@ -8,7 +8,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     [Header("Typewriter Settings")]
-    [SerializeField] private float typingSpeed = 0.05f;  // Speed at which characters appear
+    [SerializeField] private float typingSpeed = 0.05f;
 
     [SerializeField]private string characterName;
     [SerializeField]private string dialogueContent;
@@ -21,13 +21,13 @@ public class DialogueManager : MonoBehaviour
     // Coroutine to display text with typing effect
     private IEnumerator ShowDialogue(string name, string content)
     {
-        dialogueText.text = name;  // Show the character name immediately
+        dialogueText.text = name;
 
-        yield return new WaitForSeconds(0.5f); // Optional: small delay before starting the typing effect
+        yield return new WaitForSeconds(0.5f);
 
         foreach (char letter in content.ToCharArray())
         {
-            dialogueText.text += letter;  // Add each letter one by one
+            dialogueText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
     }
