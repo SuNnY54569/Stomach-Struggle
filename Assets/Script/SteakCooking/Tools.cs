@@ -18,7 +18,8 @@ public class Tools : MonoBehaviour
     
     [SerializeField] private Texture2D tongsCursor;
     [SerializeField] private Texture2D spatulaCursor;
-    [SerializeField] private Vector2 cursorHotspot = Vector2.zero;
+    [SerializeField] private Vector2 tongsCursorHotspot;
+    [SerializeField] private Vector2 spatulaCursorHotspot;
 
     public Steak currentlyCookingSteak;
 
@@ -60,10 +61,10 @@ public class Tools : MonoBehaviour
         switch (tool)
         {
             case ToolType.Tongs:
-                Cursor.SetCursor(tongsCursor, cursorHotspot, CursorMode.ForceSoftware);
+                Cursor.SetCursor(tongsCursor, tongsCursorHotspot, CursorMode.ForceSoftware);
                 break;
             case ToolType.Spatula:
-                Cursor.SetCursor(spatulaCursor, cursorHotspot, CursorMode.ForceSoftware);
+                Cursor.SetCursor(spatulaCursor, spatulaCursorHotspot, CursorMode.ForceSoftware);
                 break;
             case ToolType.None:
             default:

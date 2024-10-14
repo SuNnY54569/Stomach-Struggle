@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -130,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.25, y: 1.25}
   m_EdgeRadius: 0
 --- !u!114 &3450796466129740443
 MonoBehaviour:
@@ -149,9 +149,8 @@ MonoBehaviour:
   topSideCookingTimer: 0
   bottomSideCookingTimer: 0
   isTopSideCooking: 1
-  cookingProgressBar: {fileID: 0}
-  progressBarFill: {fileID: 0}
-  cookingClockText: {fileID: 0}
+  panCenter: {fileID: 0}
+  spriteRenderer: {fileID: 7780819487706636082}
 --- !u!114 &7585456705528663838
 MonoBehaviour:
   m_ObjectHideFlags: 0

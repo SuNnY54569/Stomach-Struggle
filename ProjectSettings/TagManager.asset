@@ -28,6 +28,7 @@ TagManager:
   - BottomCooked
   - Food
   - Pan
+  - PanCenter
   layers:
   - Default
   - TransparentFX

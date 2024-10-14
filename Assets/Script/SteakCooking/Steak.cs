@@ -15,6 +15,8 @@ public class Steak : MonoBehaviour
     [SerializeField] private float topSideCookingTimer = 0f;
     [SerializeField] private float bottomSideCookingTimer = 0f;
     public bool isTopSideCooking = true;
+    [SerializeField] private Transform panCenter;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private bool isCooking = false;
     private bool isDragging = false;
     private Vector2 originalPosition;
@@ -25,6 +27,8 @@ public class Steak : MonoBehaviour
     private void Awake()
     {
         steakSpawner = FindObjectOfType<SteakSpawner>().GetComponent<SteakSpawner>();
+        panCenter = GameObject.FindGameObjectWithTag("PanCenter").transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -126,14 +130,24 @@ public class Steak : MonoBehaviour
             }
         }
     }
-    
+
+    private void OnMouseOver()
+    {
+        spriteRenderer.color = Color.gray;
+    }
+
+    private void OnMouseExit()
+    {
+        spriteRenderer.color = Color.red;
+    }
+
     private void SnapToPanCenter()
     {
         // Assuming your pan has a Collider2D to find its position
         Collider2D panCollider = GameObject.FindWithTag("Pan").GetComponent<Collider2D>();
         if (panCollider != null)
         {
-            transform.position = panCollider.bounds.center; // Snap to the center of the pan
+            transform.position = panCenter.position; // Snap to the center of the pan
         }
     }
     
