@@ -11,6 +11,17 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PreTest.unity
     guid: 0fa932fb64de15543aa0bd8226fb0c9f
+Quiw
+    - enabled: 1
+    path: Assets/Scenes/CutScene1.unity
+    guid: bcef2e6efd0a1984297cdc6482395eb6
+  - enabled: 0
+    path: Assets/Scenes/chapter1.unity
+    guid: d5951bc972deb4b468900b397b3f5de4
+  - enabled: 1
+    path: Assets/Scenes/Claw machine.unity
+    guid: d3c55d205514bb74fa1701f2ce0db307
+mergeTest
   - enabled: 1
     path: Assets/Scenes/Claw machine.unity
     guid: d3c55d205514bb74fa1701f2ce0db307
