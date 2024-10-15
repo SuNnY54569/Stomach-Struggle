@@ -29,6 +29,8 @@ TagManager:
   - Food
   - Pan
   - PanCenter
+  - BadVegetable
+  - GoodVegetable
   layers:
   - Default
   - TransparentFX
