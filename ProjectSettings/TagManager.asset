@@ -27,6 +27,8 @@ TagManager:
   - TopCooked
   - BottomCooked
   - Food
+  - Pan
+  - PanCenter
   layers:
   - Default
   - TransparentFX
@@ -34,10 +36,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - PanLayer
+  - PlateLayer
   - Dragging
-  - 
+  - TrashLayer
   - 
   - 
   - 

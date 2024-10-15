@@ -11,7 +11,7 @@ public class DragFood : MonoBehaviour
     [Tooltip("Can the player interact with this food item?")]
     public bool isInteractable = true;
     
-    private Collider2D collider2D;
+    private Collider2D col;
     private Vector3 offset;
     private bool isDragging;
     private Camera mainCamera;
@@ -24,7 +24,7 @@ public class DragFood : MonoBehaviour
     private void Awake()
     {
         foodSpawners = GameObject.FindGameObjectsWithTag("FoodSpawner");
-        collider2D = GetComponent<Collider2D>();
+        col = GetComponent<Collider2D>();
         foodCooking = GetComponent<FoodCooking>();
         mainCamera = Camera.main;
         startPosition = transform.position;
@@ -75,7 +75,7 @@ public class DragFood : MonoBehaviour
         if (GameManager.Instance.isGamePaused) return;
         if (!isInteractable) return;
         isDragging = false;
-        collider2D.enabled = false;
+        col.enabled = false;
         
         RaycastHit2D hitInfo = Physics2D.Raycast(MouseWorldPosition(), Vector2.zero);
         
@@ -92,7 +92,7 @@ public class DragFood : MonoBehaviour
             ResetPosition();
         }
 
-        collider2D.enabled = true;
+        col.enabled = true;
     }
     #endregion
     
@@ -131,7 +131,7 @@ public class DragFood : MonoBehaviour
         if (foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked())
         {
             isInteractable = false;
-            Destroy(collider2D);
+            Destroy(col);
         }
     }
 

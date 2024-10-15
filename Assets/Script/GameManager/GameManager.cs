@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -26,8 +27,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject winPanel;
 
-    [SerializeField] private int totalHeart;
-    [SerializeField] private int totalHeartLeft;
+     public int totalHeart;
+     public int totalHeartLeft;
+     [Header("Scenes to Deactivate GameManager")]
+     [SerializeField] private List<string> scenesToDeactivate;
     
     
     private void Awake()
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -47,6 +51,24 @@ public class GameManager : MonoBehaviour
     {
         currentHealth = maxHealth;
         UpdateHeartsUI();
+    }
+    
+    private void OnDestroy()
+    {
+        // Unsubscribe from the event to avoid memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scenesToDeactivate.Contains(scene.name))
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
     
     #region Health Management
@@ -95,7 +117,7 @@ public class GameManager : MonoBehaviour
         return scoreValue;
     }
 
-    private void UpdateScoreText()
+    public void UpdateScoreText()
     {
         if (scoreText != null)
             scoreText.text = scoreValue + $"/{scoreMax}";
@@ -150,5 +172,10 @@ public class GameManager : MonoBehaviour
     {
         winPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+    }
+
+    public void SetMaxScore(int maxScore)
+    {
+        scoreMax = maxScore;
     }
 }
