@@ -16,12 +16,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        PauseGame();
+        //PauseGame();
         StartCoroutine(ShowDialogue(characterName, dialogueContent));
-    }
-    private void Update()
-    {
-        
     }
 
     private IEnumerator ShowDialogue(string name, string content)
