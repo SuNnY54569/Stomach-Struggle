@@ -21,11 +21,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Chapter1.2.2.unity
     guid: 5d47b7d36a7ea42439f33cae710aa883
   - enabled: 1
+    path: Assets/Scenes/GoHomeCutScene.unity
+    guid: c0d625ee7669f9341ae5ebcada114c5f
+  - enabled: 1
     path: Assets/Scenes/WashHand.unity
     guid: 32317b407e1071a4a9d2e2ee74461712
   - enabled: 1
     path: Assets/Scenes/SteakCooking.unity
     guid: 7e4288e108ad9aa4bbd670c9337f9d77
+  - enabled: 1
+    path: Assets/Scenes/friendHomecutScene.unity
+    guid: 33a26f20f7728f141bb40e440fe7e222
   - enabled: 1
     path: Assets/Scenes/Twohours.unity
     guid: c67ba6f468aeb3f438066e290b391e98
