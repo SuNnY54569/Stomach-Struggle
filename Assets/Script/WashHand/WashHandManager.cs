@@ -120,18 +120,17 @@ public class WashHandManager : MonoBehaviour
         }
     }
     
-    public void OnObjectClicked(int objectIndex, string animationName, GameObject obj)
+    public void OnObjectClicked(int objectIndex, string animationName, GameObject obj, Animator animator)
     {
         if (objectIndex == currentObjectIndex)
         {
             centralAnimator.SetTrigger(animationName);
-            
-            obj.SetActive(false);
+            animator.SetTrigger("Explode");
             foreach (var ob in objects)
             {
                 ob.GetComponent<Collider2D>().enabled = false;
             }
-            StartCoroutine(MoveToBondedPosition());
+            StartCoroutine(WaitForAnimation(animator, "Explode", MoveToBondedPosition, obj));
             currentObjectIndex++;
         }
         else
@@ -145,8 +144,28 @@ public class WashHandManager : MonoBehaviour
         }
     }
     
+    private IEnumerator WaitForAnimation(Animator animator, string animationName, Func<IEnumerator> coroutineToStart, GameObject obj)
+    {
+        // Wait until the current animation state is the one specified
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+        {
+            yield return null;
+        }
+
+        // Wait until the animation has finished playing
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            yield return null;
+        }
+
+        // Start the specified coroutine after the animation has finished
+        yield return StartCoroutine(coroutineToStart());
+        obj.SetActive(false);
+    }
+    
     private IEnumerator MoveToBondedPosition()
     {
+        
         for (int i = 0; i < objects.Count; i++)
         {
             GameObject boundedPosition = startPositions[i].gameObject.GetComponent<PositionBond>().bondedPosition;

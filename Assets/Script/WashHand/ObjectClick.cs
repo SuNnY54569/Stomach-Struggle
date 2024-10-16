@@ -13,6 +13,7 @@ public class ObjectClick : MonoBehaviour
     [SerializeField] private Color blinkColor = Color.red; // Color to blink
     [SerializeField] private float blinkDuration = 1f; // Duration of each blink cycle
     [SerializeField] private float scaleAmount = 1.25f;
+    [SerializeField] private Animator animator;
 
     private bool isMoving;
     private Color originalColor;
@@ -39,7 +40,7 @@ public class ObjectClick : MonoBehaviour
 
     private void OnMouseDown()
     {
-        WashHandManager.Instance.OnObjectClicked(objectIndex, animationName, gameObject);
+        WashHandManager.Instance.OnObjectClicked(objectIndex, animationName, gameObject, animator);
     }
 
     public void BlinkObject()
