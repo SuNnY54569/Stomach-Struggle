@@ -19,6 +19,8 @@ public class ClawController : MonoBehaviour
     private SpriteRenderer clawSprite;
     [SerializeField, Tooltip("Default Claw Sprite")]
     private Sprite defaultClawSprite;
+    [SerializeField, Tooltip("Max Score for this scene")]
+    private int maxScore;
 
     [Header("Movement Settings")]
     [SerializeField,Tooltip("Speed of horizontal movement for the claw.")]
@@ -47,6 +49,7 @@ public class ClawController : MonoBehaviour
     void Start()
     {
         startPosition = claw.transform.position;
+        GameManager.Instance.SetMaxScore(maxScore);
         GameManager.Instance.SetScoreTextActive(true);
     }
 
