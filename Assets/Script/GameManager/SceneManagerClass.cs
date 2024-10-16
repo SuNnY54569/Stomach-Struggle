@@ -6,7 +6,7 @@ public class SceneManagerClass : MonoBehaviour
 {
     public void LoadMenuScene() 
     {
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("Start scene");
         GameManager.Instance.CloseAllPanel();
     }
     

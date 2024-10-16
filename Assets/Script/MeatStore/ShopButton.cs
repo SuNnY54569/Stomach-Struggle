@@ -13,13 +13,13 @@ public class ShopButton : MonoBehaviour
     [SerializeField] private ClawController clawController;
     [SerializeField] private bool isReturnButton;
 
-    [Header("UI Text Settings")]
+    /*[Header("UI Text Settings")]
     [SerializeField] private GameObject messageBox;
-    [SerializeField] private TextMeshProUGUI messageText;
+    [SerializeField] private TextMeshProUGUI messageText;*/
 
     private void Start()
     {
-        messageBox.SetActive(false);
+        //messageBox.SetActive(false);
     }
 
     private void Awake()
@@ -31,14 +31,14 @@ public class ShopButton : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.gray;
-        messageBox.SetActive(true);
+        //messageBox.SetActive(true);
     }
 
     private void OnMouseExit()
     {
         if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.white;
-        messageBox.SetActive(false);
+        //messageBox.SetActive(false);
     }
 
     private void OnMouseDown()
@@ -63,6 +63,6 @@ public class ShopButton : MonoBehaviour
         }
         
         sprite.color = Color.white;
-        messageBox.SetActive(false);
+        //messageBox.SetActive(false);
     }
 }
