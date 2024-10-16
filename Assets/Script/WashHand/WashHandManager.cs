@@ -38,6 +38,11 @@ public class WashHandManager : MonoBehaviour
         GameManager.Instance.SetScoreTextActive(false);
     }
 
+    private void Start()
+    {
+        GameManager.Instance.SetScoreTextActive(false);
+    }
+
     private void Update()
     {
         if (GameManager.Instance.currentHealth > 1)
@@ -119,7 +124,7 @@ public class WashHandManager : MonoBehaviour
     {
         if (objectIndex == currentObjectIndex)
         {
-            //centralAnimator.SetTrigger(animationName);
+            centralAnimator.SetTrigger(animationName);
             
             obj.SetActive(false);
             foreach (var ob in objects)

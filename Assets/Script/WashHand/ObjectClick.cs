@@ -14,6 +14,7 @@ public class ObjectClick : MonoBehaviour
     [SerializeField] private float blinkDuration = 1f; // Duration of each blink cycle
     [SerializeField] private float scaleAmount = 1.25f;
 
+    private bool isMoving;
     private Color originalColor;
     private Vector3 initPos;
 
@@ -30,7 +31,10 @@ public class ObjectClick : MonoBehaviour
 
     private void Update()
     {
-        picture.transform.localPosition = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, 0);
+        if (isMoving)
+        {
+            picture.transform.localPosition = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, 0);
+        }
     }
 
     private void OnMouseDown()
@@ -80,5 +84,10 @@ public class ObjectClick : MonoBehaviour
         // Ensure object returns to original state if health is no longer 1
         objectRenderer.material.color = originalColor;
         gameObject.transform.localScale = originalScale;
+    }
+
+    public void MovingObject()
+    {
+        isMoving = true;
     }
 }
