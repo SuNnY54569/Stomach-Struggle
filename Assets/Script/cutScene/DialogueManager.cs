@@ -18,7 +18,6 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(ShowDialogue(characterName, dialogueContent));
     }
 
-    // Coroutine to display text with typing effect
     private IEnumerator ShowDialogue(string name, string content)
     {
         dialogueText.text = name;
