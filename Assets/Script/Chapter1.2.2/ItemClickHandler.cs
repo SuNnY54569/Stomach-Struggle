@@ -8,11 +8,11 @@ public class ItemClickHandler : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
         
-        if (gameObject.CompareTag("GoodMeat"))
+        if (gameObject.CompareTag("GoodVegetable"))
         {
             Destroy(gameObject);
         }
-        else if (gameObject.CompareTag("BadMeat"))
+        else if (gameObject.CompareTag("BadVegetable"))
         {
             if (GameManager.Instance != null)
             {
@@ -24,11 +24,11 @@ public class ItemClickHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (gameObject.CompareTag("GoodMeat"))
+        if (gameObject.CompareTag("GoodVegetable"))
         {
             GameManager.Instance.DecreaseHealth(1);
         }
-        else if (gameObject.CompareTag("BadMeat"))
+        else if (gameObject.CompareTag("BadVegetable"))
         {
             GameManager.Instance.DecreaseHealth(0);
         }

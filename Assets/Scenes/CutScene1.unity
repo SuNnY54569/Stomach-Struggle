@@ -527,7 +527,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -641,8 +641,6 @@ PlayableDirector:
     value: {fileID: 1717534511}
   - key: {fileID: -5685473463209126288, guid: 86aaf7945158a264c9230193a32c906f, type: 2}
     value: {fileID: 473757437}
-  - key: {fileID: -1244407457057925293, guid: 86aaf7945158a264c9230193a32c906f, type: 2}
-    value: {fileID: 1666822077}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &448632475
@@ -854,7 +852,7 @@ MonoBehaviour:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 959543866}
-          m_TargetAssemblyTypeName: SceneManagerClass, Assembly-CSharp
+          m_TargetAssemblyTypeName: nextScene, Assembly-CSharp
           m_MethodName: LoadNextScene
           m_Mode: 1
           m_Arguments:
@@ -1053,7 +1051,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1262,7 +1260,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 959543864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4759f68cdb64bb647a0a03b18e3e0498, type: 3}
+  m_Script: {fileID: 11500000, guid: b845c7e96d10e36498ecbc66f53c8314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &993922729
@@ -1632,7 +1630,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2487,7 +2485,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2721,7 +2719,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
