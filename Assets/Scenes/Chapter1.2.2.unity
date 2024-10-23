@@ -178,6 +178,8 @@ MonoBehaviour:
   - {fileID: 3126161383067482225, guid: f7dfbf8d57ee24d49a814ab8ead4ef7d, type: 3}
   - {fileID: 3126161383067482225, guid: d15a975254867594da4ea466dec88db8, type: 3}
   - {fileID: 3126161383067482225, guid: 36f378737d71a084ca5963bb29b4ad22, type: 3}
+  - {fileID: 3126161383067482225, guid: f4281b93a306e5c4e99df6e84f7552e1, type: 3}
+  - {fileID: 2833592423724286684, guid: 37bfeac0d13d6064a8dc84c4c1ccebda, type: 3}
   timer: {fileID: 1477854552}
   secondSpawn: 1.5
   minTras: -8
