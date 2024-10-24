@@ -138,7 +138,7 @@ public class Steak : MonoBehaviour
 
     private void OnMouseExit()
     {
-        spriteRenderer.color = Color.red;
+        spriteRenderer.color = Color.white;
     }
 
     private void SnapToPanCenter()

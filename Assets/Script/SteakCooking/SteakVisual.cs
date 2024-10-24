@@ -5,15 +5,18 @@ using UnityEngine;
 public class SteakVisual : MonoBehaviour
 {
     #region Visual Settings
-    [Header("Food Colors")]
-    [SerializeField,Tooltip("Color for the raw food state.")]
-    private Color rawSprite;
+    [Header("Food Sprites")]
+    [SerializeField, Tooltip("Sprite for the raw food state.")]
+    private Sprite rawSprite;
+
+    [SerializeField, Tooltip("Sprite for the almost cooked food state.")]
+    private Sprite almostCookedSprite;
     
-    [SerializeField,Tooltip("Color for the cooked food state (for either side).")]
-    private Color cookedSprite;
-    
-    [SerializeField,Tooltip("Color for the overcooked food state.")]
-    private Color overcookedSprite;
+    [SerializeField, Tooltip("Sprite for the cooked food state.")]
+    private Sprite cookedSprite;
+
+    [SerializeField, Tooltip("Sprite for the overcooked food state.")]
+    private Sprite overcookedSprite;
     
     private SpriteRenderer spriteRenderer;
     private Steak steak;
@@ -23,7 +26,7 @@ public class SteakVisual : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         steak = GetComponent<Steak>();
-        spriteRenderer.color = rawSprite;
+        spriteRenderer.sprite = rawSprite;
     }
 
     private void Update()
@@ -42,25 +45,25 @@ public class SteakVisual : MonoBehaviour
         
         if (isTopOvercooked || isBottomOvercooked)
         {
-            spriteRenderer.color = overcookedSprite; 
+            spriteRenderer.sprite = overcookedSprite; 
             return;
         }
         
         if (isTopCooked && isBottomCooked)
         {
-            spriteRenderer.color = cookedSprite; 
+            spriteRenderer.sprite = cookedSprite; 
         }
         else if (isTopCooked)
         {
-            spriteRenderer.color = isTopCooking ? rawSprite : cookedSprite; 
+            spriteRenderer.sprite = isTopCooking ? rawSprite : almostCookedSprite; 
         }
         else if (isBottomCooked)
         {
-            spriteRenderer.color = isTopCooking ? cookedSprite : rawSprite; 
+            spriteRenderer.sprite = isTopCooking ? almostCookedSprite : rawSprite; 
         }
         else
         {
-            spriteRenderer.color = rawSprite; 
+            spriteRenderer.sprite = rawSprite; 
         }
     }
     #endregion
