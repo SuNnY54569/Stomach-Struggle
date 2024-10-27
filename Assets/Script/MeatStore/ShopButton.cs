@@ -60,6 +60,7 @@ public class ShopButton : MonoBehaviour
         else
         {
             clawController.RePosition();
+            clawController.SetDefaultSprite();
         }
         
         sprite.color = Color.white;
