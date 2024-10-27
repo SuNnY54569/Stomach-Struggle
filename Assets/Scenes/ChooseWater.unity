@@ -568,12 +568,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 586958987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a53b0e424f4a7b043978a532c08e55b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c99497672550a241ad1df71bb3eb9d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterPrefabs:
-  - {fileID: 525121166181843103, guid: aa5e4b2d6c51f71478d8498c879539fa, type: 3}
-  - {fileID: 3750278459630771766, guid: b58e4ef10530e0b459b32f6b5e43b524, type: 3}
+  goodWaterPrefab: {fileID: 3750278459630771766, guid: b58e4ef10530e0b459b32f6b5e43b524, type: 3}
+  badWaterPrefab: {fileID: 525121166181843103, guid: aa5e4b2d6c51f71478d8498c879539fa, type: 3}
   spawnPoints:
   - {fileID: 1735811595}
   - {fileID: 959482961}
