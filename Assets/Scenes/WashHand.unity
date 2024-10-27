@@ -1759,6 +1759,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8365017362007177058, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365017362007177058, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[0].name
+      value: Hurt
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365017362007177058, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[0].sounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8365017362007177058, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[0].sounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e165c7f4c5ad45a4ebd44cfbc1bc8ff4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     {
         currentHealth -= amount;
         UpdateHeartsUI();
+        SoundManager.PlaySound(SoundType.Hurt);
 
         if (currentHealth <= 0)
         {
