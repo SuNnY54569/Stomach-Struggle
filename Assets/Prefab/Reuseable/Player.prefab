@@ -2557,9 +2557,11 @@ MonoBehaviour:
   - PreTest
   - PostTest
   - Summary
-  intensity: 0
-  initialIntensity: 0.3
   volume: {fileID: 4719851792561678198}
+  fadeDuration: 0.5
+  intensity: 0
+  initialIntensity: 0.4
+  shakeIntensity: 0.1
 --- !u!114 &6330731320766605027
 MonoBehaviour:
   m_ObjectHideFlags: 0
