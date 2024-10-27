@@ -31,6 +31,8 @@ TagManager:
   - PanCenter
   - BadVegetable
   - GoodVegetable
+  - GoodWater
+  - BadWater
   layers:
   - Default
   - TransparentFX
