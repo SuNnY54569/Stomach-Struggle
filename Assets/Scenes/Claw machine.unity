@@ -1029,7 +1029,7 @@ MonoBehaviour:
   - {fileID: 1189681268}
   - {fileID: 1083913207}
   - {fileID: 1153057610}
-  clawChance: 0.3
+  clawChance: 0.1
   clawController: {fileID: 43559482}
   isReturnButton: 0
 --- !u!61 &684205373
