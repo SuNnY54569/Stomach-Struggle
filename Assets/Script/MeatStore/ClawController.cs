@@ -198,6 +198,7 @@ public class ClawController : MonoBehaviour
         }
         
         claw.transform.position = startPosition;
+        SetDefaultSprite();
     }
 
     public void SetDefaultSprite()

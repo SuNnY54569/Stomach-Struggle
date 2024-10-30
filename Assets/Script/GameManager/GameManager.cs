@@ -1,9 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -27,11 +28,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject winPanel;
 
-     public int totalHeart;
-     public int totalHeartLeft;
-     [Header("Scenes to Deactivate GameManager")]
-     [SerializeField] private List<string> scenesToDeactivate;
+    public int totalHeart;
+    public int totalHeartLeft;
+    [Header("Scenes to Deactivate GameManager")]
+    [SerializeField] private List<string> scenesToDeactivate;
     
+    [Header("Post Processing")]
+    [SerializeField] private PostProcessVolume volume;
+    [SerializeField] private float fadeDuration = 0.3f;
+    [SerializeField] private float intensity = 0f;
+    [SerializeField] private float initialIntensity;
+    [SerializeField] private float shakeIntensity = 0.1f;
+    private Vignette _vignette;
     
     private void Awake()
     {
@@ -44,6 +52,18 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
+        }
+
+        volume.profile.TryGetSettings<Vignette>(out _vignette);
+
+        if (!_vignette)
+        {
+            Debug.LogError("Error, vignette empty");
+        }
+        else
+        {
+            _vignette.enabled.Override(false);
         }
     }
     
@@ -74,8 +94,10 @@ public class GameManager : MonoBehaviour
     #region Health Management
     public void DecreaseHealth(int amount)
     {
+        StartCoroutine(TakeDamageEffect());
         currentHealth -= amount;
         UpdateHeartsUI();
+        SoundManager.PlaySound(SoundType.Hurt);
 
         if (currentHealth <= 0)
         {
@@ -98,6 +120,41 @@ public class GameManager : MonoBehaviour
 
             hearts[i].enabled = i < maxHealth;
         }
+    }
+
+    private IEnumerator TakeDamageEffect()
+    {
+        _vignette.enabled.Override(true);
+        float elapsedTime = 0f;
+        intensity = initialIntensity;
+        float shakeDuration = fadeDuration; // Shake duration
+        Transform cameraTransform = Camera.main.transform;
+        Vector3 originalPosition = cameraTransform.position;
+
+        while (intensity > 0 || shakeDuration > 0)
+        {
+            elapsedTime += Time.deltaTime;
+            intensity = Mathf.Lerp(initialIntensity, 0, elapsedTime / fadeDuration);
+            _vignette.intensity.Override(intensity);
+
+            // Apply camera shake
+            if (shakeDuration > 0)
+            {
+                shakeDuration -= Time.deltaTime;
+                float offsetX = Random.Range(-shakeIntensity, shakeIntensity);
+                float offsetY = Random.Range(-shakeIntensity, shakeIntensity);
+                cameraTransform.position = originalPosition + new Vector3(offsetX, offsetY, 0);
+            }
+            else
+            {
+                cameraTransform.position = originalPosition;
+            }
+
+            yield return null;
+        }
+        
+        _vignette.enabled.Override(false);
+        cameraTransform.position = originalPosition;
     }
     #endregion
     
@@ -178,4 +235,6 @@ public class GameManager : MonoBehaviour
     {
         scoreMax = maxScore;
     }
+    
+    
 }
