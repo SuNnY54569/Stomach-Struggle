@@ -8,7 +8,7 @@ public class ItemClickHandler : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
         if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax) return;
-        
+
         if (gameObject.CompareTag("GoodVegetable"))
         {
             Destroy(gameObject);
