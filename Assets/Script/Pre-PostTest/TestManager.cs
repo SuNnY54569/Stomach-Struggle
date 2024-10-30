@@ -40,7 +40,15 @@ public class TestManager : MonoBehaviour
         GenerateQuestion();
         scoreText.text = $"{score} / {totalQuestion}";
     }
-
+    
+    private void OnValidate()
+    {
+        for (int i = 0; i < QnA.Count; i++)
+        {
+            QnA[i].name = $"Question{i + 1}";
+        }
+    }
+    
     public void Next()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -48,13 +56,12 @@ public class TestManager : MonoBehaviour
     
     public void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene("PreTest");
     }
 
-    public void QuitGame()
+    public void MainMenu()
     {
-        Debug.Log("Quit Game");
-        Application.Quit();
+        SceneManager.LoadScene("Start scene");
     }
 
     private void GameOver()

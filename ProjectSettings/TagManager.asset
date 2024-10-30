@@ -31,11 +31,15 @@ TagManager:
   - PanCenter
   - BadVegetable
   - GoodVegetable
+  - GoodWater
+  - BadWater
+  - GoodTreat
+  - BadTreat
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessing
   - Water
   - UI
   - PanLayer

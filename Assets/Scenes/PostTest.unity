@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &105119934
 RectTransform:
   m_ObjectHideFlags: 0
@@ -506,7 +506,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 621491569}
         m_TargetAssemblyTypeName: TestManager, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -773,8 +773,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
+  m_sharedMaterial: {fileID: -3118256012651775128, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -798,7 +798,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.75
+  m_fontSize: 50
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -972,30 +972,119 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   QnA:
-  - question: Answer is 1
+  - name: Question1
+    question: "\u0E01\u0E32\u0E23\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E43\u0E0A\u0E49\u0E27\u0E31\u0E15\u0E16\u0E38\u0E14\u0E34\u0E1A\u0E17\u0E35\u0E48\u0E2A\u0E14
+      \u0E2A\u0E30\u0E2D\u0E32\u0E14 \u0E21\u0E32\u0E08\u0E32\u0E01\u0E41\u0E2B\u0E25\u0E48\u0E07\u0E17\u0E35\u0E48\u0E40\u0E0A\u0E37\u0E48\u0E2D\u0E16\u0E37\u0E2D\u0E44\u0E14\u0E49
+      \u0E40\u0E1B\u0E47\u0E19\u0E01\u0E32\u0E23\u0E25\u0E14\u0E2D\u0E31\u0E19\u0E15\u0E23\u0E32\u0E22\u0E08\u0E32\u0E01\u0E2A\u0E32\u0E23\u0E1B\u0E19\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E44\u0E14\u0E49\u0E27\u0E34\u0E18\u0E35\u0E2B\u0E19\u0E36\u0E48\u0E07"
     answers:
-    - 1
-    - 2
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
     correctAnswers: 1
-    correction: Pls Answer the correct one mate
-  - question: Answer is 2
+    correction: "\u0E23\u0E49\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E15\u0E31\u0E27\u0E23\u0E49\u0E32\u0E19\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E0A\u0E48\u0E27\u0E22\u0E25\u0E14\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E01\u0E34\u0E14\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
+  - name: Question2
+    question: "\u0E01\u0E32\u0E23\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E38\u0E01\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E17\u0E31\u0E48\u0E27\u0E16\u0E36\u0E07\u0E08\u0E30\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22\u0E08\u0E32\u0E01\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
     answers:
-    - 1
-    - 2
-    correctAnswers: 2
-    correction: Pls Answer the correct one mate
-  - question: Answer is 1
-    answers:
-    - 1
-    - 2
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
     correctAnswers: 1
-    correction: Pls Answer the correct one mate
-  - question: Answer is 2
+    correction: "\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E16\u0E39\u0E01\u0E17\u0E33\u0E25\u0E32\u0E22\u0E14\u0E49\u0E27\u0E22\u0E04\u0E27\u0E32\u0E21\u0E23\u0E49\u0E2D\u0E19\u0E44\u0E14\u0E49"
+  - name: Question3
+    question: "\u0E01\u0E32\u0E23\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E2A\u0E38\u0E01\u0E46
+      \u0E14\u0E34\u0E1A\u0E46 \u0E40\u0E0A\u0E48\u0E19 \u0E25\u0E32\u0E1A\u0E40\u0E25\u0E37\u0E2D\u0E14
+      \u0E2B\u0E25\u0E39\u0E49 \u0E1B\u0E25\u0E32\u0E08\u0E48\u0E2D\u0E21 \u0E01\u0E49\u0E2D\u0E22
+      \u0E2B\u0E2D\u0E22\u0E41\u0E04\u0E23\u0E07\u0E25\u0E27\u0E01\u0E44\u0E21\u0E48\u0E2A\u0E38\u0E01
+      \u0E40\u0E1B\u0E47\u0E19\u0E01\u0E32\u0E23\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22"
     answers:
-    - 1
-    - 2
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
     correctAnswers: 2
-    correction: Pls Answer the correct one mate
+    correction: "\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E2B\u0E21\u0E39\u0E41\u0E25\u0E30\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E14\u0E34\u0E1A\u0E21\u0E35\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04
+      \u0E01\u0E32\u0E23\u0E01\u0E34\u0E19\u0E15\u0E49\u0E2D\u0E07\u0E1C\u0E48\u0E32\u0E19\u0E01\u0E32\u0E23\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E38\u0E01\u0E14\u0E49\u0E27\u0E22\u0E04\u0E27\u0E32\u0E21\u0E23\u0E49\u0E2D\u0E19\u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19"
+  - name: Question4
+    question: "\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08\u0E17\u0E35\u0E48\u0E27\u0E32\u0E07\u0E02\u0E32\u0E22\u0E17\u0E31\u0E48\u0E27\u0E44\u0E1B
+      \u0E04\u0E27\u0E23\u0E21\u0E35\u0E01\u0E32\u0E23\u0E2D\u0E38\u0E48\u0E19\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E1B\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E19\u0E01\u0E32\u0E23\u0E1A\u0E39\u0E14\u0E40\u0E2A\u0E35\u0E22\u0E17\u0E38\u0E01
+      2 \u0E0A\u0E31\u0E48\u0E27\u0E42\u0E21\u0E07"
+    answers:
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
+    correctAnswers: 1
+    correction: "\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E40\u0E1E\u0E34\u0E48\u0E21\u0E08\u0E33\u0E19\u0E27\u0E19\u0E44\u0E14\u0E49\u0E43\u0E19\u0E2D\u0E38\u0E13\u0E2B\u0E20\u0E39\u0E21\u0E34\u0E2B\u0E49\u0E2D\u0E07
+      \u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E23\u0E38\u0E07\u0E40\u0E2A\u0E23\u0E47\u0E08\u0E04\u0E27\u0E23\u0E19\u0E33\u0E40\u0E02\u0E49\u0E32\u0E15\u0E39\u0E49\u0E40\u0E22\u0E47\u0E19\u0E17\u0E31\u0E19\u0E17\u0E35
+      \u0E2B\u0E23\u0E37\u0E2D\u0E2B\u0E32\u0E01\u0E08\u0E30\u0E01\u0E34\u0E19\u0E44\u0E21\u0E48\u0E04\u0E27\u0E23\u0E17\u0E34\u0E49\u0E07\u0E44\u0E27\u0E49\u0E02\u0E49\u0E32\u0E07\u0E19\u0E2D\u0E01\u0E15\u0E39\u0E49\u0E40\u0E22\u0E47\u0E19\u0E19\u0E32\u0E19\u0E40\u0E01\u0E34\u0E19
+      2 \u0E0A\u0E31\u0E48\u0E27\u0E42\u0E21\u0E07"
+  - name: Question5
+    question: "\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23
+      \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E02\u0E35\u0E22\u0E07 \u0E21\u0E35\u0E14
+      \u0E08\u0E32\u0E19 \u0E17\u0E35\u0E48\u0E04\u0E35\u0E1A \u0E2F\u0E25\u0E2F
+      \u0E23\u0E48\u0E27\u0E21\u0E01\u0E31\u0E19\u0E23\u0E30\u0E2B\u0E27\u0E48\u0E32\u0E07\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E14\u0E34\u0E1A
+      \u0E41\u0E25\u0E30\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E2A\u0E38\u0E01 \u0E17\u0E33\u0E43\u0E2B\u0E49\u0E40\u0E01\u0E34\u0E14\u0E01\u0E32\u0E23\u0E1B\u0E19\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E08\u0E32\u0E01\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E14\u0E34\u0E1A\u0E44\u0E1B\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E2A\u0E38\u0E01\u0E44\u0E14\u0E49"
+    answers:
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
+    correctAnswers: 1
+    correction: "\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E1B\u0E19\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E43\u0E19\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E17\u0E35\u0E48\u0E43\u0E0A\u0E49\u0E1B\u0E19\u0E01\u0E31\u0E19\u0E44\u0E14\u0E49"
+  - name: Question6
+    question: "\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E04\u0E27\u0E23\u0E25\u0E49\u0E32\u0E07\u0E21\u0E37\u0E2D\u0E14\u0E49\u0E27\u0E22\u0E2A\u0E1A\u0E39\u0E48\u0E17\u0E38\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07
+      \u0E01\u0E48\u0E2D\u0E19\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21 \u0E02\u0E13\u0E30\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21
+      \u0E2B\u0E25\u0E31\u0E07\u0E40\u0E15\u0E23\u0E35\u0E22\u0E21\u0E2D\u0E32\u0E2B\u0E32\u0E23
+      \u0E41\u0E25\u0E30\u0E2B\u0E25\u0E31\u0E07\u0E2D\u0E2D\u0E01\u0E08\u0E32\u0E01\u0E2B\u0E49\u0E2D\u0E07\u0E2A\u0E49\u0E27\u0E21
+      \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E0A\u0E48\u0E27\u0E22\u0E25\u0E14\u0E01\u0E32\u0E23\u0E41\u0E1E\u0E23\u0E48\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E25\u0E07\u0E2A\u0E39\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E41\u0E25\u0E30\u0E19\u0E49\u0E33"
+    answers:
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
+    correctAnswers: 1
+    correction: "\u0E01\u0E32\u0E23\u0E25\u0E49\u0E32\u0E07\u0E21\u0E37\u0E2D\u0E0A\u0E48\u0E27\u0E22\u0E0A\u0E48\u0E27\u0E22\u0E25\u0E14\u0E01\u0E32\u0E23\u0E41\u0E1E\u0E23\u0E48\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E25\u0E07\u0E2A\u0E39\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E41\u0E25\u0E30\u0E19\u0E49\u0E33"
+  - name: Question7
+    question: "\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23
+      \u0E1C\u0E39\u0E49\u0E40\u0E2A\u0E23\u0E34\u0E1F\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
+      \u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E1B\u0E47\u0E19\u0E2B\u0E27\u0E31\u0E14 \u0E44\u0E2D\u0E08\u0E32\u0E21
+      \u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E1B\u0E23\u0E38\u0E07\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E15\u0E48\u0E2D\u0E44\u0E21\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E2B\u0E22\u0E38\u0E14\u0E07\u0E32\u0E19"
+    answers:
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
+    correctAnswers: 2
+    correction: "\u0E04\u0E27\u0E23\u0E2B\u0E22\u0E38\u0E14\u0E07\u0E32\u0E19\u0E40\u0E19\u0E37\u0E48\u0E2D\u0E07\u0E08\u0E32\u0E01\u0E08\u0E30\u0E41\u0E1E\u0E23\u0E48\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E2A\u0E39\u0E48\u0E1C\u0E39\u0E49\u0E1A\u0E23\u0E34\u0E42\u0E20\u0E04"
+  - name: Question8
+    question: "\u0E01\u0E32\u0E23\u0E2A\u0E27\u0E21\u0E16\u0E38\u0E07\u0E21\u0E37\u0E2D\u0E2B\u0E22\u0E34\u0E1A\u0E08\u0E31\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E41\u0E25\u0E49\u0E27\u0E44\u0E1B\u0E2A\u0E31\u0E21\u0E1C\u0E31\u0E2A\u0E2B\u0E23\u0E37\u0E2D\u0E2B\u0E22\u0E34\u0E1A\u0E08\u0E31\u0E1A\u0E2A\u0E34\u0E48\u0E07\u0E02\u0E2D\u0E07\u0E2D\u0E37\u0E48\u0E19
+      \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E07\u0E34\u0E19 \u0E42\u0E14\u0E22\u0E44\u0E21\u0E48\u0E16\u0E2D\u0E14\u0E2D\u0E2D\u0E01\u0E01\u0E48\u0E2D\u0E19
+      \u0E40\u0E1B\u0E47\u0E19\u0E27\u0E34\u0E18\u0E35\u0E01\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22
+      \u0E44\u0E21\u0E48\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E15\u0E48\u0E2D\u0E01\u0E32\u0E23\u0E1B\u0E19\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E25\u0E07\u0E2A\u0E39\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23"
+    answers:
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
+    correctAnswers: 2
+    correction: "\u0E2B\u0E32\u0E01\u0E2A\u0E27\u0E21\u0E16\u0E38\u0E07\u0E21\u0E37\u0E2D\u0E41\u0E25\u0E49\u0E27\u0E15\u0E49\u0E2D\u0E07\u0E44\u0E1B\u0E2A\u0E31\u0E21\u0E1C\u0E31\u0E2A\u0E2B\u0E23\u0E37\u0E2D\u0E2B\u0E22\u0E34\u0E1A\u0E08\u0E31\u0E1A\u0E2A\u0E34\u0E48\u0E07\u0E02\u0E2D\u0E07\u0E2D\u0E37\u0E48\u0E19
+      \u0E46 \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E07\u0E34\u0E19  \u0E04\u0E27\u0E23\u0E16\u0E2D\u0E14\u0E16\u0E38\u0E07\u0E21\u0E37\u0E2D\u0E2D\u0E2D\u0E01\u0E01\u0E48\u0E2D\u0E19\u0E17\u0E38\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07
+      \u0E40\u0E1E\u0E23\u0E32\u0E30\u0E2D\u0E32\u0E08\u0E08\u0E30\u0E1B\u0E19\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E41\u0E25\u0E30\u0E40\u0E1B\u0E47\u0E19\u0E41\u0E2B\u0E25\u0E48\u0E07
+      \u0E19\u0E33\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E41\u0E25\u0E30\u0E2A\u0E34\u0E48\u0E07\u0E2A\u0E01\u0E1B\u0E23\u0E01\u0E15\u0E48\u0E32\u0E07
+      \u0E46  \u0E21\u0E32\u0E2A\u0E39\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E14\u0E49 "
+  - name: Question9
+    question: "\u0E01\u0E32\u0E23\u0E22\u0E36\u0E14\u0E2B\u0E25\u0E31\u0E01 \u201C\u0E2A\u0E38\u0E01
+      \u0E23\u0E49\u0E2D\u0E19 \u0E2A\u0E30\u0E2D\u0E32\u0E14\u201D \u0E0A\u0E48\u0E27\u0E22\u0E1B\u0E49\u0E2D\u0E07\u0E01\u0E31\u0E19\u0E01\u0E32\u0E23\u0E40\u0E08\u0E47\u0E1A\u0E1B\u0E48\u0E27\u0E22\u0E14\u0E49\u0E27\u0E22\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29\u0E44\u0E14\u0E49"
+    answers:
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
+    correctAnswers: 1
+    correction: "\u0E2A\u0E38\u0E01 = \u0E44\u0E21\u0E48\u0E01\u0E34\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E14\u0E34\u0E1A\u0E2B\u0E23\u0E37\u0E2D\u0E2A\u0E38\u0E01\u0E46\u0E14\u0E34\u0E1A\u0E46
+      , \u0E23\u0E49\u0E2D\u0E19 = \u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08\u0E44\u0E27\u0E49\u0E19\u0E32\u0E19\u0E40\u0E01\u0E34\u0E19
+      2 \u0E0A\u0E21./\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E40\u0E01\u0E47\u0E1A\u0E44\u0E27\u0E49\u0E04\u0E49\u0E32\u0E07\u0E04\u0E37\u0E19
+      \u0E15\u0E49\u0E2D\u0E07\u0E19\u0E33\u0E21\u0E32\u0E2D\u0E38\u0E48\u0E19\u0E23\u0E49\u0E2D\u0E19\u0E43\u0E2B\u0E49\u0E17\u0E31\u0E48\u0E27\u0E16\u0E36\u0E07\u0E01\u0E48\u0E2D\u0E19\u0E01\u0E34\u0E19\u0E17\u0E38\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07
+      , \u0E2A\u0E30\u0E2D\u0E32\u0E14 = \u0E40\u0E25\u0E37\u0E2D\u0E01\u0E19\u0E49\u0E33\u0E14\u0E37\u0E48\u0E21
+      \u0E19\u0E49\u0E33\u0E41\u0E02\u0E47\u0E07\u0E17\u0E35\u0E48\u0E2A\u0E30\u0E2D\u0E32\u0E14
+      \u0E21\u0E35\u0E40\u0E04\u0E23\u0E37\u0E48\u0E2D\u0E07\u0E2B\u0E21\u0E32\u0E22
+      \u0E2D\u0E22., \u0E25\u0E49\u0E32\u0E07\u0E21\u0E37\u0E2D\u0E14\u0E49\u0E27\u0E22\u0E19\u0E49\u0E33\u0E41\u0E25\u0E30\u0E2A\u0E1A\u0E39\u0E48\u0E17\u0E38\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07\u0E01\u0E48\u0E2D\u0E19\u0E1B\u0E23\u0E38\u0E07\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E01\u0E34\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23
+      \u0E2B\u0E25\u0E31\u0E07\u0E40\u0E02\u0E49\u0E32\u0E2B\u0E49\u0E2D\u0E07\u0E19\u0E49\u0E33\u0E2B\u0E23\u0E37\u0E2D\u0E2A\u0E31\u0E21\u0E1C\u0E31\u0E2A\u0E2A\u0E34\u0E48\u0E07\u0E2A\u0E01\u0E1B\u0E23\u0E01 "
+  - name: Question10
+    question: "\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
+      \u0E04\u0E25\u0E37\u0E48\u0E19\u0E44\u0E2A\u0E49\u0E2D\u0E32\u0E40\u0E08\u0E35\u0E22\u0E19
+      \u0E04\u0E27\u0E23\u0E23\u0E35\u0E1A\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E22\u0E32\u0E2B\u0E22\u0E38\u0E14\u0E16\u0E48\u0E32\u0E22\u0E17\u0E31\u0E19\u0E17\u0E35"
+    answers:
+    - "\u0E16\u0E39\u0E01"
+    - "\u0E1C\u0E34\u0E14"
+    correctAnswers: 2
+    correction: "\u0E2B\u0E32\u0E01\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22\u0E44\u0E21\u0E48\u0E04\u0E27\u0E23\u0E01\u0E34\u0E19\u0E22\u0E32\u0E2B\u0E22\u0E38\u0E14\u0E16\u0E48\u0E32\u0E22
+      \u0E04\u0E27\u0E23\u0E14\u0E37\u0E48\u0E21\u0E19\u0E49\u0E33\u0E40\u0E01\u0E25\u0E37\u0E2D\u0E41\u0E23\u0E48\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E04\u0E19\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
+      \u0E41\u0E25\u0E30\u0E2B\u0E32\u0E01\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E2B\u0E19\u0E31\u0E01\u0E43\u0E2B\u0E49\u0E23\u0E35\u0E1A\u0E44\u0E1B\u0E1E\u0E1A\u0E41\u0E1E\u0E17\u0E22\u0E4C\u0E17\u0E31\u0E19\u0E17\u0E35"
   options:
   - {fileID: 1446919223}
   - {fileID: 2031781611}
@@ -1172,8 +1261,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Which Answer Is Correct
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
+  m_sharedMaterial: {fileID: -3118256012651775128, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1264,7 +1353,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -150, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &647377654
 GameObject:
@@ -1452,8 +1541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.595}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 57.056}
+  m_SizeDelta: {x: -120, y: 114.11}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1060245953
 CanvasRenderer:
@@ -1485,8 +1574,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Correction
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
+  m_sharedMaterial: {fileID: -3118256012651775128, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1516,7 +1605,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1549,7 +1638,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1119725265
@@ -1611,8 +1700,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
+  m_sharedMaterial: {fileID: -3118256012651775128, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1745,8 +1834,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0 / 4
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
+  m_sharedMaterial: {fileID: -3118256012651775128, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1770,7 +1859,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.75
+  m_fontSize: 50
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1994,8 +2083,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 2
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
+  m_sharedMaterial: {fileID: -3118256012651775128, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2267,8 +2356,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.595}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 57.056274}
+  m_SizeDelta: {x: 0, y: -114.1126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1724851746
 CanvasRenderer:
@@ -2300,8 +2389,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Correct Answer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
+  m_sharedMaterial: {fileID: -3118256012651775128, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2331,7 +2420,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -2426,7 +2515,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1/10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2490,7 +2579,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1757597790
@@ -2558,9 +2647,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Retry
+  m_text: Restart
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2624,7 +2713,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1844732894
@@ -2692,9 +2781,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: Main Menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 271bd075cb56fe946b2054324ec31df0, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2758,7 +2847,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1846576684
