@@ -70,7 +70,7 @@ public class SymptomGameController : MonoBehaviour
     {
         if (!selectedToggle.isOn) return;
         
-        Text toggleLabel = selectedToggle.GetComponentInChildren<Text>();
+        TMP_Text toggleLabel = selectedToggle.GetComponentInChildren<TMP_Text>();
         if (toggleLabel == null) return;
 
         if (toggleLabel.text == currentSymptom.symptomDescription)
