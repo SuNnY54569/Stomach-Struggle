@@ -11,7 +11,6 @@ public class SoundSettingUI : MonoBehaviour
     
     private void Start()
     {
-        
         InitializeSliders();
         
         backgroundSlider.onValueChanged.AddListener(value => UpdateBackgroundVolume(value));
@@ -21,9 +20,9 @@ public class SoundSettingUI : MonoBehaviour
     
     private void InitializeSliders()
     {
-        backgroundSlider.value = SoundManager.GetVolume(VolumeType.Background);
-        sfxSlider.value = SoundManager.GetVolume(VolumeType.SFX);
-        dialogSlider.value = SoundManager.GetVolume(VolumeType.Dialog);
+        backgroundSlider.value = PlayerPrefs.GetFloat(VolumeType.Background.ToString(), 1f);
+        sfxSlider.value = PlayerPrefs.GetFloat(VolumeType.SFX.ToString(), 1f);
+        dialogSlider.value = PlayerPrefs.GetFloat(VolumeType.Dialog.ToString(), 1f);
     }
     
     private void UpdateBackgroundVolume(float value)
