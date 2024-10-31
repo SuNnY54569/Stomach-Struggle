@@ -2,7 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
+
+public enum VolumeType
+{
+    Background,
+    SFX,
+    Dialog
+}
 
 public enum SoundType
 {
@@ -15,6 +23,13 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private SoundList[] soundList;
     private static SoundManager instance;
     private AudioSource audioSource;
+    
+    private Dictionary<VolumeType, float> volumeLevels = new Dictionary<VolumeType, float>()
+    {
+        { VolumeType.Background, 1f },
+        { VolumeType.SFX, 1f },
+        { VolumeType.Dialog, 1f }
+    };
 
     private void Awake()
     {
@@ -40,19 +55,15 @@ public class SoundManager : MonoBehaviour
         {
             Debug.LogError("SoundManager: AudioSource component is missing.");
         }
+        
+        LoadVolumeSettings();
     }
 
-    public static void PlaySound(SoundType sound, float volume = 1)
+    public static void PlaySound(SoundType sound, VolumeType volumeType)
     {
-        if (instance == null)
+        if (instance == null || instance.audioSource == null)
         {
-            Debug.LogError("SoundManager instance is missing.");
-            return;
-        }
-
-        if (instance.audioSource == null)
-        {
-            Debug.LogError("SoundManager: AudioSource is not assigned.");
+            Debug.LogError("SoundManager: AudioSource or instance is missing.");
             return;
         }
 
@@ -62,10 +73,36 @@ public class SoundManager : MonoBehaviour
             return;
         }
         
+        float adjustedVolume = instance.volumeLevels[volumeType];
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
-        AudioClip randomCilp = clips[Random.Range(0, clips.Length)];
-        instance.audioSource.PlayOneShot(randomCilp);
-        Debug.Log($"play {randomCilp}");
+        AudioClip randomClip = clips[Random.Range(0, clips.Length)];
+        instance.audioSource.PlayOneShot(randomClip, adjustedVolume);
+    }
+    
+    public static void SetVolume(VolumeType volumeType, float volume)
+    {
+        if (instance != null)
+        {
+            instance.volumeLevels[volumeType] = Mathf.Clamp01(volume);
+            PlayerPrefs.SetFloat(volumeType.ToString(), volume);
+        }
+    }
+    
+    public static float GetVolume(VolumeType volumeType)
+    {
+        if (instance != null && instance.volumeLevels.ContainsKey(volumeType))
+        {
+            return instance.volumeLevels[volumeType];
+        }
+        return 1f;
+    }
+    
+    private void LoadVolumeSettings()
+    {
+        foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
+        {
+            volumeLevels[type] = PlayerPrefs.GetFloat(type.ToString(), 1f);
+        }
     }
     
 #if UNITY_EDITOR

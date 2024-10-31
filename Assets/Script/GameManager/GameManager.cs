@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(TakeDamageEffect());
         currentHealth -= amount;
         UpdateHeartsUI();
-        SoundManager.PlaySound(SoundType.Hurt);
+        SoundManager.PlaySound(SoundType.Hurt, VolumeType.SFX);
 
         if (currentHealth <= 0)
         {
