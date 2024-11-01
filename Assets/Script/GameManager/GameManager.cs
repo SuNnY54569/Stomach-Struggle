@@ -194,6 +194,14 @@ public class GameManager : MonoBehaviour
         winPanel.SetActive(true);
     }
 
+    public void ExitToMenu()
+    {
+        ResetHealth();
+        ResetScore();
+        totalHeart = 0;
+        totalHeartLeft = 0;
+    }
+
     public void ResetHealth()
     {
         currentHealth = maxHealth;
