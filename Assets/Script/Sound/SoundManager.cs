@@ -17,12 +17,13 @@ public enum SoundType
     Hurt
 }
 
-[RequireComponent(typeof(AudioSource)), ExecuteInEditMode]
+[ExecuteInEditMode]
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] private SoundList[] soundList;
     private static SoundManager instance;
-    private AudioSource audioSource;
+    
+    private Dictionary<VolumeType, AudioSource> audioSources = new Dictionary<VolumeType, AudioSource>();
     
     private Dictionary<VolumeType, float> volumeLevels = new Dictionary<VolumeType, float>()
     {
@@ -40,6 +41,8 @@ public class SoundManager : MonoBehaviour
             instance = this;
             transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
+            InitializeAudioSources();
+            LoadVolumeSettings();
         }
         else
         {
@@ -47,21 +50,21 @@ public class SoundManager : MonoBehaviour
             return;
         }
     }
-
-    private void Start()
+    
+    private void InitializeAudioSources()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
+        // Create a separate AudioSource for each VolumeType
+        foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
         {
-            Debug.LogError("SoundManager: AudioSource component is missing.");
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.volume = volumeLevels[type]; // Set initial volume from saved settings
+            audioSources[type] = source;
         }
-        
-        LoadVolumeSettings();
     }
 
     public static void PlaySound(SoundType sound, VolumeType volumeType)
     {
-        if (instance == null || instance.audioSource == null)
+        if (instance == null || !instance.audioSources.ContainsKey(volumeType))
         {
             Debug.LogError("SoundManager: AudioSource or instance is missing.");
             return;
@@ -73,17 +76,19 @@ public class SoundManager : MonoBehaviour
             return;
         }
         
-        float adjustedVolume = instance.volumeLevels[volumeType];
+        AudioSource source = instance.audioSources[volumeType];
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
         AudioClip randomClip = clips[Random.Range(0, clips.Length)];
-        instance.audioSource.PlayOneShot(randomClip, adjustedVolume);
+        source.PlayOneShot(randomClip);
     }
     
     public static void SetVolume(VolumeType volumeType, float volume)
     {
-        if (instance != null)
+        if (instance != null && instance.audioSources.ContainsKey(volumeType))
         {
-            instance.volumeLevels[volumeType] = Mathf.Clamp01(volume);
+            volume = Mathf.Clamp01(volume);
+            instance.volumeLevels[volumeType] = volume;
+            instance.audioSources[volumeType].volume = volume;
             PlayerPrefs.SetFloat(volumeType.ToString(), volume);
         }
     }
@@ -101,7 +106,14 @@ public class SoundManager : MonoBehaviour
     {
         foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
         {
-            volumeLevels[type] = PlayerPrefs.GetFloat(type.ToString(), 1f);
+            float savedVolume = PlayerPrefs.GetFloat(type.ToString(), 1f);
+            volumeLevels[type] = savedVolume;
+            
+            // Update AudioSource volume if it already exists
+            if (audioSources.ContainsKey(type))
+            {
+                audioSources[type].volume = savedVolume;
+            }
         }
     }
     
@@ -121,7 +133,7 @@ public class SoundManager : MonoBehaviour
 [Serializable]
 public struct SoundList
 {
-    public AudioClip[] Sounds { get => sounds; }
+    public AudioClip[] Sounds => sounds;
     [HideInInspector] public string name;
     [SerializeField] private AudioClip[] sounds;
 }
