@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public int totalHeartLeft;
     [Header("Scenes to Deactivate GameManager")]
     [SerializeField] private List<string> scenesToDeactivate;
+    [SerializeField] private List<GameObject> objectsToDeactivate;
     
     [Header("Post Processing")]
     [SerializeField] private PostProcessVolume volume;
@@ -83,11 +84,17 @@ public class GameManager : MonoBehaviour
     {
         if (scenesToDeactivate.Contains(scene.name))
         {
-            gameObject.SetActive(false);
+            foreach (var obj in objectsToDeactivate)
+            {
+                obj.SetActive(false);
+            }
         }
         else
         {
-            gameObject.SetActive(true);
+            foreach (var obj in objectsToDeactivate)
+            {
+                obj.SetActive(true);
+            }
         }
     }
     

@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundSettingUI : MonoBehaviour
+public class MenuSoundSetting : MonoBehaviour
 {
     [SerializeField] private Slider backgroundSlider;
     [SerializeField] private Slider sfxSlider;
@@ -18,8 +17,8 @@ public class SoundSettingUI : MonoBehaviour
         sfxSlider.onValueChanged.AddListener(value => UpdateSFXVolume(value));
         dialogSlider.onValueChanged.AddListener(value => UpdateDialogVolume(value));
     }
-
-    public void InitializeSliders()
+    
+    private void InitializeSliders()
     {
         backgroundSlider.value = PlayerPrefs.GetFloat(VolumeType.Background.ToString(), 1f);
         sfxSlider.value = PlayerPrefs.GetFloat(VolumeType.SFX.ToString(), 1f);
