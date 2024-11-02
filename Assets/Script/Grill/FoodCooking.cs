@@ -9,13 +9,13 @@ public class FoodCooking : MonoBehaviour
     #region Cooking Settings
     [Header("Cooking Settings")]
     [SerializeField, Tooltip("Time it takes to cook the food.")]
-    private float cookingTime;
+    public float cookingTime;
     
     [SerializeField, Tooltip("Time after which the food is considered overcooked.")]
     private float overcookedTime;
     
-    private float topSideCookingTimer;
-    private float bottomSideCookingTimer;
+    public float topSideCookingTimer;
+    public float bottomSideCookingTimer;
     
     public bool isTopSideCooking = true;
     private bool isFlipped;
@@ -35,10 +35,16 @@ public class FoodCooking : MonoBehaviour
     [Tooltip("Is the food currently cooking?")]
     public bool isCooking;
 
+    private SpriteRenderer spriteRenderer;
     private Color rawColor = Color.red;
     private Color cookedColor = Color.green;
     private Color overcookedColor = Color.black;
     #endregion
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -137,6 +143,7 @@ public class FoodCooking : MonoBehaviour
     public void FlipFood()
     {
         isTopSideCooking = !isTopSideCooking;
+        spriteRenderer.transform.rotation = isTopSideCooking ? new Quaternion(0f, 0, 0,0 ) : new Quaternion(180f, 0, 0,0 );
         cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
         progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
     }
