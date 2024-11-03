@@ -19,7 +19,7 @@ public class Timer : MonoBehaviour
         if (GameManager.Instance.currentHealth <= 0)
         {
             isGameOver = true;
-            timerText.text = "00:00";
+            timerText.text = "00";
             return;
         }
         
@@ -39,7 +39,7 @@ public class Timer : MonoBehaviour
 
             int minutes = Mathf.FloorToInt(remainingTime / 60);
             int seconds = Mathf.FloorToInt(remainingTime % 60);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.text = string.Format("{00}", seconds);
         }
 
     }
