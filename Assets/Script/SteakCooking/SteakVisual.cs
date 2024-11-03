@@ -55,7 +55,7 @@ public class SteakVisual : MonoBehaviour
         }
         else if (isTopCooked)
         {
-            spriteRenderer.sprite = isTopCooking ? rawSprite : almostCookedSprite; 
+            spriteRenderer.sprite = isTopCooking ? rawSprite : almostCookedSprite;
         }
         else if (isBottomCooked)
         {

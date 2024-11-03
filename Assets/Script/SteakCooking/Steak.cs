@@ -133,12 +133,12 @@ public class Steak : MonoBehaviour
 
     private void OnMouseOver()
     {
-        spriteRenderer.color = Color.gray;
+        //spriteRenderer.color = Color.gray;
     }
 
     private void OnMouseExit()
     {
-        spriteRenderer.color = Color.white;
+        //spriteRenderer.color = Color.white;
     }
 
     private void SnapToPanCenter()
@@ -216,6 +216,14 @@ public class Steak : MonoBehaviour
     public void FlipFood()
     {
         isTopSideCooking = !isTopSideCooking;
+        if (isTopSideCooking)
+        {
+            gameObject.transform.rotation = new Quaternion(0f, 0, 0,0 );
+        }
+        else
+        {
+            gameObject.transform.rotation = new Quaternion(180f, 0, 0,0 );
+        }
     }
     
     public void ResetPosition()

@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
-        remainingTime = 60f;
+        remainingTime = 30f;
     }
 
     private void Update()

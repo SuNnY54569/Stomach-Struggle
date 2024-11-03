@@ -2,19 +2,35 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
+
+public enum VolumeType
+{
+    Background,
+    SFX,
+    Dialog
+}
 
 public enum SoundType
 {
     Hurt
 }
 
-[RequireComponent(typeof(AudioSource)), ExecuteInEditMode]
+[ExecuteInEditMode]
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] private SoundList[] soundList;
     private static SoundManager instance;
-    private AudioSource audioSource;
+    
+    private Dictionary<VolumeType, AudioSource> audioSources = new Dictionary<VolumeType, AudioSource>();
+    
+    private Dictionary<VolumeType, float> volumeLevels = new Dictionary<VolumeType, float>()
+    {
+        { VolumeType.Background, 1f },
+        { VolumeType.SFX, 1f },
+        { VolumeType.Dialog, 1f }
+    };
 
     private void Awake()
     {
@@ -25,6 +41,8 @@ public class SoundManager : MonoBehaviour
             instance = this;
             transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
+            InitializeAudioSources();
+            LoadVolumeSettings();
         }
         else
         {
@@ -32,27 +50,23 @@ public class SoundManager : MonoBehaviour
             return;
         }
     }
-
-    private void Start()
+    
+    private void InitializeAudioSources()
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
+        // Create a separate AudioSource for each VolumeType
+        foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
         {
-            Debug.LogError("SoundManager: AudioSource component is missing.");
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.volume = volumeLevels[type]; // Set initial volume from saved settings
+            audioSources[type] = source;
         }
     }
 
-    public static void PlaySound(SoundType sound, float volume = 1)
+    public static void PlaySound(SoundType sound, VolumeType volumeType)
     {
-        if (instance == null)
+        if (instance == null || !instance.audioSources.ContainsKey(volumeType))
         {
-            Debug.LogError("SoundManager instance is missing.");
-            return;
-        }
-
-        if (instance.audioSource == null)
-        {
-            Debug.LogError("SoundManager: AudioSource is not assigned.");
+            Debug.LogError("SoundManager: AudioSource or instance is missing.");
             return;
         }
 
@@ -62,10 +76,45 @@ public class SoundManager : MonoBehaviour
             return;
         }
         
+        AudioSource source = instance.audioSources[volumeType];
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
-        AudioClip randomCilp = clips[Random.Range(0, clips.Length)];
-        instance.audioSource.PlayOneShot(randomCilp);
-        Debug.Log($"play {randomCilp}");
+        AudioClip randomClip = clips[Random.Range(0, clips.Length)];
+        source.PlayOneShot(randomClip);
+    }
+    
+    public static void SetVolume(VolumeType volumeType, float volume)
+    {
+        if (instance != null && instance.audioSources.ContainsKey(volumeType))
+        {
+            volume = Mathf.Clamp01(volume);
+            instance.volumeLevels[volumeType] = volume;
+            instance.audioSources[volumeType].volume = volume;
+            PlayerPrefs.SetFloat(volumeType.ToString(), volume);
+        }
+    }
+    
+    public static float GetVolume(VolumeType volumeType)
+    {
+        if (instance != null && instance.volumeLevels.ContainsKey(volumeType))
+        {
+            return instance.volumeLevels[volumeType];
+        }
+        return 1f;
+    }
+    
+    private void LoadVolumeSettings()
+    {
+        foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
+        {
+            float savedVolume = PlayerPrefs.GetFloat(type.ToString(), 1f);
+            volumeLevels[type] = savedVolume;
+            
+            // Update AudioSource volume if it already exists
+            if (audioSources.ContainsKey(type))
+            {
+                audioSources[type].volume = savedVolume;
+            }
+        }
     }
     
 #if UNITY_EDITOR
@@ -84,7 +133,7 @@ public class SoundManager : MonoBehaviour
 [Serializable]
 public struct SoundList
 {
-    public AudioClip[] Sounds { get => sounds; }
+    public AudioClip[] Sounds => sounds;
     [HideInInspector] public string name;
     [SerializeField] private AudioClip[] sounds;
 }

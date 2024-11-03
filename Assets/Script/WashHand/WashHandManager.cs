@@ -103,16 +103,20 @@ public class WashHandManager : MonoBehaviour
         
         float elapsedTime = 0f;
         Vector3 startingPosition = obj.transform.position;
+        Vector3 startingScale = obj.transform.localScale;
+        Vector3 targetScale = new Vector3(1.5f, 1.5f, 1.5f);
 
         while (elapsedTime < 1f)
         {
             obj.transform.position = Vector3.Lerp(startingPosition, targetPosition.transform.position, elapsedTime);
+            obj.transform.localScale = Vector3.Lerp(startingScale, targetScale, elapsedTime);
+            
             elapsedTime += Time.deltaTime * moveSpeed;
             yield return null;  // Wait for the next frame
         }
         
         obj.transform.position = targetPosition.transform.position;
-        
+        obj.transform.localScale = targetScale;
         
         if (objCollider != null)
         {

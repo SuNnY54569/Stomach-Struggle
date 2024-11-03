@@ -7,7 +7,8 @@ public class ItemClickHandler : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.Instance.isGamePaused) return;
-        
+        if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax) return;
+
         if (gameObject.CompareTag("GoodVegetable"))
         {
             Destroy(gameObject);
@@ -27,10 +28,6 @@ public class ItemClickHandler : MonoBehaviour
         if (gameObject.CompareTag("GoodVegetable"))
         {
             GameManager.Instance.DecreaseHealth(1);
-        }
-        else if (gameObject.CompareTag("BadVegetable"))
-        {
-            GameManager.Instance.DecreaseHealth(0);
         }
 
         Destroy(this.gameObject);

@@ -40,6 +40,8 @@ public class ObjectClick : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance.isGamePaused) return;
+        
         WashHandManager.Instance.OnObjectClicked(objectIndex, animationName, gameObject, animator);
     }
 

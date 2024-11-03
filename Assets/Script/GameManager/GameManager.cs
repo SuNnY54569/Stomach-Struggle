@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public int totalHeartLeft;
     [Header("Scenes to Deactivate GameManager")]
     [SerializeField] private List<string> scenesToDeactivate;
+    [SerializeField] private List<GameObject> objectsToDeactivate;
     
     [Header("Post Processing")]
     [SerializeField] private PostProcessVolume volume;
@@ -83,11 +84,17 @@ public class GameManager : MonoBehaviour
     {
         if (scenesToDeactivate.Contains(scene.name))
         {
-            gameObject.SetActive(false);
+            foreach (var obj in objectsToDeactivate)
+            {
+                obj.SetActive(false);
+            }
         }
         else
         {
-            gameObject.SetActive(true);
+            foreach (var obj in objectsToDeactivate)
+            {
+                obj.SetActive(true);
+            }
         }
     }
     
@@ -97,7 +104,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(TakeDamageEffect());
         currentHealth -= amount;
         UpdateHeartsUI();
-        SoundManager.PlaySound(SoundType.Hurt);
+        SoundManager.PlaySound(SoundType.Hurt, VolumeType.SFX);
 
         if (currentHealth <= 0)
         {
@@ -192,6 +199,14 @@ public class GameManager : MonoBehaviour
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
         winPanel.SetActive(true);
+    }
+
+    public void ExitToMenu()
+    {
+        ResetHealth();
+        ResetScore();
+        totalHeart = 0;
+        totalHeartLeft = 0;
     }
 
     public void ResetHealth()
