@@ -1860,10 +1860,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTool: 0
-  tongsCursor: {fileID: 2800000, guid: 43550a56bbcec604eb931cde41dfe23f, type: 3}
-  spatulaCursor: {fileID: 2800000, guid: 46ef17d45395ca24aa7ad6717ce5afde, type: 3}
-  tongsCursorHotspot: {x: 0, y: 230}
-  spatulaCursorHotspot: {x: 0, y: 230}
+  tongsCursor: {fileID: 2800000, guid: 773cf159aa6008f42b66bf791c8c6fdd, type: 3}
+  spatulaCursor: {fileID: 2800000, guid: a313a7fe615fb9149a2cf73218762520, type: 3}
+  tongsCursorHotspot: {x: 30, y: 220}
+  spatulaCursorHotspot: {x: 0, y: 249}
   currentlyCookingSteak: {fileID: 0}
 --- !u!4 &1684163229
 Transform:
