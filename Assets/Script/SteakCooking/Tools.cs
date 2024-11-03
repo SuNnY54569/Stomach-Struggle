@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Tools : MonoBehaviour
@@ -20,6 +21,15 @@ public class Tools : MonoBehaviour
     [SerializeField] private Texture2D spatulaCursor;
     [SerializeField] private Vector2 tongsCursorHotspot;
     [SerializeField] private Vector2 spatulaCursorHotspot;
+    
+    [Header("Warning Setting")]
+    [SerializeField] private TextMeshProUGUI warningMessageText;
+    [SerializeField] private string warningMessage;
+    [SerializeField] private string tongsWarning = "อันนี้ต้องใช้ตะหลิวนะ";
+    [SerializeField] private string spatulaWarning = "อันนี้ต้องใช้ทีคีบนะ";
+    [SerializeField] private float warningFadeDuration = 1.5f;
+    [SerializeField] private float warningCooldown = 1.5f;
+    private float lastWarningTime = -Mathf.Infinity; 
 
     public Steak currentlyCookingSteak;
 
@@ -37,10 +47,19 @@ public class Tools : MonoBehaviour
         }
         
     }
+    
+    private void Start()
+    {
+        // Ensure warning message is invisible at start
+        if (warningMessageText != null)
+        {
+            warningMessageText.alpha = 0;
+        }
+    }
 
     private void Update()
     {
-        if (GameManager.Instance.isGamePaused) 
+        if (GameManager.Instance != null && GameManager.Instance.isGamePaused) 
         {
             DeselectTool();
         }
@@ -96,5 +115,52 @@ public class Tools : MonoBehaviour
     {
         // Check if the provided steak is the one currently being cooked
         return currentlyCookingSteak == steak;
+    }
+    
+    public void ShowWarning(ToolType toolType)
+    {
+        if (Time.time - lastWarningTime < warningCooldown) return;
+        if (warningMessageText == null) return;
+        
+        lastWarningTime = Time.time;
+        StopCoroutine(FadeOutWarning());
+        
+        switch (toolType)
+        {
+            case ToolType.Spatula :
+                warningMessageText.text = spatulaWarning;
+                break;
+            case ToolType.Tongs:
+                warningMessageText.text = tongsWarning;
+                break;
+            default:
+                warningMessageText.text = warningMessage;
+                break;
+        }
+        
+        warningMessageText.gameObject.SetActive(true);
+        StartCoroutine(FadeOutWarning());
+    }
+    
+    private IEnumerator FadeOutWarning()
+    {
+        float elapsedTime = 0f;
+        Color originalColor = warningMessageText.color;
+        originalColor.a = 1f;  // Start fully visible
+        warningMessageText.color = originalColor;
+
+        // Fade out over time
+        while (elapsedTime < warningFadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / warningFadeDuration);
+            warningMessageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        // Ensure it's completely invisible
+        warningMessageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        warningMessageText.gameObject.SetActive(false);
+        warningMessageText.text = "";
     }
 }
