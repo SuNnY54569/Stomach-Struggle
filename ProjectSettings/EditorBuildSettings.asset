@@ -63,11 +63,11 @@ EditorBuildSettings:
     path: Assets/Scenes/GoHospital.unity
     guid: dfead498a0c1f0d4d928e6ae8983a880
   - enabled: 1
-    path: Assets/Scenes/WaitingForDoc.unity
-    guid: ee59f12f8f3154d41b98dcf75e1c15e0
-  - enabled: 1
     path: Assets/Scenes/Docter.unity
     guid: 661042fb14c25844abad534f9cb4f07f
+  - enabled: 1
+    path: Assets/Scenes/WaitingForDoc.unity
+    guid: ee59f12f8f3154d41b98dcf75e1c15e0
   - enabled: 1
     path: Assets/Scenes/Docter 2.unity
     guid: a0663bff2a1b4454d80fad0b49089619
