@@ -41,6 +41,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float initialIntensity;
     [SerializeField] private float shakeIntensity = 0.1f;
     private Vignette _vignette;
+
+    [Header("Player Info")] 
+    public string playerName = "Player";
+    public int preTestScore;
+    public int postTestScore;
     
     private void Awake()
     {

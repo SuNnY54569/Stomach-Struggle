@@ -49,19 +49,24 @@ public class TestManager : MonoBehaviour
         }
     }
     
-    public void Next()
+    public void Next(string sceneName)
     {
+        switch (sceneName)
+        {
+            case "PreTest":
+                GameManager.Instance.preTestScore = score;
+                break;
+            case "PostTest":
+                GameManager.Instance.postTestScore = score;
+                break;
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     
     public void Retry()
     {
         SceneManager.LoadScene("PreTest");
-    }
-
-    public void MainMenu()
-    {
-        SceneManager.LoadScene("Start scene");
     }
 
     private void GameOver()
