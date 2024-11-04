@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Firebase.Database;
 using TMPro;
 using UnityEngine;
+using Proyecto26;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -14,75 +14,75 @@ public class DatabaseManager : MonoBehaviour
     
     string newUserKey;
     private string userID;
-    private DatabaseReference dbReference;
+    private string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/users";
     
     void Start()
     {
         userID = SystemInfo.deviceUniqueIdentifier;
-        dbReference = FirebaseDatabase.DefaultInstance.RootReference;
-    
-        if (dbReference == null)
-        {
-            Debug.LogError("Database reference not initialized!");
-        }
     }
 
     public void CreateUser()
     {
-        if (nameInput == null || GameManager.Instance == null || dbReference == null)
+        if (nameInput == null || GameManager.Instance == null)
         {
             Debug.LogError("One of the references is null: " +
-                           $"nameInput: {nameInput}, GameManager.Instance: {GameManager.Instance}, dbReference: {dbReference}");
+                           $"nameInput: {nameInput}, GameManager.Instance: {GameManager.Instance}");
             return;
         }
         
+        newUserKey = Guid.NewGuid().ToString();
+        
         User newUser = new User(nameInput.text, $"{GameManager.Instance.preTestScore}/10", $"{GameManager.Instance.postTestScore}/10");
-        string json = JsonUtility.ToJson(newUser);
 
-        newUserKey = dbReference.Child("users").Push().Key;
-        dbReference.Child("users").Child(userID).Child(newUserKey).SetRawJsonValueAsync(json);
+        /*newUserKey = dbReference.Child("users").Push().Key;
+        dbReference.Child("users").Child(userID).Child(newUserKey).SetRawJsonValueAsync(json);*/
+        
+        RestClient.Put($"{firebaseURL}/{userID}/{newUserKey}.json", newUser).Then(response =>
+        {
+            Debug.Log("User created successfully with key: " + newUserKey);
+        }).Catch(error =>
+        {
+            Debug.LogError("Error creating user: " + error.Message);
+        });
     }
 
     public IEnumerator GetName(Action<string> onCallback)
     {
-        var userNameData = dbReference.Child("users").Child(userID).Child(newUserKey).Child("name").GetValueAsync();
-
-        yield return new WaitUntil(predicate: () => userNameData.IsCompleted);
-
-        if (userNameData != null)
+        RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/name.json").Then(response =>
         {
-            DataSnapshot snapshot = userNameData.Result;
-            
-            onCallback.Invoke(snapshot.Value.ToString());
-        }
+            onCallback?.Invoke(response.Text);
+        }).Catch(error =>
+        {
+            Debug.LogError("Error fetching name: " + error.Message);
+        });
+
+        yield return null;
     }
     
     public IEnumerator GetPreTestScore(Action<string> onCallback)
     {
-        var userPreTestScoreData = dbReference.Child("users").Child(userID).Child(newUserKey).Child("preTestScore").GetValueAsync();
-
-        yield return new WaitUntil(predicate: () => userPreTestScoreData.IsCompleted);
-
-        if (userPreTestScoreData != null)
+        RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/preTestScore.json").Then(response =>
         {
-            DataSnapshot snapshot = userPreTestScoreData.Result;
-            
-            onCallback.Invoke(snapshot.Value.ToString());
-        }
+            onCallback?.Invoke(response.Text);
+        }).Catch(error =>
+        {
+            Debug.LogError("Error fetching pre-test score: " + error.Message);
+        });
+
+        yield return null;
     }
     
     public IEnumerator GetPostTestScore(Action<string> onCallback)
     {
-        var userPostTestScoreData = dbReference.Child("users").Child(userID).Child(newUserKey).Child("postTestScore").GetValueAsync();
-
-        yield return new WaitUntil(predicate: () => userPostTestScoreData.IsCompleted);
-
-        if (userPostTestScoreData != null)
+        RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/postTestScore.json").Then(response =>
         {
-            DataSnapshot snapshot = userPostTestScoreData.Result;
-            
-            onCallback.Invoke(snapshot.Value.ToString());
-        }
+            onCallback?.Invoke(response.Text);
+        }).Catch(error =>
+        {
+            Debug.LogError("Error fetching post-test score: " + error.Message);
+        });
+
+        yield return null;
     }
 
     public void GetUserInfo()
