@@ -130,16 +130,9 @@ public class TestManager : MonoBehaviour
     
     private IEnumerator HandleNextQuestion()
     {
-        yield return StartCoroutine(GetWrongCount(currentCount =>
-        {
-            // Remove the current question
-            QnA.RemoveAt(currentQuestion);
-        }));
-
-        // Wait for 0.5 seconds before generating the next question
         yield return new WaitForSeconds(0.5f);
 
-        // Generate the next question
+        QnA.RemoveAt(currentQuestion);
         GenerateQuestion();
     }
     
@@ -150,7 +143,6 @@ public class TestManager : MonoBehaviour
         // Wait for the response from RestClient
         yield return RestClient.Get($"{firebaseURL}/{questionId}/wrongCount.json").Then(response =>
         {
-            Debug.Log("Response Text: " + response.Text);
             if (int.TryParse(response.Text, out int wrongCount))
             {
                 onCallback?.Invoke(wrongCount);
