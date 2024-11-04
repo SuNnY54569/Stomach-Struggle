@@ -43,7 +43,7 @@ public class DatabaseManager : MonoBehaviour
         });
     }
 
-    public IEnumerator GetName(Action<string> onCallback)
+    private IEnumerator GetName(Action<string> onCallback)
     {
         RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/name.json").Then(response =>
         {
@@ -55,12 +55,14 @@ public class DatabaseManager : MonoBehaviour
 
         yield return null;
     }
-    
-    public IEnumerator GetPreTestScore(Action<string> onCallback)
+
+    private IEnumerator GetPreTestScore(Action<string> onCallback)
     {
-        RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/preTestScore.json").Then(response =>
+        yield return RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/preTestScore.json").Then(response =>
         {
-            onCallback?.Invoke(response.Text);
+            string score = response.Text;
+            Debug.Log($"Fetched Pre-Test Score Response: {score}");
+            onCallback?.Invoke(score != "null" ? score : "No Score Found");
         }).Catch(error =>
         {
             Debug.LogError("Error fetching pre-test score: " + error.Message);
@@ -68,12 +70,14 @@ public class DatabaseManager : MonoBehaviour
 
         yield return null;
     }
-    
-    public IEnumerator GetPostTestScore(Action<string> onCallback)
+
+    private IEnumerator GetPostTestScore(Action<string> onCallback)
     {
-        RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/postTestScore.json").Then(response =>
+        yield return RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/postTestScore.json").Then(response =>
         {
-            onCallback?.Invoke(response.Text);
+            string score = response.Text;
+            Debug.Log($"Fetched Post-Test Score Response: {score}");
+            onCallback?.Invoke(score != "null" ? score : "No Score Found");
         }).Catch(error =>
         {
             Debug.LogError("Error fetching post-test score: " + error.Message);
@@ -87,23 +91,26 @@ public class DatabaseManager : MonoBehaviour
         StartCoroutine(GetName((string name) =>
         {
             nameText.text = $"Name: {name}";
-
         }));
-        
+
         StartCoroutine(GetPreTestScore((string preTestScore) =>
         {
             preTestScoreText.text = $"Pre-Test Score: {preTestScore}";
-            if (preTestScore != null) return;
-            preTestScoreText.text = $"Pre-Test Score: {GameManager.Instance.preTestScore}/10";
-            Debug.LogWarning("preTestScoreText = null");
+            if (preTestScoreText.text == "No Score Found")
+            {
+                preTestScoreText.text = $"Pre-Test Score: {GameManager.Instance.preTestScore}/10";
+                Debug.LogWarning("preTestScoreText = null");
+            }
         }));
-        
+
         StartCoroutine(GetPostTestScore((string postTestScore) =>
         {
             postTestScoreText.text = $"Post-Test Score: {postTestScore}";
-            if (postTestScore != null) return;
-            preTestScoreText.text = $"Post-Test Score: {GameManager.Instance.postTestScore}/10";
-            Debug.LogWarning("psotTestScoreText = null");
+            if (postTestScoreText.text == "No Score Found")
+            {
+                postTestScoreText.text = $"Post-Test Score: {GameManager.Instance.postTestScore}/10";
+                Debug.LogWarning("postTestScoreText = null");
+            }
         }));
     }
 }
