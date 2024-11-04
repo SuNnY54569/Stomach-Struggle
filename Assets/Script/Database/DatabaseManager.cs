@@ -33,9 +33,6 @@ public class DatabaseManager : MonoBehaviour
         newUserKey = Guid.NewGuid().ToString();
         
         User newUser = new User(nameInput.text, $"{GameManager.Instance.preTestScore}/10", $"{GameManager.Instance.postTestScore}/10");
-
-        /*newUserKey = dbReference.Child("users").Push().Key;
-        dbReference.Child("users").Child(userID).Child(newUserKey).SetRawJsonValueAsync(json);*/
         
         RestClient.Put($"{firebaseURL}/{userID}/{newUserKey}.json", newUser).Then(response =>
         {
@@ -96,13 +93,17 @@ public class DatabaseManager : MonoBehaviour
         StartCoroutine(GetPreTestScore((string preTestScore) =>
         {
             preTestScoreText.text = $"Pre-Test Score: {preTestScore}";
-
+            if (preTestScore != null) return;
+            preTestScoreText.text = $"Pre-Test Score: {GameManager.Instance.preTestScore}/10";
+            Debug.LogWarning("preTestScoreText = null");
         }));
         
         StartCoroutine(GetPostTestScore((string postTestScore) =>
         {
             postTestScoreText.text = $"Post-Test Score: {postTestScore}";
-
+            if (postTestScore != null) return;
+            preTestScoreText.text = $"Post-Test Score: {GameManager.Instance.postTestScore}/10";
+            Debug.LogWarning("psotTestScoreText = null");
         }));
     }
 }
