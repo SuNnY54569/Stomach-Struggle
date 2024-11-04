@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Proyecto26;
 using Random = UnityEngine.Random;
 
 public class TestManager : MonoBehaviour
@@ -25,12 +26,20 @@ public class TestManager : MonoBehaviour
 
     [Header("Infos")] 
     [SerializeField] private int questionNumber;
-    [SerializeField] private int currentQuestion;
+    public int currentQuestion;
     [SerializeField] private int totalQuestion;
     [SerializeField] private int score;
+    
+    public string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions";
 
     private void Start()
     {
+        if (QnA == null || QnA.Count == 0)
+        {
+            Debug.LogError("QnA list is not initialized or is empty.");
+            return; // Prevents proceeding if there are no questions
+        }
+        
         totalQuestion = QnA.Count;
         goPanel.SetActive(false);
         quizPanel.SetActive(true);
@@ -39,14 +48,6 @@ public class TestManager : MonoBehaviour
         qNumberText.text = $"{questionNumber}.";
         GenerateQuestion();
         scoreText.text = $"{score} / {totalQuestion}";
-    }
-    
-    private void OnValidate()
-    {
-        for (int i = 0; i < QnA.Count; i++)
-        {
-            QnA[i].name = $"Question{i + 1}";
-        }
     }
     
     public void Next(string sceneName)
@@ -66,7 +67,7 @@ public class TestManager : MonoBehaviour
     
     public void Retry()
     {
-        SceneManager.LoadScene("PreTest");
+        SceneManager.LoadScene("Start scene");
     }
 
     private void GameOver()
@@ -88,11 +89,12 @@ public class TestManager : MonoBehaviour
 
     public void Wrong()
     {
+        IncrementWrongCount();
         corretOrNotText.text = "Wrong Answer";
         correctionText.text = QnA[currentQuestion].correction;
         correctionPanel.SetActive(true);
-        QnA.RemoveAt(currentQuestion);
-        GenerateQuestion();
+        
+        StartCoroutine(HandleNextQuestion());
     }
     
     private void SetAnswer()
@@ -113,7 +115,7 @@ public class TestManager : MonoBehaviour
         if (QnA.Count > 0)
         {
             currentQuestion = Random.Range(0, QnA.Count);
-
+            Debug.Log($"Current Question Index: {currentQuestion}, Question Name: {QnA[currentQuestion].name}");
             questionText.text = QnA[currentQuestion].question;
             SetAnswer();
             questionNumber++;
@@ -124,5 +126,67 @@ public class TestManager : MonoBehaviour
             Debug.Log("Out of Questions");
             GameOver();
         }
+    }
+    
+    private IEnumerator HandleNextQuestion()
+    {
+        yield return StartCoroutine(GetWrongCount(currentCount =>
+        {
+            // Remove the current question
+            QnA.RemoveAt(currentQuestion);
+        }));
+
+        // Wait for 0.5 seconds before generating the next question
+        yield return new WaitForSeconds(0.5f);
+
+        // Generate the next question
+        GenerateQuestion();
+    }
+    
+    private IEnumerator GetWrongCount(Action<int> onCallback)
+    {
+        string questionId = $"{QnA[currentQuestion].name}";
+
+        // Wait for the response from RestClient
+        yield return RestClient.Get($"{firebaseURL}/{questionId}/wrongCount.json").Then(response =>
+        {
+            Debug.Log("Response Text: " + response.Text);
+            if (int.TryParse(response.Text, out int wrongCount))
+            {
+                onCallback?.Invoke(wrongCount);
+            }
+            else
+            {
+                Debug.LogError("Failed to parse wrong count to an integer: " + response.Text);
+            }
+        }).Catch(error =>
+        {
+            Debug.LogError("Error fetching wrong count: " + error.Message);
+        });
+    }
+    
+    private void IncrementWrongCount()
+    {
+        // Start the coroutine to get the current wrong count
+        StartCoroutine(GetWrongCount(currentCount =>
+        {
+            string questionId = $"{QnA[currentQuestion].name}";
+            // Increment the wrong count
+            int newCount = currentCount + 1;
+
+            Question question = new Question(newCount);
+
+            // Define the path to the question data
+            string url = $"{firebaseURL}/{questionId}.json";
+
+            // Update the wrong count in the database
+            RestClient.Put(url, question).Then(response =>
+            {
+                Debug.Log($"Updated wrong count for {questionId}: {newCount}");
+            }).Catch(error =>
+            {
+                Debug.LogError($"Error updating wrong count: {error}");
+            });
+        })); // Pass questionId directly
     }
 }
