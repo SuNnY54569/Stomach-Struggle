@@ -17,6 +17,7 @@ public class TestManager : MonoBehaviour
     [SerializeField] private GameObject quizPanel;
     [SerializeField] private GameObject goPanel;
     [SerializeField] private GameObject correctionPanel;
+    [SerializeField] private GameObject correctPanel;
     [SerializeField] private TMP_Text corretOrNotText;
     [SerializeField] private TMP_Text correctionText;
     [SerializeField] private TMP_Text questionText;
@@ -26,7 +27,7 @@ public class TestManager : MonoBehaviour
 
     [Header("Infos")] 
     [SerializeField] private int questionNumber;
-    public int currentQuestion;
+    [SerializeField] private int currentQuestion;
     [SerializeField] private int totalQuestion;
     [SerializeField] private int score;
     
@@ -78,13 +79,9 @@ public class TestManager : MonoBehaviour
     }
     public void Correct()
     {
-        corretOrNotText.text = "Correct Answer";
-        correctionText.text = "Good Job !";
         score += 1;
         scoreText.text = $"{score} / {totalQuestion}";
-        correctionPanel.SetActive(true);
-        QnA.RemoveAt(currentQuestion);
-        GenerateQuestion();
+        correctPanel.SetActive(true);
     }
 
     public void Wrong()
@@ -93,8 +90,6 @@ public class TestManager : MonoBehaviour
         corretOrNotText.text = "Wrong Answer";
         correctionText.text = QnA[currentQuestion].correction;
         correctionPanel.SetActive(true);
-        
-        StartCoroutine(HandleNextQuestion());
     }
     
     private void SetAnswer()
@@ -127,11 +122,9 @@ public class TestManager : MonoBehaviour
             GameOver();
         }
     }
-    
-    private IEnumerator HandleNextQuestion()
-    {
-        yield return new WaitForSeconds(0.5f);
 
+    public void NextQuestion()
+    {
         QnA.RemoveAt(currentQuestion);
         GenerateQuestion();
     }
