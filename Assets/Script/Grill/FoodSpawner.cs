@@ -28,7 +28,7 @@ public class FoodSpawner : MonoBehaviour
     {
         if (!IsObjectAbove())
         {
-            Instantiate(rawFoodPrefabs[Random.Range(0, rawFoodPrefabs.Length)], transform.position, Quaternion.identity);
+            Instantiate(rawFoodPrefabs[Random.Range(0, rawFoodPrefabs.Length)], transform.position, Quaternion.identity, transform);
         }
     }
     

@@ -6,7 +6,7 @@ public class DragFood : MonoBehaviour
     #region Drag Settings
     [Header("Settings")]
     [SerializeField, Tooltip("Array of food spawners.")]
-    private GameObject[] foodSpawners;
+    private GameObject foodSpawners;
 
     [Tooltip("Can the player interact with this food item?")]
     public bool isInteractable = true;
@@ -23,7 +23,7 @@ public class DragFood : MonoBehaviour
 
     private void Awake()
     {
-        foodSpawners = GameObject.FindGameObjectsWithTag("FoodSpawner");
+        foodSpawners = transform.parent.gameObject;
         col = GetComponent<Collider2D>();
         foodCooking = GetComponent<FoodCooking>();
         mainCamera = Camera.main;
@@ -82,10 +82,7 @@ public class DragFood : MonoBehaviour
         if (hitInfo.collider != null)
         {
             HandleDrop(hitInfo);
-            foreach (var foodSpawner in foodSpawners)
-            {
-                foodSpawner.GetComponent<FoodSpawner>().SpawnFood();
-            }
+            foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
         }
         else
         {

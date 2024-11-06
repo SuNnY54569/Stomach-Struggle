@@ -62,6 +62,10 @@ public class Steak : MonoBehaviour
             FlipFood();
             StartCooking();
         }
+        else
+        {
+            Tools.Instance.ShowWarning(currentTool);
+        }
     }
     
     private void OnMouseDrag()
