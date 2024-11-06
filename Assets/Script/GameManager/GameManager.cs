@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,16 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
+[Serializable]
+public class LevelSettings
+{
+    [Tooltip("The name of the level.")]
+    public string levelName;
+    [Tooltip("The maximum score required to win this level.")]
+    public int maxScore;
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -28,12 +39,14 @@ public class GameManager : MonoBehaviour
 
     #region Score Settings
     [Header("Score Settings")]
-    [Tooltip("The current score of the player.")]
+    [SerializeField,Tooltip("The current score of the player.")]
     private int scoreValue = 0;
     [Tooltip("The maximum score required to win.")]
     public int scoreMax;
     [SerializeField, Tooltip("UI Text element to display score.")]
     private TextMeshProUGUI scoreText;
+    [SerializeField, Tooltip("List of level settings to configure max score for each level.")]
+    private List<LevelSettings> levelSettings;
     #endregion
 
 
@@ -133,6 +146,8 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        SetMaxScoreForLevel(scene.name);
+        
         foreach (var obj in objectsToDeactivate)
         {
             obj.SetActive(!scenesToDeactivate.Contains(scene.name));
@@ -214,6 +229,21 @@ public class GameManager : MonoBehaviour
     {
         scoreValue = 0;
         UpdateScoreText();
+    }
+    
+    private void SetMaxScoreForLevel(string levelName)
+    {
+        foreach (LevelSettings settings in levelSettings)
+        {
+            if (settings.levelName == levelName)
+            {
+                scoreMax = settings.maxScore;
+                return;
+            }
+        }
+        
+        Debug.LogWarning($"Max score for {levelName} not set. Using default.");
+        scoreMax = 3;
     }
     #endregion
     

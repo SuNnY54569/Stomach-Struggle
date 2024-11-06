@@ -10,6 +10,9 @@ public class DragFood : MonoBehaviour
 
     [Tooltip("Can the player interact with this food item?")]
     public bool isInteractable = true;
+
+    [SerializeField] private Collider2D spawnCollider;
+    [SerializeField] private Collider2D mainCollider;
     
     private Collider2D col;
     private Vector3 offset;
@@ -19,10 +22,15 @@ public class DragFood : MonoBehaviour
     private bool isOnGrill;
     private bool wasOnGrillBeforeDrag;
     private FoodCooking foodCooking;
+    [SerializeField] private bool hasBeenActivate;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     #endregion
 
     private void Awake()
     {
+        isOnGrill = false;
+        spriteRenderer.enabled = false;
+        mainCollider.enabled = false;
         foodSpawners = transform.parent.gameObject;
         col = GetComponent<Collider2D>();
         foodCooking = GetComponent<FoodCooking>();
@@ -57,6 +65,9 @@ public class DragFood : MonoBehaviour
         {
             isDragging = true;
             wasOnGrillBeforeDrag = isOnGrill;
+            spriteRenderer.enabled = true;
+            mainCollider.enabled = true;
+            spawnCollider.enabled = false;
             foodCooking.StopCooking();
         }
     }
@@ -82,13 +93,15 @@ public class DragFood : MonoBehaviour
         if (hitInfo.collider != null)
         {
             HandleDrop(hitInfo);
-            foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
         }
         else
         {
             ResetPosition();
+            if (!hasBeenActivate)
+            {
+                spriteRenderer.enabled = false;
+            }
         }
-
         col.enabled = true;
     }
     #endregion
@@ -100,15 +113,19 @@ public class DragFood : MonoBehaviour
         {
             case "Grill":
                 PlaceOnGrill();
+                foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
                 break;
             case "Plate":
                 PlaceOnPlate();
+                foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
                 break;
             case "Trash":
                 PlaceOnTrash();
+                foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
                 break;
             default:
                 ResetPosition();
+                spriteRenderer.enabled = false;
                 break;
         }
     }
@@ -118,11 +135,13 @@ public class DragFood : MonoBehaviour
         transform.position += new Vector3(0, 0, -0.01f);
         foodCooking.StartCooking();
         isOnGrill = true;
+        hasBeenActivate = true;
         startPosition = transform.position;
     }
 
     private void PlaceOnPlate()
     {
+        hasBeenActivate = true;
         foodCooking.PlaceOnPlate();
         startPosition = transform.position;
         if (foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked())

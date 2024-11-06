@@ -4416,8 +4416,13 @@ MonoBehaviour:
   - {fileID: 612236002009804672}
   fullHeart: {fileID: 1064164869, guid: 3de96c4ecb143464f8787ab21c87752f, type: 3}
   emptyHeart: {fileID: 2126760246, guid: 3de96c4ecb143464f8787ab21c87752f, type: 3}
-  scoreMax: 5
+  scoreMax: 3
   scoreText: {fileID: 8850102741101602797}
+  levelSettings:
+  - levelName: Grill
+    maxScore: 5
+  - levelName: ChooseWater
+    maxScore: 5
   gameOverPanel: {fileID: 7869578107665225231}
   winPanel: {fileID: 2498101482384833761}
   totalHeart: 0
@@ -4426,6 +4431,8 @@ MonoBehaviour:
   totalHeartLeft1: 0
   totalHeart2: 0
   totalHeartLeft2: 0
+  totalHeart3: 0
+  totalHeartLeft3: 0
   scenesToDeactivate:
   - Start scene
   - PreTest
@@ -4447,9 +4454,8 @@ MonoBehaviour:
   - {fileID: 1215772611402400720}
   volume: {fileID: 4719851792561678198}
   fadeDuration: 0.5
-  intensity: 0
-  initialIntensity: 0.4
   shakeIntensity: 0.1
+  intensity: 0
   playerName: Player
   preTestScore: 0
   postTestScore: 0
