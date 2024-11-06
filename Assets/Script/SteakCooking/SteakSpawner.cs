@@ -18,6 +18,7 @@ public class SteakSpawner : MonoBehaviour
         previousMaxScore = GameManager.Instance.scoreMax;
         GameManager.Instance.SetMaxScore(maxScore);
         GameManager.Instance.SetScoreTextActive(true);
+        GameManager.Instance.UpdateScoreText();
         remainingSteaks = maxSteakCount;
         SpawnInitialSteaks();
     }
