@@ -30,6 +30,16 @@ public class GameManager : MonoBehaviour
 
     public int totalHeart;
     public int totalHeartLeft;
+
+    public int totalHeart1;
+    public int totalHeartLeft1;
+    
+    public int totalHeart2;
+    public int totalHeartLeft2;
+    
+    public int totalHeart3;
+    public int totalHeartLeft3;
+    
     [Header("Scenes to Deactivate GameManager")]
     [SerializeField] private List<string> scenesToDeactivate;
     [SerializeField] private List<GameObject> objectsToDeactivate;
@@ -139,32 +149,21 @@ public class GameManager : MonoBehaviour
         _vignette.enabled.Override(true);
         float elapsedTime = 0f;
         intensity = initialIntensity;
-        float shakeDuration = fadeDuration; // Shake duration
         Transform cameraTransform = Camera.main.transform;
         Vector3 originalPosition = cameraTransform.position;
 
-        while (intensity > 0 || shakeDuration > 0)
+        while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             intensity = Mathf.Lerp(initialIntensity, 0, elapsedTime / fadeDuration);
             _vignette.intensity.Override(intensity);
 
-            // Apply camera shake
-            if (shakeDuration > 0)
-            {
-                shakeDuration -= Time.deltaTime;
-                float offsetX = Random.Range(-shakeIntensity, shakeIntensity);
-                float offsetY = Random.Range(-shakeIntensity, shakeIntensity);
-                cameraTransform.position = originalPosition + new Vector3(offsetX, offsetY, 0);
-            }
-            else
-            {
-                cameraTransform.position = originalPosition;
-            }
+            float shakeMagnitude = Mathf.Lerp(shakeIntensity, 0, elapsedTime / fadeDuration);
+            cameraTransform.position = originalPosition + Random.insideUnitSphere * shakeMagnitude;
 
             yield return null;
         }
-        
+
         _vignette.enabled.Override(false);
         cameraTransform.position = originalPosition;
     }
@@ -254,6 +253,16 @@ public class GameManager : MonoBehaviour
     public void SetMaxScore(int maxScore)
     {
         scoreMax = maxScore;
+    }
+
+    public int GetSumTotalHeartLeft()
+    {
+        return totalHeartLeft1 + totalHeartLeft2 + totalHeartLeft3;
+    }
+
+    public int GetSumTotalHeart()
+    {
+        return totalHeart1 + totalHeart2 + totalHeart3;
     }
     
     

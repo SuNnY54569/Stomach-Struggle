@@ -4422,6 +4422,10 @@ MonoBehaviour:
   winPanel: {fileID: 2498101482384833761}
   totalHeart: 0
   totalHeartLeft: 0
+  totalHeart1: 0
+  totalHeartLeft1: 0
+  totalHeart2: 0
+  totalHeartLeft2: 0
   scenesToDeactivate:
   - Start scene
   - PreTest
@@ -4438,6 +4442,7 @@ MonoBehaviour:
   - Sleep1
   - WaitingForDoc
   - Final Summary
+  - Summary
   objectsToDeactivate:
   - {fileID: 1215772611402400720}
   volume: {fileID: 4719851792561678198}

@@ -10,11 +10,12 @@ public class DatabaseManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI preTestScoreText;
     [SerializeField] private TextMeshProUGUI postTestScoreText;
+    [SerializeField] private TextMeshProUGUI totalHeartText;
     [SerializeField] private TMP_InputField nameInput;
     
     string newUserKey;
     private string userID;
-    private string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/users";
+    private const string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/users";
     
     void Start()
     {
@@ -31,8 +32,11 @@ public class DatabaseManager : MonoBehaviour
         }
         
         newUserKey = Guid.NewGuid().ToString();
+
+        int totalHeart = GameManager.Instance.GetSumTotalHeart();
+        int totalHeartLeft = GameManager.Instance.GetSumTotalHeartLeft();
         
-        User newUser = new User(nameInput.text, $"{GameManager.Instance.preTestScore}/10", $"{GameManager.Instance.postTestScore}/10");
+        User newUser = new User(nameInput.text, $"{GameManager.Instance.preTestScore}/10", $"{GameManager.Instance.postTestScore}/10", $"{totalHeartLeft}/{totalHeart}");
         
         RestClient.Put($"{firebaseURL}/{userID}/{newUserKey}.json", newUser).Then(response =>
         {
@@ -86,6 +90,21 @@ public class DatabaseManager : MonoBehaviour
         yield return null;
     }
 
+    private IEnumerator GetTotalHeart(Action<string> onCallback)
+    {
+        yield return RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/totalHeart.json").Then(response =>
+        {
+            string totalHeart = response.Text;
+            Debug.Log($"Fetched totalHeart Response: {totalHeart}");
+            onCallback?.Invoke(totalHeart != "null" ? totalHeart : "No totalHeart Found");
+        }).Catch(error =>
+        {
+            Debug.LogError("Error fetching totalHeart: " + error.Message);
+        });
+
+        yield return null;
+    }
+
     public void GetUserInfo()
     {
         StartCoroutine(GetName((string name) =>
@@ -110,6 +129,16 @@ public class DatabaseManager : MonoBehaviour
             {
                 postTestScoreText.text = $"Post-Test Score: {GameManager.Instance.postTestScore}/10";
                 Debug.LogWarning("postTestScoreText = null");
+            }
+        }));
+        
+        StartCoroutine(GetTotalHeart((string totalHeart) =>
+        {
+            totalHeartText.text = $"TotalHeart: {totalHeart}";
+            if (totalHeartText.text == "No Score Found")
+            {
+                totalHeartText.text = $"TotalHeart: {GameManager.Instance.GetSumTotalHeartLeft()}/{GameManager.Instance.GetSumTotalHeart()}";
+                Debug.LogWarning("preTestScoreText = null");
             }
         }));
     }
