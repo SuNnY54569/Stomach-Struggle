@@ -126,6 +126,7 @@ public class TestManager : MonoBehaviour
         else
         {
             Debug.Log("Out of Questions");
+            UpdateMostWrongCountQuestionInDatabase();
             GameOver();
         }
     }
@@ -134,7 +135,6 @@ public class TestManager : MonoBehaviour
     {
         QnA.RemoveAt(currentQuestion);
         GenerateQuestion();
-        UpdateMostWrongCountQuestionInDatabase();
     }
 
     private IEnumerator GetWrongCount(Action<int> onCallback)

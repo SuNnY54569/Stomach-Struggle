@@ -4437,6 +4437,7 @@ MonoBehaviour:
   - GoVegShop
   - Sleep1
   - WaitingForDoc
+  - Final Summary
   objectsToDeactivate:
   - {fileID: 1215772611402400720}
   volume: {fileID: 4719851792561678198}
@@ -4444,6 +4445,9 @@ MonoBehaviour:
   intensity: 0
   initialIntensity: 0.4
   shakeIntensity: 0.1
+  playerName: Player
+  preTestScore: 0
+  postTestScore: 0
 --- !u!114 &6330731320766605027
 MonoBehaviour:
   m_ObjectHideFlags: 0
