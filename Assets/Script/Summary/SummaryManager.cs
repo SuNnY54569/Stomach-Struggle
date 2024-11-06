@@ -7,17 +7,34 @@ using UnityEngine.SceneManagement;
 
 public class SummaryManager : MonoBehaviour
 {
-    [SerializeField] private int totalHeartLeft;
-    [SerializeField] private int totalHeart;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private TMP_Text healthConditionText;
-    [SerializeField] private string goodHealthText;
-    [SerializeField] private string mediumHealthText;
-    [SerializeField] private string badHealthText;
-    [SerializeField] private string retrySceneName;
-    
-    private const string MAIN_MENU_SCENE = "Start scene";
+    #region Serialized Fields
+    [Header("Health Settings")]
+    [SerializeField, Tooltip("The total amount of hearts the player can have.")]
+    private int totalHeartLeft;
+    [SerializeField, Tooltip("The total number of hearts the player started with.")]
+    private int totalHeart;
 
+    [Header("UI Elements")]
+    [SerializeField, Tooltip("The text element that displays the score.")]
+    private TMP_Text scoreText;
+    [SerializeField, Tooltip("The text element that displays the health condition.")]
+    private TMP_Text healthConditionText;
+
+    [Header("Health Condition Texts")]
+    [SerializeField, Tooltip("The text displayed when the player has good health.")]
+    private string goodHealthText;
+    [SerializeField, Tooltip("The text displayed when the player has medium health.")]
+    private string mediumHealthText;
+    [SerializeField, Tooltip("The text displayed when the player has bad health.")]
+    private string badHealthText;
+
+    [Header("Scene Management")]
+    [SerializeField, Tooltip("The name of the scene used to retry the current day.")]
+    private string retrySceneName;
+    private const string MAIN_MENU_SCENE = "Start scene";
+    #endregion
+
+    #region Unity Lifecycle
     private void Start()
     {
         if (GameManager.Instance != null)
@@ -31,7 +48,9 @@ public class SummaryManager : MonoBehaviour
             Debug.LogError("GameManager instance not found!");
         }
     }
+    #endregion
     
+    #region UI Update
     private void UpdateHealthUI()
     {
         scoreText.text = $"{totalHeartLeft}/{totalHeart}";
@@ -51,7 +70,9 @@ public class SummaryManager : MonoBehaviour
             healthConditionText.text = badHealthText;
         }
     }
+    #endregion
 
+    #region Level Navigation
     public void NextLevel()
     {
         if (GameManager.Instance == null) return;
@@ -73,9 +94,7 @@ public class SummaryManager : MonoBehaviour
                 break;
         }
 
-        GameManager.Instance.totalHeart = 0;
-        GameManager.Instance.totalHeartLeft = 0;
-        
+        GameManager.Instance.ResetTotalHeart();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         GameManager.Instance.gameObject.SetActive(true);
     }
@@ -84,8 +103,7 @@ public class SummaryManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.totalHeart = 0;
-            GameManager.Instance.totalHeartLeft = 0;
+            GameManager.Instance.ResetTotalHeart();
             SceneManager.LoadScene(retrySceneName);
         }
     }
@@ -94,9 +112,9 @@ public class SummaryManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.totalHeart = 0;
-            GameManager.Instance.totalHeartLeft = 0;
+            GameManager.Instance.ResetAllTotalHeart();
             SceneManager.LoadScene(MAIN_MENU_SCENE);
         }
     }
+    #endregion
 }

@@ -12,25 +12,47 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public bool isGamePaused;
     
+    #region Health Settings
     [Header("Health Settings")]
+    [Tooltip("The maximum health the player can have.")]
     public int maxHealth = 3;
+    [Tooltip("The player's current health.")]
     public int currentHealth;
-    [SerializeField] private Image[] hearts;
-    [SerializeField] private Sprite fullHeart;
-    [SerializeField] private Sprite emptyHeart;
+    [SerializeField, Tooltip("Array of heart UI images to display health.")]
+    private Image[] hearts;
+    [SerializeField, Tooltip("Sprite to represent a full heart.")]
+    private Sprite fullHeart;
+    [SerializeField, Tooltip("Sprite to represent an empty heart.")]
+    private Sprite emptyHeart;
+    #endregion
 
+    #region Score Settings
     [Header("Score Settings")]
+    [Tooltip("The current score of the player.")]
     private int scoreValue = 0;
+    [Tooltip("The maximum score required to win.")]
     public int scoreMax;
-    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField, Tooltip("UI Text element to display score.")]
+    private TextMeshProUGUI scoreText;
+    #endregion
 
-    [Header("Win, lose Panel")]
-    [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private GameObject winPanel;
 
+    #region Panel Settings
+    [Header("Win/Lose Panel")]
+    [SerializeField, Tooltip("Panel to display when the game is over.")]
+    private GameObject gameOverPanel;
+    [SerializeField, Tooltip("Panel to display when the player wins.")]
+    private GameObject winPanel;
+    #endregion
+
+    #region Total Health Tracking
+    [Header("Health Tracking")]
+    [Tooltip("Total hearts the player has accumulated.")]
     public int totalHeart;
+    [Tooltip("Total remaining hearts.")]
     public int totalHeartLeft;
-
+    
+    [Tooltip("Health stats for specific levels or checkpoints.")]
     public int totalHeart1;
     public int totalHeartLeft1;
     
@@ -39,24 +61,42 @@ public class GameManager : MonoBehaviour
     
     public int totalHeart3;
     public int totalHeartLeft3;
+    #endregion
     
+    #region Scene Management
     [Header("Scenes to Deactivate GameManager")]
-    [SerializeField] private List<string> scenesToDeactivate;
-    [SerializeField] private List<GameObject> objectsToDeactivate;
+    [SerializeField, Tooltip("List of scenes where GameManager should be deactivated.")]
+    private List<string> scenesToDeactivate;
+    [SerializeField, Tooltip("Objects to deactivate in certain scenes.")]
+    private List<GameObject> objectsToDeactivate;
+    #endregion
     
+    #region Post Processing Effects
     [Header("Post Processing")]
-    [SerializeField] private PostProcessVolume volume;
-    [SerializeField] private float fadeDuration = 0.3f;
-    [SerializeField] private float intensity = 0f;
-    [SerializeField] private float initialIntensity;
-    [SerializeField] private float shakeIntensity = 0.1f;
-    private Vignette _vignette;
-
-    [Header("Player Info")] 
-    public string playerName = "Player";
-    public int preTestScore;
-    public int postTestScore;
+    [SerializeField, Tooltip("The PostProcessVolume used for visual effects.")]
+    private PostProcessVolume volume;
+    [SerializeField, Tooltip("Duration of screen fade when taking damage.")]
+    private float fadeDuration = 0.3f;
+    [SerializeField, Tooltip("The intensity of the camera shake on damage.")]
+    private float shakeIntensity = 0.1f;
+    [SerializeField, Tooltip("Current intensity for visual effects.")]
+    private float intensity;
     
+    private float initialIntensity;
+    private Vignette _vignette;
+    #endregion
+
+    #region Player Information
+    [Header("Player Info")]
+    [Tooltip("The name of the player.")]
+    public string playerName = "Player";
+    [Tooltip("Score before the test.")]
+    public int preTestScore;
+    [Tooltip("Score after the test.")]
+    public int postTestScore;
+    #endregion
+    
+    #region Unity Lifecycle
     private void Awake()
     {
         if (Instance == null)
@@ -68,18 +108,15 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            return;
         }
 
-        volume.profile.TryGetSettings<Vignette>(out _vignette);
-
-        if (!_vignette)
+        if (volume.profile.TryGetSettings<Vignette>(out _vignette))
         {
-            Debug.LogError("Error, vignette empty");
+            _vignette.enabled.Override(false);
         }
         else
         {
-            _vignette.enabled.Override(false);
+            Debug.LogError("Vignette effect not found");
         }
     }
     
@@ -91,27 +128,17 @@ public class GameManager : MonoBehaviour
     
     private void OnDestroy()
     {
-        // Unsubscribe from the event to avoid memory leaks
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scenesToDeactivate.Contains(scene.name))
+        foreach (var obj in objectsToDeactivate)
         {
-            foreach (var obj in objectsToDeactivate)
-            {
-                obj.SetActive(false);
-            }
-        }
-        else
-        {
-            foreach (var obj in objectsToDeactivate)
-            {
-                obj.SetActive(true);
-            }
+            obj.SetActive(!scenesToDeactivate.Contains(scene.name));
         }
     }
+    #endregion
     
     #region Health Management
     public void DecreaseHealth(int amount)
@@ -131,15 +158,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < hearts.Length; i++)
         {
-            if (i < currentHealth)
-            {
-                hearts[i].sprite = fullHeart;
-            }
-            else
-            {
-                hearts[i].sprite = emptyHeart;
-            }
-
+            hearts[i].sprite = i < currentHealth ? fullHeart : emptyHeart;
             hearts[i].enabled = i < maxHealth;
         }
     }
@@ -190,8 +209,15 @@ public class GameManager : MonoBehaviour
         if (scoreText != null)
             scoreText.text = scoreValue + $"/{scoreMax}";
     }
+    
+    public void ResetScore()
+    {
+        scoreValue = 0;
+        UpdateScoreText();
+    }
     #endregion
     
+    #region Game End States
     public void GameOver()
     {
         ResetScore();
@@ -218,25 +244,13 @@ public class GameManager : MonoBehaviour
         currentHealth = maxHealth;
         UpdateHeartsUI();
     }
+    #endregion
 
-    public void ResetScore()
-    {
-        scoreValue = 0;
-        UpdateScoreText();
-    }
-
+    #region Utility Functions
     public void PauseGame()
     {
         isGamePaused = !isGamePaused;
-
-        if (isGamePaused)
-        {
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
+        Time.timeScale = isGamePaused ? 0f : 1f;
     }
 
     public void SetScoreTextActive(bool isActive)
@@ -264,6 +278,28 @@ public class GameManager : MonoBehaviour
     {
         return totalHeart1 + totalHeart2 + totalHeart3;
     }
-    
-    
+
+    public void ResetTotalHeart()
+    {
+        totalHeart = 0;
+        totalHeartLeft = 0;
+    }
+
+    public void ResetAllTotalHeart()
+    {
+        ResetTotalHeart();
+        totalHeart1 = 0;
+        totalHeart2 = 0;
+        totalHeart3 = 0;
+        totalHeartLeft1 = 0;
+        totalHeartLeft2 = 0;
+        totalHeartLeft3 = 0;
+    }
+
+    public void ResetPrePostTest()
+    {
+        preTestScore = 0;
+        postTestScore = 0;
+    }
+    #endregion
 }

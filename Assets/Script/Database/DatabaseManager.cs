@@ -4,24 +4,38 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Proyecto26;
+using UnityEngine.SceneManagement;
 
 public class DatabaseManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI preTestScoreText;
-    [SerializeField] private TextMeshProUGUI postTestScoreText;
-    [SerializeField] private TextMeshProUGUI totalHeartText;
-    [SerializeField] private TMP_InputField nameInput;
+    #region Serialized Fields
+    [Header("UI References")]
+    [SerializeField, Tooltip("Displays the user's name")] 
+    private TextMeshProUGUI nameText;
+    [SerializeField, Tooltip("Displays the user's pre-test score")] 
+    private TextMeshProUGUI preTestScoreText;
+    [SerializeField, Tooltip("Displays the user's post-test score")]
+    private TextMeshProUGUI postTestScoreText;
+    [SerializeField, Tooltip("Displays the user's total remaining hearts")]
+    private TextMeshProUGUI totalHeartText;
+    [SerializeField, Tooltip("Input field for entering the user's name")]
+    private TMP_InputField nameInput;
+    #endregion
     
-    string newUserKey;
+    #region Private Fields
+    private string newUserKey;
     private string userID;
     private const string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/users";
+    #endregion
     
+    #region Unity Lifecycle
     void Start()
     {
         userID = SystemInfo.deviceUniqueIdentifier;
     }
+    #endregion
 
+    #region Firebase Methods
     public void CreateUser()
     {
         if (nameInput == null || GameManager.Instance == null)
@@ -104,7 +118,9 @@ public class DatabaseManager : MonoBehaviour
 
         yield return null;
     }
+    #endregion
 
+    #region Public Methods
     public void GetUserInfo()
     {
         StartCoroutine(GetName((string name) =>
@@ -142,4 +158,12 @@ public class DatabaseManager : MonoBehaviour
             }
         }));
     }
+
+    public void ToMenu()
+    {
+        GameManager.Instance.ResetTotalHeart();
+        GameManager.Instance.ResetPrePostTest();
+        SceneManagerClass.Instance.LoadMenuScene();
+    }
+    #endregion
 }
