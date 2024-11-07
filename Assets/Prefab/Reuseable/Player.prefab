@@ -5606,6 +5606,8 @@ MonoBehaviour:
     maxScore: 5
   - levelName: ChooseWater
     maxScore: 5
+  - levelName: Claw machine
+    maxScore: 5
   gameOverPanel: {fileID: 7869578107665225231}
   winPanel: {fileID: 2498101482384833761}
   tutorialPanel: {fileID: 5770594542048099888}
