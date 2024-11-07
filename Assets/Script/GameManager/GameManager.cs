@@ -7,6 +7,7 @@ using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -56,6 +57,13 @@ public class GameManager : MonoBehaviour
     private GameObject gameOverPanel;
     [SerializeField, Tooltip("Panel to display when the player wins.")]
     private GameObject winPanel;
+    #endregion
+
+    #region Tutorial Settings
+    [Header("Tutorial")] [SerializeField, Tooltip("Panel to display Tutorial when scene start")]
+    public GameObject tutorialPanel;
+    [SerializeField, Tooltip("Tutorial Video Manager Script")]
+    private TutorialVideoManager tutorialVideoManager;
     #endregion
 
     #region Total Health Tracking
@@ -135,6 +143,7 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
+        initialIntensity = intensity;
         currentHealth = maxHealth;
         UpdateHeartsUI();
     }
@@ -152,7 +161,30 @@ public class GameManager : MonoBehaviour
         {
             obj.SetActive(!scenesToDeactivate.Contains(scene.name));
         }
+        
+        if (tutorialVideoManager != null)
+        {
+            VideoClip videoClip = tutorialVideoManager.GetVideoForScene(scene.name);
+            if (videoClip != null)
+            {
+                // Set up the video and show tutorial panel
+                tutorialVideoManager.SetupVideoForScene(scene.name);
+                tutorialVideoManager.StartVideo();
+                tutorialPanel.SetActive(true);
+                PauseGame();
+            }
+            else
+            {
+                // Hide the tutorial panel and ensure the game is not paused
+                tutorialPanel.SetActive(false);
+                if (isGamePaused)
+                {
+                    PauseGame(); // Unpause the game if it was paused
+                }
+            }
+        }
     }
+    
     #endregion
     
     #region Health Management
