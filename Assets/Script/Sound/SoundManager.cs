@@ -9,7 +9,8 @@ public enum VolumeType
 {
     Background,
     SFX,
-    Dialog
+    Dialog,
+    Tutorial
 }
 
 public enum SoundType
@@ -20,18 +21,26 @@ public enum SoundType
 [ExecuteInEditMode]
 public class SoundManager : MonoBehaviour
 {
+    #region Fields
+
+    [Header("Sound Settings")]
+    [Tooltip("List of sounds organized by SoundType.")]
     [SerializeField] private SoundList[] soundList;
+
     private static SoundManager instance;
-    
+
     private Dictionary<VolumeType, AudioSource> audioSources = new Dictionary<VolumeType, AudioSource>();
-    
     private Dictionary<VolumeType, float> volumeLevels = new Dictionary<VolumeType, float>()
     {
         { VolumeType.Background, 1f },
         { VolumeType.SFX, 1f },
-        { VolumeType.Dialog, 1f }
+        { VolumeType.Dialog, 1f },
+        { VolumeType.Tutorial, 1f }
     };
 
+    #endregion
+    
+    #region Initialization
     private void Awake()
     {
         if (!Application.isPlaying) return;
@@ -61,6 +70,25 @@ public class SoundManager : MonoBehaviour
             audioSources[type] = source;
         }
     }
+    
+    private void LoadVolumeSettings()
+    {
+        foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
+        {
+            float savedVolume = PlayerPrefs.GetFloat(type.ToString(), 1f);
+            volumeLevels[type] = savedVolume;
+            
+            // Update AudioSource volume if it already exists
+            if (audioSources.ContainsKey(type))
+            {
+                audioSources[type].volume = savedVolume;
+            }
+        }
+    }
+    
+    #endregion
+    
+    #region Public Methods
 
     public static void PlaySound(SoundType sound, VolumeType volumeType)
     {
@@ -95,27 +123,11 @@ public class SoundManager : MonoBehaviour
     
     public static float GetVolume(VolumeType volumeType)
     {
-        if (instance != null && instance.volumeLevels.ContainsKey(volumeType))
-        {
-            return instance.volumeLevels[volumeType];
-        }
-        return 1f;
+        return instance != null && instance.volumeLevels.ContainsKey(volumeType) ? instance.volumeLevels[volumeType] : 1f;
     }
+    #endregion
     
-    private void LoadVolumeSettings()
-    {
-        foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
-        {
-            float savedVolume = PlayerPrefs.GetFloat(type.ToString(), 1f);
-            volumeLevels[type] = savedVolume;
-            
-            // Update AudioSource volume if it already exists
-            if (audioSources.ContainsKey(type))
-            {
-                audioSources[type].volume = savedVolume;
-            }
-        }
-    }
+    #region Editor Only
     
 #if UNITY_EDITOR
     private void OnEnable()
@@ -128,6 +140,8 @@ public class SoundManager : MonoBehaviour
         }
     }
 #endif
+    
+    #endregion
 }
 
 [Serializable]

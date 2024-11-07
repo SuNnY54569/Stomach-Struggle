@@ -7,26 +7,45 @@ using UnityEngine.Video;
 [System.Serializable]
 public class SceneVideoMapping
 {
-    public string sceneName;       // Scene name
-    public VideoClip videoClip;    // Video clip for this scene
+    [Tooltip("Name of the scene this video is associated with.")]
+    public string sceneName;
+
+    [Tooltip("Video clip for this specific scene.")]
+    public VideoClip videoClip;
 }
 
 public class TutorialVideoManager : MonoBehaviour
 {
-    [Tooltip("Add a dictionary or list of videos with scene names")]
+    #region Fields
+    [Header("Video Player Components")]
+    [Tooltip("The VideoPlayer component to play tutorial videos.")]
     [SerializeField] private VideoPlayer videoPlayer;
-    
-    [Tooltip("Assign tutorial videos for each scene")]
+
+    [Tooltip("AudioSource for the tutorial video's audio.")]
+    [SerializeField] private AudioSource tutorialAudioSource;
+
+    [Header("Tutorial Scene Data")]
+    [Tooltip("List of tutorial videos associated with specific scenes.")]
     public TutorialSceneData[] tutorialScenes;
 
-    [Tooltip("Assign the replay button in the UI")]
+    [Header("UI Components")]
+    [Tooltip("Button to replay the tutorial video.")]
     [SerializeField] private Button replayButton;
+
+    #endregion
+    #region Unity Lifecycle
 
     private void Awake()
     {
         if (replayButton != null)
+        {
             replayButton.gameObject.SetActive(false);
+        }
     }
+
+    #endregion
+    
+    #region Public Methods
 
     public void SetupVideoForScene(string sceneName)
     {
@@ -37,26 +56,24 @@ public class TutorialVideoManager : MonoBehaviour
         }
     }
     
+    public void SetTutorialVolume(float volume)
+    {
+        tutorialAudioSource.volume = volume;
+    }
+    
     public void StartVideo()
     {
         if (videoPlayer.clip != null)
         {
             videoPlayer.Play();
-            videoPlayer.loopPointReached += (VideoPlayer vp) =>
-            {
-                // When video finishes, show the replay button
-                replayButton.gameObject.SetActive(true);
-            };
+            videoPlayer.loopPointReached += OnVideoEnd;
         }
     }
     
     public void ReplayVideo()
     {
-        // Restart the video from the beginning
         videoPlayer.Stop();
         videoPlayer.Play();
-        
-        // Hide the replay button while video is playing
         replayButton.gameObject.SetActive(false);
     }
     
@@ -67,7 +84,7 @@ public class TutorialVideoManager : MonoBehaviour
         GameManager.Instance.tutorialPanel.SetActive(false);
         GameManager.Instance.PauseGame();
     }
-
+    
     public VideoClip GetVideoForScene(string sceneName)
     {
         foreach (var tutorialScene in tutorialScenes)
@@ -77,11 +94,25 @@ public class TutorialVideoManager : MonoBehaviour
         }
         return null;
     }
+    
+    #endregion
+    
+    #region Private Methods
+    
+    private void OnVideoEnd(VideoPlayer vp)
+    {
+        replayButton.gameObject.SetActive(true);
+    }
+    
+    #endregion
 }
 
 [System.Serializable]
 public class TutorialSceneData
 {
+    [Tooltip("The name of the scene.")]
     public string sceneName;
+
+    [Tooltip("The video clip associated with this scene.")]
     public VideoClip videoClip;
 }

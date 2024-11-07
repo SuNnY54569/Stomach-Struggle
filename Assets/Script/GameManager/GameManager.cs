@@ -25,48 +25,65 @@ public class GameManager : MonoBehaviour
     public bool isGamePaused;
     
     #region Health Settings
+    
     [Header("Health Settings")]
     [Tooltip("The maximum health the player can have.")]
     public int maxHealth = 3;
+    
     [Tooltip("The player's current health.")]
     public int currentHealth;
+    
     [SerializeField, Tooltip("Array of heart UI images to display health.")]
     private Image[] hearts;
+    
     [SerializeField, Tooltip("Sprite to represent a full heart.")]
     private Sprite fullHeart;
+    
     [SerializeField, Tooltip("Sprite to represent an empty heart.")]
     private Sprite emptyHeart;
+    
     #endregion
 
     #region Score Settings
+    
     [Header("Score Settings")]
     [SerializeField,Tooltip("The current score of the player.")]
     private int scoreValue = 0;
+    
     [Tooltip("The maximum score required to win.")]
     public int scoreMax;
+    
     [SerializeField, Tooltip("UI Text element to display score.")]
     private TextMeshProUGUI scoreText;
+    
     [SerializeField, Tooltip("List of level settings to configure max score for each level.")]
     private List<LevelSettings> levelSettings;
+    
     #endregion
-
-
+    
     #region Panel Settings
+    
     [Header("Win/Lose Panel")]
     [SerializeField, Tooltip("Panel to display when the game is over.")]
     private GameObject gameOverPanel;
+    
     [SerializeField, Tooltip("Panel to display when the player wins.")]
     private GameObject winPanel;
+    
     #endregion
 
     #region Tutorial Settings
+    
     [Header("Tutorial")] [SerializeField, Tooltip("Panel to display Tutorial when scene start")]
     public GameObject tutorialPanel;
+    
     [SerializeField, Tooltip("Tutorial Video Manager Script")]
     private TutorialVideoManager tutorialVideoManager;
+    
     #endregion
 
     #region Total Health Tracking
+    
     [Header("Health Tracking")]
     [Tooltip("Total hearts the player has accumulated.")]
     public int totalHeart;
@@ -85,36 +102,48 @@ public class GameManager : MonoBehaviour
     #endregion
     
     #region Scene Management
+    
     [Header("Scenes to Deactivate GameManager")]
     [SerializeField, Tooltip("List of scenes where GameManager should be deactivated.")]
     private List<string> scenesToDeactivate;
+    
     [SerializeField, Tooltip("Objects to deactivate in certain scenes.")]
     private List<GameObject> objectsToDeactivate;
+    
     #endregion
     
     #region Post Processing Effects
+    
     [Header("Post Processing")]
     [SerializeField, Tooltip("The PostProcessVolume used for visual effects.")]
     private PostProcessVolume volume;
+    
     [SerializeField, Tooltip("Duration of screen fade when taking damage.")]
     private float fadeDuration = 0.3f;
+    
     [SerializeField, Tooltip("The intensity of the camera shake on damage.")]
     private float shakeIntensity = 0.1f;
+    
     [SerializeField, Tooltip("Current intensity for visual effects.")]
     private float intensity;
     
     private float initialIntensity;
     private Vignette _vignette;
+    
     #endregion
 
     #region Player Information
+    
     [Header("Player Info")]
     [Tooltip("The name of the player.")]
     public string playerName = "Player";
+    
     [Tooltip("Score before the test.")]
     public int preTestScore;
+    
     [Tooltip("Score after the test.")]
     public int postTestScore;
+    
     #endregion
     
     #region Unity Lifecycle
