@@ -73,6 +73,10 @@ public class WashHandManager : MonoBehaviour
     #region Game Start and Setup
     public void StartGame()
     {
+        if (GameManager.Instance.isGamePaused)
+        {
+            return;
+        }
         if (positions.Count != objects.Count)
         {
             Debug.LogError("The number of positions and objects must be equal.");

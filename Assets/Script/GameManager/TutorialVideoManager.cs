@@ -21,9 +21,6 @@ public class TutorialVideoManager : MonoBehaviour
     [Tooltip("The VideoPlayer component to play tutorial videos.")]
     [SerializeField] private VideoPlayer videoPlayer;
 
-    [Tooltip("AudioSource for the tutorial video's audio.")]
-    [SerializeField] private AudioSource tutorialAudioSource;
-
     [Header("Tutorial Scene Data")]
     [Tooltip("List of tutorial videos associated with specific scenes.")]
     public TutorialSceneData[] tutorialScenes;
@@ -41,6 +38,11 @@ public class TutorialVideoManager : MonoBehaviour
         {
             replayButton.gameObject.SetActive(false);
         }
+        
+        if (SoundManager.instance != null && SoundManager.instance.audioSources.ContainsKey(VolumeType.Tutorial))
+        {
+            videoPlayer.SetTargetAudioSource(0, SoundManager.instance.audioSources[VolumeType.Tutorial]);
+        }
     }
 
     #endregion
@@ -54,11 +56,6 @@ public class TutorialVideoManager : MonoBehaviour
         {
             videoPlayer.clip = videoClip;
         }
-    }
-    
-    public void SetTutorialVolume(float volume)
-    {
-        tutorialAudioSource.volume = volume;
     }
     
     public void StartVideo()

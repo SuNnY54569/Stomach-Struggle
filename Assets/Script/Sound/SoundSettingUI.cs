@@ -73,7 +73,6 @@ public class SoundSettingUI : MonoBehaviour
     private void UpdateTutorialVolume(float value)
     {
         SoundManager.SetVolume(VolumeType.Tutorial, value);
-        tutorialVideoManager.SetTutorialVolume(value);
     }
 
     #endregion

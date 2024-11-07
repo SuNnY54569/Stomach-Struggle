@@ -27,9 +27,9 @@ public class SoundManager : MonoBehaviour
     [Tooltip("List of sounds organized by SoundType.")]
     [SerializeField] private SoundList[] soundList;
 
-    private static SoundManager instance;
+    public static SoundManager instance;
 
-    private Dictionary<VolumeType, AudioSource> audioSources = new Dictionary<VolumeType, AudioSource>();
+    public Dictionary<VolumeType, AudioSource> audioSources = new Dictionary<VolumeType, AudioSource>();
     private Dictionary<VolumeType, float> volumeLevels = new Dictionary<VolumeType, float>()
     {
         { VolumeType.Background, 1f },

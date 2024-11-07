@@ -196,7 +196,6 @@ public class GameManager : MonoBehaviour
             VideoClip videoClip = tutorialVideoManager.GetVideoForScene(scene.name);
             if (videoClip != null)
             {
-                // Set up the video and show tutorial panel
                 tutorialVideoManager.SetupVideoForScene(scene.name);
                 tutorialVideoManager.StartVideo();
                 tutorialPanel.SetActive(true);
@@ -204,11 +203,10 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                // Hide the tutorial panel and ensure the game is not paused
                 tutorialPanel.SetActive(false);
                 if (isGamePaused)
                 {
-                    PauseGame(); // Unpause the game if it was paused
+                    PauseGame();
                 }
             }
         }
