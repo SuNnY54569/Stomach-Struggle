@@ -36,6 +36,7 @@ TagManager:
   - GoodTreat
   - BadTreat
   - Setting
+  - TutorialVideoManager
   layers:
   - Default
   - TransparentFX

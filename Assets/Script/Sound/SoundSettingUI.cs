@@ -21,10 +21,6 @@ public class SoundSettingUI : MonoBehaviour
     [Tooltip("Slider to adjust tutorial volume.")]
     [SerializeField] private Slider tutorialSlider;
 
-    [Header("Managers")]
-    [Tooltip("Reference to TutorialVideoManager for setting tutorial volume.")]
-    [SerializeField] private TutorialVideoManager tutorialVideoManager;
-
     #endregion
     
     #region Initialization

@@ -125,7 +125,13 @@ public class DragFood : MonoBehaviour
                 break;
             default:
                 ResetPosition();
-                spriteRenderer.enabled = false;
+                if (!hasBeenActivate)
+                {
+                    spriteRenderer.enabled = false;
+                    mainCollider.enabled = false;
+                    spawnCollider.enabled = true;
+                }
+
                 break;
         }
     }

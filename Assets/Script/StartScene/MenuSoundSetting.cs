@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,10 +20,7 @@ public class MenuSoundSetting : MonoBehaviour
 
     [Tooltip("Slider to adjust tutorial volume.")]
     [SerializeField] private Slider tutorialSlider;
-
-    [Header("Managers")]
-    [Tooltip("Reference to TutorialVideoManager for setting tutorial volume.")]
-    [SerializeField] private TutorialVideoManager tutorialVideoManager;
+    
 
     #endregion
     
@@ -30,13 +28,10 @@ public class MenuSoundSetting : MonoBehaviour
     
     private void Start()
     {
-        if (tutorialVideoManager == null)
-        {
-            tutorialVideoManager = FindObjectOfType<TutorialVideoManager>().GetComponent<TutorialVideoManager>();
-        }
         
         InitializeSliders();
         AddSliderListeners();
+        
     }
 
     public void InitializeSliders()
