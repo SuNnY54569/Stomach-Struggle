@@ -176,7 +176,19 @@ public class GameManager : MonoBehaviour
         currentHealth = maxHealth;
         UpdateHeartsUI();
     }
-    
+
+    private void FixedUpdate()
+    {
+        if (tutorialPanel.activeSelf)
+        {
+            objectsToDeactivate[0].SetActive(false);
+        }
+        else
+        {
+            objectsToDeactivate[0].SetActive(true);
+        }
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -390,5 +402,12 @@ public class GameManager : MonoBehaviour
         preTestScore = 0;
         postTestScore = 0;
     }
+
+    public void RestartScene()
+    {
+        PauseGame();
+        ResetHealth();
+    }
+    
     #endregion
 }

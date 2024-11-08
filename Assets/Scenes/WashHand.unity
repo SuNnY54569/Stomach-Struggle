@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 4
   picture: {fileID: 1238207156}
-  amp: 0.25
+  amp: 0.15
   freq: 2.9
   animationName: 4
   objectRenderer: {fileID: 0}
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 1
   picture: {fileID: 696248756}
-  amp: 0.25
+  amp: 0.15
   freq: 2.75
   animationName: 1
   objectRenderer: {fileID: 0}
@@ -837,7 +837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 6
   picture: {fileID: 190683308}
-  amp: 0.25
+  amp: 0.15
   freq: 3.25
   animationName: 6
   objectRenderer: {fileID: 0}
@@ -991,7 +991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 3
   picture: {fileID: 696729753}
-  amp: 0.25
+  amp: 0.15
   freq: 2.85
   animationName: 3
   objectRenderer: {fileID: 0}
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 2
   picture: {fileID: 980415976}
-  amp: 0.25
+  amp: 0.15
   freq: 2.8
   animationName: 2
   objectRenderer: {fileID: 0}
@@ -2179,7 +2179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 5
   picture: {fileID: 1133493286}
-  amp: 0.25
+  amp: 0.15
   freq: 2.95
   animationName: 5
   objectRenderer: {fileID: 0}
@@ -3312,7 +3312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 7
   picture: {fileID: 2038116882}
-  amp: 0.25
+  amp: 0.15
   freq: 3.5
   animationName: 7
   objectRenderer: {fileID: 0}

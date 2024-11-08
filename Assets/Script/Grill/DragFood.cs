@@ -100,6 +100,8 @@ public class DragFood : MonoBehaviour
             if (!hasBeenActivate)
             {
                 spriteRenderer.enabled = false;
+                mainCollider.enabled = false;
+                spawnCollider.enabled = true;
             }
         }
         col.enabled = true;
