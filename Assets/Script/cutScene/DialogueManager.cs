@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System;
 using UnityEngine;
 using TMPro;
 
@@ -11,17 +10,35 @@ public class DialogueManager : MonoBehaviour
     [Header("Typewriter Settings")]
     [SerializeField] private float typingSpeed = 0.05f;
 
-    [SerializeField]private string characterName;
-    [SerializeField]private string dialogueContent;
+    [SerializeField] private string characterName;
+    [SerializeField] private string dialogueContent;
+
+    private bool isDialogueDisplayed = false; 
+    private bool hasClicked = false;  
+
+    private Coroutine currentDialogueCoroutine = null; 
 
     private void Start()
     {
-        //PauseGame();
-        StartCoroutine(ShowDialogue(characterName, dialogueContent));
+        currentDialogueCoroutine = StartCoroutine(ShowDialogue(characterName, dialogueContent));
+    }
+
+    private void Update()
+    {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && !hasClicked)
+        {
+            ShowFullDialogue(); 
+            hasClicked = true;  
+        }
     }
 
     private IEnumerator ShowDialogue(string name, string content)
     {
+        if (isDialogueDisplayed)
+        {
+            yield break;
+        }
+
         dialogueText.text = name;
 
         yield return new WaitForSecondsRealtime(0.5f);
@@ -30,6 +47,23 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text += letter;
             yield return new WaitForSecondsRealtime(typingSpeed);
+        }
+
+        isDialogueDisplayed = true;
+    }
+
+    private void ShowFullDialogue()
+    {
+        if (!isDialogueDisplayed)
+        {
+            dialogueText.text = dialogueContent;
+            isDialogueDisplayed = true;
+
+            if (currentDialogueCoroutine != null)
+            {
+                StopCoroutine(currentDialogueCoroutine);
+                currentDialogueCoroutine = null;
+            }
         }
     }
 
