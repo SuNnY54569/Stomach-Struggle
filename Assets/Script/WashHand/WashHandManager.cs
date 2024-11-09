@@ -10,20 +10,40 @@ public class WashHandManager : MonoBehaviour
 {
     public static WashHandManager Instance;
     
-    [SerializeField,Tooltip("List of positions where the objects can be placed.")]
+    #region Serialized Fields with Tooltips
+
+    [Header("Position and Object Settings")]
+    [SerializeField, Tooltip("List of positions where the objects can be placed.")]
     private List<GameObject> positions;
-    [SerializeField,Tooltip("Objects that need to be placed at random positions.")]
+
+    [SerializeField, Tooltip("Objects that need to be placed at random positions.")]
     private List<GameObject> objects;
-    [SerializeField,Tooltip("The speed at which the objects move to their positions.")]
+
+    [Header("Movement Settings")]
+    [SerializeField, Tooltip("The speed at which the objects move to their positions.")]
     private float moveSpeed = 2f;
-    [SerializeField,Tooltip("The image in the center that plays animations.")]
+
+    [Header("Central Image Settings")]
+    [SerializeField, Tooltip("The image in the center that plays animations.")]
     private GameObject centralImage;
+
+    [SerializeField, Tooltip("Animator component for the central image.")]
+    private Animator centralAnimator;
+
+    [Header("Game Settings")]
+    [SerializeField, Tooltip("Index of the current object the player needs to click.")]
+    private int currentObjectIndex = 1;
+
+    #endregion
     
-    [SerializeField] private Animator centralAnimator;
-    [SerializeField] private int currentObjectIndex = 1;
+    #region Private Fields
+
     private List<GameObject> startPositions = new List<GameObject>();
     private bool isBlinking = false;
 
+    #endregion
+
+    #region Unity Lifecycle
     private void Awake()
     {
         if (Instance == null)
@@ -45,27 +65,18 @@ public class WashHandManager : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.currentHealth > 1)
-        {
-            isBlinking = false; // Reset when health is more than 1
-            return;
-        }
-        
-        if (isBlinking) return;
-        foreach (var objectClick in objects)
-        {
-            var objectClickComponent = objectClick.GetComponent<ObjectClick>();
-            if (objectClickComponent != null && objectClickComponent.objectIndex == currentObjectIndex)
-            {
-                objectClickComponent.BlinkObject(); // Make the correct object blink
-                isBlinking = true; // Set to true so it doesn't repeatedly trigger
-                break;
-            }
-        }
+        HandleObjectBlinking();
     }
-
+    
+    #endregion
+    
+    #region Game Start and Setup
     public void StartGame()
     {
+        if (GameManager.Instance.isGamePaused)
+        {
+            return;
+        }
         if (positions.Count != objects.Count)
         {
             Debug.LogError("The number of positions and objects must be equal.");
@@ -83,7 +94,9 @@ public class WashHandManager : MonoBehaviour
 
         centralAnimator = centralImage.GetComponent<Animator>();
     }
+    #endregion
     
+    #region Object Positioning and Movement
     private void ShuffleList(List<GameObject> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
@@ -123,7 +136,9 @@ public class WashHandManager : MonoBehaviour
             objCollider.enabled = true;
         }
     }
+    #endregion
     
+    #region Game Actions
     public void OnObjectClicked(int objectIndex, string animationName, GameObject obj, Animator animator)
     {
         if (objectIndex == currentObjectIndex)
@@ -147,7 +162,9 @@ public class WashHandManager : MonoBehaviour
             StartCoroutine(WaitToWin());
         }
     }
+    #endregion
     
+    #region Animation and Coroutines
     private IEnumerator WaitForAnimation(Animator animator, string animationName, Func<IEnumerator> coroutineToStart, GameObject obj)
     {
         // Wait until the current animation state is the one specified
@@ -192,5 +209,30 @@ public class WashHandManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         GameManager.Instance.WinGame();
     }
+    #endregion
     
+    #region Helper Methods
+
+    private void HandleObjectBlinking()
+    {
+        if (GameManager.Instance.currentHealth > 1)
+        {
+            isBlinking = false;
+            return;
+        }
+        
+        if (isBlinking) return;
+        foreach (var objectClick in objects)
+        {
+            var objectClickComponent = objectClick.GetComponent<ObjectClick>();
+            if (objectClickComponent != null && objectClickComponent.objectIndex == currentObjectIndex)
+            {
+                objectClickComponent.BlinkObject();
+                isBlinking = true;
+                break;
+            }
+        }
+    }
+
+    #endregion
 }

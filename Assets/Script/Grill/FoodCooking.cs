@@ -64,10 +64,6 @@ public class FoodCooking : MonoBehaviour
             {
                 MarkAsOvercooked();
             }
-            else if (topSideCookingTimer >= cookingTime && topSideCookingTimer < overcookedTime)
-            {
-                MarkAsCooked();
-            }
         }
         else
         {
@@ -77,10 +73,6 @@ public class FoodCooking : MonoBehaviour
             if (bottomSideCookingTimer >= overcookedTime)
             {
                 MarkAsOvercooked();
-            }
-            else if (bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime)
-            {
-                MarkAsCooked();
             }
         }
     }
@@ -121,29 +113,16 @@ public class FoodCooking : MonoBehaviour
     #endregion
     
     #region Cooking State Methods
-    
-    private void MarkAsCooked()
-    {
-        if (isTopSideCooking)
-        {
-            gameObject.tag = "TopCooked";
-        }
-        else
-        {
-            gameObject.tag = "BottomCooked";
-        }
-    }
 
     private void MarkAsOvercooked()
     {
-        gameObject.tag = "Overcooked";
         StopCooking();
     }
     
     public void FlipFood()
     {
         isTopSideCooking = !isTopSideCooking;
-        spriteRenderer.transform.rotation = isTopSideCooking ? new Quaternion(0f, 0, 0,0 ) : new Quaternion(180f, 0, 0,0 );
+        spriteRenderer.flipY = !spriteRenderer.flipY;
         cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
         progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
     }

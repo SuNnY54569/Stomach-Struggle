@@ -4,23 +4,38 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Proyecto26;
+using UnityEngine.SceneManagement;
 
 public class DatabaseManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI preTestScoreText;
-    [SerializeField] private TextMeshProUGUI postTestScoreText;
-    [SerializeField] private TMP_InputField nameInput;
+    #region Serialized Fields
+    [Header("UI References")]
+    [SerializeField, Tooltip("Displays the user's name")] 
+    private TextMeshProUGUI nameText;
+    [SerializeField, Tooltip("Displays the user's pre-test score")] 
+    private TextMeshProUGUI preTestScoreText;
+    [SerializeField, Tooltip("Displays the user's post-test score")]
+    private TextMeshProUGUI postTestScoreText;
+    [SerializeField, Tooltip("Displays the user's total remaining hearts")]
+    private TextMeshProUGUI totalHeartText;
+    [SerializeField, Tooltip("Input field for entering the user's name")]
+    private TMP_InputField nameInput;
+    #endregion
     
-    string newUserKey;
+    #region Private Fields
+    private string newUserKey;
     private string userID;
-    private string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/users";
+    private const string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/users";
+    #endregion
     
+    #region Unity Lifecycle
     void Start()
     {
         userID = SystemInfo.deviceUniqueIdentifier;
     }
+    #endregion
 
+    #region Firebase Methods
     public void CreateUser()
     {
         if (nameInput == null || GameManager.Instance == null)
@@ -31,8 +46,11 @@ public class DatabaseManager : MonoBehaviour
         }
         
         newUserKey = Guid.NewGuid().ToString();
+
+        int totalHeart = GameManager.Instance.GetSumTotalHeart();
+        int totalHeartLeft = GameManager.Instance.GetSumTotalHeartLeft();
         
-        User newUser = new User(nameInput.text, $"{GameManager.Instance.preTestScore}/10", $"{GameManager.Instance.postTestScore}/10");
+        User newUser = new User(nameInput.text, $"{GameManager.Instance.preTestScore}/10", $"{GameManager.Instance.postTestScore}/10", $"{totalHeartLeft}/{totalHeart}");
         
         RestClient.Put($"{firebaseURL}/{userID}/{newUserKey}.json", newUser).Then(response =>
         {
@@ -86,6 +104,23 @@ public class DatabaseManager : MonoBehaviour
         yield return null;
     }
 
+    private IEnumerator GetTotalHeart(Action<string> onCallback)
+    {
+        yield return RestClient.Get($"{firebaseURL}/{userID}/{newUserKey}/totalHeart.json").Then(response =>
+        {
+            string totalHeart = response.Text;
+            Debug.Log($"Fetched totalHeart Response: {totalHeart}");
+            onCallback?.Invoke(totalHeart != "null" ? totalHeart : "No totalHeart Found");
+        }).Catch(error =>
+        {
+            Debug.LogError("Error fetching totalHeart: " + error.Message);
+        });
+
+        yield return null;
+    }
+    #endregion
+
+    #region Public Methods
     public void GetUserInfo()
     {
         StartCoroutine(GetName((string name) =>
@@ -112,5 +147,23 @@ public class DatabaseManager : MonoBehaviour
                 Debug.LogWarning("postTestScoreText = null");
             }
         }));
+        
+        StartCoroutine(GetTotalHeart((string totalHeart) =>
+        {
+            totalHeartText.text = $"TotalHeart: {totalHeart}";
+            if (totalHeartText.text == "No Score Found")
+            {
+                totalHeartText.text = $"TotalHeart: {GameManager.Instance.GetSumTotalHeartLeft()}/{GameManager.Instance.GetSumTotalHeart()}";
+                Debug.LogWarning("preTestScoreText = null");
+            }
+        }));
     }
+
+    public void ToMenu()
+    {
+        GameManager.Instance.ResetTotalHeart();
+        GameManager.Instance.ResetPrePostTest();
+        SceneManagerClass.Instance.LoadMenuScene();
+    }
+    #endregion
 }

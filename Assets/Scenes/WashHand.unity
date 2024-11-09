@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 4
   picture: {fileID: 1238207156}
-  amp: 0.25
+  amp: 0.15
   freq: 2.9
   animationName: 4
   objectRenderer: {fileID: 0}
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 1
   picture: {fileID: 696248756}
-  amp: 0.25
+  amp: 0.15
   freq: 2.75
   animationName: 1
   objectRenderer: {fileID: 0}
@@ -837,7 +837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 6
   picture: {fileID: 190683308}
-  amp: 0.25
+  amp: 0.15
   freq: 3.25
   animationName: 6
   objectRenderer: {fileID: 0}
@@ -991,7 +991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 3
   picture: {fileID: 696729753}
-  amp: 0.25
+  amp: 0.15
   freq: 2.85
   animationName: 3
   objectRenderer: {fileID: 0}
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 2
   picture: {fileID: 980415976}
-  amp: 0.25
+  amp: 0.15
   freq: 2.8
   animationName: 2
   objectRenderer: {fileID: 0}
@@ -1759,34 +1759,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8331924476641371660, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8331924476641371660, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8331924476641371660, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 1384219598}
-    - target: {fileID: 8331924476641371660, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8331924476641371660, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: PauseGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 8331924476641371660, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8331924476641371660, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1872,7 +1844,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1123118595
 RectTransform:
@@ -2207,7 +2179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 5
   picture: {fileID: 1133493286}
-  amp: 0.25
+  amp: 0.15
   freq: 2.95
   animationName: 5
   objectRenderer: {fileID: 0}
@@ -2381,17 +2353,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bondedPosition: {fileID: 2002442354}
---- !u!114 &1384219598 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4016435654707868921, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-  m_PrefabInstance: {fileID: 1055363274}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe6209c919425a4986ba92e218eef03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1473513952
 GameObject:
   m_ObjectHideFlags: 0
@@ -3351,7 +3312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectIndex: 7
   picture: {fileID: 2038116882}
-  amp: 0.25
+  amp: 0.15
   freq: 3.5
   animationName: 7
   objectRenderer: {fileID: 0}

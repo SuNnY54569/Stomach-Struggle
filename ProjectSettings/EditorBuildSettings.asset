@@ -45,11 +45,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Sleep1.unity
     guid: a6173988920d8644d8393365ce0302fb
   - enabled: 1
-    path: Assets/Scenes/Summary.unity
+    path: Assets/Scenes/Summary1.unity
     guid: 039487725772e1d42998eb2676d24516
   - enabled: 1
     path: Assets/Scenes/CutSceneDay2.unity
-    guid: 8b29c359ef38dd64dbe2715979d5a52b
+    guid: a10dc29cf14467c4d907acebb458c53d
   - enabled: 1
     path: Assets/Scenes/Grill.unity
     guid: d04b7b2c99f2a3046a7ccc407366da5c
@@ -59,6 +59,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GoHomeAndSleep.unity
     guid: d367521bf5c2e114bb0f58bde3f16700
+  - enabled: 1
+    path: Assets/Scenes/Summary2.unity
+    guid: 093914d3a354789498154f2274e7af87
   - enabled: 1
     path: Assets/Scenes/GoHospital.unity
     guid: dfead498a0c1f0d4d928e6ae8983a880
@@ -71,6 +74,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Docter 2.unity
     guid: a0663bff2a1b4454d80fad0b49089619
+  - enabled: 1
+    path: Assets/Scenes/Summary3.unity
+    guid: d1a77d84ddf44f749807e3536651297a
   - enabled: 1
     path: Assets/Scenes/PostTest.unity
     guid: 1592169ca02f9724d9194f5dc98943a9
