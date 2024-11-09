@@ -13,10 +13,10 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private string characterName;
     [SerializeField] private string dialogueContent;
 
-    private bool isDialogueDisplayed = false; 
-    private bool hasClicked = false;  
+    private bool isDialogueDisplayed = false;
+    private bool hasClicked = false;
 
-    private Coroutine currentDialogueCoroutine = null; 
+    private Coroutine currentDialogueCoroutine = null;
 
     private void Start()
     {
@@ -27,8 +27,8 @@ public class DialogueManager : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && !hasClicked)
         {
-            ShowFullDialogue(); 
-            hasClicked = true;  
+            ShowFullDialogue();
+            hasClicked = true;
         }
     }
 
@@ -36,16 +36,19 @@ public class DialogueManager : MonoBehaviour
     {
         if (isDialogueDisplayed)
         {
-            yield break;
+            yield break; 
         }
 
-        dialogueText.text = name;
+        string currentText = name + "";
+        dialogueText.text = currentText;
 
         yield return new WaitForSecondsRealtime(0.5f);
 
         foreach (char letter in content.ToCharArray())
         {
-            dialogueText.text += letter;
+            currentText += letter; 
+            dialogueText.text = currentText;
+
             yield return new WaitForSecondsRealtime(typingSpeed);
         }
 
@@ -56,7 +59,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (!isDialogueDisplayed)
         {
-            dialogueText.text = dialogueContent;
+            dialogueText.text = characterName + "" + dialogueContent;
             isDialogueDisplayed = true;
 
             if (currentDialogueCoroutine != null)
