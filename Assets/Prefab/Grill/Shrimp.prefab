@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 5134051192098825308}
   - component: {fileID: 8349774986328864771}
   - component: {fileID: 7061499889016792865}
+  - component: {fileID: 4648705306474662518}
   m_Layer: 0
   m_Name: Shrimp
   m_TagString: Raw
@@ -169,8 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ad2053cdc36cd4ca085ea1d0e7b195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodSpawners: []
+  foodSpawners: {fileID: 0}
   isInteractable: 1
+  spawnCollider: {fileID: 4648705306474662518}
+  mainCollider: {fileID: 7073591692244041223}
+  spriteRenderer: {fileID: 4428160139501982363}
 --- !u!114 &8349774986328864771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +211,51 @@ MonoBehaviour:
   cookingSprite: {fileID: -2117204262, guid: 4e81dfcb2fd8d774e8ca7790261e61cc, type: 3}
   cookedSprite: {fileID: 669786798, guid: f7898e8570277ae44a0d6ff8d3eb48ee, type: 3}
   overcookedSprite: {fileID: 1519602367, guid: 486b286a3a21628438acbd76c4554382, type: 3}
+--- !u!61 &4648705306474662518
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836158698998753788}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.85, y: 7.76}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 18, y: 16}
+  m_EdgeRadius: 0
 --- !u!1 &2180788710246720760
 GameObject:
   m_ObjectHideFlags: 0

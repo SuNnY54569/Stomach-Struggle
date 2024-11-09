@@ -10,28 +10,46 @@ using SimpleJSON;
 
 public class TestManager : MonoBehaviour
 {
-    [Header("Questions")] [SerializeField] private List<QandA> QnA;
+    [Header("Questions")]
+    [SerializeField, Tooltip("List of questions and answers for the quiz")]
+    private List<QandA> QnA;
 
-    [Header("References")] [SerializeField]
+    [Header("References")]
+    [SerializeField, Tooltip("Array of answer option buttons")]
     private GameObject[] options;
+    [SerializeField, Tooltip("Panel for displaying the quiz")]
+    private GameObject quizPanel;
+    [SerializeField, Tooltip("Panel for displaying game over screen")]
+    private GameObject goPanel;
+    [SerializeField, Tooltip("Panel for displaying answer corrections")]
+    private GameObject correctionPanel;
+    [SerializeField, Tooltip("Panel for displaying correct answer feedback")]
+    private GameObject correctPanel;
+    [SerializeField, Tooltip("Text for indicating if the answer was correct or incorrect")]
+    private TMP_Text corretOrNotText;
+    [SerializeField, Tooltip("Text for showing the correction of the answer")]
+    private TMP_Text correctionText;
+    [SerializeField, Tooltip("Text for displaying the question")]
+    private TMP_Text questionText;
+    [SerializeField, Tooltip("Text for displaying the current score")]
+    private TMP_Text scoreText;
+    [SerializeField, Tooltip("Text for displaying the final score on game over screen")]
+    private TMP_Text finalscoreText;
+    [SerializeField, Tooltip("Text for displaying the question number")]
+    private TMP_Text qNumberText;
 
-    [SerializeField] private GameObject quizPanel;
-    [SerializeField] private GameObject goPanel;
-    [SerializeField] private GameObject correctionPanel;
-    [SerializeField] private GameObject correctPanel;
-    [SerializeField] private TMP_Text corretOrNotText;
-    [SerializeField] private TMP_Text correctionText;
-    [SerializeField] private TMP_Text questionText;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private TMP_Text finalscoreText;
-    [SerializeField] private TMP_Text qNumberText;
+    [Header("Infos")]
+    [SerializeField, Tooltip("Current question number")]
+    private int questionNumber;
+    [SerializeField, Tooltip("Index of the current question in the QnA list")]
+    private int currentQuestion;
+    [SerializeField, Tooltip("Total number of questions in the quiz")]
+    private int totalQuestion;
+    [SerializeField, Tooltip("Player's score")]
+    private int score;
 
-    [Header("Infos")] [SerializeField] private int questionNumber;
-    [SerializeField] private int currentQuestion;
-    [SerializeField] private int totalQuestion;
-    [SerializeField] private int score;
-
-    public string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions";
+    [Tooltip("Firebase database URL for questions")]
+    string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions";
 
     private void Start()
     {

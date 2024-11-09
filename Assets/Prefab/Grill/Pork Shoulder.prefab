@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 5134051192098825308}
   - component: {fileID: 8349774986328864771}
   - component: {fileID: 7061499889016792865}
+  - component: {fileID: 5408638851157305904}
   m_Layer: 0
   m_Name: Pork Shoulder
   m_TagString: Raw
@@ -169,8 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ad2053cdc36cd4ca085ea1d0e7b195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodSpawners: []
+  foodSpawners: {fileID: 0}
   isInteractable: 1
+  spawnCollider: {fileID: 5408638851157305904}
+  mainCollider: {fileID: 4583075882696660074}
+  spriteRenderer: {fileID: 4600698423219108069}
 --- !u!114 &8349774986328864771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +211,51 @@ MonoBehaviour:
   cookingSprite: {fileID: 794188660, guid: 62ed4a0ceca7ddb4e8fec340c7f1208f, type: 3}
   cookedSprite: {fileID: -499608355, guid: b896090c1cf380041b1e3911d8831004, type: 3}
   overcookedSprite: {fileID: 2101887522, guid: fc57b01ba9f7143438602d362ccc70fe, type: 3}
+--- !u!61 &5408638851157305904
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836158698998753788}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 7.85, y: 7.76}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 18, y: 16}
+  m_EdgeRadius: 0
 --- !u!1 &2180788710246720760
 GameObject:
   m_ObjectHideFlags: 0
