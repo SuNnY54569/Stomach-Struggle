@@ -8,7 +8,11 @@ public class SymptomGameController : MonoBehaviour
 {
     [Header("Symptoms")]
     public List<Symptom> symptomsList;
+    public Symptom fixedSymptom1; // The first fixed symptom
+    public Symptom fixedSymptom2; // The second fixed symptom
+    private Symptom randomSymptom; // The randomly chosen symptom
     private Symptom currentSymptom;
+    private List<Symptom> activeSymptoms; // List of the three symptoms to check
 
     [Header("UI Elements")]
     public TMP_Text symptomPromptText; // Text to display the current symptom
@@ -18,6 +22,7 @@ public class SymptomGameController : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.SetScoreTextActive(false);
+        SetupSymptoms();
         SetRandomSymptom();
         ShuffleToggles();
 
@@ -27,17 +32,34 @@ public class SymptomGameController : MonoBehaviour
             toggle.onValueChanged.AddListener(delegate { CheckAnswer(toggle); });
         }
     }
+    
+    private void SetupSymptoms()
+    {
+        activeSymptoms = new List<Symptom> { fixedSymptom1, fixedSymptom2 };
+
+        // Choose one random symptom that isn’t fixedSymptom1 or fixedSymptom2
+        List<Symptom> availableSymptoms = new List<Symptom>(symptomsList);
+        availableSymptoms.Remove(fixedSymptom1);
+        availableSymptoms.Remove(fixedSymptom2);
+
+        if (availableSymptoms.Count > 0)
+        {
+            randomSymptom = availableSymptoms[Random.Range(0, availableSymptoms.Count)];
+            activeSymptoms.Add(randomSymptom);
+        }
+    }
 
     private void SetRandomSymptom()
     {
-        if (symptomsList.Count > 0)
+        if (activeSymptoms.Count > 0)
         {
-            currentSymptom = symptomsList[Random.Range(0, symptomsList.Count)];
+            currentSymptom = activeSymptoms[Random.Range(0, activeSymptoms.Count)];
             symptomPromptText.text = currentSymptom.symptomDescription;
         }
         else
         {
             GameManager.Instance.WinGame();
+            ClearToggleListeners();
         }
     }
     
@@ -75,13 +97,22 @@ public class SymptomGameController : MonoBehaviour
 
         if (toggleLabel.text == currentSymptom.symptomDescription)
         {
-            symptomsList.Remove(currentSymptom);
-            SetRandomSymptom();
+            activeSymptoms.Remove(currentSymptom); // Remove matched symptom
+            selectedToggle.interactable = false; // Disable toggle
+            SetRandomSymptom(); // Set the next symptom or end the game
         }
         else
         {
             GameManager.Instance.DecreaseHealth(1);
             selectedToggle.isOn = false;
+        }
+    }
+    
+    private void ClearToggleListeners()
+    {
+        foreach (Toggle toggle in symptomCheckboxes)
+        {
+            toggle.onValueChanged.RemoveAllListeners();
         }
     }
 }

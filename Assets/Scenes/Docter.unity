@@ -1208,6 +1208,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd4e37787d8b47146aa2dc2340fac797, type: 2}
   - {fileID: 11400000, guid: 6deec7842d358ca458364b37ff4f7e10, type: 2}
   - {fileID: 11400000, guid: c262e74443bdab942ae730111f6645af, type: 2}
+  fixedSymptom1: {fileID: 11400000, guid: fe139a0a81fbdeb4d9c9c7a608bff0f8, type: 2}
+  fixedSymptom2: {fileID: 11400000, guid: 545cf2aa5933444468916b73530d5402, type: 2}
   symptomPromptText: {fileID: 604204511}
   symptomCheckboxes:
   - {fileID: 711788546}
