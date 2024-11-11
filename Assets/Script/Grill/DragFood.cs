@@ -24,6 +24,7 @@ public class DragFood : MonoBehaviour
     private FoodCooking foodCooking;
     [SerializeField] private bool hasBeenActivate;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    private Tools.ToolType currentTool;
     #endregion
 
     private void Awake()
@@ -40,6 +41,8 @@ public class DragFood : MonoBehaviour
     
     private void Update()
     {
+        currentTool = Tools.Instance.currentTool;
+        
         if (foodCooking.isCooking && !isOnGrill)
         {
             foodCooking.StopCooking();
@@ -49,10 +52,11 @@ public class DragFood : MonoBehaviour
     #region Mouse Events
     private void OnMouseDown()
     {
-        if (GameManager.Instance.isGamePaused) return;
-        if (!isInteractable) return;
+        if (GameManager.Instance.isGamePaused || !isInteractable) return;
         
         offset = transform.position - MouseWorldPosition();
+        
+        if (!ValidateToolForCookingState()) return;
         
         if (isOnGrill)
         {
@@ -74,17 +78,20 @@ public class DragFood : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (GameManager.Instance.isGamePaused) return;
-        if (isDragging && isInteractable)
-        {
-            transform.position = MouseWorldPosition() + offset;
-        }
+        if (!isDragging || GameManager.Instance.isGamePaused || !isInteractable) return;
+
+        if (!ValidateToolForCookingState()) return;
+        
+        transform.position = MouseWorldPosition() + offset;
+        
     }
     
     private void OnMouseUp()
     {
-        if (GameManager.Instance.isGamePaused) return;
-        if (!isInteractable) return;
+        if (GameManager.Instance.isGamePaused || !isInteractable) return;
+        
+        if (!ValidateToolForCookingState()) return;
+        
         isDragging = false;
         col.enabled = false;
         
@@ -198,6 +205,36 @@ public class DragFood : MonoBehaviour
             isOnGrill = false;
             foodCooking.StopCooking();
         }
+    }
+    
+    private bool ValidateToolForCookingState()
+    {
+        if (Tools.Instance.currentTool == Tools.ToolType.None)
+        {
+            Tools.Instance.ShowWarning(currentTool);
+            return false;
+        }
+
+        bool isBothSidesCooked = foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked();
+
+        if (Tools.Instance.currentTool == Tools.ToolType.Spatula)
+        {
+            if (!isBothSidesCooked)
+            {
+                Tools.Instance.ShowWarning(currentTool);
+                return false;
+            }
+        }
+        else if (Tools.Instance.currentTool == Tools.ToolType.Tongs)
+        {
+            if (isBothSidesCooked)
+            {
+                Tools.Instance.ShowWarning(currentTool);
+                return false;
+            }
+        }
+
+        return true;
     }
     #endregion
 }

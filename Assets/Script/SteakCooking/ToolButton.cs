@@ -23,11 +23,13 @@ public class ToolButton : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.gray;
     }
     
     private void OnMouseExit()
     {
+        if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.white;
     }
 }
