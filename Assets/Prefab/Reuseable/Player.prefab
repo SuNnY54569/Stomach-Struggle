@@ -2398,7 +2398,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2284886304831662698}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+  m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -2441,23 +2441,23 @@ MonoBehaviour:
   videoPlayer: {fileID: 8939078656716128124}
   tutorialScenes:
   - sceneName: Claw machine
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: Chapter1.2.2
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: WashHand
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: SteakCooking
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: Twohours
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: Grill
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: ChooseWater
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: Docter
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: Docter 2
-    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
+    videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   replayButton: {fileID: 8292771327219512057}
 --- !u!1 &2307312508155886722
 GameObject:
