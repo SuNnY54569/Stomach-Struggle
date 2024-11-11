@@ -2441,23 +2441,23 @@ MonoBehaviour:
   videoPlayer: {fileID: 8939078656716128124}
   tutorialScenes:
   - sceneName: Claw machine
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: Chapter1.2.2
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: WashHand
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: SteakCooking
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: Twohours
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: Grill
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: ChooseWater
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: Docter
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   - sceneName: Docter 2
-    videoClip: {fileID: 32900000, guid: b57c4bfc071c7e744809c25c6f328aec, type: 3}
+    videoClip: {fileID: 32900000, guid: 397832338c5937748a12394e93f12737, type: 3}
   replayButton: {fileID: 8292771327219512057}
 --- !u!1 &2307312508155886722
 GameObject:
@@ -5599,6 +5599,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 7869578107665225231}
   winPanel: {fileID: 2498101482384833761}
   tutorialPanel: {fileID: 5770594542048099888}
+  gameplayPanel: {fileID: 1215772611402400720}
   tutorialVideoManager: {fileID: 2437533427275752445}
   totalHeart: 0
   totalHeartLeft: 0
