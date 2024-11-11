@@ -6,18 +6,30 @@ using UnityEngine.UI;
 
 public class SymptomGameController : MonoBehaviour
 {
-    [Header("Symptoms")]
-    public List<Symptom> symptomsList;
-    public Symptom fixedSymptom1; // The first fixed symptom
-    public Symptom fixedSymptom2; // The second fixed symptom
-    private Symptom randomSymptom; // The randomly chosen symptom
+    [Header("Symptoms Settings")]
+    [SerializeField, Tooltip("List of all available symptoms.")]
+    private List<Symptom> symptomsList;
+
+    [SerializeField, Tooltip("First fixed symptom that always appears.")]
+    private Symptom fixedSymptom1;
+
+    [SerializeField, Tooltip("Second fixed symptom that always appears.")]
+    private Symptom fixedSymptom2;
+
+    private Symptom randomSymptom;
     private Symptom currentSymptom;
-    private List<Symptom> activeSymptoms; // List of the three symptoms to check
+    private List<Symptom> activeSymptoms = new List<Symptom>();
 
     [Header("UI Elements")]
-    public TMP_Text symptomPromptText; // Text to display the current symptom
-    public List<Toggle> symptomCheckboxes; // Checkboxes for each symptom
-    public VerticalLayoutGroup layoutGroup;
+    [SerializeField, Tooltip("Text element to display the current symptom prompt.")]
+    private TMP_Text symptomPromptText;
+
+    [SerializeField, Tooltip("Checkboxes for each symptom.")]
+    private List<Toggle> symptomCheckboxes;
+
+    [SerializeField, Tooltip("Layout group to control the symptom checkbox arrangement.")]
+    private VerticalLayoutGroup layoutGroup;
+
 
     private void Start()
     {
