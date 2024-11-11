@@ -165,5 +165,6 @@ public class DatabaseManager : MonoBehaviour
         GameManager.Instance.ResetPrePostTest();
         SceneManagerClass.Instance.LoadMenuScene();
     }
+    
     #endregion
 }
