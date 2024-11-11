@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +27,7 @@ public class spawnPointdown : MonoBehaviour
         {
             
             float wanted = Random.Range(minTras, maxTras);
-            var position = new Vector3(wanted,transform.position.y);
+            var position = new Vector3(wanted,transform.position.y,0);
 
             GameObject spawnedItem = Instantiate(itemPrefab[Random.Range(0, itemPrefab.Length)], position, Quaternion.identity);
             StartCoroutine(MoveObjectDown(spawnedItem));
