@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
     
     [Header("Tutorial")] [SerializeField, Tooltip("Panel to display Tutorial when scene start")]
     public GameObject tutorialPanel;
+
+    [SerializeField] public GameObject gameplayPanel;
     
     [SerializeField, Tooltip("Tutorial Video Manager Script")]
     private TutorialVideoManager tutorialVideoManager;
@@ -177,18 +179,6 @@ public class GameManager : MonoBehaviour
         UpdateHeartsUI();
     }
 
-    private void FixedUpdate()
-    {
-        if (tutorialPanel.activeSelf)
-        {
-            objectsToDeactivate[0].SetActive(false);
-        }
-        else
-        {
-            objectsToDeactivate[0].SetActive(true);
-        }
-    }
-
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -211,6 +201,7 @@ public class GameManager : MonoBehaviour
                 tutorialVideoManager.SetupVideoForScene(scene.name);
                 tutorialVideoManager.StartVideo();
                 tutorialPanel.SetActive(true);
+                gameplayPanel.gameObject.SetActive(false);
                 PauseGame();
             }
             else

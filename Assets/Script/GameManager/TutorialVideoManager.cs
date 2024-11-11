@@ -79,6 +79,7 @@ public class TutorialVideoManager : MonoBehaviour
         videoPlayer.Stop();
         replayButton.gameObject.SetActive(false);
         GameManager.Instance.tutorialPanel.SetActive(false);
+        GameManager.Instance.gameplayPanel.SetActive(true);
         GameManager.Instance.PauseGame();
     }
     

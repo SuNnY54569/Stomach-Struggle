@@ -1438,6 +1438,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1215772611402400720, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016435654707868921, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: gameplayPanel
+      value: 
+      objectReference: {fileID: 575194571}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1487,6 +1495,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+--- !u!1 &575194571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1215772611402400720, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+  m_PrefabInstance: {fileID: 562622644}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &720572618
 GameObject:
   m_ObjectHideFlags: 0
