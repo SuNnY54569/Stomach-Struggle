@@ -1202,8 +1202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   symptomsList:
-  - {fileID: 11400000, guid: fe139a0a81fbdeb4d9c9c7a608bff0f8, type: 2}
-  - {fileID: 11400000, guid: 545cf2aa5933444468916b73530d5402, type: 2}
   - {fileID: 11400000, guid: 4239ddc90ac47ca47b0a1473043dc963, type: 2}
   - {fileID: 11400000, guid: bd4e37787d8b47146aa2dc2340fac797, type: 2}
   - {fileID: 11400000, guid: 6deec7842d358ca458364b37ff4f7e10, type: 2}
