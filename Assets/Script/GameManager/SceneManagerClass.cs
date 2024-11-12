@@ -27,13 +27,11 @@ public class SceneManagerClass : MonoBehaviour
     #region Scene Management
     public void LoadMenuScene()
     {
-        GameManager.Instance.CloseAllPanel();
         TransitionManager.Instance.LoadLevel("Start scene", 0.5f);
     }
 
     public void LoadNextScene()
     {
-        GameManager.Instance.CloseAllPanel();
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
@@ -49,7 +47,6 @@ public class SceneManagerClass : MonoBehaviour
 
     public void ReloadScene()
     {
-        GameManager.Instance.CloseAllPanel();
         string currentSceneName = SceneManager.GetActiveScene().name;
         
         if (SceneExists(currentSceneName))
@@ -64,7 +61,6 @@ public class SceneManagerClass : MonoBehaviour
 
     public void LoadThisScene(string sceneName)
     {
-        GameManager.Instance.CloseAllPanel();
         if (SceneExists(sceneName))
         {
             TransitionManager.Instance.LoadLevel(sceneName, 0.5f);

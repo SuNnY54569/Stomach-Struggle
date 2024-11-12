@@ -2459,6 +2459,7 @@ MonoBehaviour:
   - sceneName: Docter 2
     videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   replayButton: {fileID: 8292771327219512057}
+  skipButton: {fileID: 723946657801768396}
 --- !u!1 &2307312508155886722
 GameObject:
   m_ObjectHideFlags: 0
@@ -3531,18 +3532,6 @@ MonoBehaviour:
           m_StringArgument: Claw machine
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2498101482384833761}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 4016435654707868921}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResetHealth
@@ -3688,18 +3677,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7869578107665225231}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 4016435654707868921}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResetHealth
@@ -7265,6 +7242,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4656033396446134791}
     m_Modifications:
+    - target: {fileID: 2374072872290194105, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
+      propertyPath: rotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8746815213132877900, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
       propertyPath: m_Name
       value: TransitionManager

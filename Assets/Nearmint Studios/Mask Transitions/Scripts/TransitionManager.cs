@@ -83,13 +83,13 @@ namespace MaskTransitions
             parentMaskRect.sizeDelta = Vector2.zero;
             maskRect.rotation = Quaternion.identity;
 
-            Tween blueTweenSize = maskRect.DOSizeDelta(new Vector2(maxSize, maxSize), animationTime).SetEase(Ease.InOutQuad);
+            Tween blueTweenSize = maskRect.DOSizeDelta(new Vector2(maxSize, maxSize), animationTime).SetEase(Ease.InOutQuad).SetUpdate(true);
 
             Sequence animationSequence = DOTween.Sequence().Join(blueTweenSize);
 
             if (rotation)
             {
-                Tween blueTweenRotate = maskRect.DORotate(new Vector3(0, 0, 180), animationTime).SetEase(Ease.InOutQuad);
+                Tween blueTweenRotate = maskRect.DORotate(new Vector3(0, 0, 180), animationTime).SetEase(Ease.InOutQuad).SetUpdate(true);
                 animationSequence.Join(blueTweenRotate);
             }
 
@@ -105,9 +105,9 @@ namespace MaskTransitions
             parentMaskRect.sizeDelta = Vector2.zero;
             parentMaskRect.rotation = Quaternion.identity;
 
-            parentMaskRect.DOSizeDelta(new Vector2(maxSize, maxSize), animationTime).SetEase(Ease.InOutQuad);
+            parentMaskRect.DOSizeDelta(new Vector2(maxSize, maxSize), animationTime).SetEase(Ease.InOutQuad).SetUpdate(true);
             if (rotation)
-                parentMaskRect.DORotate(new Vector3(0, 0, 180), animationTime).SetEase(Ease.InOutQuad);
+                parentMaskRect.DORotate(new Vector3(0, 0, 180), animationTime).SetEase(Ease.InOutQuad).SetUpdate(true);
         }
         #endregion
 
@@ -122,10 +122,10 @@ namespace MaskTransitions
             float dividedTime = transitionTime / 3;
 
             //Optional Delay
-            yield return new WaitForSeconds(startDelay);
+            yield return new WaitForSecondsRealtime(startDelay);
 
             StartAnimation(dividedTime);
-            yield return new WaitForSeconds(dividedTime);
+            yield return new WaitForSecondsRealtime(dividedTime);
             EndAnimation(dividedTime);
         }
         #endregion
@@ -138,19 +138,23 @@ namespace MaskTransitions
 
         IEnumerator LoadLevelWithWait(string sceneName, float delay)
         {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
 
-            Tween animationTween = StartAnimationForLoad();
-
-            // Wait for the animation to complete
+            Tween animationTween = StartAnimationForLoad().SetUpdate(true);
             yield return animationTween.WaitForCompletion();
 
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+            GameManager.Instance.CloseAllPanel();
+            asyncLoad.allowSceneActivation = false;
 
-            while (!asyncLoad.isDone)
+            while (asyncLoad.progress < 0.9f)
             {
                 yield return null;
             }
+
+            asyncLoad.allowSceneActivation = true;
+
+            yield return new WaitForSecondsRealtime(0.1f); // Optional for smoother transition
 
             EndAnimation();
         }

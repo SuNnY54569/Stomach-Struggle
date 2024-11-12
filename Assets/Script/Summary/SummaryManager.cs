@@ -95,7 +95,7 @@ public class SummaryManager : MonoBehaviour
         }
 
         GameManager.Instance.ResetTotalHeart();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManagerClass.Instance.LoadNextScene();
         GameManager.Instance.gameObject.SetActive(true);
     }
 
@@ -104,7 +104,7 @@ public class SummaryManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ResetTotalHeart();
-            SceneManager.LoadScene(retrySceneName);
+            SceneManagerClass.Instance.LoadThisScene(retrySceneName);
         }
     }
 
@@ -113,7 +113,7 @@ public class SummaryManager : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ResetAllTotalHeart();
-            SceneManager.LoadScene(MAIN_MENU_SCENE);
+            SceneManagerClass.Instance.LoadMenuScene();
         }
     }
     #endregion

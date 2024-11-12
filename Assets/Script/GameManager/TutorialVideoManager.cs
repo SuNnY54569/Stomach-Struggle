@@ -29,6 +29,8 @@ public class TutorialVideoManager : MonoBehaviour
     [Header("UI Components")]
     [Tooltip("Button to replay the tutorial video.")]
     [SerializeField] private Button replayButton;
+    [Tooltip("Button to skip the tutorial")] 
+    [SerializeField] private Button skipButton;
 
     #endregion
     #region Unity Lifecycle
@@ -38,6 +40,11 @@ public class TutorialVideoManager : MonoBehaviour
         if (replayButton != null)
         {
             replayButton.gameObject.SetActive(false);
+        }
+        
+        if (skipButton != null)
+        {
+            skipButton.gameObject.SetActive(false);
         }
         
         if (SoundManager.instance != null && SoundManager.instance.audioSources.ContainsKey(VolumeType.Tutorial))
@@ -64,6 +71,7 @@ public class TutorialVideoManager : MonoBehaviour
         if (videoClip != null)
         {
             videoPlayer.clip = videoClip;
+            StartCoroutine(ShowSkipButtonWithDelay(1f));
         }
     }
     
@@ -87,6 +95,7 @@ public class TutorialVideoManager : MonoBehaviour
     {
         videoPlayer.Stop();
         replayButton.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(false);
         GameManager.Instance.tutorialPanel.SetActive(false);
         GameManager.Instance.gameplayPanel.SetActive(true);
         GameManager.Instance.PauseGame();
@@ -109,6 +118,12 @@ public class TutorialVideoManager : MonoBehaviour
     private void OnVideoEnd(VideoPlayer vp)
     {
         replayButton.gameObject.SetActive(true);
+    }
+    
+    private IEnumerator ShowSkipButtonWithDelay(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        skipButton.gameObject.SetActive(true);
     }
     
     #endregion
