@@ -71,6 +71,7 @@ public class TutorialVideoManager : MonoBehaviour
         if (videoClip != null)
         {
             videoPlayer.clip = videoClip;
+            GameManager.Instance.BlurBackGround();
             StartCoroutine(ShowSkipButtonWithDelay(1f));
         }
     }

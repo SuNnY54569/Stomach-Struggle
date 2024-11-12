@@ -7,6 +7,7 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private float remainingTime;
+    [SerializeField] private GameObject clockGameObject;
     public bool isGameOver = false;
 
     private void Start()
@@ -16,6 +17,8 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
+        clockGameObject.SetActive(!GameManager.Instance.isGamePaused);
+
         if (GameManager.Instance.currentHealth <= 0)
         {
             isGameOver = true;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1b396c4c74dbb684a9297d3df9d7afc1
+guid: 7f3fb57c08ee2ed44a98a8cc4596f859
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -136,106 +136,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI_Q_A_0
+      name: UI_Q_A_010_0
       rect:
         serializedVersion: 2
-        x: 198
-        y: 1361
-        width: 1018
-        height: 603
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 100, y: 100, z: 100, w: 100}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce2cbb2bf31d8f64d88ca5ff2691011a
-      internalID: -1258846336
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Q_A_1
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 1091
+        x: 205
+        y: 1262
         width: 444
-        height: 211
+        height: 218
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 20, y: 60, z: 20, w: 30}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 260472658b1482e41a4a02c6d55599df
-      internalID: 948826210
+      spriteID: e4455b90880c25948b91a25230712d3d
+      internalID: -494575291
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Q_A_2
+      name: UI_Q_A_010_1
       rect:
         serializedVersion: 2
-        x: 820
-        y: 1091
+        x: 779
+        y: 1262
+        width: 445
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0741396c235b47448ad554b77f25ce1
+      internalID: -866916259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Q_A_010_2
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 964
         width: 444
-        height: 211
+        height: 209
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 20, y: 60, z: 20, w: 30}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb02716aac26f8c4bb63bf8d0ffdfd98
-      internalID: -878024974
+      spriteID: e736dfc05c5d3b1478671874bcc3b71c
+      internalID: -1262766965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI_Q_A_3
+      name: UI_Q_A_010_3
       rect:
         serializedVersion: 2
-        x: 276
-        y: 543
-        width: 862
-        height: 488
+        x: 779
+        y: 964
+        width: 445
+        height: 209
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 45, y: 45, z: 45, w: 165}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7caad15d6d2b78b4a8298de8d77b0b67
-      internalID: -1307209094
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_Q_A_4
-      rect:
-        serializedVersion: 2
-        x: 276
-        y: 90
-        width: 862
-        height: 371
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 45, y: 45, z: 45, w: 160}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 30280136a6f26b04fb9e91e7c9ab0c09
-      internalID: 1323599554
+      spriteID: c5fe484cfd5e8ff4eb8d9c82515337ef
+      internalID: 2031290944
       vertices: []
       indices: 
       edges: []
@@ -251,11 +230,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      UI_Q_A_0: -1258846336
-      UI_Q_A_1: 948826210
-      UI_Q_A_2: -878024974
-      UI_Q_A_3: -1307209094
-      UI_Q_A_4: 1323599554
+      UI_Q_A_010_0: -494575291
+      UI_Q_A_010_1: -866916259
+      UI_Q_A_010_2: -1262766965
+      UI_Q_A_010_3: 2031290944
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

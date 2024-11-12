@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField, Tooltip("Panel to display when the player wins.")]
     private GameObject winPanel;
+
+    [SerializeField, Tooltip("Panel to display pause menu")]
+    private GameObject pausePanel;
     
     #endregion
 
@@ -131,6 +134,9 @@ public class GameManager : MonoBehaviour
     
     private float initialIntensity;
     private Vignette _vignette;
+    private DepthOfField _depthOfField;
+    private ColorGrading _colorGrading;
+    private bool isEnabled;
     
     #endregion
 
@@ -169,6 +175,16 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("Vignette effect not found");
+        }
+
+        if (volume.profile.TryGetSettings<DepthOfField>(out _depthOfField))
+        {
+            _depthOfField.enabled.Override(false);
+        }
+        
+        if (volume.profile.TryGetSettings<ColorGrading>(out _colorGrading))
+        {
+            _colorGrading.enabled.Override(false);
         }
     }
     
@@ -354,6 +370,7 @@ public class GameManager : MonoBehaviour
     {
         winPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+        pausePanel.SetActive(false);
     }
 
     public void SetMaxScore(int maxScore)
@@ -398,6 +415,13 @@ public class GameManager : MonoBehaviour
     {
         PauseGame();
         ResetHealth();
+    }
+
+    public void BlurBackGround()
+    {
+        isEnabled = !isEnabled;
+        _depthOfField.enabled.Override(isEnabled);
+        _colorGrading.enabled.Override(isEnabled);
     }
     
     #endregion

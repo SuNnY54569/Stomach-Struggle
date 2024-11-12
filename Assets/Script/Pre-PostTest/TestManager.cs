@@ -81,7 +81,6 @@ public class TestManager : MonoBehaviour
         goPanel.SetActive(false);
         quizPanel.SetActive(true);
         correctionPanel.SetActive(false);
-        minimumScoreText.SetActive(false);
         questionNumber = 0;
         qNumberText.text = $"{questionNumber}.";
         GenerateQuestion();
