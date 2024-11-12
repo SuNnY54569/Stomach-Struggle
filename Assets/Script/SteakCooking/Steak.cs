@@ -135,16 +135,6 @@ public class Steak : MonoBehaviour
         }
     }
 
-    private void OnMouseOver()
-    {
-        //spriteRenderer.color = Color.gray;
-    }
-
-    private void OnMouseExit()
-    {
-        //spriteRenderer.color = Color.white;
-    }
-
     private void SnapToPanCenter()
     {
         // Assuming your pan has a Collider2D to find its position
@@ -194,7 +184,7 @@ public class Steak : MonoBehaviour
         }
         else if (currentTimer >= cookingTime)
         {
-            MarkAsCooked();
+            //MarkAsCooked();
         }
     }
     
@@ -281,14 +271,14 @@ public class Steak : MonoBehaviour
         ResetPosition();
     }
     
-    private void MarkAsCooked()
+    /*private void MarkAsCooked()
     {
         gameObject.tag = "Cooked";
-    }
+    }*/
 
     private void MarkAsOvercooked()
     {
-        gameObject.tag = "Overcooked";
+        //gameObject.tag = "Overcooked";
         isCooking = false;
     }
     
