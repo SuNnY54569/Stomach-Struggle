@@ -1995,10 +1995,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTool: 0
-  tongsCursor: {fileID: 2800000, guid: 773cf159aa6008f42b66bf791c8c6fdd, type: 3}
-  spatulaCursor: {fileID: 2800000, guid: a313a7fe615fb9149a2cf73218762520, type: 3}
-  tongsCursorHotspot: {x: 30, y: 220}
-  spatulaCursorHotspot: {x: 0, y: 249}
+  tongsCursor: {fileID: 2800000, guid: a2615535e3d828240867129e964271b9, type: 3}
+  spatulaCursor: {fileID: 2800000, guid: b53c60af2622f3a4ebea66bc5c598d0f, type: 3}
+  tongsCursorHotspot: {x: 50, y: 200}
+  spatulaCursorHotspot: {x: 0, y: 229}
   warningMessageText: {fileID: 31005053}
   warningMessage: "\u0E42\u0E1B\u0E23\u0E14\u0E43\u0E0A\u0E49\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E43\u0E2B\u0E49\u0E16\u0E39\u0E01\u0E0A\u0E19\u0E34\u0E14"
   tongsWarning: "\u0E2D\u0E31\u0E19\u0E19\u0E35\u0E49\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E15\u0E30\u0E2B\u0E25\u0E34\u0E27\u0E19\u0E30"

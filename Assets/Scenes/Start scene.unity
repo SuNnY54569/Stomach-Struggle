@@ -1439,9 +1439,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1497622664710890237, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: rotation
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: transitionImage
+      value: 
+      objectReference: {fileID: 21300000, guid: ee1b4d0e03de1a344be5c30c60c2109f, type: 3}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1487,8 +1487,7 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 5506968654951044208, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
