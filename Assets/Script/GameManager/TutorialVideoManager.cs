@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +46,14 @@ public class TutorialVideoManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (SoundManager.instance != null && SoundManager.instance.audioSources.ContainsKey(VolumeType.Tutorial))
+        {
+            videoPlayer.SetTargetAudioSource(0, SoundManager.instance.audioSources[VolumeType.Tutorial]);
+        }
+    }
+
     #endregion
     
     #region Public Methods
@@ -79,6 +88,7 @@ public class TutorialVideoManager : MonoBehaviour
         videoPlayer.Stop();
         replayButton.gameObject.SetActive(false);
         GameManager.Instance.tutorialPanel.SetActive(false);
+        GameManager.Instance.gameplayPanel.SetActive(true);
         GameManager.Instance.PauseGame();
     }
     
