@@ -87,12 +87,12 @@ public class TestManager : MonoBehaviour
                 break;
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManagerClass.Instance.LoadNextScene();
     }
 
     public void Retry()
     {
-        SceneManager.LoadScene("Start scene");
+        SceneManagerClass.Instance.ReloadScene();
     }
 
     private void GameOver()

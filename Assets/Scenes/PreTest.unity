@@ -1016,7 +1016,6 @@ MonoBehaviour:
   currentQuestion: 0
   totalQuestion: 0
   score: 0
-  firebaseURL: https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions
 --- !u!4 &621491570
 Transform:
   m_ObjectHideFlags: 0
