@@ -124,6 +124,7 @@ public class spawnFoodRandom : MonoBehaviour
 
         if (spawnCount < maxSpawns)
         {
+            spawnCount -= 1;
             SpawnAllFood();
         }
     }

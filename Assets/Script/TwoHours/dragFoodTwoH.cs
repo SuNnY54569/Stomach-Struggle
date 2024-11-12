@@ -7,11 +7,13 @@ public class dragFoodTwoH : MonoBehaviour
     private DragControllerGuitar _dragController;
     private bool _isDragging;
     private FoodRandom _foodRandom;
+    private Vector3 _startPosition;
 
     private void Awake()
     {
         _dragController = FindObjectOfType<DragControllerGuitar>();
         _foodRandom = GetComponent<FoodRandom>();
+        _startPosition = transform.position;
     }
 
     private void Update()
@@ -40,6 +42,7 @@ public class dragFoodTwoH : MonoBehaviour
     private void Drop()
     {
         _isDragging = false;
+        bool droppedInSlot = false;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);
 
         foreach (Collider2D collider in colliders)
@@ -51,15 +54,20 @@ public class dragFoodTwoH : MonoBehaviour
             {
                 FoodRandom foodRandom = GetComponent<FoodRandom>();
                 slotEat.OnDrop(this, foodRandom);
+                droppedInSlot = true;
                 break;
             }
             else if (slotWarm != null)
             {
                 FoodRandom foodRandom = GetComponent<FoodRandom>();
                 slotWarm.OnDrop(this, foodRandom);
+                droppedInSlot = true;
                 break;
             }
-
+            if (!droppedInSlot)
+            {
+                transform.position = _startPosition;
+            }
 
         }
     }
