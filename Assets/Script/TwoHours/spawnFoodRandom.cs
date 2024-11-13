@@ -19,6 +19,7 @@ public class spawnFoodRandom : MonoBehaviour
     [Header("UI Settings")]
     [SerializeField] private TextMeshProUGUI spawnCountText;
     [SerializeField] private GameObject clockGameObject;
+    [SerializeField] private GameObject guideText;
 
     private bool isGameOver = false;
 
@@ -37,6 +38,7 @@ public class spawnFoodRandom : MonoBehaviour
     {
         clockGameObject.SetActive(!GameManager.Instance.isGamePaused);
         spawnCountText.gameObject.SetActive(!GameManager.Instance.isGamePaused);
+        guideText.SetActive(!GameManager.Instance.isGamePaused);
         
         if (spawnCount >= maxSpawns)
         {

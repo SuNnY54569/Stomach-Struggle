@@ -52,6 +52,9 @@ public class GameManager : MonoBehaviour
     
     [Tooltip("The maximum score required to win.")]
     public int scoreMax;
+
+    [SerializeField, Tooltip("Score GameObject")]
+    private GameObject scoreGameObject;
     
     [SerializeField, Tooltip("UI Text element to display score.")]
     private TextMeshProUGUI scoreText;
@@ -363,7 +366,7 @@ public class GameManager : MonoBehaviour
 
     public void SetScoreTextActive(bool isActive)
     {
-        scoreText.gameObject.SetActive(isActive);
+        scoreGameObject.gameObject.SetActive(isActive);
     }
 
     public void CloseAllPanel()
