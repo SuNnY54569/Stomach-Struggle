@@ -109,6 +109,11 @@ public class TestManager : MonoBehaviour
         SceneManagerClass.Instance.ReloadScene();
     }
 
+    public void ToMenu()
+    {
+        SceneManagerClass.Instance.LoadMenuScene();
+    }
+
     private void GameOver()
     {
         quizPanel.SetActive(false);

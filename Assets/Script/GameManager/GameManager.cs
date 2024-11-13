@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public bool isGamePaused;
+    public bool isBlurEnabled;
     
     #region Health Settings
     
@@ -139,7 +140,6 @@ public class GameManager : MonoBehaviour
     private Vignette _vignette;
     private DepthOfField _depthOfField;
     private ColorGrading _colorGrading;
-    private bool isEnabled;
     
     #endregion
 
@@ -361,6 +361,7 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         isGamePaused = !isGamePaused;
+        BlurBackGround();
         Time.timeScale = isGamePaused ? 0f : 1f;
     }
 
@@ -422,9 +423,9 @@ public class GameManager : MonoBehaviour
 
     public void BlurBackGround()
     {
-        isEnabled = !isEnabled;
-        _depthOfField.enabled.Override(isEnabled);
-        _colorGrading.enabled.Override(isEnabled);
+        isBlurEnabled = !isBlurEnabled;
+        _depthOfField.enabled.Override(isBlurEnabled);
+        _colorGrading.enabled.Override(isBlurEnabled);
     }
     
     #endregion
