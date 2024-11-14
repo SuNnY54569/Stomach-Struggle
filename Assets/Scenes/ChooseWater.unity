@@ -1738,7 +1738,6 @@ MonoBehaviour:
   - {fileID: 699900336}
   objectsToOpen:
   - {fileID: 1766179758}
-  - {fileID: 567687908}
   - {fileID: 586958987}
   - {fileID: 737970003}
   isReturnButton: 0
