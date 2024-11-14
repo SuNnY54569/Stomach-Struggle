@@ -313,10 +313,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8939078656716128124, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_VideoClip
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -569,6 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 1543239218}
   remainingTime: 30
+  clockGameObject: {fileID: 263767223}
   isGameOver: 0
 --- !u!1 &1543239216
 GameObject:

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public bool isGamePaused;
+    public bool isBlurEnabled;
     
     #region Health Settings
     
@@ -52,6 +53,9 @@ public class GameManager : MonoBehaviour
     
     [Tooltip("The maximum score required to win.")]
     public int scoreMax;
+
+    [SerializeField, Tooltip("Score GameObject")]
+    private GameObject scoreGameObject;
     
     [SerializeField, Tooltip("UI Text element to display score.")]
     private TextMeshProUGUI scoreText;
@@ -69,6 +73,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField, Tooltip("Panel to display when the player wins.")]
     private GameObject winPanel;
+
+    [SerializeField, Tooltip("Panel to display pause menu")]
+    private GameObject pausePanel;
     
     #endregion
 
@@ -131,6 +138,8 @@ public class GameManager : MonoBehaviour
     
     private float initialIntensity;
     private Vignette _vignette;
+    private DepthOfField _depthOfField;
+    private ColorGrading _colorGrading;
     
     #endregion
 
@@ -169,6 +178,16 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("Vignette effect not found");
+        }
+
+        if (volume.profile.TryGetSettings<DepthOfField>(out _depthOfField))
+        {
+            _depthOfField.enabled.Override(false);
+        }
+        
+        if (volume.profile.TryGetSettings<ColorGrading>(out _colorGrading))
+        {
+            _colorGrading.enabled.Override(false);
         }
     }
     
@@ -342,18 +361,20 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         isGamePaused = !isGamePaused;
+        BlurBackGround();
         Time.timeScale = isGamePaused ? 0f : 1f;
     }
 
     public void SetScoreTextActive(bool isActive)
     {
-        scoreText.gameObject.SetActive(isActive);
+        scoreGameObject.gameObject.SetActive(isActive);
     }
 
     public void CloseAllPanel()
     {
         winPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+        pausePanel.SetActive(false);
     }
 
     public void SetMaxScore(int maxScore)
@@ -398,6 +419,13 @@ public class GameManager : MonoBehaviour
     {
         PauseGame();
         ResetHealth();
+    }
+
+    public void BlurBackGround()
+    {
+        isBlurEnabled = !isBlurEnabled;
+        _depthOfField.enabled.Override(isBlurEnabled);
+        _colorGrading.enabled.Override(isBlurEnabled);
     }
     
     #endregion

@@ -13,6 +13,7 @@ public class TestManager : MonoBehaviour
     [Header("Questions")]
     [SerializeField, Tooltip("List of questions and answers for the quiz")]
     private List<QandA> QnA;
+    private List<QandA> originalQnA;
 
     [Header("References")]
     [SerializeField, Tooltip("Array of answer option buttons")]
@@ -47,6 +48,14 @@ public class TestManager : MonoBehaviour
     private int totalQuestion;
     [SerializeField, Tooltip("Player's score")]
     private int score;
+    
+    [Header("Quiz Settings")]
+    [SerializeField, Tooltip("Minimum score needed to pass the post-test")]
+    private int minimumPassingScore = 5;
+    [SerializeField, Tooltip("Button to proceed to the next scene")]
+    private GameObject nextButton;
+    [SerializeField, Tooltip("Minimum Score Text GameObject")]
+    private GameObject minimumScoreText;
 
     [Tooltip("Firebase database URL for questions")]
     string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions";
@@ -58,12 +67,15 @@ public class TestManager : MonoBehaviour
             Debug.LogError("QnA list is not initialized or is empty.");
             return;
         }
+        
+        originalQnA = new List<QandA>(QnA);
 
         Initialize();
     }
 
     private void Initialize()
     {
+        QnA = new List<QandA>(originalQnA);
         UpdateMostWrongCountQuestionInDatabase();
         totalQuestion = QnA.Count;
         goPanel.SetActive(false);
@@ -87,12 +99,19 @@ public class TestManager : MonoBehaviour
                 break;
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManagerClass.Instance.LoadNextScene();
     }
 
     public void Retry()
     {
-        SceneManager.LoadScene("Start scene");
+        score = 0;
+        questionNumber = 0;
+        SceneManagerClass.Instance.ReloadScene();
+    }
+
+    public void ToMenu()
+    {
+        SceneManagerClass.Instance.LoadMenuScene();
     }
 
     private void GameOver()
@@ -100,6 +119,28 @@ public class TestManager : MonoBehaviour
         quizPanel.SetActive(false);
         goPanel.SetActive(true);
         finalscoreText.text = $"{score} / {totalQuestion}";
+
+        if (SceneManager.GetActiveScene().name == "PostTest")
+        {
+            if (score >= minimumPassingScore)
+            {
+                finalscoreText.color = Color.green;
+                nextButton.SetActive(true);
+            }
+            else
+            {
+                finalscoreText.color = Color.red;
+                nextButton.SetActive(false);
+                minimumScoreText.GetComponent<TMP_Text>().text =
+                    $"ต้องได้คะแนนมากกว่า {minimumPassingScore} ถึงจะผ่านนะ";
+                minimumScoreText.SetActive(true);
+            }
+        }
+        else
+        {
+            finalscoreText.color = Color.white; 
+            nextButton.SetActive(true); 
+        }
     }
 
     public void Correct()

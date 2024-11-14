@@ -4,26 +4,37 @@ using UnityEngine;
 public class DragFood : MonoBehaviour
 {
     #region Drag Settings
-    [Header("Settings")]
-    [SerializeField, Tooltip("Array of food spawners.")]
+    [Header("Food and Spawner Settings")]
+    [SerializeField, Tooltip("Parent GameObject containing all food spawners.")]
     private GameObject foodSpawners;
 
-    [Tooltip("Can the player interact with this food item?")]
+    [Tooltip("Determines if the player can interact with this food item.")]
     public bool isInteractable = true;
 
-    [SerializeField] private Collider2D spawnCollider;
-    [SerializeField] private Collider2D mainCollider;
+    [SerializeField, Tooltip("Collider for the spawn area.")]
+    private Collider2D spawnCollider;
+
+    [SerializeField, Tooltip("Main collider for the food object.")]
+    private Collider2D mainCollider;
     
+    [SerializeField, Tooltip("spriteRenderer for the food object spirte.")]
+    private SpriteRenderer spriteRenderer;
+
+    [Header("Food Drag and Cooking")]
+    [SerializeField, Tooltip("Whether the food item is on the grill.")]
+    private bool isOnGrill;
+
+    [SerializeField, Tooltip("Tracks if the food has been activated or placed.")]
+    private bool hasBeenActivate;
+
     private Collider2D col;
     private Vector3 offset;
     private bool isDragging;
     private Camera mainCamera;
     private Vector3 startPosition;
-    private bool isOnGrill;
     private bool wasOnGrillBeforeDrag;
     private FoodCooking foodCooking;
-    [SerializeField] private bool hasBeenActivate;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    private Tools.ToolType currentTool;
     #endregion
 
     private void Awake()
@@ -40,6 +51,8 @@ public class DragFood : MonoBehaviour
     
     private void Update()
     {
+        currentTool = Tools.Instance.currentTool;
+        
         if (foodCooking.isCooking && !isOnGrill)
         {
             foodCooking.StopCooking();
@@ -49,10 +62,11 @@ public class DragFood : MonoBehaviour
     #region Mouse Events
     private void OnMouseDown()
     {
-        if (GameManager.Instance.isGamePaused) return;
-        if (!isInteractable) return;
+        if (GameManager.Instance.isGamePaused || !isInteractable) return;
         
         offset = transform.position - MouseWorldPosition();
+        
+        if (!ValidateToolForCookingState()) return;
         
         if (isOnGrill)
         {
@@ -74,17 +88,18 @@ public class DragFood : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (GameManager.Instance.isGamePaused) return;
-        if (isDragging && isInteractable)
-        {
-            transform.position = MouseWorldPosition() + offset;
-        }
+        if (!isDragging || GameManager.Instance.isGamePaused || !isInteractable) return;
+        if (!ValidateToolForCookingState()) return;
+        
+        transform.position = MouseWorldPosition() + offset;
+        
     }
     
     private void OnMouseUp()
     {
-        if (GameManager.Instance.isGamePaused) return;
-        if (!isInteractable) return;
+        if (GameManager.Instance.isGamePaused || !isInteractable) return;
+        if (!ValidateToolForCookingState()) return;
+        
         isDragging = false;
         col.enabled = false;
         
@@ -198,6 +213,36 @@ public class DragFood : MonoBehaviour
             isOnGrill = false;
             foodCooking.StopCooking();
         }
+    }
+    
+    private bool ValidateToolForCookingState()
+    {
+        if (Tools.Instance.currentTool == Tools.ToolType.None)
+        {
+            Tools.Instance.ShowWarning(currentTool);
+            return false;
+        }
+
+        bool isBothSidesCooked = foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked();
+
+        if (Tools.Instance.currentTool == Tools.ToolType.Spatula)
+        {
+            if (!isBothSidesCooked)
+            {
+                Tools.Instance.ShowWarning(currentTool);
+                return false;
+            }
+        }
+        else if (Tools.Instance.currentTool == Tools.ToolType.Tongs)
+        {
+            if (isBothSidesCooked)
+            {
+                Tools.Instance.ShowWarning(currentTool);
+                return false;
+            }
+        }
+
+        return true;
     }
     #endregion
 }

@@ -288,8 +288,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1582424911}
-  - {fileID: 1436437294}
-  - {fileID: 1248164812}
+  - {fileID: 571514648}
   - {fileID: 1680149060}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -369,14 +368,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 174967821898614798, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4016435654707868921, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: scoreMax
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -420,10 +411,6 @@ PrefabInstance:
     - target: {fileID: 6831690669236110215, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7658361978072816184, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -578,6 +565,43 @@ MonoBehaviour:
   startMinute: 0
   endHour: 18
   endMinute: 0
+--- !u!1 &571514647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 571514648}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &571514648
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571514647}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1436437294}
+  - {fileID: 1248164812}
+  m_Father: {fileID: 237194377}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 1100, y: 120}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &670262126
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +691,8 @@ MonoBehaviour:
   - {fileID: 1436437295}
   - {fileID: 1248164813}
   spawnCountText: {fileID: 1680149061}
+  clockGameObject: {fileID: 1582424910}
+  guideText: {fileID: 571514647}
 --- !u!1 &923241626
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,16 +883,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1248164811}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 237194377}
+  m_Father: {fileID: 571514648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -53}
+  m_AnchoredPosition: {x: 0, y: -25.000006}
   m_SizeDelta: {x: 1100, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1248164813
@@ -1304,16 +1330,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436437293}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 237194377}
+  m_Father: {fileID: 571514648}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -123}
+  m_AnchoredPosition: {x: 0, y: -95.00001}
   m_SizeDelta: {x: 620.2, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1436437295
@@ -1425,7 +1451,7 @@ GameObject:
   - component: {fileID: 1582424913}
   - component: {fileID: 1582424912}
   m_Layer: 5
-  m_Name: BGCoubtTime
+  m_Name: BGCountTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
