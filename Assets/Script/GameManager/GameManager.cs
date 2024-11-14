@@ -333,7 +333,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ResetScore();
-        
+        gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(true);
         PauseGame();
     }
@@ -343,6 +343,7 @@ public class GameManager : MonoBehaviour
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
         
+        gameplayPanel.SetActive(false);
         winPanel.SetActive(true);
         PauseGame();
     }

@@ -56,6 +56,8 @@ public class TestManager : MonoBehaviour
     private GameObject nextButton;
     [SerializeField, Tooltip("Minimum Score Text GameObject")]
     private GameObject minimumScoreText;
+    [SerializeField, Tooltip("Time Untill Correct panel to close")]
+    private float disablePanelTime;
 
     [Tooltip("Firebase database URL for questions")]
     string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions";
@@ -148,6 +150,7 @@ public class TestManager : MonoBehaviour
         score += 1;
         scoreText.text = $"{score} / {totalQuestion}";
         correctPanel.SetActive(true);
+        StartCoroutine(WaitToNextQuestion(disablePanelTime));
     }
 
     public void Wrong()
@@ -156,6 +159,14 @@ public class TestManager : MonoBehaviour
         corretOrNotText.text = "Wrong Answer";
         correctionText.text = QnA[currentQuestion].correction;
         correctionPanel.SetActive(true);
+    }
+
+    private IEnumerator WaitToNextQuestion(float second)
+    {
+        yield return new WaitForSeconds(second);
+        if (!correctPanel.activeSelf) yield break;
+        NextQuestion();
+        correctPanel.SetActive(false);
     }
 
     private void SetAnswer()
