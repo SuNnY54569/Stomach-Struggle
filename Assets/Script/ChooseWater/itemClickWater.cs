@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class itemClickWater : MonoBehaviour
 {
-
+    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Sprite[] waterSprites;
     private SpriteRenderer spriteRenderer;
 
@@ -21,6 +21,18 @@ public class itemClickWater : MonoBehaviour
             int randomIndex = Random.Range(0, waterSprites.Length);
             spriteRenderer.sprite = waterSprites[randomIndex];
         }
+    }
+
+    private void OnMouseOver()
+    {
+        if (GameManager.Instance.isGamePaused) return;
+        sprite.color = Color.gray;
+    }
+
+    private void OnMouseExit()
+    {
+        if (GameManager.Instance.isGamePaused) return;
+        sprite.color = Color.white;
     }
 
     private void OnMouseDown()
