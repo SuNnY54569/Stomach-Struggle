@@ -608,13 +608,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f006e7b72023734fb1ad9906e546402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalMaxHeart: 0
+  totalHeartLeft: 0
   totalHeart: 0
   scoreText: {fileID: 1373418450}
   healthConditionText: {fileID: 139864017}
   goodHealthText: Good Health
   mediumHealthText: Medium Health
   badHealthText: Bad Health
+  retrySceneName: 
 --- !u!4 &250235955
 Transform:
   m_ObjectHideFlags: 0
@@ -2065,6 +2066,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2000018483}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2000018484
 MonoBehaviour:

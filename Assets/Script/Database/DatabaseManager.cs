@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using Proyecto26;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class DatabaseManager : MonoBehaviour
     private TextMeshProUGUI totalHeartText;
     [SerializeField, Tooltip("Input field for entering the user's name")]
     private TMP_InputField nameInput;
+    [SerializeField, Tooltip("Button for submit the player name")]
+    private Button submitButton;
     #endregion
     
     #region Private Fields
@@ -32,7 +35,15 @@ public class DatabaseManager : MonoBehaviour
     void Start()
     {
         userID = SystemInfo.deviceUniqueIdentifier;
+        submitButton.interactable = false;
+        nameInput.onValueChanged.AddListener(OnNameInputChanged);
     }
+    
+    private void OnNameInputChanged(string input)
+    {
+        submitButton.interactable = !string.IsNullOrWhiteSpace(input);
+    }
+    
     #endregion
 
     #region Firebase Methods
@@ -46,6 +57,7 @@ public class DatabaseManager : MonoBehaviour
         }
         
         newUserKey = Guid.NewGuid().ToString();
+        GameManager.Instance.playerName = nameInput.text;
 
         int totalHeart = GameManager.Instance.GetSumTotalHeart();
         int totalHeartLeft = GameManager.Instance.GetSumTotalHeartLeft();
@@ -126,12 +138,17 @@ public class DatabaseManager : MonoBehaviour
         StartCoroutine(GetName((string name) =>
         {
             nameText.text = $"Name: {name}";
+            if (name == "null")
+            {
+                nameText.text = $"Name: {GameManager.Instance.playerName}";
+                Debug.LogWarning("preTestScoreText = null");
+            }
         }));
 
         StartCoroutine(GetPreTestScore((string preTestScore) =>
         {
             preTestScoreText.text = $"Pre-Test Score: {preTestScore}";
-            if (preTestScoreText.text == "No Score Found")
+            if (preTestScore == "No Score Found")
             {
                 preTestScoreText.text = $"Pre-Test Score: {GameManager.Instance.preTestScore}/10";
                 Debug.LogWarning("preTestScoreText = null");
@@ -141,7 +158,7 @@ public class DatabaseManager : MonoBehaviour
         StartCoroutine(GetPostTestScore((string postTestScore) =>
         {
             postTestScoreText.text = $"Post-Test Score: {postTestScore}";
-            if (postTestScoreText.text == "No Score Found")
+            if (postTestScore == "No Score Found")
             {
                 postTestScoreText.text = $"Post-Test Score: {GameManager.Instance.postTestScore}/10";
                 Debug.LogWarning("postTestScoreText = null");
@@ -151,7 +168,7 @@ public class DatabaseManager : MonoBehaviour
         StartCoroutine(GetTotalHeart((string totalHeart) =>
         {
             totalHeartText.text = $"TotalHeart: {totalHeart}";
-            if (totalHeartText.text == "No Score Found")
+            if (totalHeart == "No totalHeart Found")
             {
                 totalHeartText.text = $"TotalHeart: {GameManager.Instance.GetSumTotalHeartLeft()}/{GameManager.Instance.GetSumTotalHeart()}";
                 Debug.LogWarning("preTestScoreText = null");

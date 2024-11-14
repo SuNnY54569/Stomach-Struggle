@@ -34,6 +34,10 @@ public class WashHandManager : MonoBehaviour
     [SerializeField, Tooltip("Index of the current object the player needs to click.")]
     private int currentObjectIndex = 1;
 
+    [Header("UI Setting")] 
+    [SerializeField, Tooltip("Start Button")]
+    private GameObject startButton;
+
     #endregion
     
     #region Private Fields
@@ -65,6 +69,7 @@ public class WashHandManager : MonoBehaviour
 
     private void Update()
     {
+        startButton.SetActive(GameManager.Instance.tutorialPanel.activeSelf != true);
         HandleObjectBlinking();
     }
     

@@ -225,6 +225,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                Debug.Log("No Video");
                 tutorialPanel.SetActive(false);
                 if (isGamePaused)
                 {
@@ -323,7 +324,7 @@ public class GameManager : MonoBehaviour
             }
         }
         
-        Debug.LogWarning($"Max score for {levelName} not set. Using default.");
+        //Debug.Log($"Max score for {levelName} not set. Using default.");
         scoreMax = 3;
     }
     #endregion
@@ -332,22 +333,45 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ResetScore();
+        
         gameOverPanel.SetActive(true);
+        PauseGame();
     }
 
     public void WinGame()
     {
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
+        
         winPanel.SetActive(true);
+        PauseGame();
     }
 
-    public void ExitToMenu()
+    public void ExitToMenu(Button button)
     {
         ResetHealth();
         ResetScore();
-        totalHeart = 0;
-        totalHeartLeft = 0;
+        ResetAllTotalHeart();
+        SceneManagerClass.Instance.LoadMenuScene();
+        StartCoroutine(waitForSecond(button));
+    }
+
+    public void NextScene(Button button)
+    {
+        ResetHealth();
+        ResetScore();
+        SceneManagerClass.Instance.LoadNextScene();
+        StartCoroutine(waitForSecond(button));
+    }
+
+    private IEnumerator waitForSecond(Button button, float second = 1f)
+    {
+        PauseGame();
+        BlurBackGround();
+        button.interactable = false;
+        yield return new WaitForSeconds(second);
+        BlurBackGround();
+        button.interactable = true;
     }
 
     public void ResetHealth()
@@ -415,10 +439,12 @@ public class GameManager : MonoBehaviour
         postTestScore = 0;
     }
 
-    public void RestartScene()
+    public void RestartScene(Button button)
     {
-        PauseGame();
         ResetHealth();
+        ResetScore();
+        SceneManagerClass.Instance.ReloadScene();
+        StartCoroutine(waitForSecond(button));
     }
 
     public void BlurBackGround()
