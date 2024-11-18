@@ -32,6 +32,7 @@ public class Basket : MonoBehaviour
             GameManager.Instance.IncreaseScore(1);
         }
         
+        SoundManager.PlaySound(SoundType.PickUpMeat,VolumeType.SFX);
         clawController.SetDefaultSprite();
     }
 

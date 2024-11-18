@@ -20,6 +20,7 @@ public class CookingClock : MonoBehaviour
     private Steak currentlyCookingSteak;
     private Tween shakeTween;
     private Vector3 clockOriginalPos;
+    private bool isClockSoundPlaying;
 
     private void Start()
     {
@@ -39,6 +40,10 @@ public class CookingClock : MonoBehaviour
 
             if (elapsed >= 5f && elapsed < 10f)
             {
+                if (!isClockSoundPlaying)
+                {
+                    StartCoroutine(PlayClockSound());
+                }
                 if (shakeTween == null || !shakeTween.IsActive())
                 {
                     StartShake(); // Start shaking if not already shaking
@@ -90,5 +95,14 @@ public class CookingClock : MonoBehaviour
             shakeTween.Kill();
             clock.transform.localPosition = clockOriginalPos;
         }
+    }
+    
+    IEnumerator PlayClockSound()
+    {
+        isClockSoundPlaying = true;
+        SoundManager.PlaySound(SoundType.Clock, VolumeType.SFX);
+
+        yield return new WaitForSeconds(0.75f);
+        isClockSoundPlaying = false;
     }
 }

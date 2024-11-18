@@ -4,8 +4,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum ShopType
+{
+    GoodShop,
+    MidShop,
+    BadShop
+}
+
 public class ShopButton : MonoBehaviour
 {
+
+    [SerializeField] private ShopType shopType;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private GameObject[] objectsToClose;
     [SerializeField] private GameObject[] objectsToOpen;
@@ -39,6 +48,7 @@ public class ShopButton : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.Instance.isGamePaused) return;
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         foreach (var objectToClose in objectsToClose)
         {
             objectToClose.SetActive(false);
@@ -57,7 +67,24 @@ public class ShopButton : MonoBehaviour
             clawController.RePosition();
             clawController.SetDefaultSprite();
         }
+        ChangeAmbientSound();
         
         sprite.color = Color.white;
+    }
+
+    private void ChangeAmbientSound()
+    {
+        switch (shopType)
+        {
+            case ShopType.GoodShop:
+                SoundManager.PlaySound(SoundType.CleanShopSFX,VolumeType.SFX);
+                break;
+            case ShopType.MidShop:
+                SoundManager.instance.CrossfadeBGM(SoundType.ClawBG,0.5f);
+                break;
+            case ShopType.BadShop:
+                SoundManager.instance.CrossfadeBGM(SoundType.BadShopBG,0.5f);
+                break;
+        }
     }
 }

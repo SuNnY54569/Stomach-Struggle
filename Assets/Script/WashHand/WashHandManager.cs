@@ -98,6 +98,7 @@ public class WashHandManager : MonoBehaviour
             StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
         }
 
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         centralAnimator = centralImage.GetComponent<Animator>();
     }
     #endregion
@@ -151,6 +152,7 @@ public class WashHandManager : MonoBehaviour
         {
             centralAnimator.SetTrigger(animationName);
             animator.SetTrigger("Explode");
+            SoundManager.PlaySound(SoundType.BBExpolde,VolumeType.SFX);
             foreach (var ob in objects)
             {
                 ob.GetComponent<Collider2D>().enabled = false;

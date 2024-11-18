@@ -41,6 +41,7 @@ public class SummaryManager : MonoBehaviour
     #region Unity Lifecycle
     private void Start()
     {
+        SoundManager.PlaySound(SoundType.FinishDay,VolumeType.SFX);
         if (GameManager.Instance != null)
         {
             totalHeart = GameManager.Instance.totalHeart;
@@ -100,6 +101,7 @@ public class SummaryManager : MonoBehaviour
                 break;
         }
 
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         GameManager.Instance.ResetTotalHeart();
         SceneManagerClass.Instance.LoadNextScene();
         GameManager.Instance.gameObject.SetActive(true);
@@ -109,6 +111,7 @@ public class SummaryManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
+            SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
             GameManager.Instance.ResetTotalHeart();
             SceneManagerClass.Instance.LoadThisScene(retrySceneName);
         }
@@ -118,6 +121,7 @@ public class SummaryManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
+            SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
             GameManager.Instance.ResetAllTotalHeart();
             SceneManagerClass.Instance.LoadMenuScene();
         }

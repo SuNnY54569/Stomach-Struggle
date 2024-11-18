@@ -57,5 +57,6 @@ public class itemClickWater : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 }

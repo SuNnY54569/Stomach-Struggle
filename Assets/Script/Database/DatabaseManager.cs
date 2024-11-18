@@ -49,6 +49,7 @@ public class DatabaseManager : MonoBehaviour
     #region Firebase Methods
     public void CreateUser()
     {
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         if (nameInput == null || GameManager.Instance == null)
         {
             Debug.LogError("One of the references is null: " +
@@ -178,6 +179,7 @@ public class DatabaseManager : MonoBehaviour
 
     public void ToMenu()
     {
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         GameManager.Instance.ResetTotalHeart();
         GameManager.Instance.ResetPrePostTest();
         SceneManagerClass.Instance.LoadMenuScene();

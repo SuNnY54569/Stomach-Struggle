@@ -333,6 +333,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ResetScore();
+        SoundManager.PlaySound(SoundType.Lose,VolumeType.SFX);
         gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(true);
         PauseGame();
@@ -343,6 +344,7 @@ public class GameManager : MonoBehaviour
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
         
+        SoundManager.PlaySound(SoundType.Win,VolumeType.SFX);
         gameplayPanel.SetActive(false);
         winPanel.SetActive(true);
         PauseGame();

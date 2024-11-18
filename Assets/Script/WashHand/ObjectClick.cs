@@ -59,6 +59,10 @@ public class ObjectClick : MonoBehaviour
 
         while (GameManager.Instance.currentHealth == 1) // Continue blinking while health == 1
         {
+            if (gameObject.activeSelf)
+            {
+                SoundManager.PlaySound(SoundType.BBWarning,VolumeType.SFX, 0.1f);
+            }
             float duration = blinkDuration / 2f;
 
             // Smoothly scale up and down during the blink

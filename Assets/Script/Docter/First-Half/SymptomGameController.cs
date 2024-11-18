@@ -118,6 +118,7 @@ public class SymptomGameController : MonoBehaviour
             GameManager.Instance.DecreaseHealth(1);
             selectedToggle.isOn = false;
         }
+        SoundManager.PlaySound(SoundType.CheckBox,VolumeType.SFX);
     }
     
     private void ClearToggleListeners()

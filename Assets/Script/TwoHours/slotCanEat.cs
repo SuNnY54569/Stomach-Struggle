@@ -19,7 +19,8 @@ public class slotCanEat : MonoBehaviour
 
         if (isWithinTimeRange)
         {
-                GameManager.Instance.IncreaseScore(0);
+            SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
+            GameManager.Instance.IncreaseScore(0);
         }
         else
         {

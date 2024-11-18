@@ -22,6 +22,24 @@ public enum SoundType
     TestBG,
     CorrectAnswer,
     WrongAnswer,
+    Win,
+    Lose,
+    FinishDay,
+    PickUpMeat,
+    ClawBG,
+    BadShopBG,
+    CleanShopSFX,
+    WashHandBG,
+    BBExpolde,
+    BBWarning,
+    Clock,
+    flipMeat,
+    PlaceOnPlate,
+    PlaceOnTrash,
+    GrillBg,
+    SteakBg,
+    CheckBox,
+    ClockTicking
 }
 
 [Serializable]
@@ -112,7 +130,7 @@ public class SoundManager : MonoBehaviour
 
     #region Play Sound Methods
 
-    public static void PlaySound(SoundType sound, VolumeType volumeType)
+    public static void PlaySound(SoundType sound, VolumeType volumeType, float volumeScale = 1f)
     {
         if (instance == null || !instance.audioSources.ContainsKey(volumeType))
         {
@@ -129,14 +147,14 @@ public class SoundManager : MonoBehaviour
         AudioSource source = instance.audioSources[volumeType];
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
         AudioClip randomClip = clips[Random.Range(0, clips.Length)];
-        source.PlayOneShot(randomClip);
+        source.PlayOneShot(randomClip, instance.volumeLevels[volumeType] * volumeScale);
     }
 
     #endregion
     
     #region Multi-BGM Methods
     
-    public static void PlayRandomBGMForLevel(string levelName, float crossfadeDuration = 1f)
+    public static void PlayRandomBGMForLevel(string levelName, float crossfadeDuration = 1f, float volumeScale = 0.5f)
     {
         if (instance == null || !instance.audioSources.ContainsKey(VolumeType.Background))
         {
@@ -156,7 +174,7 @@ public class SoundManager : MonoBehaviour
         instance.CrossfadeBGM(randomSound, crossfadeDuration);
     }
     
-    private void CrossfadeBGM(SoundType sound, float duration)
+    public void CrossfadeBGM(SoundType sound, float duration)
     {
         if (crossfadeCoroutine != null)
             StopCoroutine(crossfadeCoroutine);

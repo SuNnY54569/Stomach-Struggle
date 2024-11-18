@@ -125,6 +125,7 @@ public class FoodCooking : MonoBehaviour
         spriteRenderer.flipY = !spriteRenderer.flipY;
         cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
         progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
+        SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
     }
 
     public void StartCooking()

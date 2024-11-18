@@ -693,6 +693,7 @@ MonoBehaviour:
   spawnCountText: {fileID: 1680149061}
   clockGameObject: {fileID: 1582424910}
   guideText: {fileID: 571514647}
+  isTickingSoundPlaying: 0
 --- !u!1 &923241626
 GameObject:
   m_ObjectHideFlags: 0

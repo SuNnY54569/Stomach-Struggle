@@ -175,6 +175,7 @@ public class ClawController : MonoBehaviour
         {
             Debug.Log("Hit box");
             GenerateItem();
+            SoundManager.PlaySound(SoundType.PickUpMeat,VolumeType.SFX);
         }
     }
     

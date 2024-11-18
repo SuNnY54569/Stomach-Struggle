@@ -75,6 +75,14 @@ public class TestManager : MonoBehaviour
         Initialize();
     }
 
+    private void LateUpdate()
+    {
+        if (goPanel.activeSelf)
+        {
+            quizPanel.SetActive(false);
+        }
+    }
+
     private void Initialize()
     {
         QnA = new List<QandA>(originalQnA);

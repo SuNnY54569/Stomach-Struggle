@@ -35,6 +35,7 @@ public class waterShop : MonoBehaviour
             objectToOpen.SetActive(true);
         }
 
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         sprite.color = Color.white;
     }
 }

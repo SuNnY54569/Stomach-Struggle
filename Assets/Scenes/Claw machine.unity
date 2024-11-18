@@ -668,6 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 0
   sprite: {fileID: 607041242}
   objectsToClose:
   - {fileID: 1773504430}
@@ -1018,6 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 2
   sprite: {fileID: 684205374}
   objectsToClose:
   - {fileID: 1030453577}
@@ -1531,6 +1533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 1
   sprite: {fileID: 870700062}
   objectsToClose:
   - {fileID: 1030453577}
@@ -1860,6 +1863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 1
   sprite: {fileID: 1083913209}
   objectsToClose:
   - {fileID: 1636783706}
