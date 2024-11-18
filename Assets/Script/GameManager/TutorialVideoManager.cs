@@ -89,6 +89,7 @@ public class TutorialVideoManager : MonoBehaviour
         videoPlayer.Stop();
         videoPlayer.Play();
         replayButton.gameObject.SetActive(false);
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
     
     public void SkipVideo()
@@ -96,6 +97,7 @@ public class TutorialVideoManager : MonoBehaviour
         videoPlayer.Stop();
         replayButton.gameObject.SetActive(false);
         skipButton.gameObject.SetActive(false);
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         GameManager.Instance.tutorialPanel.SetActive(false);
         GameManager.Instance.gameplayPanel.SetActive(true);
         GameManager.Instance.PauseGame();

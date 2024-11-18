@@ -131,22 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[1].name
-      value: Hurt
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[1].sounds.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[1].sounds.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: e165c7f4c5ad45a4ebd44cfbc1bc8ff4, type: 3}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -190,10 +174,6 @@ PrefabInstance:
     - target: {fileID: 6831690669236110215, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8906145181944943106, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

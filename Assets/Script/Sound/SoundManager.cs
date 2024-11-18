@@ -16,7 +16,12 @@ public enum VolumeType
 
 public enum SoundType
 {
-    Hurt
+    Hurt,
+    StartSceneBG,
+    UIClick,
+    TestBG,
+    CorrectAnswer,
+    WrongAnswer,
 }
 
 [Serializable]
@@ -135,7 +140,6 @@ public class SoundManager : MonoBehaviour
     {
         if (instance == null || !instance.audioSources.ContainsKey(VolumeType.Background))
         {
-            Debug.LogError("SoundManager: No instance or background audio source.");
             return;
         }
 
@@ -214,6 +218,11 @@ public class SoundManager : MonoBehaviour
     public static float GetVolume(VolumeType volumeType)
     {
         return instance != null && instance.volumeLevels.ContainsKey(volumeType) ? instance.volumeLevels[volumeType] : 1f;
+    }
+
+    public void PlayUIClick()
+    {
+        PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
     #endregion
     

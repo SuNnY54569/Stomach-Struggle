@@ -13,11 +13,13 @@ public class AnswerScript : MonoBehaviour
         {
             Debug.Log("Correct Answer");
             testManager.Correct();
+            SoundManager.PlaySound(SoundType.CorrectAnswer,VolumeType.SFX);
         }
         else
         {
             Debug.Log("Wrong Answer");
             testManager.Wrong();
+            SoundManager.PlaySound(SoundType.WrongAnswer,VolumeType.SFX);
         }
     }
 }
