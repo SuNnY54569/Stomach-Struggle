@@ -65,6 +65,7 @@ public class WashHandManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.SetScoreTextActive(false);
+        CloseAllCollider();
     }
 
     private void Update()
@@ -236,6 +237,22 @@ public class WashHandManager : MonoBehaviour
                 isBlinking = true;
                 break;
             }
+        }
+    }
+
+    private void CloseAllCollider()
+    {
+        foreach (var obj in objects)
+        {
+            obj.GetComponent<Collider2D>().enabled = false;
+        }
+    }
+
+    public void OpenAllCollider()
+    {
+        foreach (var obj in objects)
+        {
+            obj.GetComponent<Collider2D>().enabled = true;
         }
     }
 

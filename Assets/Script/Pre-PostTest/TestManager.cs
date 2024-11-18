@@ -126,8 +126,11 @@ public class TestManager : MonoBehaviour
         {
             if (score >= minimumPassingScore)
             {
+                minimumScoreText.GetComponent<TMP_Text>().text =
+                    $"คะเเนนผ่านเกณฑ์";
                 finalscoreText.color = Color.green;
                 nextButton.SetActive(true);
+                minimumScoreText.SetActive(true);
             }
             else
             {
@@ -140,7 +143,7 @@ public class TestManager : MonoBehaviour
         }
         else
         {
-            finalscoreText.color = Color.white; 
+            finalscoreText.color = Color.black; 
             nextButton.SetActive(true); 
         }
     }
@@ -150,23 +153,14 @@ public class TestManager : MonoBehaviour
         score += 1;
         scoreText.text = $"{score} / {totalQuestion}";
         correctPanel.SetActive(true);
-        StartCoroutine(WaitToNextQuestion(disablePanelTime));
     }
 
     public void Wrong()
     {
         IncrementWrongCount();
-        corretOrNotText.text = "Wrong Answer";
+        corretOrNotText.text = "ผิดนะครับ";
         correctionText.text = QnA[currentQuestion].correction;
         correctionPanel.SetActive(true);
-    }
-
-    private IEnumerator WaitToNextQuestion(float second)
-    {
-        yield return new WaitForSeconds(second);
-        if (!correctPanel.activeSelf) yield break;
-        NextQuestion();
-        correctPanel.SetActive(false);
     }
 
     private void SetAnswer()

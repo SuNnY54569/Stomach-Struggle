@@ -12,33 +12,28 @@ public class ShopButton : MonoBehaviour
     [Range(0,1)] [SerializeField] private float clawChance;
     [SerializeField] private ClawController clawController;
     [SerializeField] private bool isReturnButton;
-
-    /*[Header("UI Text Settings")]
-    [SerializeField] private GameObject messageBox;
-    [SerializeField] private TextMeshProUGUI messageText;*/
-
-    private void Start()
-    {
-        //messageBox.SetActive(false);
-    }
+    [SerializeField] private Collider2D collider;
 
     private void Awake()
     {
         sprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
+    private void Update()
+    {
+        collider.enabled = !GameManager.Instance.isGamePaused;
+    }
+
     private void OnMouseOver()
     {
         if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.gray;
-        //messageBox.SetActive(true);
     }
 
     private void OnMouseExit()
     {
         if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.white;
-        //messageBox.SetActive(false);
     }
 
     private void OnMouseDown()
@@ -64,6 +59,5 @@ public class ShopButton : MonoBehaviour
         }
         
         sprite.color = Color.white;
-        //messageBox.SetActive(false);
     }
 }

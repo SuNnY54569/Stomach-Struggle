@@ -683,6 +683,7 @@ MonoBehaviour:
   clawChance: 1
   clawController: {fileID: 43559482}
   isReturnButton: 0
+  collider: {fileID: 607041241}
 --- !u!61 &607041241
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1032,6 +1033,7 @@ MonoBehaviour:
   clawChance: 0.1
   clawController: {fileID: 43559482}
   isReturnButton: 0
+  collider: {fileID: 684205373}
 --- !u!61 &684205373
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1544,6 +1546,7 @@ MonoBehaviour:
   clawChance: 0.7
   clawController: {fileID: 43559482}
   isReturnButton: 0
+  collider: {fileID: 870700061}
 --- !u!61 &870700061
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1866,6 +1869,7 @@ MonoBehaviour:
   clawChance: 0
   clawController: {fileID: 43559482}
   isReturnButton: 1
+  collider: {fileID: 1083913211}
 --- !u!212 &1083913209
 SpriteRenderer:
   m_ObjectHideFlags: 0

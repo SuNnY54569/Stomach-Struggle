@@ -18,6 +18,13 @@ public enum SoundType
     Hurt
 }
 
+[Serializable]
+public class LevelBGM
+{
+    public string LevelName;
+    public SoundType[] BGMSoundTypes; // List of SoundTypes for BGMs in this level.
+}
+
 [ExecuteInEditMode]
 public class SoundManager : MonoBehaviour
 {
@@ -26,6 +33,10 @@ public class SoundManager : MonoBehaviour
     [Header("Sound Settings")]
     [Tooltip("List of sounds organized by SoundType.")]
     [SerializeField] private SoundList[] soundList;
+    
+    [Header("Level BGM Settings")]
+    [Tooltip("Define BGMs for each level.")]
+    [SerializeField] private List<LevelBGM> levelBGMs;
 
     public static SoundManager instance;
 
@@ -37,6 +48,8 @@ public class SoundManager : MonoBehaviour
         { VolumeType.Dialog, 1f },
         { VolumeType.Tutorial, 1f }
     };
+    
+    private Coroutine crossfadeCoroutine;
 
     #endregion
     
@@ -108,6 +121,45 @@ public class SoundManager : MonoBehaviour
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
         AudioClip randomClip = clips[Random.Range(0, clips.Length)];
         source.PlayOneShot(randomClip);
+    }
+    
+    public static void CrossfadeBGM(SoundType sound, float duration = 1f)
+    {
+        if (instance == null || !instance.audioSources.ContainsKey(VolumeType.Background)) return;
+
+        if (instance.crossfadeCoroutine != null)
+            instance.StopCoroutine(instance.crossfadeCoroutine);
+
+        instance.crossfadeCoroutine = instance.StartCoroutine(instance.CrossfadeCoroutine(sound, duration));
+    }
+    
+    private IEnumerator CrossfadeCoroutine(SoundType sound, float duration)
+    {
+        AudioSource bgmSource = audioSources[VolumeType.Background];
+        AudioClip[] clips = soundList[(int)sound].Sounds;
+        if (clips == null || clips.Length == 0) yield break;
+
+        AudioClip newClip = clips[Random.Range(0, clips.Length)];
+        float originalVolume = bgmSource.volume;
+
+        // Fade out
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            bgmSource.volume = Mathf.Lerp(originalVolume, 0, t / duration);
+            yield return null;
+        }
+
+        bgmSource.clip = newClip;
+        bgmSource.Play();
+
+        // Fade in
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            bgmSource.volume = Mathf.Lerp(0, originalVolume, t / duration);
+            yield return null;
+        }
+
+        bgmSource.volume = originalVolume;
     }
     
     public static void SetVolume(VolumeType volumeType, float volume)
