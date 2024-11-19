@@ -40,7 +40,18 @@ public enum SoundType
     SteakBg,
     CheckBox,
     ClockTicking,
-    meatInBag
+    meatInBag,
+    BgInBuild,
+    BgOutHome,
+    BgInHome,
+    BgDay,
+    BgNight,
+    PressCard,
+    OpenHomeDoor,
+    CloseHomeDoor,
+    BusOpenDoor,
+    BuildOpenDoor,
+    walk
 }
 
 [Serializable]
