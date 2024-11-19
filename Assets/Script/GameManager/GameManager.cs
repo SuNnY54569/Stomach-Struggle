@@ -240,7 +240,6 @@ public class GameManager : MonoBehaviour
     #region Health Management
     public void DecreaseHealth(int amount)
     {
-        StartCoroutine(TakeDamageEffect());
         currentHealth -= amount;
         UpdateHeartsUI();
         SoundManager.PlaySound(SoundType.Hurt, VolumeType.SFX);
@@ -248,7 +247,9 @@ public class GameManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             GameOver();
+            return;
         }
+        StartCoroutine(TakeDamageEffect());
     }
     
     private void UpdateHeartsUI()

@@ -39,7 +39,8 @@ public enum SoundType
     GrillBg,
     SteakBg,
     CheckBox,
-    ClockTicking
+    ClockTicking,
+    meatInBag
 }
 
 [Serializable]
