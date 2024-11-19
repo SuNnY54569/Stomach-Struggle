@@ -118,9 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a088c0930cc4984888e3687d0b35be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rawSprite: {fileID: 1625318546, guid: 95ad6c75c37de9f428155e9825ef308d, type: 3}
-  almostCookedSprite: {fileID: -759004431, guid: 45887b62d75c62540b06cbc80f735bc5, type: 3}
-  cookedSprite: {fileID: -1195432931, guid: c3ffebb1858e2bb4d934c1ed030dcc8f, type: 3}
+  rawSprite: {fileID: 21300000, guid: 58b034f9811c3084da9af809c4d529d3, type: 3}
+  almostCookedSprite: {fileID: 21300000, guid: 1fc40d6945d9256488e376fb4ac5c4b2, type: 3}
+  cookedSprite: {fileID: 21300000, guid: ea9dbb1f71604e2468624027e739c8e2, type: 3}
   overcookedSprite: {fileID: -706466668, guid: 99b3b0a7d5877ff4b93c6284ce1083cb, type: 3}
 --- !u!61 &1292308943898910900
 BoxCollider2D:

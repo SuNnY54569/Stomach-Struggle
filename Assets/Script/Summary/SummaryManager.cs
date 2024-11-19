@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SummaryManager : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class SummaryManager : MonoBehaviour
     private TMP_Text scoreText;
     [SerializeField, Tooltip("The text element that displays the health condition.")]
     private TMP_Text healthConditionText;
+    [SerializeField, Tooltip("Heart Fill Sprite")]
+    private Image heartSpriteFill;
+    
 
     [Header("Health Condition Texts")]
     [SerializeField, Tooltip("The text displayed when the player has good health.")]
@@ -37,6 +41,7 @@ public class SummaryManager : MonoBehaviour
     #region Unity Lifecycle
     private void Start()
     {
+        SoundManager.PlaySound(SoundType.FinishDay,VolumeType.SFX);
         if (GameManager.Instance != null)
         {
             totalHeart = GameManager.Instance.totalHeart;
@@ -54,6 +59,8 @@ public class SummaryManager : MonoBehaviour
     private void UpdateHealthUI()
     {
         scoreText.text = $"{totalHeartLeft}/{totalHeart}";
+
+        heartSpriteFill.fillAmount = (float)totalHeartLeft / totalHeart;
         
         float healthRatio = (float)totalHeartLeft / totalHeart;
 
@@ -94,6 +101,7 @@ public class SummaryManager : MonoBehaviour
                 break;
         }
 
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         GameManager.Instance.ResetTotalHeart();
         SceneManagerClass.Instance.LoadNextScene();
         GameManager.Instance.gameObject.SetActive(true);
@@ -103,6 +111,7 @@ public class SummaryManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
+            SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
             GameManager.Instance.ResetTotalHeart();
             SceneManagerClass.Instance.LoadThisScene(retrySceneName);
         }
@@ -112,6 +121,7 @@ public class SummaryManager : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
+            SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
             GameManager.Instance.ResetAllTotalHeart();
             SceneManagerClass.Instance.LoadMenuScene();
         }

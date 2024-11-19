@@ -56,6 +56,8 @@ public class TestManager : MonoBehaviour
     private GameObject nextButton;
     [SerializeField, Tooltip("Minimum Score Text GameObject")]
     private GameObject minimumScoreText;
+    [SerializeField, Tooltip("Time Untill Correct panel to close")]
+    private float disablePanelTime;
 
     [Tooltip("Firebase database URL for questions")]
     string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions";
@@ -71,6 +73,14 @@ public class TestManager : MonoBehaviour
         originalQnA = new List<QandA>(QnA);
 
         Initialize();
+    }
+
+    private void LateUpdate()
+    {
+        if (goPanel.activeSelf)
+        {
+            quizPanel.SetActive(false);
+        }
     }
 
     private void Initialize()
@@ -124,8 +134,11 @@ public class TestManager : MonoBehaviour
         {
             if (score >= minimumPassingScore)
             {
+                minimumScoreText.GetComponent<TMP_Text>().text =
+                    $"คะเเนนผ่านเกณฑ์";
                 finalscoreText.color = Color.green;
                 nextButton.SetActive(true);
+                minimumScoreText.SetActive(true);
             }
             else
             {
@@ -138,7 +151,7 @@ public class TestManager : MonoBehaviour
         }
         else
         {
-            finalscoreText.color = Color.white; 
+            finalscoreText.color = Color.black; 
             nextButton.SetActive(true); 
         }
     }
@@ -153,7 +166,7 @@ public class TestManager : MonoBehaviour
     public void Wrong()
     {
         IncrementWrongCount();
-        corretOrNotText.text = "Wrong Answer";
+        corretOrNotText.text = "ผิดนะครับ";
         correctionText.text = QnA[currentQuestion].correction;
         correctionPanel.SetActive(true);
     }

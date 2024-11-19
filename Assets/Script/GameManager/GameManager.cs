@@ -225,6 +225,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                Debug.Log("No Video");
                 tutorialPanel.SetActive(false);
                 if (isGamePaused)
                 {
@@ -239,7 +240,6 @@ public class GameManager : MonoBehaviour
     #region Health Management
     public void DecreaseHealth(int amount)
     {
-        StartCoroutine(TakeDamageEffect());
         currentHealth -= amount;
         UpdateHeartsUI();
         SoundManager.PlaySound(SoundType.Hurt, VolumeType.SFX);
@@ -247,7 +247,9 @@ public class GameManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             GameOver();
+            return;
         }
+        StartCoroutine(TakeDamageEffect());
     }
     
     private void UpdateHeartsUI()
@@ -323,7 +325,7 @@ public class GameManager : MonoBehaviour
             }
         }
         
-        Debug.LogWarning($"Max score for {levelName} not set. Using default.");
+        //Debug.Log($"Max score for {levelName} not set. Using default.");
         scoreMax = 3;
     }
     #endregion
@@ -332,22 +334,48 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         ResetScore();
+        SoundManager.PlaySound(SoundType.Lose,VolumeType.SFX);
+        gameplayPanel.SetActive(false);
         gameOverPanel.SetActive(true);
+        PauseGame();
     }
 
     public void WinGame()
     {
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
+        
+        SoundManager.PlaySound(SoundType.Win,VolumeType.SFX);
+        gameplayPanel.SetActive(false);
         winPanel.SetActive(true);
+        PauseGame();
     }
 
-    public void ExitToMenu()
+    public void ExitToMenu(Button button)
     {
         ResetHealth();
         ResetScore();
-        totalHeart = 0;
-        totalHeartLeft = 0;
+        ResetAllTotalHeart();
+        SceneManagerClass.Instance.LoadMenuScene();
+        StartCoroutine(waitForSecond(button));
+    }
+
+    public void NextScene(Button button)
+    {
+        ResetHealth();
+        ResetScore();
+        SceneManagerClass.Instance.LoadNextScene();
+        StartCoroutine(waitForSecond(button));
+    }
+
+    private IEnumerator waitForSecond(Button button, float second = 1f)
+    {
+        PauseGame();
+        BlurBackGround();
+        button.interactable = false;
+        yield return new WaitForSeconds(second);
+        BlurBackGround();
+        button.interactable = true;
     }
 
     public void ResetHealth()
@@ -415,10 +443,12 @@ public class GameManager : MonoBehaviour
         postTestScore = 0;
     }
 
-    public void RestartScene()
+    public void RestartScene(Button button)
     {
-        PauseGame();
         ResetHealth();
+        ResetScore();
+        SceneManagerClass.Instance.ReloadScene();
+        StartCoroutine(waitForSecond(button));
     }
 
     public void BlurBackGround()

@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Start scene.unity
+    path: Assets/Scenes/StartScene.unity
     guid: eff9c7bbef694bc4ebf811ea14b56604
   - enabled: 1
     path: Assets/Scenes/PreTest.unity
@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GoVegShop.unity
     guid: 8663bb4392bff12478862f14099529e0
   - enabled: 1
-    path: Assets/Scenes/Chapter1.2.2.unity
+    path: Assets/Scenes/Vegetable.unity
     guid: 5d47b7d36a7ea42439f33cae710aa883
   - enabled: 1
     path: Assets/Scenes/GoHomeCutScene.unity

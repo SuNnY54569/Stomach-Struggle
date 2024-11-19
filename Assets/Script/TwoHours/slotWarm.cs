@@ -27,6 +27,7 @@ public class slotWarm : MonoBehaviour
         }
         else
         {
+            SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
             GameManager.Instance.IncreaseScore(0);
         }
 

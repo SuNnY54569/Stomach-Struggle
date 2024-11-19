@@ -34,6 +34,10 @@ public class WashHandManager : MonoBehaviour
     [SerializeField, Tooltip("Index of the current object the player needs to click.")]
     private int currentObjectIndex = 1;
 
+    [Header("UI Setting")] 
+    [SerializeField, Tooltip("Start Button")]
+    private GameObject startButton;
+
     #endregion
     
     #region Private Fields
@@ -61,10 +65,12 @@ public class WashHandManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.SetScoreTextActive(false);
+        CloseAllCollider();
     }
 
     private void Update()
     {
+        startButton.SetActive(GameManager.Instance.tutorialPanel.activeSelf != true);
         HandleObjectBlinking();
     }
     
@@ -92,6 +98,7 @@ public class WashHandManager : MonoBehaviour
             StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
         }
 
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         centralAnimator = centralImage.GetComponent<Animator>();
     }
     #endregion
@@ -145,6 +152,7 @@ public class WashHandManager : MonoBehaviour
         {
             centralAnimator.SetTrigger(animationName);
             animator.SetTrigger("Explode");
+            SoundManager.PlaySound(SoundType.BBExpolde,VolumeType.SFX);
             foreach (var ob in objects)
             {
                 ob.GetComponent<Collider2D>().enabled = false;
@@ -231,6 +239,22 @@ public class WashHandManager : MonoBehaviour
                 isBlinking = true;
                 break;
             }
+        }
+    }
+
+    private void CloseAllCollider()
+    {
+        foreach (var obj in objects)
+        {
+            obj.GetComponent<Collider2D>().enabled = false;
+        }
+    }
+
+    public void OpenAllCollider()
+    {
+        foreach (var obj in objects)
+        {
+            obj.GetComponent<Collider2D>().enabled = true;
         }
     }
 

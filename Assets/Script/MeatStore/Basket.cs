@@ -29,9 +29,9 @@ public class Basket : MonoBehaviour
         else if (collision.CompareTag("GoodMeat"))
         {
             Destroy(collision.gameObject);
+            SoundManager.PlaySound(SoundType.meatInBag,VolumeType.SFX);
             GameManager.Instance.IncreaseScore(1);
         }
-        
         clawController.SetDefaultSprite();
     }
 

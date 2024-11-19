@@ -18,6 +18,7 @@ public class Treatment : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
 
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         if (gameObject.CompareTag("GoodTreat"))
         {
             if (GameManager.Instance != null)

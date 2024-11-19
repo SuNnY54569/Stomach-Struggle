@@ -21,6 +21,8 @@ public class ItemClickHandler : MonoBehaviour
             }
             Destroy(gameObject);
         }
+        
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

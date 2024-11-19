@@ -668,6 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 0
   sprite: {fileID: 607041242}
   objectsToClose:
   - {fileID: 1773504430}
@@ -683,6 +684,7 @@ MonoBehaviour:
   clawChance: 1
   clawController: {fileID: 43559482}
   isReturnButton: 0
+  collider: {fileID: 607041241}
 --- !u!61 &607041241
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1017,6 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 2
   sprite: {fileID: 684205374}
   objectsToClose:
   - {fileID: 1030453577}
@@ -1032,6 +1035,7 @@ MonoBehaviour:
   clawChance: 0.1
   clawController: {fileID: 43559482}
   isReturnButton: 0
+  collider: {fileID: 684205373}
 --- !u!61 &684205373
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1529,6 +1533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 1
   sprite: {fileID: 870700062}
   objectsToClose:
   - {fileID: 1030453577}
@@ -1544,6 +1549,7 @@ MonoBehaviour:
   clawChance: 0.7
   clawController: {fileID: 43559482}
   isReturnButton: 0
+  collider: {fileID: 870700061}
 --- !u!61 &870700061
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1857,6 +1863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76ed0fa465308340ac3630a8764cfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopType: 1
   sprite: {fileID: 1083913209}
   objectsToClose:
   - {fileID: 1636783706}
@@ -1866,6 +1873,7 @@ MonoBehaviour:
   clawChance: 0
   clawController: {fileID: 43559482}
   isReturnButton: 1
+  collider: {fileID: 1083913211}
 --- !u!212 &1083913209
 SpriteRenderer:
   m_ObjectHideFlags: 0

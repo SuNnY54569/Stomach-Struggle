@@ -22,6 +22,7 @@ public class spawnFoodRandom : MonoBehaviour
     [SerializeField] private GameObject guideText;
 
     private bool isGameOver = false;
+    public bool isTickingSoundPlaying = false;
 
     private float timeLeft;
     private int spawnCount = 0;
@@ -86,6 +87,10 @@ public class spawnFoodRandom : MonoBehaviour
         {
             timeLeft -= Time.deltaTime;
             timerText.text = Mathf.Ceil(timeLeft).ToString();
+            if (!isTickingSoundPlaying)
+            {
+                StartCoroutine(PlayClockTickingSound());
+            }
         }
         else
         {
@@ -141,5 +146,14 @@ public class spawnFoodRandom : MonoBehaviour
         {
             spawnCountText.text = $"{spawnCount} / 3";
         }
+    }
+
+    IEnumerator PlayClockTickingSound()
+    {
+        isTickingSoundPlaying = true;
+        SoundManager.PlaySound(SoundType.ClockTicking, VolumeType.SFX);
+
+        yield return new WaitForSeconds(1f);
+        isTickingSoundPlaying = false;
     }
 }

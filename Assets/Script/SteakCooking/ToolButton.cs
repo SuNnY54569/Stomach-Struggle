@@ -19,6 +19,7 @@ public class ToolButton : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
         Tools.Instance.SetCurrentTool(toolType);
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
     private void OnMouseOver()

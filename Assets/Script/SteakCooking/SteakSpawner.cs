@@ -21,6 +21,7 @@ public class SteakSpawner : MonoBehaviour
         GameManager.Instance.UpdateScoreText();
         remainingSteaks = maxSteakCount;
         SpawnInitialSteaks();
+        //SoundManager.PlaySound();
     }
 
     private void SpawnInitialSteaks()

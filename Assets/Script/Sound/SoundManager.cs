@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
@@ -15,7 +16,38 @@ public enum VolumeType
 
 public enum SoundType
 {
-    Hurt
+    Hurt,
+    StartSceneBG,
+    UIClick,
+    TestBG,
+    CorrectAnswer,
+    WrongAnswer,
+    Win,
+    Lose,
+    FinishDay,
+    PickUpMeat,
+    ClawBG,
+    BadShopBG,
+    CleanShopSFX,
+    WashHandBG,
+    BBExpolde,
+    BBWarning,
+    Clock,
+    flipMeat,
+    PlaceOnPlate,
+    PlaceOnTrash,
+    GrillBg,
+    SteakBg,
+    CheckBox,
+    ClockTicking,
+    meatInBag
+}
+
+[Serializable]
+public class LevelBGM
+{
+    public string LevelName;
+    public SoundType[] BGMSoundTypes;
 }
 
 [ExecuteInEditMode]
@@ -26,6 +58,10 @@ public class SoundManager : MonoBehaviour
     [Header("Sound Settings")]
     [Tooltip("List of sounds organized by SoundType.")]
     [SerializeField] private SoundList[] soundList;
+    
+    [Header("Level BGM Settings")]
+    [Tooltip("Define BGMs for each level.")]
+    [SerializeField] private List<LevelBGM> levelBGMs;
 
     public static SoundManager instance;
 
@@ -37,6 +73,9 @@ public class SoundManager : MonoBehaviour
         { VolumeType.Dialog, 1f },
         { VolumeType.Tutorial, 1f }
     };
+    
+    private Coroutine crossfadeCoroutine;
+    private string currentLevel = "";
 
     #endregion
     
@@ -69,6 +108,8 @@ public class SoundManager : MonoBehaviour
             source.volume = volumeLevels[type]; // Set initial volume from saved settings
             audioSources[type] = source;
         }
+        
+        
     }
     
     private void LoadVolumeSettings()
@@ -87,10 +128,10 @@ public class SoundManager : MonoBehaviour
     }
     
     #endregion
-    
-    #region Public Methods
 
-    public static void PlaySound(SoundType sound, VolumeType volumeType)
+    #region Play Sound Methods
+
+    public static void PlaySound(SoundType sound, VolumeType volumeType, float volumeScale = 1f)
     {
         if (instance == null || !instance.audioSources.ContainsKey(volumeType))
         {
@@ -107,8 +148,80 @@ public class SoundManager : MonoBehaviour
         AudioSource source = instance.audioSources[volumeType];
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
         AudioClip randomClip = clips[Random.Range(0, clips.Length)];
-        source.PlayOneShot(randomClip);
+        source.PlayOneShot(randomClip, instance.volumeLevels[volumeType] * volumeScale);
     }
+
+    #endregion
+    
+    #region Multi-BGM Methods
+    
+    public static void PlayRandomBGMForLevel(string levelName, float crossfadeDuration = 1f, float volumeScale = 0.5f)
+    {
+        if (instance == null || !instance.audioSources.ContainsKey(VolumeType.Background))
+        {
+            return;
+        }
+
+        LevelBGM levelBGM = instance.levelBGMs.Find(bgm => bgm.LevelName == levelName);
+
+        if (levelBGM == null || levelBGM.BGMSoundTypes.Length == 0)
+        {
+            Debug.LogError($"SoundManager: No BGM defined for level {levelName}.");
+            return;
+        }
+
+        // Randomly select a BGM for the level
+        SoundType randomSound = levelBGM.BGMSoundTypes[Random.Range(0, levelBGM.BGMSoundTypes.Length)];
+        instance.CrossfadeBGM(randomSound, crossfadeDuration);
+    }
+    
+    public void CrossfadeBGM(SoundType sound, float duration)
+    {
+        if (crossfadeCoroutine != null)
+            StopCoroutine(crossfadeCoroutine);
+
+        crossfadeCoroutine = StartCoroutine(CrossfadeCoroutine(sound, duration));
+    }
+    
+    private IEnumerator CrossfadeCoroutine(SoundType sound, float duration)
+    {
+        AudioSource bgmSource = audioSources[VolumeType.Background];
+
+        if (bgmSource.isPlaying)
+        {
+            // Fade out current BGM
+            float initialVolume = bgmSource.volume;
+            for (float t = 0; t < duration; t += Time.deltaTime)
+            {
+                bgmSource.volume = Mathf.Lerp(initialVolume, 0, t / duration);
+                yield return null;
+            }
+            bgmSource.Stop();
+            bgmSource.volume = initialVolume;
+        }
+
+        // Play new BGM
+        AudioClip[] clips = soundList[(int)sound].Sounds;
+        if (clips == null || clips.Length == 0) yield break;
+
+        AudioClip newClip = clips[Random.Range(0, clips.Length)];
+        bgmSource.clip = newClip;
+        bgmSource.loop = true;
+        bgmSource.Play();
+
+        // Fade in new BGM
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            bgmSource.volume = Mathf.Lerp(0, volumeLevels[VolumeType.Background], t / duration);
+            yield return null;
+        }
+
+        bgmSource.volume = volumeLevels[VolumeType.Background];
+    }
+    
+    #endregion
+    
+    #region Volume Management
     
     public static void SetVolume(VolumeType volumeType, float volume)
     {
@@ -125,6 +238,45 @@ public class SoundManager : MonoBehaviour
     {
         return instance != null && instance.volumeLevels.ContainsKey(volumeType) ? instance.volumeLevels[volumeType] : 1f;
     }
+
+    public void PlayUIClick()
+    {
+        PlaySound(SoundType.UIClick,VolumeType.SFX);
+    }
+    #endregion
+    
+    #region Level Detection and BGM Change
+    
+    private void Start()
+    {
+        // Initialize the level tracking and play BGM for the current level
+        UpdateLevelBGM();
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the event when the object is destroyed
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Update BGM whenever a new scene is loaded
+        UpdateLevelBGM();
+    }
+
+    private void UpdateLevelBGM()
+    {
+        string newLevel = SceneManager.GetActiveScene().name;
+
+        if (currentLevel != newLevel)
+        {
+            currentLevel = newLevel;
+            PlayRandomBGMForLevel(currentLevel, 1f); // 1f for crossfade duration
+        }
+    }
+    
     #endregion
     
     #region Editor Only

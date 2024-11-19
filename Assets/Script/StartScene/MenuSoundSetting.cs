@@ -48,6 +48,7 @@ public class MenuSoundSetting : MonoBehaviour
         sfxSlider.onValueChanged.AddListener(value => UpdateSFXVolume(value));
         dialogSlider.onValueChanged.AddListener(value => UpdateDialogVolume(value));
         tutorialSlider.onValueChanged.AddListener(value => UpdateTutorialVolume(value));
+        
     }
     
     #endregion

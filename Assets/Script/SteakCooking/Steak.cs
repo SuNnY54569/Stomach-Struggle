@@ -87,6 +87,7 @@ public class Steak : MonoBehaviour
             if (IsDroppedOnTrashCan())
             {
                 DestroySteak();
+                SoundManager.PlaySound(SoundType.PlaceOnTrash,VolumeType.SFX);
                 steakSpawner.HandleSteakLost();
                 Tools.Instance.DeselectTool();
             }
@@ -210,6 +211,7 @@ public class Steak : MonoBehaviour
     public void FlipFood()
     {
         isTopSideCooking = !isTopSideCooking;
+        SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
         if (isTopSideCooking)
         {
             gameObject.transform.rotation = new Quaternion(0f, 0, 0,0 );
@@ -233,6 +235,7 @@ public class Steak : MonoBehaviour
             topSideCookingTimer < overcookedTime && bottomSideCookingTimer < overcookedTime)
         {
             HandleCooked();
+            SoundManager.PlaySound(SoundType.PlaceOnPlate,VolumeType.SFX);
         }
         else if (topSideCookingTimer < cookingTime || bottomSideCookingTimer < cookingTime)
         {
@@ -270,15 +273,9 @@ public class Steak : MonoBehaviour
         GameManager.Instance.DecreaseHealth(1);
         ResetPosition();
     }
-    
-    /*private void MarkAsCooked()
-    {
-        gameObject.tag = "Cooked";
-    }*/
 
     private void MarkAsOvercooked()
     {
-        //gameObject.tag = "Overcooked";
         isCooking = false;
     }
     

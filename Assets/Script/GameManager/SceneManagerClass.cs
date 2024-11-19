@@ -27,7 +27,7 @@ public class SceneManagerClass : MonoBehaviour
     #region Scene Management
     public void LoadMenuScene()
     {
-        TransitionManager.Instance.LoadLevel("Start scene", 0.5f);
+        TransitionManager.Instance.LoadLevel("StartScene", 0.5f);
     }
 
     public void LoadNextScene()

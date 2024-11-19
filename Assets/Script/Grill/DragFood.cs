@@ -84,6 +84,7 @@ public class DragFood : MonoBehaviour
             spawnCollider.enabled = false;
             foodCooking.StopCooking();
         }
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
     private void OnMouseDrag()
@@ -130,14 +131,17 @@ public class DragFood : MonoBehaviour
         {
             case "Grill":
                 PlaceOnGrill();
+                SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
                 foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
                 break;
             case "Plate":
                 PlaceOnPlate();
+                SoundManager.PlaySound(SoundType.PlaceOnPlate,VolumeType.SFX);
                 foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
                 break;
             case "Trash":
                 PlaceOnTrash();
+                SoundManager.PlaySound(SoundType.PlaceOnTrash,VolumeType.SFX);
                 foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
                 break;
             default:
