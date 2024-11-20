@@ -9,5 +9,6 @@ public class nextScene : MonoBehaviour
     {
         SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
         SceneManagerClass.Instance.LoadNextScene();
+        SoundManager.StopAllSounds();
     }
 }
