@@ -240,6 +240,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 253f2bf3a7dfa5348b13a86630954901, type: 2}
     - {fileID: 11400000, guid: d774e0edfd18348449a54b3310857fac, type: 2}
     - {fileID: 11400000, guid: 0c86c76d2bc5a1549861e1f67c548de7, type: 2}
+    - {fileID: 11400000, guid: e7a5ddf644aa99945aaef51ea0306e74, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -283,6 +284,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 610388798}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: StopAllSoundsInCutScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 250235953}
@@ -303,6 +316,20 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 610388798}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Playwalk
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -612,6 +639,7 @@ MonoBehaviour:
   totalHeart: 0
   scoreText: {fileID: 1373418450}
   healthConditionText: {fileID: 139864017}
+  heartSpriteFill: {fileID: 0}
   goodHealthText: Good Health
   mediumHealthText: Medium Health
   badHealthText: Bad Health
@@ -1176,6 +1204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 610388796}
   - component: {fileID: 610388797}
+  - component: {fileID: 610388798}
   m_Layer: 0
   m_Name: Charater
   m_TagString: Untagged
@@ -1210,6 +1239,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b845c7e96d10e36498ecbc66f53c8314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &610388798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610388795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &688271844

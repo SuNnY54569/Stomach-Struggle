@@ -464,6 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 906071631}
   - component: {fileID: 906071630}
+  - component: {fileID: 906071632}
   m_Layer: 0
   m_Name: charater
   m_TagString: Untagged
@@ -499,6 +500,18 @@ Transform:
   - {fileID: 1177048656}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &906071632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906071629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &977552712
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,6 +833,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 81122ca37f3ea7647a3ab7d82707bd2a, type: 2}
     - {fileID: 11400000, guid: ca361ab7f8c298a4ea0db3b66719fd76, type: 2}
     - {fileID: 11400000, guid: 253f2bf3a7dfa5348b13a86630954901, type: 2}
+    - {fileID: 11400000, guid: e7a5ddf644aa99945aaef51ea0306e74, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -854,6 +868,32 @@ MonoBehaviour:
         - m_Target: {fileID: 906071630}
           m_TargetAssemblyTypeName: nextScene, Assembly-CSharp
           m_MethodName: LoadNextScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 906071632}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: StopAllSoundsInCutScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 906071632}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Playwalk
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
