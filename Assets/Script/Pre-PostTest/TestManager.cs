@@ -26,6 +26,8 @@ public class TestManager : MonoBehaviour
     private GameObject correctionPanel;
     [SerializeField, Tooltip("Panel for displaying correct answer feedback")]
     private GameObject correctPanel;
+    [SerializeField, Tooltip("Panel for displaying Start game")]
+    private GameObject startPanel;
     [SerializeField, Tooltip("Text for indicating if the answer was correct or incorrect")]
     private TMP_Text corretOrNotText;
     [SerializeField, Tooltip("Text for showing the correction of the answer")]
@@ -89,7 +91,8 @@ public class TestManager : MonoBehaviour
         UpdateMostWrongCountQuestionInDatabase();
         totalQuestion = QnA.Count;
         goPanel.SetActive(false);
-        quizPanel.SetActive(true);
+        quizPanel.SetActive(false);
+        startPanel.SetActive(true);
         correctionPanel.SetActive(false);
         questionNumber = 0;
         qNumberText.text = $"{questionNumber}.";
@@ -122,6 +125,13 @@ public class TestManager : MonoBehaviour
     public void ToMenu()
     {
         SceneManagerClass.Instance.LoadMenuScene();
+    }
+
+    public void StartTest()
+    {
+        quizPanel.SetActive(true);
+        startPanel.SetActive(false);
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
     private void GameOver()
@@ -205,6 +215,7 @@ public class TestManager : MonoBehaviour
 
     public void NextQuestion()
     {
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         QnA.RemoveAt(currentQuestion);
         GenerateQuestion();
     }
