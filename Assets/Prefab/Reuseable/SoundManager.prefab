@@ -239,7 +239,7 @@ MonoBehaviour:
   - LevelName: Sleep1
     BGMSoundTypes: 1d000000
   - LevelName: WaitingForDoc
-    BGMSoundTypes: 1b000000
+    BGMSoundTypes: 19000000
   - LevelName: GoHomeAndSleep
     BGMSoundTypes: 1a000000
 --- !u!114 &4196816338870125203
