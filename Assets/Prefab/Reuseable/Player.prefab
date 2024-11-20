@@ -2549,7 +2549,7 @@ MonoBehaviour:
   tutorialScenes:
   - sceneName: Claw machine
     videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
-  - sceneName: Chapter1.2.2
+  - sceneName: Vegetable
     videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
   - sceneName: WashHand
     videoClip: {fileID: 32900000, guid: 144338604bd4b104cacd62708b2860c0, type: 3}
