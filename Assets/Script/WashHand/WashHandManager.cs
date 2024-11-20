@@ -65,7 +65,7 @@ public class WashHandManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.SetScoreTextActive(false);
-        CloseAllCollider();
+        CloseAllColliders();
     }
 
     private void Update()
@@ -79,26 +79,25 @@ public class WashHandManager : MonoBehaviour
     #region Game Start and Setup
     public void StartGame()
     {
-        if (GameManager.Instance.isGamePaused)
-        {
-            return;
-        }
+        if (GameManager.Instance.isGamePaused) return;
+
         if (positions.Count != objects.Count)
         {
             Debug.LogError("The number of positions and objects must be equal.");
             return;
         }
         
+        startPositions.Clear();
         List<GameObject> shuffledPositions = new List<GameObject>(positions);
         ShuffleList(shuffledPositions);
         
         for (int i = 0; i < objects.Count; i++)
         {
-            startPositions.Add(shuffledPositions[i]);  // Store random start positions
+            startPositions.Add(shuffledPositions[i]);
             StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
         }
 
-        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
+        SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
         centralAnimator = centralImage.GetComponent<Animator>();
     }
     #endregion
@@ -116,32 +115,25 @@ public class WashHandManager : MonoBehaviour
     private IEnumerator MoveObjectToPosition(GameObject obj, GameObject targetPosition)
     {
         Collider2D objCollider = obj.GetComponent<Collider2D>();
-        if (objCollider != null)
-        {
-            objCollider.enabled = false;
-        }
-        
+        objCollider?.Disable();
+
         float elapsedTime = 0f;
         Vector3 startingPosition = obj.transform.position;
-        Vector3 startingScale = obj.transform.localScale;
         Vector3 targetScale = new Vector3(1.5f, 1.5f, 1.5f);
 
         while (elapsedTime < 1f)
         {
-            obj.transform.position = Vector3.Lerp(startingPosition, targetPosition.transform.position, elapsedTime);
-            obj.transform.localScale = Vector3.Lerp(startingScale, targetScale, elapsedTime);
-            
-            elapsedTime += Time.deltaTime * moveSpeed;
-            yield return null;  // Wait for the next frame
+            float t = elapsedTime * moveSpeed;
+            obj.transform.position = Vector3.Lerp(startingPosition, targetPosition.transform.position, t);
+            obj.transform.localScale = Vector3.Lerp(obj.transform.localScale, targetScale, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
-        
+
         obj.transform.position = targetPosition.transform.position;
         obj.transform.localScale = targetScale;
-        
-        if (objCollider != null)
-        {
-            objCollider.enabled = true;
-        }
+
+        objCollider?.Enable();
     }
     #endregion
     
@@ -152,11 +144,9 @@ public class WashHandManager : MonoBehaviour
         {
             centralAnimator.SetTrigger(animationName);
             animator.SetTrigger("Explode");
-            SoundManager.PlaySound(SoundType.BBExpolde,VolumeType.SFX);
-            foreach (var ob in objects)
-            {
-                ob.GetComponent<Collider2D>().enabled = false;
-            }
+            SoundManager.PlaySound(SoundType.BBExpolde, VolumeType.SFX);
+
+            CloseAllColliders();
             StartCoroutine(WaitForAnimation(animator, "Explode", MoveToBondedPosition, obj));
             currentObjectIndex++;
         }
@@ -164,8 +154,8 @@ public class WashHandManager : MonoBehaviour
         {
             GameManager.Instance.DecreaseHealth(1);
         }
-        
-        if (currentObjectIndex >= objects.Count + 1)
+
+        if (currentObjectIndex > objects.Count)
         {
             StartCoroutine(WaitToWin());
         }
@@ -175,19 +165,8 @@ public class WashHandManager : MonoBehaviour
     #region Animation and Coroutines
     private IEnumerator WaitForAnimation(Animator animator, string animationName, Func<IEnumerator> coroutineToStart, GameObject obj)
     {
-        // Wait until the current animation state is the one specified
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
-        {
-            yield return null;
-        }
-
-        // Wait until the animation has finished playing
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
-        {
-            yield return null;
-        }
-
-        // Start the specified coroutine after the animation has finished
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(animationName));
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         yield return StartCoroutine(coroutineToStart());
         obj.SetActive(false);
     }
@@ -195,25 +174,41 @@ public class WashHandManager : MonoBehaviour
     private IEnumerator MoveToBondedPosition()
     {
         
+        // Step 1: Move objects to their bonded positions simultaneously
+        List<Coroutine> coroutines = new List<Coroutine>();
         for (int i = 0; i < objects.Count; i++)
         {
-            GameObject boundedPosition = startPositions[i].gameObject.GetComponent<PositionBond>().bondedPosition;
-            StartCoroutine(MoveObjectToPosition(objects[i], boundedPosition));
+            GameObject bondedPosition = startPositions[i].GetComponent<PositionBond>().bondedPosition;
+            coroutines.Add(StartCoroutine(MoveObjectToPosition(objects[i], bondedPosition)));
         }
-        
-        //yield return new WaitForSeconds(centralAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        // Wait for all coroutines to finish
+        foreach (var coroutine in coroutines)
+        {
+            yield return coroutine;
+        }
+
+        // Wait for a delay after all objects have reached their bonded positions
         yield return new WaitForSeconds(3f);
-        
+
+        // Step 2: Move objects back to their start positions simultaneously
+        coroutines.Clear();
         for (int i = 0; i < objects.Count; i++)
         {
-            StartCoroutine(MoveObjectToPosition(objects[i], startPositions[i]));
+            coroutines.Add(StartCoroutine(MoveObjectToPosition(objects[i], startPositions[i])));
         }
+
+        // Wait for all coroutines to finish
+        foreach (var coroutine in coroutines)
+        {
+            yield return coroutine;
+        }
+
         isBlinking = false;
     }
 
     private IEnumerator WaitToWin()
     {
-        //yield return new WaitForSeconds(centralAnimator.GetCurrentAnimatorStateInfo(0).length);
         yield return new WaitForSeconds(3f);
         GameManager.Instance.WinGame();
     }
@@ -242,21 +237,35 @@ public class WashHandManager : MonoBehaviour
         }
     }
 
-    private void CloseAllCollider()
+    private void CloseAllColliders()
     {
         foreach (var obj in objects)
         {
-            obj.GetComponent<Collider2D>().enabled = false;
+            if (obj.TryGetComponent<Collider2D>(out Collider2D collider))
+            {
+                collider.enabled = false;
+            }
         }
     }
 
-    public void OpenAllCollider()
+    public void OpenAllColliders()
     {
         foreach (var obj in objects)
         {
-            obj.GetComponent<Collider2D>().enabled = true;
+            var collider = obj.GetComponent<Collider2D>();
+            if (collider != null)
+            {
+                collider.enabled = true;
+                collider.isTrigger = true;
+            }
         }
     }
 
     #endregion
+}
+
+public static class ColliderExtensions
+{
+    public static void Disable(this Collider2D collider) => collider.enabled = false;
+    public static void Enable(this Collider2D collider) => collider.enabled = true;
 }
