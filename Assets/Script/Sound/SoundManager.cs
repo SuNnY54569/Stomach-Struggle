@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -51,7 +52,12 @@ public enum SoundType
     CloseHomeDoor,
     BusOpenDoor,
     BuildOpenDoor,
-    walk
+    walk,
+    BusCome,
+    BusRun,
+    BgMarket,
+    BusRunTenS,
+    PhoneRing
 }
 
 [Serializable]
@@ -69,7 +75,7 @@ public class SoundManager : MonoBehaviour
     [Header("Sound Settings")]
     [Tooltip("List of sounds organized by SoundType.")]
     [SerializeField] private SoundList[] soundList;
-    
+
     [Header("Level BGM Settings")]
     [Tooltip("Define BGMs for each level.")]
     [SerializeField] private List<LevelBGM> levelBGMs;
@@ -84,17 +90,17 @@ public class SoundManager : MonoBehaviour
         { VolumeType.Dialog, 1f },
         { VolumeType.Tutorial, 1f }
     };
-    
+
     private Coroutine crossfadeCoroutine;
     private string currentLevel = "";
 
     #endregion
-    
+
     #region Initialization
     private void Awake()
     {
         if (!Application.isPlaying) return;
-        
+
         if (instance == null)
         {
             instance = this;
@@ -109,7 +115,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
     }
-    
+
     private void InitializeAudioSources()
     {
         // Create a separate AudioSource for each VolumeType
@@ -119,17 +125,17 @@ public class SoundManager : MonoBehaviour
             source.volume = volumeLevels[type]; // Set initial volume from saved settings
             audioSources[type] = source;
         }
-        
-        
+
+
     }
-    
+
     private void LoadVolumeSettings()
     {
         foreach (VolumeType type in Enum.GetValues(typeof(VolumeType)))
         {
             float savedVolume = PlayerPrefs.GetFloat(type.ToString(), 1f);
             volumeLevels[type] = savedVolume;
-            
+
             // Update AudioSource volume if it already exists
             if (audioSources.ContainsKey(type))
             {
@@ -137,7 +143,7 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
-    
+
     #endregion
 
     #region Play Sound Methods
@@ -155,7 +161,7 @@ public class SoundManager : MonoBehaviour
             Debug.LogError($"SoundManager: No sounds assigned for SoundType {sound}.");
             return;
         }
-        
+
         AudioSource source = instance.audioSources[volumeType];
         AudioClip[] clips = instance.soundList[(int)sound].Sounds;
         AudioClip randomClip = clips[Random.Range(0, clips.Length)];
@@ -163,9 +169,9 @@ public class SoundManager : MonoBehaviour
     }
 
     #endregion
-    
+
     #region Multi-BGM Methods
-    
+
     public static void PlayRandomBGMForLevel(string levelName, float crossfadeDuration = 1f, float volumeScale = 0.5f)
     {
         if (instance == null || !instance.audioSources.ContainsKey(VolumeType.Background))
@@ -185,7 +191,7 @@ public class SoundManager : MonoBehaviour
         SoundType randomSound = levelBGM.BGMSoundTypes[Random.Range(0, levelBGM.BGMSoundTypes.Length)];
         instance.CrossfadeBGM(randomSound, crossfadeDuration);
     }
-    
+
     public void CrossfadeBGM(SoundType sound, float duration)
     {
         if (crossfadeCoroutine != null)
@@ -193,7 +199,7 @@ public class SoundManager : MonoBehaviour
 
         crossfadeCoroutine = StartCoroutine(CrossfadeCoroutine(sound, duration));
     }
-    
+
     private IEnumerator CrossfadeCoroutine(SoundType sound, float duration)
     {
         AudioSource bgmSource = audioSources[VolumeType.Background];
@@ -229,11 +235,11 @@ public class SoundManager : MonoBehaviour
 
         bgmSource.volume = volumeLevels[VolumeType.Background];
     }
-    
+
     #endregion
-    
+
     #region Volume Management
-    
+
     public static void SetVolume(VolumeType volumeType, float volume)
     {
         if (instance != null && instance.audioSources.ContainsKey(volumeType))
@@ -244,7 +250,7 @@ public class SoundManager : MonoBehaviour
             PlayerPrefs.SetFloat(volumeType.ToString(), volume);
         }
     }
-    
+
     public static float GetVolume(VolumeType volumeType)
     {
         return instance != null && instance.volumeLevels.ContainsKey(volumeType) ? instance.volumeLevels[volumeType] : 1f;
@@ -252,12 +258,12 @@ public class SoundManager : MonoBehaviour
 
     public void PlayUIClick()
     {
-        PlaySound(SoundType.UIClick,VolumeType.SFX);
+        PlaySound(SoundType.UIClick, VolumeType.SFX);
     }
     #endregion
-    
+
     #region Level Detection and BGM Change
-    
+
     private void Start()
     {
         // Initialize the level tracking and play BGM for the current level
@@ -287,11 +293,11 @@ public class SoundManager : MonoBehaviour
             PlayRandomBGMForLevel(currentLevel, 1f); // 1f for crossfade duration
         }
     }
-    
+
     #endregion
-    
+
     #region Editor Only
-    
+
 #if UNITY_EDITOR
     private void OnEnable()
     {
@@ -303,7 +309,29 @@ public class SoundManager : MonoBehaviour
         }
     }
 #endif
-    
+
+    #endregion
+
+    #region StopSound
+    public static void StopAllSounds()
+    {
+        if (instance == null)
+        {
+            Debug.LogError("SoundManager: Instance is missing.");
+            return;
+        }
+
+        foreach (var source in instance.audioSources.Values)
+        {
+            if (source.isPlaying)
+            {
+                source.Stop();
+                source.clip = null;
+            }
+        }
+    }
+
+
     #endregion
 }
 

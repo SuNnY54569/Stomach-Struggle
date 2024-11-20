@@ -1900,6 +1900,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f6ccbaa27265bc7459f273d1b564bf0d, type: 2}
     - {fileID: 11400000, guid: cc8a0bb5d8a118d488f27bfc3e211ed2, type: 2}
     - {fileID: 11400000, guid: 253f2bf3a7dfa5348b13a86630954901, type: 2}
+    - {fileID: 11400000, guid: 6132e852689d9e94f8dc92751cdbf66e, type: 2}
+    - {fileID: 11400000, guid: 70a3e6c17105a0c43b709dd864c008eb, type: 2}
+    - {fileID: 11400000, guid: 40fe4b4ee32025a448356058195dad7b, type: 2}
+    - {fileID: 11400000, guid: e7a5ddf644aa99945aaef51ea0306e74, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -2061,6 +2065,74 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 2040641448}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: StopAllSoundsInCutScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2040641448}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: PlayOutHomeBGM
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2040641448}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: PlayCloseHomeDoor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2040641448}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: PlayOpenHomeDoor
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2040641448}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Playwalk
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!320 &1679474975
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -2186,6 +2258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2040641447}
   - component: {fileID: 2040641446}
+  - component: {fileID: 2040641448}
   m_Layer: 0
   m_Name: character
   m_TagString: Untagged
@@ -2222,6 +2295,18 @@ Transform:
   - {fileID: 705796967}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2040641448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040641445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

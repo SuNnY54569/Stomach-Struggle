@@ -196,7 +196,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1219910014, guid: 81154e94810102346a5290dad8b506fe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2004,6 +2004,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0c86c76d2bc5a1549861e1f67c548de7, type: 2}
     - {fileID: 11400000, guid: d774e0edfd18348449a54b3310857fac, type: 2}
     - {fileID: 11400000, guid: 253f2bf3a7dfa5348b13a86630954901, type: 2}
+    - {fileID: 11400000, guid: 4111acbd36f84e84eb300a7954c8c16a, type: 2}
+    - {fileID: 11400000, guid: 6132e852689d9e94f8dc92751cdbf66e, type: 2}
+    - {fileID: 11400000, guid: e7a5ddf644aa99945aaef51ea0306e74, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -2182,6 +2185,60 @@ MonoBehaviour:
         - m_Target: {fileID: 1665993976}
           m_TargetAssemblyTypeName: nextScene, Assembly-CSharp
           m_MethodName: LoadNextScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1665993977}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: StopAllSoundsInCutScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1665993977}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: PlayPhoneRing
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1665993977}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: PlayOutHomeBGM
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1665993977}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Playwalk
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2463,6 +2520,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.size
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[40].name
+      value: PhoneRing
+      objectReference: {fileID: 0}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2522,6 +2587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1665993975}
   - component: {fileID: 1665993976}
+  - component: {fileID: 1665993977}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -2557,6 +2623,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b845c7e96d10e36498ecbc66f53c8314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1665993977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665993974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1865404845
