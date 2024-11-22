@@ -256,6 +256,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 610388798}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Dialouge14Day1
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 253575385}
@@ -715,8 +727,9 @@ MonoBehaviour:
   dialogueText: {fileID: 832271606}
   typingSpeed: 0.05
   characterName: "\u0E40\u0E08\u0E19 :"
-  dialogueContent: "\u0E1D\u0E35\u0E21\u0E37\u0E2D\u0E01\u0E32\u0E23\u0E17\u0E33\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E23\u0E32\u0E01\u0E47\u0E14\u0E35\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E31\u0E19\u0E19\u0E30\u0E40\u0E19\u0E35\u0E49\u0E22
-    \u0E2D\u0E38\u0E49\u0E22 4 \u0E17\u0E38\u0E48\u0E21\u0E41\u0E25\u0E49\u0E27\u0E19\u0E2D\u0E19\u0E14\u0E35\u0E01\u0E27\u0E48\u0E32\u0E1E\u0E23\u0E38\u0E48\u0E07\u0E19\u0E35\u0E49\u0E15\u0E49\u0E2D\u0E07\u0E44\u0E1B\u0E17\u0E33\u0E07\u0E32\u0E19 "
+  dialogueContent: "\u0E1D\u0E35\u0E21\u0E37\u0E2D\u0E01\u0E32\u0E23\u0E17\u0E33\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E23\u0E32\u0E01\u0E47\u0E14\u0E35\u0E40\u0E2B\u0E21\u0E37\u0E2D\u0E19\u0E01\u0E31\u0E19\u0E19\u0E30
+    \u0E2D\u0E38\u0E49\u0E22 4 \u0E17\u0E38\u0E48\u0E21\u0E41\u0E25\u0E49\u0E27\u0E19\u0E2D\u0E19\u0E14\u0E35\u0E01\u0E27\u0E48\u0E32
+    \u0E1E\u0E23\u0E38\u0E48\u0E07\u0E19\u0E35\u0E49\u0E15\u0E49\u0E2D\u0E07\u0E44\u0E1B\u0E17\u0E33\u0E07\u0E32\u0E19"
 --- !u!95 &253575388
 Animator:
   serializedVersion: 5

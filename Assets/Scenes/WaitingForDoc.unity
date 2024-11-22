@@ -701,6 +701,66 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.size
+      value: 68
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[54].name
+      value: Dialouge14Day1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[55].name
+      value: Dialouge3Day2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[56].name
+      value: Dialouge4Day2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[57].name
+      value: Dialouge5Day2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[58].name
+      value: Dialouge6Day2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[59].name
+      value: Dialouge7Day2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[60].name
+      value: Dialouge1Day3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[61].name
+      value: Dialouge2Day3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[62].name
+      value: Dialouge3Day3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[63].name
+      value: Dialouge4Day3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[64].name
+      value: Dialouge5Day3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[65].name
+      value: Dialouge6Day3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[66].name
+      value: Dialouge7Day3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: soundList.Array.data[67].name
+      value: Dialouge8Day3
+      objectReference: {fileID: 0}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -838,6 +898,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 1682427061}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Dialouge6Day3
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1439451595}
@@ -864,6 +936,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1682427061}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Dialouge7Day2
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 663569857}
@@ -882,6 +966,18 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1682427061}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: Dialouge8Day3
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
