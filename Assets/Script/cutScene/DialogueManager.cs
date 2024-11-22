@@ -8,7 +8,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     [Header("Typewriter Settings")]
-    [SerializeField] private float typingSpeed = 0.05f;
+    [SerializeField] private float typingSpeed = 0.015f;
 
     [SerializeField] private string characterName;
     [SerializeField] private string dialogueContent;

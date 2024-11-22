@@ -189,6 +189,87 @@ MonoBehaviour:
   - name: PhoneRing
     sounds:
     - {fileID: 8300000, guid: b4eedda787d36464688674ade28887c0, type: 3}
+  - name: Dialouge1Day1
+    sounds:
+    - {fileID: 8300000, guid: 859e1fb4a1b212b42949c995fea413ec, type: 3}
+  - name: Dialouge2Day1
+    sounds:
+    - {fileID: 8300000, guid: 2908024b7ed89144698fa714e68a3ca1, type: 3}
+  - name: Dialouge3Day1
+    sounds:
+    - {fileID: 8300000, guid: 235876da2dcef344b84893a5e794fe30, type: 3}
+  - name: Dialouge4Day1
+    sounds:
+    - {fileID: 8300000, guid: 9678b2ee3a6bd3144b8bc2f76c642eb8, type: 3}
+  - name: Dialouge5Day1
+    sounds:
+    - {fileID: 8300000, guid: 8b3f58b0c7824a94d922e8a3fbfff575, type: 3}
+  - name: Dialouge6Day1
+    sounds:
+    - {fileID: 8300000, guid: cb743686b4277dc4ab862a97fcda39eb, type: 3}
+  - name: Dialouge7Day1
+    sounds:
+    - {fileID: 8300000, guid: 58eeb1ca808c7f941813b22b53621556, type: 3}
+  - name: Dialouge8Day1
+    sounds:
+    - {fileID: 8300000, guid: c34e637861cea024f97f3c13654b21d7, type: 3}
+  - name: Dialouge9Day1
+    sounds:
+    - {fileID: 8300000, guid: 7f7f2cc76207ffb49ac0bbde6c191b6e, type: 3}
+  - name: Dialouge10Day1
+    sounds:
+    - {fileID: 8300000, guid: 74d49a49d672fa845981467abe0d8912, type: 3}
+  - name: Dialouge11Day1
+    sounds:
+    - {fileID: 8300000, guid: 88d9873d2e6ea824eb32b7832b91b1b0, type: 3}
+  - name: Dialouge12Day1
+    sounds:
+    - {fileID: 8300000, guid: f456fb547104982469fb720c7168a1e0, type: 3}
+  - name: Dialouge13Day1
+    sounds:
+    - {fileID: 8300000, guid: 85921ec7cec86004ca36f9cb49c49db9, type: 3}
+  - name: Dialouge14Day1
+    sounds:
+    - {fileID: 8300000, guid: a7ebbe8aff10b9243bc98dc0fa1d7f43, type: 3}
+  - name: Dialouge3Day2
+    sounds:
+    - {fileID: 8300000, guid: 56266921fe6e657469b4367cf024f27a, type: 3}
+  - name: Dialouge4Day2
+    sounds:
+    - {fileID: 8300000, guid: c06ae8c563f936f4f93c5ba7e8db92af, type: 3}
+  - name: Dialouge5Day2
+    sounds:
+    - {fileID: 8300000, guid: 628df3f845c53ae448dba54cca1f8cf2, type: 3}
+  - name: Dialouge6Day2
+    sounds:
+    - {fileID: 8300000, guid: edd382e93ddf40a4c8d0b1d6b6cc196f, type: 3}
+  - name: Dialouge7Day2
+    sounds:
+    - {fileID: 8300000, guid: 8f100ea0371e20f40a05bccef12f8d5d, type: 3}
+  - name: Dialouge1Day3
+    sounds:
+    - {fileID: 8300000, guid: 83d79c510f7c8494c93d623cacd2f9a4, type: 3}
+  - name: Dialouge2Day3
+    sounds:
+    - {fileID: 8300000, guid: ba6dd7e54c124504780d41d49c79aafc, type: 3}
+  - name: Dialouge3Day3
+    sounds:
+    - {fileID: 8300000, guid: b7794b29c37b98f45a9fc79af8729191, type: 3}
+  - name: Dialouge4Day3
+    sounds:
+    - {fileID: 8300000, guid: 1e71989821b78584b8cd204e4fbe55a8, type: 3}
+  - name: Dialouge5Day3
+    sounds:
+    - {fileID: 8300000, guid: d90bcb56869162f4fbfc7874fa20dd6b, type: 3}
+  - name: Dialouge6Day3
+    sounds:
+    - {fileID: 8300000, guid: 9a03854aad3042e42b308cc4d25c360d, type: 3}
+  - name: Dialouge7Day3
+    sounds:
+    - {fileID: 8300000, guid: 6a5825031d19d87438a80b9afea3efa8, type: 3}
+  - name: Dialouge8Day3
+    sounds:
+    - {fileID: 8300000, guid: 86aee2a40137125458277fa8ba6135e5, type: 3}
   levelBGMs:
   - LevelName: StartScene
     BGMSoundTypes: 01000000
@@ -239,7 +320,7 @@ MonoBehaviour:
   - LevelName: Sleep1
     BGMSoundTypes: 1d000000
   - LevelName: WaitingForDoc
-    BGMSoundTypes: 1b000000
+    BGMSoundTypes: 19000000
   - LevelName: GoHomeAndSleep
     BGMSoundTypes: 1a000000
 --- !u!114 &4196816338870125203
