@@ -1999,8 +1999,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0E42\u0E1B\u0E23\u0E14\u0E43\u0E0A\u0E49\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E43\u0E2B\u0E49\u0E16\u0E39\u0E01\u0E0A\u0E19\u0E34\u0E14"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
-  m_sharedMaterial: {fileID: 4640881436553943417, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d9da3f5127acd66429052b8b75f05a0c, type: 2}
+  m_sharedMaterial: {fileID: -6018157660094580244, guid: d9da3f5127acd66429052b8b75f05a0c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2941,7 +2941,7 @@ MonoBehaviour:
   warningMessage: "\u0E42\u0E1B\u0E23\u0E14\u0E43\u0E0A\u0E49\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E43\u0E2B\u0E49\u0E16\u0E39\u0E01\u0E0A\u0E19\u0E34\u0E14"
   tongsWarning: "\u0E2D\u0E31\u0E19\u0E19\u0E35\u0E49\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E15\u0E30\u0E40\u0E01\u0E35\u0E22\u0E1A\u0E19\u0E30"
   spatulaWarning: "\u0E2D\u0E31\u0E19\u0E19\u0E35\u0E49\u0E15\u0E49\u0E2D\u0E07\u0E43\u0E0A\u0E49\u0E17\u0E35\u0E04\u0E35\u0E1A\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E19\u0E30"
-  warningFadeDuration: 3
+  warningFadeDuration: 5
   warningCooldown: 3
   currentlyCookingSteak: {fileID: 0}
 --- !u!4 &1855595138

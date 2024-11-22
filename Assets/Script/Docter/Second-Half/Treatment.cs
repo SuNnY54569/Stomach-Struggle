@@ -39,12 +39,16 @@ public class Treatment : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if (GameManager.Instance.isGamePaused) return;
+        
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         sprite.color = Color.gray;
     }
 
     private void OnMouseExit()
     {
+        if (GameManager.Instance.isGamePaused) return;
+        
         sprite.color = originalColor;
     }
 }
