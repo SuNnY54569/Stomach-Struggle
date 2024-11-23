@@ -196,6 +196,7 @@ public class GameManager : MonoBehaviour
         initialIntensity = intensity;
         currentHealth = maxHealth;
         UpdateHeartsUI();
+        SoundManager.instance.UpdateLevelBGM();
     }
 
     private void OnDestroy()
@@ -205,6 +206,8 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        SoundManager.instance.UpdateLevelBGM();
+        
         SetMaxScoreForLevel(scene.name);
         
         foreach (var obj in objectsToDeactivate)
