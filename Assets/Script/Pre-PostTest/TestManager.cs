@@ -95,7 +95,7 @@ public class TestManager : MonoBehaviour
         startPanel.SetActive(true);
         correctionPanel.SetActive(false);
         questionNumber = 0;
-        qNumberText.text = $"{questionNumber}.";
+        qNumberText.text = $"{questionNumber}";
         GenerateQuestion();
         scoreText.text = $"{score} / {totalQuestion}";
     }
@@ -203,7 +203,7 @@ public class TestManager : MonoBehaviour
             questionText.text = QnA[currentQuestion].question;
             SetAnswer();
             questionNumber++;
-            qNumberText.text = $"{questionNumber}.";
+            qNumberText.text = $"{questionNumber}";
         }
         else
         {
