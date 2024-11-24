@@ -188,6 +188,7 @@ public class GameManager : MonoBehaviour
         }
 
         SetupPostProcessing();
+        InitializeAllPanel();
     }
     
     private void Start()
@@ -502,7 +503,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject panel in uiPanels)
         {
-            Vector2 targetPosition = new Vector2(1000, 0); // Example: off-screen to the right
+            Vector2 targetPosition = new Vector2(2500, 0); // Example: off-screen to the right
             UITransitionUtility.Instance.Initialize(panel, targetPosition);
         }
     }

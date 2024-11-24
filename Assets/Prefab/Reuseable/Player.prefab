@@ -5855,7 +5855,13 @@ MonoBehaviour:
   pauseButton: {fileID: 1261794784035289052}
   normalPause: {fileID: 4628402803700197682}
   cutScenePause: {fileID: 1697450438639176961}
-  uiPanels: []
+  uiPanels:
+  - {fileID: 5770594542048099888}
+  - {fileID: 1215772611402400720}
+  - {fileID: 7869578107665225231}
+  - {fileID: 9164563958850804555}
+  - {fileID: 2498101482384833761}
+  - {fileID: 4570051222304859563}
   tutorialPanel: {fileID: 5770594542048099888}
   gameplayPanel: {fileID: 1215772611402400720}
   tutorialVideoManager: {fileID: 2437533427275752445}
