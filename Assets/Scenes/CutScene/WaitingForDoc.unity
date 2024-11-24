@@ -701,66 +701,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.size
-      value: 68
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[54].name
-      value: Dialouge14Day1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[55].name
-      value: Dialouge3Day2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[56].name
-      value: Dialouge4Day2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[57].name
-      value: Dialouge5Day2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[58].name
-      value: Dialouge6Day2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[59].name
-      value: Dialouge7Day2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[60].name
-      value: Dialouge1Day3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[61].name
-      value: Dialouge2Day3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[62].name
-      value: Dialouge3Day3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[63].name
-      value: Dialouge4Day3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[64].name
-      value: Dialouge5Day3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[65].name
-      value: Dialouge6Day3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[66].name
-      value: Dialouge7Day3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2623328297978700429, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
-      propertyPath: soundList.Array.data[67].name
-      value: Dialouge8Day3
-      objectReference: {fileID: 0}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1464,6 +1404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b845c7e96d10e36498ecbc66f53c8314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSkip: 0
 --- !u!4 &1682427060
 Transform:
   m_ObjectHideFlags: 0
@@ -1493,6 +1434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogCanvas: {fileID: 1778604455}
 --- !u!1 &1778604455
 GameObject:
   m_ObjectHideFlags: 0

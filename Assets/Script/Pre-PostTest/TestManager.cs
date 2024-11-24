@@ -40,6 +40,8 @@ public class TestManager : MonoBehaviour
     private TMP_Text finalscoreText;
     [SerializeField, Tooltip("Text for displaying the question number")]
     private TMP_Text qNumberText;
+    [SerializeField, Tooltip("Canvas of all panel")]
+    private GameObject canvas;
 
     [Header("Infos")]
     [SerializeField, Tooltip("Current question number")]
@@ -83,6 +85,8 @@ public class TestManager : MonoBehaviour
         {
             quizPanel.SetActive(false);
         }
+
+        canvas.SetActive(!GameManager.Instance.isGamePaused);
     }
 
     private void Initialize()

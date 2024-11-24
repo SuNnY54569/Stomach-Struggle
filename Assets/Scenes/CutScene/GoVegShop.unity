@@ -1032,6 +1032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b845c7e96d10e36498ecbc66f53c8314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSkip: 0
 --- !u!4 &2031280258
 Transform:
   m_ObjectHideFlags: 0
@@ -1060,6 +1061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogCanvas: {fileID: 1335441639}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

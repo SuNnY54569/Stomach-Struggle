@@ -1254,6 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b845c7e96d10e36498ecbc66f53c8314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSkip: 0
 --- !u!114 &610388798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,6 +1267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogCanvas: {fileID: 2145925636}
 --- !u!1 &688271844
 GameObject:
   m_ObjectHideFlags: 0

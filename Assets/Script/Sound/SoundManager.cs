@@ -358,6 +358,15 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public static void PauseAllSounds()
+    {
+        instance.audioSources[VolumeType.Dialog].Pause();
+    }
+
+    public static void ResumeAllSounds()
+    {
+        instance.audioSources[VolumeType.Dialog].UnPause();
+    }
 
     #endregion
 }
