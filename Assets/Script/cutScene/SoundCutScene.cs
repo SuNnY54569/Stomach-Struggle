@@ -197,6 +197,10 @@ public class SoundCutScene : MonoBehaviour
     {
         SoundManager.instance.CrossfadeBGM(SoundType.BgInHome, 1f);
     }
+    public void InBuildBGM()
+    {
+        SoundManager.instance.CrossfadeBGM(SoundType.BgInBuild, 1f);
+    }
     public void StopAllSoundsInCutScene()
     {
         SoundManager.StopAllSounds();

@@ -75,6 +75,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Docter 2.unity
     guid: a0663bff2a1b4454d80fad0b49089619
   - enabled: 1
+    path: Assets/Scenes/FinishedTreatment.unity
+    guid: 060d632c1fa9ee94b846c3c5f403aaad
+  - enabled: 1
     path: Assets/Scenes/Summary3.unity
     guid: d1a77d84ddf44f749807e3536651297a
   - enabled: 1
