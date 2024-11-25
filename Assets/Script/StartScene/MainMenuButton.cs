@@ -11,13 +11,13 @@ public class MainMenuButton : MonoBehaviour
 
     private void Awake()
     {
-        UITransitionUtility.Instance.Initialize(picturePanel, new Vector2(0,0));
-        UITransitionUtility.Instance.Initialize(buttonPanel, new Vector2(0,0));
-        UITransitionUtility.Instance.Initialize(settingPanel, new Vector2(0,0));
     }
 
     private void Start()
     {
+        UITransitionUtility.Instance.Initialize(picturePanel, new Vector2(0,0));
+        UITransitionUtility.Instance.Initialize(buttonPanel, new Vector2(0,0));
+        UITransitionUtility.Instance.Initialize(settingPanel, new Vector2(0,0));
         UITransitionUtility.Instance.MoveIn(picturePanel, LeanTweenType.easeOutBounce, 2f);
         UITransitionUtility.Instance.MoveIn(buttonPanel,LeanTweenType.easeOutBounce, 2f);
     }

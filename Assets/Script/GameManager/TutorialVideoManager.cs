@@ -44,13 +44,12 @@ public class TutorialVideoManager : MonoBehaviour
         {
             videoPlayer.SetTargetAudioSource(0, SoundManager.instance.audioSources[VolumeType.Tutorial]);
         }
-        
-        UITransitionUtility.Instance.Initialize(skipButton.gameObject, skipButton.gameObject.transform.position);
-        UITransitionUtility.Instance.Initialize(replayButton.gameObject, replayButton.gameObject.transform.position);
     }
 
     private void Start()
     {
+        UITransitionUtility.Instance.Initialize(skipButton.gameObject, skipButton.gameObject.transform.position);
+        UITransitionUtility.Instance.Initialize(replayButton.gameObject, replayButton.gameObject.transform.position);
         if (SoundManager.instance != null && SoundManager.instance.audioSources.ContainsKey(VolumeType.Tutorial))
         {
             videoPlayer.SetTargetAudioSource(0, SoundManager.instance.audioSources[VolumeType.Tutorial]);

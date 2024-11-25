@@ -191,11 +191,11 @@ public class GameManager : MonoBehaviour
         }
 
         SetupPostProcessing();
-        InitializeAllPanel();
     }
     
     private void Start()
     {
+        InitializeAllPanel();
         initialIntensity = intensity;
         currentHealth = maxHealth;
         UpdateHeartsUI();

@@ -45,6 +45,7 @@ public class DatabaseManager : MonoBehaviour
 
     void Start()
     {
+        UITransitionUtility.Instance.PopUp(enterNamePanel);
         userID = SystemInfo.deviceUniqueIdentifier;
         submitButton.interactable = false;
         nameInput.onValueChanged.AddListener(OnNameInputChanged);
