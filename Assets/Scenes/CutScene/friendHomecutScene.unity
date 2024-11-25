@@ -706,7 +706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &563988792
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2327,6 +2327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSkip: 0
+  skipButton: {fileID: 563988791}
 --- !u!4 &2040641447
 Transform:
   m_ObjectHideFlags: 0

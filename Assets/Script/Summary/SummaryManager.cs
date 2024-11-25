@@ -22,6 +22,8 @@ public class SummaryManager : MonoBehaviour
     private TMP_Text healthConditionText;
     [SerializeField, Tooltip("Heart Fill Sprite")]
     private Image heartSpriteFill;
+    [SerializeField, Tooltip("Panel")]
+    private GameObject panel;
     
 
     [Header("Health Condition Texts")]
@@ -39,6 +41,12 @@ public class SummaryManager : MonoBehaviour
     #endregion
 
     #region Unity Lifecycle
+
+    private void Awake()
+    {
+        UITransitionUtility.Instance.Initialize(panel, new Vector2(0,0));
+    }
+
     private void Start()
     {
         SoundManager.PlaySound(SoundType.FinishDay,VolumeType.SFX);
@@ -52,6 +60,7 @@ public class SummaryManager : MonoBehaviour
         {
             Debug.LogError("GameManager instance not found!");
         }
+        UITransitionUtility.Instance.PopUp(panel,LeanTweenType.easeOutBack, 2f);
     }
     #endregion
     
@@ -104,6 +113,7 @@ public class SummaryManager : MonoBehaviour
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         GameManager.Instance.ResetTotalHeart();
         SceneManagerClass.Instance.LoadNextScene();
+        UITransitionUtility.Instance.PopDown(panel);
         GameManager.Instance.gameObject.SetActive(true);
     }
 
@@ -113,6 +123,7 @@ public class SummaryManager : MonoBehaviour
         {
             SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
             GameManager.Instance.ResetTotalHeart();
+            UITransitionUtility.Instance.PopDown(panel);
             SceneManagerClass.Instance.LoadThisScene(retrySceneName);
         }
     }
@@ -123,6 +134,7 @@ public class SummaryManager : MonoBehaviour
         {
             SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
             GameManager.Instance.ResetAllTotalHeart();
+            UITransitionUtility.Instance.PopDown(panel);
             SceneManagerClass.Instance.LoadMenuScene();
         }
     }

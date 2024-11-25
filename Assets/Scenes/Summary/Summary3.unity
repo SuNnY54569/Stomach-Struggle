@@ -798,6 +798,7 @@ MonoBehaviour:
   scoreText: {fileID: 1706752351}
   healthConditionText: {fileID: 1463579416}
   heartSpriteFill: {fileID: 950430228}
+  panel: {fileID: 1914365492}
   goodHealthText: Good Health
   mediumHealthText: Medium Health
   badHealthText: Bad Health
@@ -1479,7 +1480,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1914365493
 RectTransform:
   m_ObjectHideFlags: 0

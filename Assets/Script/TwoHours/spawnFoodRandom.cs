@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -20,6 +21,7 @@ public class spawnFoodRandom : MonoBehaviour
     [SerializeField] private TextMeshProUGUI spawnCountText;
     [SerializeField] private GameObject clockGameObject;
     [SerializeField] private GameObject guideText;
+    [SerializeField] private GameObject panel;
 
     private bool isGameOver = false;
     public bool isTickingSoundPlaying = false;
@@ -28,11 +30,17 @@ public class spawnFoodRandom : MonoBehaviour
     private int spawnCount = 0;
     private const int maxSpawns = 4;
 
+    private void Awake()
+    {
+        UITransitionUtility.Instance.Initialize(panel,Vector2.zero);
+    }
+
     private void Start()
     {
         GameManager.Instance.SetScoreTextActive(false);
         timeLeft = countdownTime;
         UpdateSpawnCountUI();
+        UITransitionUtility.Instance.MoveIn(panel,LeanTweenType.easeInOutQuad, 0.2f);
     }
 
     private void Update()
@@ -43,6 +51,10 @@ public class spawnFoodRandom : MonoBehaviour
         
         if (spawnCount >= maxSpawns)
         {
+            timerText.gameObject.SetActive(false);
+            clockGameObject.SetActive(false);
+            UITransitionUtility.Instance.MoveOut(panel,LeanTweenType.easeInOutQuad, 0.2f);
+            
             if (isGameOver) return;
                 
             if (GameManager.Instance.currentHealth <= 0)
@@ -53,8 +65,9 @@ public class spawnFoodRandom : MonoBehaviour
             {
                 GameManager.Instance.WinGame();
             }
-
+            spawnCount = 3;
             timerText.gameObject.SetActive(false);
+            clockGameObject.SetActive(false);
             spawnCountText.gameObject.SetActive(false);
 
             foreach (var text in instructionText)
@@ -114,6 +127,7 @@ public class spawnFoodRandom : MonoBehaviour
             }
         }
         spawnCount++;
+        
         UpdateSpawnCountUI();
     }
 

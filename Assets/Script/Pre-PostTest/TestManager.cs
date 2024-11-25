@@ -19,7 +19,7 @@ public class TestManager : MonoBehaviour
     [SerializeField, Tooltip("Array of answer option buttons")]
     private GameObject[] options;
     [SerializeField, Tooltip("Panel for displaying the quiz")]
-    private GameObject quizPanel;
+    public GameObject quizPanel;
     [SerializeField, Tooltip("Panel for displaying game over screen")]
     private GameObject goPanel;
     [SerializeField, Tooltip("Panel for displaying answer corrections")]
@@ -65,6 +65,20 @@ public class TestManager : MonoBehaviour
 
     [Tooltip("Firebase database URL for questions")]
     string firebaseURL = "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app/questions";
+    
+    private bool isGoPanelActive = false;
+    private bool previousPauseState;
+
+    private void Awake()
+    {
+        Vector2 targetPosition = Vector2.zero;
+        UITransitionUtility.Instance.Initialize(startPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(quizPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(correctionPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(correctPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(goPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(canvas, targetPosition);
+    }
 
     private void Start()
     {
@@ -81,12 +95,30 @@ public class TestManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (goPanel.activeSelf)
+        if (isGoPanelActive != goPanel.activeSelf)
         {
-            quizPanel.SetActive(false);
+            isGoPanelActive = goPanel.activeSelf;
+            if (isGoPanelActive)
+            {
+                UITransitionUtility.Instance.PopDown(quizPanel);
+            }
         }
 
-        canvas.SetActive(!GameManager.Instance.isGamePaused);
+        if (previousPauseState != GameManager.Instance.isGamePaused)
+        {
+            // Update the pause state tracker
+            previousPauseState = GameManager.Instance.isGamePaused;
+
+            // Perform the appropriate UI transition
+            if (GameManager.Instance.isGamePaused)
+            {
+                UITransitionUtility.Instance.PopDown(canvas);
+            }
+            else
+            {
+                UITransitionUtility.Instance.PopUp(canvas, LeanTweenType.easeOutBack, 1f);
+            }
+        }
     }
 
     private void Initialize()
@@ -96,7 +128,7 @@ public class TestManager : MonoBehaviour
         totalQuestion = QnA.Count;
         goPanel.SetActive(false);
         quizPanel.SetActive(false);
-        startPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveIn(startPanel);
         correctionPanel.SetActive(false);
         questionNumber = 0;
         qNumberText.text = $"{questionNumber}";
@@ -115,7 +147,8 @@ public class TestManager : MonoBehaviour
                 GameManager.Instance.postTestScore = score;
                 break;
         }
-
+        UITransitionUtility.Instance.MoveOut(GameManager.Instance.gameplayPanel);
+        UITransitionUtility.Instance.PopDown(canvas);
         SceneManagerClass.Instance.LoadNextScene();
     }
 
@@ -123,25 +156,29 @@ public class TestManager : MonoBehaviour
     {
         score = 0;
         questionNumber = 0;
+        UITransitionUtility.Instance.PopDown(canvas);
+        UITransitionUtility.Instance.MoveOut(GameManager.Instance.gameplayPanel);
         SceneManagerClass.Instance.ReloadScene();
     }
 
     public void ToMenu()
     {
+        UITransitionUtility.Instance.MoveOut(GameManager.Instance.gameplayPanel);
+        UITransitionUtility.Instance.PopDown(canvas);
         SceneManagerClass.Instance.LoadMenuScene();
     }
 
     public void StartTest()
     {
-        quizPanel.SetActive(true);
-        startPanel.SetActive(false);
+        UITransitionUtility.Instance.PopDown(startPanel);
+        UITransitionUtility.Instance.MoveIn(quizPanel);
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
     private void GameOver()
     {
-        quizPanel.SetActive(false);
-        goPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveOut(quizPanel);
+        UITransitionUtility.Instance.PopUp(goPanel);
         finalscoreText.text = $"{score} / {totalQuestion}";
 
         if (SceneManager.GetActiveScene().name == "PostTest")
@@ -174,7 +211,8 @@ public class TestManager : MonoBehaviour
     {
         score += 1;
         scoreText.text = $"{score} / {totalQuestion}";
-        correctPanel.SetActive(true);
+        UITransitionUtility.Instance.PopDown(quizPanel, LeanTweenType.easeInBack, 0.25f);
+        UITransitionUtility.Instance.PopUp(correctPanel);
     }
 
     public void Wrong()
@@ -182,7 +220,8 @@ public class TestManager : MonoBehaviour
         IncrementWrongCount();
         corretOrNotText.text = "ผิดนะครับ";
         correctionText.text = QnA[currentQuestion].correction;
-        correctionPanel.SetActive(true);
+        UITransitionUtility.Instance.PopDown(quizPanel, LeanTweenType.easeInBack, 0.25f);
+        UITransitionUtility.Instance.PopUp(correctionPanel);
     }
 
     private void SetAnswer()
@@ -221,6 +260,9 @@ public class TestManager : MonoBehaviour
     {
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         QnA.RemoveAt(currentQuestion);
+        UITransitionUtility.Instance.PopUp(quizPanel);
+        UITransitionUtility.Instance.PopDown(correctPanel, LeanTweenType.easeInBack, 0.25f);
+        UITransitionUtility.Instance.PopDown(correctionPanel, LeanTweenType.easeInBack, 0.25f);
         GenerateQuestion();
     }
 

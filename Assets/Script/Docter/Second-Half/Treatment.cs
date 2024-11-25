@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Treatment : MonoBehaviour
 {
+    [SerializeField] private float scaleDuration = 0.2f;
+    [SerializeField] private Vector3 targetScale = Vector3.zero;
     private SpriteRenderer sprite;
     private Color originalColor;
 
@@ -25,7 +27,6 @@ public class Treatment : MonoBehaviour
             {
                 GameManager.Instance.IncreaseScore(1);
             }
-            Destroy(gameObject);
         }
         else if (gameObject.CompareTag("BadTreat"))
         {
@@ -33,8 +34,14 @@ public class Treatment : MonoBehaviour
             {
                 GameManager.Instance.DecreaseHealth(1);
             }
-            Destroy(gameObject);
         }
+        LeanTween.scale(gameObject, targetScale, scaleDuration)
+            .setEase(LeanTweenType.easeInOutQuad) // Optional: Customize easing
+            .setOnComplete(() =>
+            {
+                // Optionally destroy the object or trigger other actions
+                gameObject.SetActive(false);
+            });
     }
 
     private void OnMouseOver()

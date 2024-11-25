@@ -1182,7 +1182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1530832506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1317,6 +1317,7 @@ MonoBehaviour:
   scoreText: {fileID: 438610858}
   healthConditionText: {fileID: 1172136136}
   heartSpriteFill: {fileID: 1172079747}
+  panel: {fileID: 1530832505}
   goodHealthText: "\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E04\u0E38\u0E13\u0E21\u0E35\u0E2A\u0E38\u0E02\u0E20\u0E32\u0E1E\u0E17\u0E35\u0E48\u0E14\u0E35\u0E40\u0E22\u0E35\u0E48\u0E22\u0E21"
   mediumHealthText: "\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E04\u0E38\u0E13\u0E21\u0E35\u0E2A\u0E38\u0E02\u0E20\u0E32\u0E1E\u0E1B\u0E01\u0E15\u0E34"
   badHealthText: "\u0E27\u0E31\u0E19\u0E19\u0E35\u0E49\u0E04\u0E38\u0E13\u0E21\u0E35\u0E2A\u0E38\u0E02\u0E20\u0E32\u0E1E\u0E2D\u0E48\u0E2D\u0E19\u0E41\u0E2D"

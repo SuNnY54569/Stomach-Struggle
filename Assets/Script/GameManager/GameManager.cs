@@ -79,6 +79,9 @@ public class GameManager : MonoBehaviour
     [SerializeField, Tooltip("Panel to display pause menu")]
     private GameObject pausePanel;
 
+    [SerializeField, Tooltip("setting panel")]
+    private GameObject settingPanel;
+
     public GameObject pauseButton;
 
     [SerializeField] private GameObject normalPause;
@@ -205,7 +208,7 @@ public class GameManager : MonoBehaviour
     {
         SoundManager.instance.UpdateLevelBGM();
         SetMaxScoreForLevel(scene.name);
-        gameplayPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveIn(gameplayPanel);
         
         currentSceneCategory = DetermineSceneCategory(scene.name);
         
@@ -246,9 +249,9 @@ public class GameManager : MonoBehaviour
         if (videoClip != null)
         {
             tutorialVideoManager.SetupVideoForScene(sceneName);
+            UITransitionUtility.Instance.MoveIn(tutorialPanel);
+            UITransitionUtility.Instance.MoveOut(gameplayPanel);
             tutorialVideoManager.StartVideo();
-            tutorialPanel.SetActive(true);
-            gameplayPanel.gameObject.SetActive(false);
             PauseGame();
         }
         else
@@ -298,7 +301,7 @@ public class GameManager : MonoBehaviour
 
         while (elapsedTime < fadeDuration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             intensity = Mathf.Lerp(initialIntensity, 0, elapsedTime / fadeDuration);
             _vignette.intensity.Override(intensity);
 
@@ -349,8 +352,8 @@ public class GameManager : MonoBehaviour
     {
         ResetScore();
         SoundManager.PlaySound(SoundType.Lose,VolumeType.SFX);
-        gameplayPanel.SetActive(false);
-        gameOverPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveOut(gameplayPanel);
+        UITransitionUtility.Instance.PopUp(gameOverPanel);
         PauseGame();
     }
 
@@ -361,8 +364,8 @@ public class GameManager : MonoBehaviour
         UpdateHeartFill();
         
         SoundManager.PlaySound(SoundType.Win,VolumeType.SFX);
-        gameplayPanel.SetActive(false);
-        winPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveOut(gameplayPanel);
+        UITransitionUtility.Instance.PopUp(winPanel);
         PauseGame();
     }
 
@@ -371,6 +374,7 @@ public class GameManager : MonoBehaviour
         ResetHealth();
         ResetScore();
         ResetAllTotalHeart();
+        MoveAllPanelOut();
         SceneManagerClass.Instance.LoadMenuScene();
         StartCoroutine(waitForSecond(button));
     }
@@ -379,6 +383,7 @@ public class GameManager : MonoBehaviour
     {
         ResetHealth();
         ResetScore();
+        MoveAllPanelOut();
         SceneManagerClass.Instance.LoadNextScene();
         StartCoroutine(waitForSecond(button));
     }
@@ -423,9 +428,9 @@ public class GameManager : MonoBehaviour
 
     public void CloseAllPanel()
     {
-        winPanel.SetActive(false);
-        gameOverPanel.SetActive(false);
-        pausePanel.SetActive(false);
+        UITransitionUtility.Instance.MoveOut(winPanel);
+        UITransitionUtility.Instance.MoveOut(gameOverPanel);
+        UITransitionUtility.Instance.MoveOut(pausePanel);
     }
 
     public void SetMaxScore(int maxScore)
@@ -470,6 +475,7 @@ public class GameManager : MonoBehaviour
     {
         ResetHealth();
         ResetScore();
+        MoveAllPanelOut();
         SceneManagerClass.Instance.ReloadScene();
         StartCoroutine(waitForSecond(button));
     }
@@ -503,9 +509,39 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject panel in uiPanels)
         {
-            Vector2 targetPosition = new Vector2(0, 0); // Example: off-screen to the right
+            Vector2 targetPosition = new Vector2(0, 0);
             UITransitionUtility.Instance.Initialize(panel, targetPosition);
         }
+    }
+
+    public void MovePanelIn(GameObject panel)
+    {
+        UITransitionUtility.Instance.MoveIn(panel);
+    }
+
+    public void MovePanelOut(GameObject panel)
+    {
+        UITransitionUtility.Instance.MoveOut(panel);
+    }
+
+    public void PopUpButton(GameObject button)
+    {
+        UITransitionUtility.Instance.PopUp(button);
+    }
+    
+    public void PopDownButton(GameObject button)
+    {
+        UITransitionUtility.Instance.PopDown(button);
+    }
+    
+    public void MoveAllPanelOut()
+    {
+        UITransitionUtility.Instance.PopDown(winPanel);
+        UITransitionUtility.Instance.PopDown(gameOverPanel);
+        UITransitionUtility.Instance.MoveOut(pausePanel);
+        UITransitionUtility.Instance.MoveOut(tutorialPanel);
+        UITransitionUtility.Instance.MoveOut(gameplayPanel);
+        UITransitionUtility.Instance.MoveOut(settingPanel);
     }
 
     #endregion

@@ -151,7 +151,7 @@ Transform:
   m_GameObject: {fileID: 43559478}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.92, z: 0}
+  m_LocalPosition: {x: 0, y: 1.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -230,10 +230,11 @@ MonoBehaviour:
   clawSprite: {fileID: 614607827}
   defaultClawSprite: {fileID: -1525049403, guid: 197cea6a4faa218418bec6234a4962b0, type: 3}
   maxScore: 5
+  returnButton: {fileID: 1083913207}
   clawSpeed: 5
   verticalMoveSpeed: 5
   clawDownPositionY: -2
-  startPosition: {x: 0, y: 0}
+  startPosition: {x: 0, y: 1.95}
   minMovementLimitX: -3
   maxMovementLimitX: 8
   goodItemChance: 0.5
@@ -595,8 +596,8 @@ MonoBehaviour:
   objectsToOpen:
   - {fileID: 1636783706}
   - {fileID: 1030453577}
-  - {fileID: 1083913207}
   - {fileID: 1001014186}
+  - {fileID: 1083913207}
   clawChance: 1
   clawController: {fileID: 43559482}
   isReturnButton: 0
@@ -946,8 +947,8 @@ MonoBehaviour:
   objectsToOpen:
   - {fileID: 1636783706}
   - {fileID: 1189681268}
-  - {fileID: 1083913207}
   - {fileID: 1153057610}
+  - {fileID: 1083913207}
   clawChance: 0.1
   clawController: {fileID: 43559482}
   isReturnButton: 0
@@ -1566,8 +1567,8 @@ MonoBehaviour:
   objectsToOpen:
   - {fileID: 1636783706}
   - {fileID: 1773504430}
-  - {fileID: 1083913207}
   - {fileID: 1978058042}
+  - {fileID: 1083913207}
   clawChance: 0.7
   clawController: {fileID: 43559482}
   isReturnButton: 0

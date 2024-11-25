@@ -51,6 +51,9 @@ public class TutorialVideoManager : MonoBehaviour
         {
             videoPlayer.SetTargetAudioSource(0, SoundManager.instance.audioSources[VolumeType.Tutorial]);
         }
+        
+        UITransitionUtility.Instance.Initialize(skipButton.gameObject, skipButton.gameObject.transform.position);
+        UITransitionUtility.Instance.Initialize(replayButton.gameObject, replayButton.gameObject.transform.position);
     }
 
     private void Start()
@@ -95,11 +98,11 @@ public class TutorialVideoManager : MonoBehaviour
     public void SkipVideo()
     {
         videoPlayer.Stop();
-        replayButton.gameObject.SetActive(false);
-        skipButton.gameObject.SetActive(false);
+        UITransitionUtility.Instance.PopDown(replayButton.gameObject, LeanTweenType.easeInBack, 0.25f);
+        UITransitionUtility.Instance.PopDown(skipButton.gameObject, LeanTweenType.easeInBack,0.25f);
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
-        GameManager.Instance.tutorialPanel.SetActive(false);
-        GameManager.Instance.gameplayPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveOut(GameManager.Instance.tutorialPanel);
+        UITransitionUtility.Instance.MoveIn(GameManager.Instance.gameplayPanel);
         GameManager.Instance.PauseGame();
     }
     
@@ -119,13 +122,13 @@ public class TutorialVideoManager : MonoBehaviour
     
     private void OnVideoEnd(VideoPlayer vp)
     {
-        replayButton.gameObject.SetActive(true);
+        UITransitionUtility.Instance.PopUp(replayButton.gameObject);
     }
     
     private IEnumerator ShowSkipButtonWithDelay(float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
-        skipButton.gameObject.SetActive(true);
+        UITransitionUtility.Instance.PopUp(skipButton.gameObject);
     }
     
     #endregion

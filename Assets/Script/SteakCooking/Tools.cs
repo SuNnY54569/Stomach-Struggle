@@ -45,16 +45,7 @@ public class Tools : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
-    }
-    
-    private void Start()
-    {
-        // Ensure warning message is invisible at start
-        if (warningMessageText != null)
-        {
-            warningMessageText.alpha = 0;
-        }
+        UITransitionUtility.Instance.Initialize(warningMessageText.gameObject,Vector2.zero);
     }
 
     private void Update()
@@ -123,8 +114,6 @@ public class Tools : MonoBehaviour
         if (warningMessageText == null) return;
         
         lastWarningTime = Time.time;
-        StopCoroutine(FadeOutWarning());
-        
         switch (toolType)
         {
             case ToolType.Spatula :
@@ -137,30 +126,14 @@ public class Tools : MonoBehaviour
                 warningMessageText.text = warningMessage;
                 break;
         }
-        
-        warningMessageText.gameObject.SetActive(true);
+        UITransitionUtility.Instance.PopUp(warningMessageText.gameObject);
+
         StartCoroutine(FadeOutWarning());
     }
     
     private IEnumerator FadeOutWarning()
     {
-        float elapsedTime = 0f;
-        Color originalColor = warningMessageText.color;
-        originalColor.a = 1f;  // Start fully visible
-        warningMessageText.color = originalColor;
-
-        // Fade out over time
-        while (elapsedTime < warningFadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / warningFadeDuration);
-            warningMessageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
-            yield return null;
-        }
-
-        // Ensure it's completely invisible
-        warningMessageText.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
-        warningMessageText.gameObject.SetActive(false);
-        warningMessageText.text = "";
+        yield return new WaitForSeconds(warningFadeDuration);
+        UITransitionUtility.Instance.PopDown(warningMessageText.gameObject);
     }
 }
