@@ -4,203 +4,82 @@ using UnityEngine;
 
 public class SoundCutScene : MonoBehaviour
 {
-    public void PlayBgInBuild()
+    private nextScene _nextScene;
+    [SerializeField] private GameObject dialogCanvas;
+
+    public void Awake()
     {
-        SoundManager.PlaySound(SoundType.BgInBuild, VolumeType.SFX);
-    }
-    public void PlayBgOutHome()
-    {
-        SoundManager.PlaySound(SoundType.BgOutHome, VolumeType.SFX);
-    }
-    public void PlayBgInHome()
-    {
-        SoundManager.PlaySound(SoundType.BgInHome, VolumeType.SFX);
-    }
-    public void BgDay()
-    {
-        SoundManager.PlaySound(SoundType.BgDay, VolumeType.SFX);
-    }
-    public void PlayBgNight()
-    {
-        SoundManager.PlaySound(SoundType.BgNight, VolumeType.SFX);
-    }
-    public void PlayPressCard()
-    {
-        SoundManager.PlaySound(SoundType.PressCard, VolumeType.SFX);
-    }
-    public void PlayOpenHomeDoor()
-    {
-        SoundManager.PlaySound(SoundType.OpenHomeDoor, VolumeType.SFX);
-    }
-    public void PlayCloseHomeDoor()
-    {
-        SoundManager.PlaySound(SoundType.CloseHomeDoor, VolumeType.SFX);
-    }
-    public void PlayBusOpenDoor()
-    {
-        SoundManager.PlaySound(SoundType.BusOpenDoor, VolumeType.SFX);
-    }
-    public void PlayBuildOpenDoor()
-    {
-        SoundManager.PlaySound(SoundType.BuildOpenDoor, VolumeType.SFX);
-    }
-    public void Playwalk()
-    {
-        SoundManager.PlaySound(SoundType.walk, VolumeType.SFX);
-    }
-    public void PlayBusCome()
-    {
-        SoundManager.PlaySound(SoundType.BusCome, VolumeType.SFX);
-    }
-    public void PlayBusRun()
-    {
-        SoundManager.PlaySound(SoundType.BusRun, VolumeType.SFX);
-    }
-    public void PlayBgMarket()
-    {
-        SoundManager.PlaySound(SoundType.BgMarket, VolumeType.SFX);
-    }
-    public void PlayBusRunTenS()
-    {
-        SoundManager.PlaySound(SoundType.BusRunTenS, VolumeType.SFX);
-    }
-    public void PlayPhoneRing()
-    {
-        SoundManager.PlaySound(SoundType.PhoneRing, VolumeType.SFX);
+        _nextScene = GetComponent<nextScene>();
     }
 
-    public void Dialouge1Day1()
+    public void LateUpdate()
     {
-        SoundManager.PlaySound(SoundType.Dialouge1Day1, VolumeType.SFX);
-    }
-    public void Dialouge2Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge2Day1, VolumeType.SFX);
-    }
-    public void Dialouge3Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge3Day1, VolumeType.SFX);
-    }
-    public void Dialouge4Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge4Day1, VolumeType.SFX);
-    }
-    public void Dialouge5Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge5Day1, VolumeType.SFX);
-    }
-    public void Dialouge6Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge6Day1, VolumeType.SFX);
-    }
-    public void Dialouge7Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge7Day1, VolumeType.SFX);
-    }
-    public void Dialouge8Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge8Day1, VolumeType.SFX);
-    }
-    public void Dialouge9Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge9Day1, VolumeType.SFX);
-    }
-    public void Dialouge10Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge10Day1, VolumeType.SFX);
-    }
-    public void Dialouge11Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge11Day1, VolumeType.SFX);
-    }
-    public void Dialouge12Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge12Day1, VolumeType.SFX);
-    }
-    public void Dialouge13Day1()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge13Day1, VolumeType.SFX);
+        dialogCanvas.SetActive(!GameManager.Instance.isGamePaused);
     }
 
-    public void Dialouge14Day1()
+    private void PlaySound(SoundType soundType, VolumeType volumeType = VolumeType.Dialog)
     {
-        SoundManager.PlaySound(SoundType.Dialouge14Day1, VolumeType.SFX);
+        if (_nextScene.isSkip) return;
+        SoundManager.PlaySound(soundType, volumeType);
     }
 
-    public void Dialouge3Day2()
+    public void PlayBackgroundMusic(SoundType bgMusic)
     {
-        SoundManager.PlaySound(SoundType.Dialouge3Day2, VolumeType.SFX);
-    }
-    public void Dialouge4Day2()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge4Day2, VolumeType.SFX);
-    }
-    public void Dialouge5Day2()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge5Day2, VolumeType.SFX);
-    }
-    public void Dialouge6Day2()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge6Day2, VolumeType.SFX);
-    }
-    public void Dialouge7Day2()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge7Day2, VolumeType.SFX);
+        if (_nextScene.isSkip) return;
+        SoundManager.instance.CrossfadeBGM(bgMusic, 1f);
     }
 
-    public void Dialouge1Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge1Day3, VolumeType.SFX);
-    }
-    public void Dialouge2Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge2Day3, VolumeType.SFX);
-    }
-    public void Dialouge3Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge3Day3, VolumeType.SFX);
-    }
-    public void Dialouge4Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge4Day3, VolumeType.SFX);
-    }
-    public void Dialouge5Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge5Day3, VolumeType.SFX);
-    }
-    public void Dialouge6Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge6Day3, VolumeType.SFX);
-    }
-    public void Dialouge7Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge7Day3, VolumeType.SFX);
-    }
-    public void Dialouge8Day3()
-    {
-        SoundManager.PlaySound(SoundType.Dialouge8Day3, VolumeType.SFX);
-    }
+    public void PlayBgInBuild() => PlaySound(SoundType.BgInBuild);
+    public void PlayBgOutHome() => PlaySound(SoundType.BgOutHome);
+    public void PlayBgInHome() => PlaySound(SoundType.BgInHome);
+    public void BgDay() => PlaySound(SoundType.BgDay);
+    public void PlayBgNight() => PlaySound(SoundType.BgNight);
+    public void PlayPressCard() => PlaySound(SoundType.PressCard);
+    public void PlayOpenHomeDoor() => PlaySound(SoundType.OpenHomeDoor);
+    public void PlayCloseHomeDoor() => PlaySound(SoundType.CloseHomeDoor);
+    public void PlayBusOpenDoor() => PlaySound(SoundType.BusOpenDoor);
+    public void PlayBuildOpenDoor() => PlaySound(SoundType.BuildOpenDoor);
+    public void Playwalk() => PlaySound(SoundType.walk);
+    public void PlayBusCome() => PlaySound(SoundType.BusCome);
+    public void PlayBusRun() => PlaySound(SoundType.BusRun);
+    public void PlayBgMarket() => PlaySound(SoundType.BgMarket);
+    public void PlayBusRunTenS() => PlaySound(SoundType.BusRunTenS);
+    public void PlayPhoneRing() => PlaySound(SoundType.PhoneRing);
 
-    public void PlayMarketBGM()
-    {
-        SoundManager.instance.CrossfadeBGM(SoundType.BgMarket, 1f);
-    }
-    public void PlayOutHomeBGM()
-    {
-        SoundManager.instance.CrossfadeBGM(SoundType.BgOutHome, 1f);
-    }
-    public void PlayBgNightBGM()
-    {
-        SoundManager.instance.CrossfadeBGM(SoundType.BgNight, 1f);
-    }
-    public void PlayBgInHomeBGM()
-    {
-        SoundManager.instance.CrossfadeBGM(SoundType.BgInHome, 1f);
-    }
-    public void InBuildBGM()
-    {
-        SoundManager.instance.CrossfadeBGM(SoundType.BgInBuild, 1f);
-    }
+    public void Dialouge1Day1() => PlaySound(SoundType.Dialouge1Day1);
+    public void Dialouge2Day1() => PlaySound(SoundType.Dialouge2Day1);
+    public void Dialouge3Day1() => PlaySound(SoundType.Dialouge3Day1);
+    public void Dialouge4Day1() => PlaySound(SoundType.Dialouge4Day1);
+    public void Dialouge5Day1() => PlaySound(SoundType.Dialouge5Day1);
+    public void Dialouge6Day1() => PlaySound(SoundType.Dialouge6Day1);
+    public void Dialouge7Day1() => PlaySound(SoundType.Dialouge7Day1);
+    public void Dialouge8Day1() => PlaySound(SoundType.Dialouge8Day1);
+    public void Dialouge9Day1() => PlaySound(SoundType.Dialouge9Day1);
+    public void Dialouge10Day1() => PlaySound(SoundType.Dialouge10Day1);
+    public void Dialouge11Day1() => PlaySound(SoundType.Dialouge11Day1);
+    public void Dialouge12Day1() => PlaySound(SoundType.Dialouge12Day1);
+    public void Dialouge13Day1() => PlaySound(SoundType.Dialouge13Day1);
+    public void Dialouge14Day1() => PlaySound(SoundType.Dialouge14Day1);
+    public void Dialouge3Day2() => PlaySound(SoundType.Dialouge3Day2);
+    public void Dialouge4Day2() => PlaySound(SoundType.Dialouge4Day2);
+    public void Dialouge5Day2() => PlaySound(SoundType.Dialouge5Day2);
+    public void Dialouge6Day2() => PlaySound(SoundType.Dialouge6Day2);
+    public void Dialouge7Day2() => PlaySound(SoundType.Dialouge7Day2);
+
+    public void Dialouge1Day3() => PlaySound(SoundType.Dialouge1Day3);
+    public void Dialouge2Day3() => PlaySound(SoundType.Dialouge2Day3);
+    public void Dialouge3Day3() => PlaySound(SoundType.Dialouge3Day3);
+    public void Dialouge4Day3() => PlaySound(SoundType.Dialouge4Day3);
+    public void Dialouge5Day3() => PlaySound(SoundType.Dialouge5Day3);
+    public void Dialouge6Day3() => PlaySound(SoundType.Dialouge6Day3);
+    public void Dialouge7Day3() => PlaySound(SoundType.Dialouge7Day3);
+    public void Dialouge8Day3() => PlaySound(SoundType.Dialouge8Day3);
+    
+    public void PlayMarketBGM() => PlayBackgroundMusic(SoundType.BgMarket);
+    public void PlayOutHomeBGM() => PlayBackgroundMusic(SoundType.BgOutHome);
+    public void PlayBgNightBGM() => PlayBackgroundMusic(SoundType.BgNight);
+    public void PlayBgInHomeBGM() => PlayBackgroundMusic(SoundType.BgInHome);
+    public void InBuildBGM() => PlayBackgroundMusic(SoundType.BgInBuild);
     public void StopAllSoundsInCutScene()
     {
         SoundManager.StopAllSounds();
