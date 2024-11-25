@@ -1,19 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
-
-[System.Serializable]
-public class SceneVideoMapping
-{
-    [Tooltip("Name of the scene this video is associated with.")]
-    public string sceneName;
-
-    [Tooltip("Video clip for this specific scene.")]
-    public VideoClip videoClip;
-}
 
 public class TutorialVideoManager : MonoBehaviour
 {
@@ -31,6 +22,8 @@ public class TutorialVideoManager : MonoBehaviour
     [SerializeField] private Button replayButton;
     [Tooltip("Button to skip the tutorial")] 
     [SerializeField] private Button skipButton;
+    [Tooltip("Tutorial Text")] 
+    [SerializeField] private TMP_Text tutorialText;
 
     #endregion
     #region Unity Lifecycle
@@ -110,8 +103,9 @@ public class TutorialVideoManager : MonoBehaviour
     {
         foreach (var tutorialScene in tutorialScenes)
         {
-            if (tutorialScene.sceneName == sceneName)
-                return tutorialScene.videoClip;
+            if (tutorialScene.sceneName != sceneName) continue;
+            tutorialText.text = tutorialScene.tutorialText;
+            return tutorialScene.videoClip;
         }
         return null;
     }
@@ -142,4 +136,7 @@ public class TutorialSceneData
 
     [Tooltip("The video clip associated with this scene.")]
     public VideoClip videoClip;
+    
+    [Tooltip("tutorial text")] 
+    public string tutorialText;
 }

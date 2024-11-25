@@ -20,7 +20,7 @@ public class spawnPointdown : MonoBehaviour
         GameManager.Instance.SetScoreTextActive(false);
         StartCoroutine(itemSpawn());
     }
-    
+
     IEnumerator itemSpawn()
     {
         while (!timer.isGameOver)

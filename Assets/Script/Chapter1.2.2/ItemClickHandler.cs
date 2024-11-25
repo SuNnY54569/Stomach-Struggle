@@ -8,20 +8,20 @@ public class ItemClickHandler : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
         if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax) return;
-
-        if (gameObject.CompareTag("GoodVegetable"))
-        {
-            Destroy(gameObject);
-        }
         else if (gameObject.CompareTag("BadVegetable"))
         {
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.DecreaseHealth(1);
             }
-            Destroy(gameObject);
         }
         
+        LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
@@ -32,6 +32,11 @@ public class ItemClickHandler : MonoBehaviour
             GameManager.Instance.DecreaseHealth(1);
         }
 
-        Destroy(this.gameObject);
+        LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
     }
 }

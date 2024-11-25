@@ -38,12 +38,16 @@ public class WashHandManager : MonoBehaviour
     [SerializeField, Tooltip("Start Button")]
     private GameObject startButton;
 
+    [SerializeField, Tooltip("Hand Gameobject")]
+    private GameObject hand;
+    
     #endregion
     
     #region Private Fields
 
     private List<GameObject> startPositions = new List<GameObject>();
     private bool isBlinking = false;
+    private bool isAppear;
 
     #endregion
 
@@ -59,6 +63,7 @@ public class WashHandManager : MonoBehaviour
             Destroy(gameObject);
         }
         
+        UITransitionUtility.Instance.Initialize(startButton, Vector2.zero);
         GameManager.Instance.SetScoreTextActive(false);
     }
 
@@ -70,7 +75,15 @@ public class WashHandManager : MonoBehaviour
 
     private void Update()
     {
-        startButton.SetActive(GameManager.Instance.tutorialPanel.activeSelf != true);
+        if (!GameManager.Instance.tutorialPanel.activeSelf && !isAppear)
+        {
+            UITransitionUtility.Instance.PopUp(startButton);
+            hand.SetActive(true);
+            hand.transform.localScale = Vector3.zero;
+            LeanTween.scale(hand, new Vector3(0.64f,0.64f,0.64f), 0.5f)
+                .setEase(LeanTweenType.easeOutBack);
+            isAppear = true;
+        }
         HandleObjectBlinking();
     }
     
@@ -80,7 +93,7 @@ public class WashHandManager : MonoBehaviour
     public void StartGame()
     {
         if (GameManager.Instance.isGamePaused) return;
-
+        
         if (positions.Count != objects.Count)
         {
             Debug.LogError("The number of positions and objects must be equal.");
@@ -97,6 +110,17 @@ public class WashHandManager : MonoBehaviour
             StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
         }
 
+        UITransitionUtility.Instance.PopDown(startButton);
+        
+        centralImage.SetActive(true);
+        centralImage.transform.localScale = Vector3.zero;
+        LeanTween.scale(centralImage, new Vector3(0.25f,0.25f,0.25f), 0.5f)
+            .setEase(LeanTweenType.easeOutBack);
+        
+        LeanTween.scale(hand, Vector3.zero, 0.5f)
+            .setEase(LeanTweenType.easeInBack)
+            .setOnComplete(() => { hand.SetActive(false); });
+        
         SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
         centralAnimator = centralImage.GetComponent<Animator>();
     }
