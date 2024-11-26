@@ -122,11 +122,26 @@ public class FoodCooking : MonoBehaviour
     public void FlipFood()
     {
         isTopSideCooking = !isTopSideCooking;
-        spriteRenderer.flipY = !spriteRenderer.flipY;
         cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
         progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
+        float originalY = transform.position.y;
+        float bounceHeight = 0.2f;
+        float bounceDuration = 0.2f;
+        float halfwayDuration = bounceDuration / 2f;
+
+        // Move up
+        LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration)
+            .setEase(LeanTweenType.easeOutQuad)
+            .setOnComplete(() =>
+            {
+                spriteRenderer.flipY = !spriteRenderer.flipY;
+                
+                LeanTween.moveY(gameObject, originalY, halfwayDuration)
+                    .setEase(LeanTweenType.easeInQuad);
+            });
         SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
     }
+    
 
     public void StartCooking()
     {
@@ -171,7 +186,7 @@ public class FoodCooking : MonoBehaviour
     public void PlaceOnTrash()
     {
         StopCooking();
-        Destroy(gameObject);
+        PopDownFood();
     }
     
     private void HandleUndercooked()
@@ -194,5 +209,15 @@ public class FoodCooking : MonoBehaviour
     public bool IsBottomSideCooked() => bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime;
     public bool IsTopSideOvercooked() => topSideCookingTimer >= overcookedTime;
     public bool IsBottomSideOvercooked() => bottomSideCookingTimer >= overcookedTime;
+
+    private void PopDownFood()
+    {
+        LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
+    }
     
 }

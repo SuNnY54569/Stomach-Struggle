@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -22,6 +23,7 @@ public class LevelSettings
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    
     public bool isGamePaused;
     public bool isBlurEnabled;
     
@@ -76,12 +78,24 @@ public class GameManager : MonoBehaviour
 
     [SerializeField, Tooltip("Panel to display pause menu")]
     private GameObject pausePanel;
+
+    [SerializeField, Tooltip("setting panel")]
+    private GameObject settingPanel;
+
+    public GameObject pauseButton;
+
+    [SerializeField] private GameObject normalPause;
+
+    [SerializeField] private GameObject cutScenePause;
+    
+    [SerializeField] private List<GameObject> uiPanels;
     
     #endregion
 
     #region Tutorial Settings
     
-    [Header("Tutorial")] [SerializeField, Tooltip("Panel to display Tutorial when scene start")]
+    [Header("Tutorial")] 
+    [SerializeField, Tooltip("Panel to display Tutorial when scene start")] 
     public GameObject tutorialPanel;
 
     [SerializeField] public GameObject gameplayPanel;
@@ -111,30 +125,31 @@ public class GameManager : MonoBehaviour
     #endregion
     
     #region Scene Management
+
+    public enum SceneCategory { Gameplay, Cutscene, Test, Summary, StartScene}
+
+    [Header("Scenes to Deactivate object")]
     
-    [Header("Scenes to Deactivate GameManager")]
-    [SerializeField, Tooltip("List of scenes where GameManager should be deactivated.")]
-    private List<string> scenesToDeactivate;
+    [Header("Scene Categories")]
+    [SerializeField] private List<string> gameplayScenes;
+    [SerializeField] private List<string> cutScenes;
+    [SerializeField] private List<string> testScenes;
+    [SerializeField] private List<string> summaryScenes;
     
     [SerializeField, Tooltip("Objects to deactivate in certain scenes.")]
     private List<GameObject> objectsToDeactivate;
+    
+    private SceneCategory currentSceneCategory;
     
     #endregion
     
     #region Post Processing Effects
     
     [Header("Post Processing")]
-    [SerializeField, Tooltip("The PostProcessVolume used for visual effects.")]
-    private PostProcessVolume volume;
-    
-    [SerializeField, Tooltip("Duration of screen fade when taking damage.")]
-    private float fadeDuration = 0.3f;
-    
-    [SerializeField, Tooltip("The intensity of the camera shake on damage.")]
-    private float shakeIntensity = 0.1f;
-    
-    [SerializeField, Tooltip("Current intensity for visual effects.")]
-    private float intensity;
+    [SerializeField] private PostProcessVolume volume;
+    [SerializeField] private float fadeDuration = 0.3f;
+    [SerializeField] private float shakeIntensity = 0.1f;
+    [SerializeField] private float intensity;
     
     private float initialIntensity;
     private Vignette _vignette;
@@ -156,6 +171,9 @@ public class GameManager : MonoBehaviour
     public int postTestScore;
     
     #endregion
+
+    [Header("Win Heart")]
+    [SerializeField] private Image heartFill; 
     
     #region Unity Lifecycle
     private void Awake()
@@ -169,68 +187,80 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
-        if (volume.profile.TryGetSettings<Vignette>(out _vignette))
-        {
-            _vignette.enabled.Override(false);
-        }
-        else
-        {
-            Debug.LogError("Vignette effect not found");
-        }
-
-        if (volume.profile.TryGetSettings<DepthOfField>(out _depthOfField))
-        {
-            _depthOfField.enabled.Override(false);
-        }
-        
-        if (volume.profile.TryGetSettings<ColorGrading>(out _colorGrading))
-        {
-            _colorGrading.enabled.Override(false);
-        }
+        SetupPostProcessing();
     }
     
     private void Start()
     {
+        InitializeAllPanel();
         initialIntensity = intensity;
         currentHealth = maxHealth;
         UpdateHeartsUI();
+        SoundManager.instance.UpdateLevelBGM();
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        SoundManager.instance.UpdateLevelBGM();
         SetMaxScoreForLevel(scene.name);
+        UITransitionUtility.Instance.MoveIn(gameplayPanel);
         
+        currentSceneCategory = DetermineSceneCategory(scene.name);
+        
+        bool isGameplayScene = currentSceneCategory == SceneCategory.Gameplay;
         foreach (var obj in objectsToDeactivate)
-        {
-            obj.SetActive(!scenesToDeactivate.Contains(scene.name));
-        }
+            obj.SetActive(isGameplayScene);
+
+        normalPause.SetActive(isGameplayScene);
+        cutScenePause.SetActive(!isGameplayScene);
+
+        pauseButton.SetActive(
+            currentSceneCategory is SceneCategory.Gameplay or SceneCategory.Cutscene or SceneCategory.Test
+        );
         
-        if (tutorialVideoManager != null)
+        SetupTutorial(scene.name);
+    }
+    
+    public SceneCategory DetermineSceneCategory(string sceneName)
+    {
+        if (gameplayScenes.Contains(sceneName))
+            return SceneCategory.Gameplay;
+        if (cutScenes.Contains(sceneName))
+            return SceneCategory.Cutscene;
+        if (testScenes.Contains(sceneName))
+            return SceneCategory.Test;
+        if (summaryScenes.Contains(sceneName))
+            return SceneCategory.Summary;
+
+        // Default category
+        return SceneCategory.StartScene;
+    }
+    
+    private void SetupTutorial(string sceneName)
+    {
+        if (tutorialVideoManager == null) return;
+
+        VideoClip videoClip = tutorialVideoManager.GetVideoForScene(sceneName);
+        if (videoClip != null)
         {
-            VideoClip videoClip = tutorialVideoManager.GetVideoForScene(scene.name);
-            if (videoClip != null)
+            tutorialVideoManager.SetupVideoForScene(sceneName);
+            UITransitionUtility.Instance.MoveIn(tutorialPanel);
+            UITransitionUtility.Instance.MoveOut(gameplayPanel);
+            tutorialVideoManager.StartVideo();
+            PauseGame();
+        }
+        else
+        {
+            Debug.Log("No Video");
+            tutorialPanel.SetActive(false);
+            if (isGamePaused)
             {
-                tutorialVideoManager.SetupVideoForScene(scene.name);
-                tutorialVideoManager.StartVideo();
-                tutorialPanel.SetActive(true);
-                gameplayPanel.gameObject.SetActive(false);
                 PauseGame();
-            }
-            else
-            {
-                Debug.Log("No Video");
-                tutorialPanel.SetActive(false);
-                if (isGamePaused)
-                {
-                    PauseGame();
-                }
             }
         }
     }
@@ -240,7 +270,7 @@ public class GameManager : MonoBehaviour
     #region Health Management
     public void DecreaseHealth(int amount)
     {
-        currentHealth -= amount;
+        currentHealth = Mathf.Max(0, currentHealth - amount);
         UpdateHeartsUI();
         SoundManager.PlaySound(SoundType.Hurt, VolumeType.SFX);
 
@@ -271,7 +301,7 @@ public class GameManager : MonoBehaviour
 
         while (elapsedTime < fadeDuration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             intensity = Mathf.Lerp(initialIntensity, 0, elapsedTime / fadeDuration);
             _vignette.intensity.Override(intensity);
 
@@ -291,10 +321,7 @@ public class GameManager : MonoBehaviour
     {
         scoreValue += amount;
         UpdateScoreText();
-        if (scoreValue >= scoreMax)
-        {
-            WinGame();
-        }
+        if (scoreValue >= scoreMax) WinGame();
     }
 
     public int GetScore()
@@ -304,11 +331,10 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScoreText()
     {
-        if (scoreText != null)
-            scoreText.text = scoreValue + $"/{scoreMax}";
+        scoreText.text = $"{scoreValue}/{scoreMax}";
     }
-    
-    public void ResetScore()
+
+    private void ResetScore()
     {
         scoreValue = 0;
         UpdateScoreText();
@@ -316,17 +342,8 @@ public class GameManager : MonoBehaviour
     
     private void SetMaxScoreForLevel(string levelName)
     {
-        foreach (LevelSettings settings in levelSettings)
-        {
-            if (settings.levelName == levelName)
-            {
-                scoreMax = settings.maxScore;
-                return;
-            }
-        }
-        
-        //Debug.Log($"Max score for {levelName} not set. Using default.");
-        scoreMax = 3;
+        var level = levelSettings.FirstOrDefault(l => l.levelName == levelName);
+        scoreMax = level?.maxScore ?? 3;
     }
     #endregion
     
@@ -335,8 +352,8 @@ public class GameManager : MonoBehaviour
     {
         ResetScore();
         SoundManager.PlaySound(SoundType.Lose,VolumeType.SFX);
-        gameplayPanel.SetActive(false);
-        gameOverPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveOut(gameplayPanel);
+        UITransitionUtility.Instance.PopUp(gameOverPanel);
         PauseGame();
     }
 
@@ -344,10 +361,11 @@ public class GameManager : MonoBehaviour
     {
         totalHeart += maxHealth;
         totalHeartLeft += currentHealth;
+        UpdateHeartFill();
         
         SoundManager.PlaySound(SoundType.Win,VolumeType.SFX);
-        gameplayPanel.SetActive(false);
-        winPanel.SetActive(true);
+        UITransitionUtility.Instance.MoveOut(gameplayPanel);
+        UITransitionUtility.Instance.PopUp(winPanel);
         PauseGame();
     }
 
@@ -356,6 +374,7 @@ public class GameManager : MonoBehaviour
         ResetHealth();
         ResetScore();
         ResetAllTotalHeart();
+        MoveAllPanelOut();
         SceneManagerClass.Instance.LoadMenuScene();
         StartCoroutine(waitForSecond(button));
     }
@@ -364,6 +383,7 @@ public class GameManager : MonoBehaviour
     {
         ResetHealth();
         ResetScore();
+        MoveAllPanelOut();
         SceneManagerClass.Instance.LoadNextScene();
         StartCoroutine(waitForSecond(button));
     }
@@ -378,7 +398,7 @@ public class GameManager : MonoBehaviour
         button.interactable = true;
     }
 
-    public void ResetHealth()
+    private void ResetHealth()
     {
         currentHealth = maxHealth;
         UpdateHeartsUI();
@@ -389,6 +409,14 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         isGamePaused = !isGamePaused;
+        if (isGamePaused)
+        {
+            SoundManager.PauseAllSounds();
+        }
+        else
+        {
+            SoundManager.ResumeAllSounds();
+        }
         BlurBackGround();
         Time.timeScale = isGamePaused ? 0f : 1f;
     }
@@ -400,9 +428,9 @@ public class GameManager : MonoBehaviour
 
     public void CloseAllPanel()
     {
-        winPanel.SetActive(false);
-        gameOverPanel.SetActive(false);
-        pausePanel.SetActive(false);
+        UITransitionUtility.Instance.MoveOut(winPanel);
+        UITransitionUtility.Instance.MoveOut(gameOverPanel);
+        UITransitionUtility.Instance.MoveOut(pausePanel);
     }
 
     public void SetMaxScore(int maxScore)
@@ -447,6 +475,7 @@ public class GameManager : MonoBehaviour
     {
         ResetHealth();
         ResetScore();
+        MoveAllPanelOut();
         SceneManagerClass.Instance.ReloadScene();
         StartCoroutine(waitForSecond(button));
     }
@@ -458,5 +487,62 @@ public class GameManager : MonoBehaviour
         _colorGrading.enabled.Override(isBlurEnabled);
     }
     
+    private void SetupPostProcessing()
+    {
+        if (volume.profile.TryGetSettings(out _vignette))
+            _vignette.enabled.Override(false);
+
+        if (volume.profile.TryGetSettings(out _depthOfField))
+            _depthOfField.enabled.Override(false);
+
+        if (volume.profile.TryGetSettings(out _colorGrading))
+            _colorGrading.enabled.Override(false);
+    }
+
+    private void UpdateHeartFill()
+    {
+        float rawFill = (float)currentHealth / maxHealth;
+        heartFill.fillAmount = Mathf.Round(rawFill * 10) / 10f;
+    }
+
+    private void InitializeAllPanel()
+    {
+        foreach (GameObject panel in uiPanels)
+        {
+            Vector2 targetPosition = new Vector2(0, 0);
+            UITransitionUtility.Instance.Initialize(panel, targetPosition);
+        }
+    }
+
+    public void MovePanelIn(GameObject panel)
+    {
+        UITransitionUtility.Instance.MoveIn(panel);
+    }
+
+    public void MovePanelOut(GameObject panel)
+    {
+        UITransitionUtility.Instance.MoveOut(panel);
+    }
+
+    public void PopUpButton(GameObject button)
+    {
+        UITransitionUtility.Instance.PopUp(button);
+    }
+    
+    public void PopDownButton(GameObject button)
+    {
+        UITransitionUtility.Instance.PopDown(button);
+    }
+    
+    public void MoveAllPanelOut()
+    {
+        UITransitionUtility.Instance.PopDown(winPanel);
+        UITransitionUtility.Instance.PopDown(gameOverPanel);
+        UITransitionUtility.Instance.MoveOut(pausePanel);
+        UITransitionUtility.Instance.MoveOut(tutorialPanel);
+        UITransitionUtility.Instance.MoveOut(gameplayPanel);
+        UITransitionUtility.Instance.MoveOut(settingPanel);
+    }
+
     #endregion
 }

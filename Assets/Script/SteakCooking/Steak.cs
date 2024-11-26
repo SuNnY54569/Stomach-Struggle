@@ -212,14 +212,21 @@ public class Steak : MonoBehaviour
     {
         isTopSideCooking = !isTopSideCooking;
         SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
-        if (isTopSideCooking)
-        {
-            gameObject.transform.rotation = new Quaternion(0f, 0, 0,0 );
-        }
-        else
-        {
-            gameObject.transform.rotation = new Quaternion(180f, 0, 0,0 );
-        }
+        float originalY = transform.position.y;
+        float bounceHeight = 0.2f;
+        float bounceDuration = 0.2f;
+        float halfwayDuration = bounceDuration / 2f;
+
+        // Move up
+        LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration)
+            .setEase(LeanTweenType.easeOutQuad)
+            .setOnComplete(() =>
+            {
+                spriteRenderer.flipY = !spriteRenderer.flipY;
+                
+                LeanTween.moveY(gameObject, originalY, halfwayDuration)
+                    .setEase(LeanTweenType.easeInQuad);
+            });
     }
     
     public void ResetPosition()
@@ -292,7 +299,12 @@ public class Steak : MonoBehaviour
     
     private void DestroySteak()
     {
-        Destroy(gameObject);
+        LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
     }
     
     public float GetTotalCookingProgress()

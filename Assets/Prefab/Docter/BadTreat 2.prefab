@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4575675131494155740}
   - component: {fileID: 5178229070068887227}
   - component: {fileID: 6968167381515844671}
-  - component: {fileID: 582570744681776213}
+  - component: {fileID: 6891403199303445869}
   m_Layer: 0
   m_Name: BadTreat 2
   m_TagString: BadTreat
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.99, y: -0.059246458, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 230766663, guid: cbfdf2146e890e8458a0877ba56ca29b, type: 3}
+  m_Sprite: {fileID: 516553701, guid: 846e8a70add591745acef580746a5bc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bddbd29398a3b40a9cbe7b606dbf89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &582570744681776213
+--- !u!61 &6891403199303445869
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,12 +134,12 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 12.04, y: 4.89}
+    oldSize: {x: 18.071936, y: 25.849998}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12.04, y: 4.89}
+  m_Size: {x: 18.071936, y: 25.849998}
   m_EdgeRadius: 0

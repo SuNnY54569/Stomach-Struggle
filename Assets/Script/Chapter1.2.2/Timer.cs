@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,10 +10,23 @@ public class Timer : MonoBehaviour
     [SerializeField] private float remainingTime;
     [SerializeField] private GameObject clockGameObject;
     public bool isGameOver = false;
+    private bool isPopDown;
+
+    private Vector3 initialClockScale;
+
+    private void Awake()
+    {
+        isPopDown = false;
+        initialClockScale = clockGameObject.transform.localScale;
+    }
 
     private void Start()
     {
         remainingTime = 30f;
+        clockGameObject.SetActive(true); // Ensure the panel is active
+        clockGameObject.transform.localScale = Vector3.zero; // Start from zero scale
+        LeanTween.scale(clockGameObject, initialClockScale, 0.5f)
+            .setEase(LeanTweenType.easeOutBack);
     }
 
     private void Update()
@@ -45,5 +59,19 @@ public class Timer : MonoBehaviour
             timerText.text = string.Format("{00}", seconds);
         }
 
+        switch (isGameOver)
+        {
+            case true when isPopDown:
+                return;
+            case true:
+                LeanTween.scale(clockGameObject, Vector3.zero, 0.5f)
+                    .setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true)
+                    .setOnComplete(() => { clockGameObject.SetActive(false); });
+                isPopDown = true;
+                break;
+            case false:
+                clockGameObject.SetActive(!GameManager.Instance.isGamePaused);
+                break;
+        }
     }
 }

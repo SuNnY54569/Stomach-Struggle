@@ -12,78 +12,75 @@ EditorBuildSettings:
     path: Assets/Scenes/PreTest.unity
     guid: 0fa932fb64de15543aa0bd8226fb0c9f
   - enabled: 1
-    path: Assets/Scenes/CutSceneDay1.unity
+    path: Assets/Scenes/CutScene/CutSceneDay1.unity
     guid: bcef2e6efd0a1984297cdc6482395eb6
   - enabled: 1
-    path: Assets/Scenes/Claw machine.unity
+    path: Assets/Scenes/Gameplay/Claw machine.unity
     guid: d3c55d205514bb74fa1701f2ce0db307
   - enabled: 1
-    path: Assets/Scenes/GoVegShop.unity
+    path: Assets/Scenes/CutScene/GoVegShop.unity
     guid: 8663bb4392bff12478862f14099529e0
   - enabled: 1
-    path: Assets/Scenes/Vegetable.unity
+    path: Assets/Scenes/Gameplay/Vegetable.unity
     guid: 5d47b7d36a7ea42439f33cae710aa883
   - enabled: 1
-    path: Assets/Scenes/GoHomeCutScene.unity
+    path: Assets/Scenes/CutScene/GoHomeCutScene.unity
     guid: c0d625ee7669f9341ae5ebcada114c5f
   - enabled: 1
-    path: Assets/Scenes/WashHand.unity
+    path: Assets/Scenes/Gameplay/WashHand.unity
     guid: 32317b407e1071a4a9d2e2ee74461712
   - enabled: 1
-    path: Assets/Scenes/FinisheWaashing.unity
+    path: Assets/Scenes/CutScene/FinisheWaashing.unity
     guid: 5ecf08471007c524fa7e8d9d8d39a1bf
   - enabled: 1
-    path: Assets/Scenes/SteakCooking.unity
+    path: Assets/Scenes/Gameplay/SteakCooking.unity
     guid: 7e4288e108ad9aa4bbd670c9337f9d77
   - enabled: 1
-    path: Assets/Scenes/friendHomecutScene.unity
+    path: Assets/Scenes/CutScene/friendHomecutScene.unity
     guid: 33a26f20f7728f141bb40e440fe7e222
   - enabled: 1
-    path: Assets/Scenes/Twohours.unity
+    path: Assets/Scenes/Gameplay/Twohours.unity
     guid: c67ba6f468aeb3f438066e290b391e98
   - enabled: 1
-    path: Assets/Scenes/Sleep1.unity
+    path: Assets/Scenes/CutScene/Sleep1.unity
     guid: a6173988920d8644d8393365ce0302fb
   - enabled: 1
-    path: Assets/Scenes/Summary1.unity
+    path: Assets/Scenes/Summary/Summary1.unity
     guid: 039487725772e1d42998eb2676d24516
   - enabled: 1
-    path: Assets/Scenes/CutSceneDay2.unity
+    path: Assets/Scenes/CutScene/CutSceneDay2.unity
     guid: a10dc29cf14467c4d907acebb458c53d
   - enabled: 1
-    path: Assets/Scenes/Grill.unity
+    path: Assets/Scenes/Gameplay/Grill.unity
     guid: d04b7b2c99f2a3046a7ccc407366da5c
   - enabled: 1
-    path: Assets/Scenes/ChooseWater.unity
+    path: Assets/Scenes/Gameplay/ChooseWater.unity
     guid: 67a5433c6405f914183126d5c6f207b9
   - enabled: 1
-    path: Assets/Scenes/GoHomeAndSleep.unity
+    path: Assets/Scenes/CutScene/GoHomeAndSleep.unity
     guid: d367521bf5c2e114bb0f58bde3f16700
   - enabled: 1
-    path: Assets/Scenes/Summary2.unity
+    path: Assets/Scenes/Summary/Summary2.unity
     guid: 093914d3a354789498154f2274e7af87
   - enabled: 1
-    path: Assets/Scenes/GoHospital.unity
+    path: Assets/Scenes/CutScene/GoHospital.unity
     guid: dfead498a0c1f0d4d928e6ae8983a880
   - enabled: 1
-    path: Assets/Scenes/Docter.unity
+    path: Assets/Scenes/Gameplay/Docter.unity
     guid: 661042fb14c25844abad534f9cb4f07f
   - enabled: 1
-    path: Assets/Scenes/WaitingForDoc.unity
+    path: Assets/Scenes/CutScene/WaitingForDoc.unity
     guid: ee59f12f8f3154d41b98dcf75e1c15e0
   - enabled: 1
-    path: Assets/Scenes/Docter 2.unity
+    path: Assets/Scenes/Gameplay/Docter 2.unity
     guid: a0663bff2a1b4454d80fad0b49089619
   - enabled: 1
-    path: Assets/Scenes/FinishedTreatment.unity
-    guid: 060d632c1fa9ee94b846c3c5f403aaad
-  - enabled: 1
-    path: Assets/Scenes/Summary3.unity
+    path: Assets/Scenes/Summary/Summary3.unity
     guid: d1a77d84ddf44f749807e3536651297a
   - enabled: 1
     path: Assets/Scenes/PostTest.unity
     guid: 1592169ca02f9724d9194f5dc98943a9
   - enabled: 1
-    path: Assets/Scenes/Final Summary.unity
+    path: Assets/Scenes/Summary/Final Summary.unity
     guid: e68a764f4527a364bb0c9e0cff94bbe9
   m_configObjects: {}

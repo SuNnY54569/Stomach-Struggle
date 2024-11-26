@@ -35,6 +35,7 @@ public class DragFood : MonoBehaviour
     private bool wasOnGrillBeforeDrag;
     private FoodCooking foodCooking;
     private Tools.ToolType currentTool;
+    private Vector3 initialScale;
     #endregion
 
     private void Awake()
@@ -47,6 +48,7 @@ public class DragFood : MonoBehaviour
         foodCooking = GetComponent<FoodCooking>();
         mainCamera = Camera.main;
         startPosition = transform.position;
+        initialScale = transform.localScale;
     }
     
     private void Update()
@@ -80,6 +82,7 @@ public class DragFood : MonoBehaviour
             isDragging = true;
             wasOnGrillBeforeDrag = isOnGrill;
             spriteRenderer.enabled = true;
+            PopUpFood();
             mainCollider.enabled = true;
             spawnCollider.enabled = false;
             foodCooking.StopCooking();
@@ -247,6 +250,15 @@ public class DragFood : MonoBehaviour
         }
 
         return true;
+    }
+    
+    private void PopUpFood()
+    {
+        gameObject.SetActive(true); // Ensure the panel is active
+        gameObject.transform.localScale = Vector3.zero; // Start from zero scale
+        LeanTween.scale(gameObject, initialScale, 0.2f)
+            .setEase(LeanTweenType.easeOutBack) // Set easing type
+            .setIgnoreTimeScale(true); // Use unscaled time
     }
     #endregion
 }

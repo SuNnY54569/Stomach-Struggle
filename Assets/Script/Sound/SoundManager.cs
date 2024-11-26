@@ -294,14 +294,14 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         // Initialize the level tracking and play BGM for the current level
-        UpdateLevelBGM();
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //UpdateLevelBGM();
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDestroy()
     {
         // Unsubscribe from the event when the object is destroyed
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -310,7 +310,7 @@ public class SoundManager : MonoBehaviour
         UpdateLevelBGM();
     }
 
-    private void UpdateLevelBGM()
+    public void UpdateLevelBGM()
     {
         string newLevel = SceneManager.GetActiveScene().name;
 
@@ -358,6 +358,15 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public static void PauseAllSounds()
+    {
+        instance.audioSources[VolumeType.Dialog].Pause();
+    }
+
+    public static void ResumeAllSounds()
+    {
+        instance.audioSources[VolumeType.Dialog].UnPause();
+    }
 
     #endregion
 }

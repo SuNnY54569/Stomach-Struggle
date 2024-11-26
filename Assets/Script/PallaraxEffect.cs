@@ -12,6 +12,6 @@ public class PallaraxEffect : MonoBehaviour
 
     private void Update()
     {
-        _image.uvRect = new Rect(_image.uvRect.position + new Vector2(x, y) * Time.deltaTime, _image.uvRect.size);
+        _image.uvRect = new Rect(_image.uvRect.position + new Vector2(x, y) * Time.unscaledDeltaTime, _image.uvRect.size);
     }
 }

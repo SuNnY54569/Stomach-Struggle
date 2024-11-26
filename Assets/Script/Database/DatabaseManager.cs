@@ -23,6 +23,10 @@ public class DatabaseManager : MonoBehaviour
     private TMP_InputField nameInput;
     [SerializeField, Tooltip("Button for submit the player name")]
     private Button submitButton;
+    [SerializeField, Tooltip("Enter name panel")]
+    private GameObject enterNamePanel;
+    [SerializeField, Tooltip("Player Data panel")]
+    private GameObject dataPanel;
     #endregion
     
     #region Private Fields
@@ -32,8 +36,16 @@ public class DatabaseManager : MonoBehaviour
     #endregion
     
     #region Unity Lifecycle
+
+    private void Awake()
+    {
+        UITransitionUtility.Instance.Initialize(enterNamePanel, enterNamePanel.transform.position);
+        UITransitionUtility.Instance.Initialize(dataPanel, enterNamePanel.transform.position);
+    }
+
     void Start()
     {
+        UITransitionUtility.Instance.PopUp(enterNamePanel);
         userID = SystemInfo.deviceUniqueIdentifier;
         submitButton.interactable = false;
         nameInput.onValueChanged.AddListener(OnNameInputChanged);
@@ -182,7 +194,22 @@ public class DatabaseManager : MonoBehaviour
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         GameManager.Instance.ResetTotalHeart();
         GameManager.Instance.ResetPrePostTest();
+        UITransitionUtility.Instance.PopDown(dataPanel);
         SceneManagerClass.Instance.LoadMenuScene();
+    }
+
+    public void EnterName()
+    {
+        CreateUser();
+        GetUserInfo();
+        StartCoroutine(switchsPanel());
+    }
+
+    private IEnumerator switchsPanel()
+    {
+        UITransitionUtility.Instance.PopDown(enterNamePanel);
+        yield return new WaitForSeconds(0.5f);
+        UITransitionUtility.Instance.PopUp(dataPanel);
     }
     
     #endregion

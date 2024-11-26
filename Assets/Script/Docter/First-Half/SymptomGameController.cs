@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class SymptomGameController : MonoBehaviour
 {
@@ -24,12 +26,18 @@ public class SymptomGameController : MonoBehaviour
     [SerializeField, Tooltip("Text element to display the current symptom prompt.")]
     private TMP_Text symptomPromptText;
 
+    [SerializeField] private GameObject talkObject;
+
     [SerializeField, Tooltip("Checkboxes for each symptom.")]
     private List<Toggle> symptomCheckboxes;
 
     [SerializeField, Tooltip("Layout group to control the symptom checkbox arrangement.")]
     private VerticalLayoutGroup layoutGroup;
 
+    private void Awake()
+    {
+        UITransitionUtility.Instance.Initialize(talkObject,Vector2.zero);
+    }
 
     private void Start()
     {
@@ -37,7 +45,6 @@ public class SymptomGameController : MonoBehaviour
         SetupSymptoms();
         SetRandomSymptom();
         ShuffleToggles();
-
         // Assign CheckAnswer() to each checkbox's OnValueChanged event
         foreach (Toggle toggle in symptomCheckboxes)
         {
@@ -66,7 +73,7 @@ public class SymptomGameController : MonoBehaviour
         if (activeSymptoms.Count > 0)
         {
             currentSymptom = activeSymptoms[Random.Range(0, activeSymptoms.Count)];
-            symptomPromptText.text = currentSymptom.symptomDescription;
+            StartCoroutine(PopTextObject());
         }
         else
         {
@@ -111,6 +118,7 @@ public class SymptomGameController : MonoBehaviour
         {
             activeSymptoms.Remove(currentSymptom); // Remove matched symptom
             selectedToggle.interactable = false; // Disable toggle
+            UITransitionUtility.Instance.PopDown(talkObject);
             SetRandomSymptom(); // Set the next symptom or end the game
         }
         else
@@ -127,5 +135,12 @@ public class SymptomGameController : MonoBehaviour
         {
             toggle.onValueChanged.RemoveAllListeners();
         }
+    }
+
+    private IEnumerator PopTextObject()
+    {
+        yield return new WaitForSeconds(0.5f);
+        symptomPromptText.text = currentSymptom.symptomDescription;
+        UITransitionUtility.Instance.PopUp(talkObject);
     }
 }
