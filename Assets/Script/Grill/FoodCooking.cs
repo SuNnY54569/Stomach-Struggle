@@ -18,6 +18,11 @@ public class FoodCooking : MonoBehaviour
     public float bottomSideCookingTimer;
     
     public bool isTopSideCooking = true;
+    
+    [SerializeField, Tooltip("Cooldown time in seconds before the food can be flipped again.")]
+    private float flipCooldownDuration = 0.5f; // Example: 2 seconds cooldown
+    private float flipCooldownTimer = 0f;
+    
     private bool isFlipped;
     #endregion
     
@@ -53,6 +58,11 @@ public class FoodCooking : MonoBehaviour
 
     private void Update()
     {
+        if (flipCooldownTimer > 0)
+        {
+            flipCooldownTimer -= Time.deltaTime;
+        }
+        
         if (!isCooking) return;
         
         if (isTopSideCooking)
@@ -121,9 +131,18 @@ public class FoodCooking : MonoBehaviour
     
     public void FlipFood()
     {
+        if (flipCooldownTimer > 0)
+        {
+            Debug.Log("Flip is on cooldown. Please wait.");
+            return;
+        }
+        
         isTopSideCooking = !isTopSideCooking;
         cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
         progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
+        
+        flipCooldownTimer = flipCooldownDuration;
+        
         float originalY = transform.position.y;
         float bounceHeight = 0.2f;
         float bounceDuration = 0.2f;
