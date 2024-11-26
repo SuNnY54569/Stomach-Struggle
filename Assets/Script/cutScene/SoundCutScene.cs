@@ -74,7 +74,21 @@ public class SoundCutScene : MonoBehaviour
     public void Dialouge6Day3() => PlaySound(SoundType.Dialouge6Day3);
     public void Dialouge7Day3() => PlaySound(SoundType.Dialouge7Day3);
     public void Dialouge8Day3() => PlaySound(SoundType.Dialouge8Day3);
-    
+
+    public void NewDiaPhone1() => PlaySound(SoundType.NewDiaPhone1);
+    public void NewDiaPhone2() => PlaySound(SoundType.NewDiaPhone2);
+    public void NewDiaPhone3() => PlaySound(SoundType.NewDiaPhone3);
+    public void NewDocTalk1() => PlaySound(SoundType.NewDocTalk1);
+    public void NewDocTalk2() => PlaySound(SoundType.NewDocTalk2);
+    public void NewDocTalk3() => PlaySound(SoundType.NewDocTalk3);
+    public void NewDocTalk4_1() => PlaySound(SoundType.NewDocTalk4_1);
+    public void NewDocTalk4_2() => PlaySound(SoundType.NewDocTalk4_2);
+    public void NewDocTalk5() => PlaySound(SoundType.NewDocTalk5);
+    public void NewChaTalk1() => PlaySound(SoundType.NewChaTalk1);
+    public void NewChaTalk2() => PlaySound(SoundType.NewChaTalk2);
+    public void NewChaTalk3() => PlaySound(SoundType.NewChaTalk3);
+    public void NewChaTalk4() => PlaySound(SoundType.NewChaTalk4);
+
     public void PlayMarketBGM() => PlayBackgroundMusic(SoundType.BgMarket);
     public void PlayOutHomeBGM() => PlayBackgroundMusic(SoundType.BgOutHome);
     public void PlayBgNightBGM() => PlayBackgroundMusic(SoundType.BgNight);

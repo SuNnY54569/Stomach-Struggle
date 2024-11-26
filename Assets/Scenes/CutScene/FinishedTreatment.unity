@@ -207,8 +207,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1352,6 +1352,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f6ccbaa27265bc7459f273d1b564bf0d, type: 2}
     - {fileID: 11400000, guid: 3366ab049ea16dd4c92202fdd29731b4, type: 2}
     - {fileID: 11400000, guid: 253f2bf3a7dfa5348b13a86630954901, type: 2}
+    - {fileID: 11400000, guid: 48d1c7a36f5a3b5479754551273b6f97, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1359,6 +1360,18 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1438268518}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: NewDocTalk4_1
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1393,6 +1406,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1438268518}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: NewDocTalk5
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1143238247}
@@ -1419,11 +1444,37 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1438268518}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: NewChaTalk4
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1438268517}
           m_TargetAssemblyTypeName: nextScene, Assembly-CSharp
           m_MethodName: LoadNextScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1438268518}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: NewDocTalk4_2
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1463,6 +1514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b845c7e96d10e36498ecbc66f53c8314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSkip: 0
+  skipButton: {fileID: 1601849860}
 --- !u!114 &1438268518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,6 +1528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d9b42b6122e0b4baeea9f10d899fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogCanvas: {fileID: 394457281}
 --- !u!4 &1438268519
 Transform:
   m_ObjectHideFlags: 0

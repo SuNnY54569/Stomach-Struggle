@@ -84,7 +84,20 @@ public enum SoundType
     Dialouge5Day3,
     Dialouge6Day3,
     Dialouge7Day3,
-    Dialouge8Day3
+    Dialouge8Day3,
+    NewDiaPhone1,
+    NewDiaPhone2,
+    NewDiaPhone3,
+    NewDocTalk1,
+    NewDocTalk2,
+    NewDocTalk3,
+    NewDocTalk4_1,
+    NewDocTalk4_2,
+    NewDocTalk5,
+    NewChaTalk1,
+    NewChaTalk2,
+    NewChaTalk3,
+    NewChaTalk4
 }
 
 [Serializable]
