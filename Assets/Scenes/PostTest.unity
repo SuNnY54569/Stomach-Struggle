@@ -1500,6 +1500,8 @@ MonoBehaviour:
   finalscoreText: {fileID: 895569724}
   qNumberText: {fileID: 333293161}
   canvas: {fileID: 762823457}
+  correctionSkipButton: {fileID: 939810801}
+  correctSkipButton: {fileID: 1252578784}
   questionNumber: 0
   currentQuestion: 0
   totalQuestion: 0
