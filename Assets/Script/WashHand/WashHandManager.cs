@@ -52,11 +52,11 @@ public class WashHandManager : MonoBehaviour
     #region Private Fields
 
     private List<GameObject> startPositions = new List<GameObject>();
-    private bool isBlinking = false;
+    private bool isBlinking;
     private bool isAppear;
-    private bool isPopUp;
     private bool isPause;
-    private bool isUnpause;
+    private bool isUnpause = true;
+    private bool isPopUpComplete;
 
     #endregion
 
@@ -295,47 +295,39 @@ public class WashHandManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         UITransitionUtility.Instance.PopUp(startButton);
     }
-
-    private IEnumerator WaitToPop()
-    {
-        yield return new WaitForSeconds(1f);
-        UITransitionUtility.Instance.PopUp(warningText);
-        UITransitionUtility.Instance.PopUp(startButton);
-    }
     
     private void HandlePopUp()
     {
         if (!GameManager.Instance.tutorialPanel.activeSelf && !isAppear)
         {
             StartCoroutine(PopUpUI());
-            isPopUp = true;
             hand.SetActive(true);
+            isPopUpComplete = true;
             hand.transform.localScale = Vector3.zero;
             LeanTween.scale(hand, new Vector3(0.64f, 0.64f, 0.64f), 0.5f)
-                .setEase(LeanTweenType.easeOutBack).setOnComplete((() =>
-                { ;
-                }));
+                .setEase(LeanTweenType.easeOutBack);
             isAppear = true;
         }
     }
     
     private void HandlePauseState()
     {
-        if (GameManager.Instance.isGamePaused && isPopUp)
+        if (GameManager.Instance.isGamePaused && isPopUpComplete)
         {
             if (!isPause)
             {
-                UITransitionUtility.Instance.PopDown(startButton);
-                UITransitionUtility.Instance.PopDown(warningText);
+                UITransitionUtility.Instance.PopDown(startButton,LeanTweenType.easeInBack, 0.2f);
+                UITransitionUtility.Instance.PopDown(warningText,LeanTweenType.easeInBack, 0.2f);
                 isPause = true;
                 isUnpause = false;
             }
         }
-        else if (!GameManager.Instance.isGamePaused && isPopUp)
+        else if (!GameManager.Instance.isGamePaused && isPopUpComplete)
         {
             if (!isUnpause)
             {
-                StartCoroutine(WaitToPop());
+                UITransitionUtility.Instance.PopUp(warningText);
+                UITransitionUtility.Instance.PopUp(startButton);
                 isUnpause = true;
                 isPause = false;
             }

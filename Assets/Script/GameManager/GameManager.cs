@@ -419,8 +419,8 @@ public class GameManager : MonoBehaviour
             // If the game is not paused, pause the game immediately and apply blur.
             isGamePaused = true;
             SoundManager.PauseAllSounds();
-            BlurBackGround();
             Time.timeScale = 0f;
+            BlurBackGround();
         }
     }
 

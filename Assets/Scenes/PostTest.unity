@@ -1502,6 +1502,8 @@ MonoBehaviour:
   canvas: {fileID: 762823457}
   correctionSkipButton: {fileID: 939810801}
   correctSkipButton: {fileID: 1252578784}
+  yesButton: {fileID: 1446919223}
+  noButton: {fileID: 2031781611}
   questionNumber: 0
   currentQuestion: 0
   totalQuestion: 0
