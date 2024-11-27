@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 using Proyecto26;
 using Random = UnityEngine.Random;
 using SimpleJSON;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class TestManager : MonoBehaviour
 {
@@ -42,6 +44,10 @@ public class TestManager : MonoBehaviour
     private TMP_Text qNumberText;
     [SerializeField, Tooltip("Canvas of all panel")]
     private GameObject canvas;
+    [SerializeField, Tooltip("Skip Button")]
+    private GameObject correctionSkipButton;
+    [SerializeField, Tooltip("Skip Button")]
+    private GameObject correctSkipButton;
 
     [Header("Infos")]
     [SerializeField, Tooltip("Current question number")]
@@ -211,6 +217,7 @@ public class TestManager : MonoBehaviour
     {
         score += 1;
         scoreText.text = $"{score} / {totalQuestion}";
+        correctSkipButton.GetComponent<Button>().interactable = true;
         UITransitionUtility.Instance.PopDown(quizPanel, LeanTweenType.easeInBack, 0.25f);
         UITransitionUtility.Instance.PopUp(correctPanel);
     }
@@ -220,6 +227,7 @@ public class TestManager : MonoBehaviour
         IncrementWrongCount();
         corretOrNotText.text = "ผิดนะครับ";
         correctionText.text = QnA[currentQuestion].correction;
+        correctionSkipButton.GetComponent<Button>().interactable = true;
         UITransitionUtility.Instance.PopDown(quizPanel, LeanTweenType.easeInBack, 0.25f);
         UITransitionUtility.Instance.PopUp(correctionPanel);
     }
@@ -259,6 +267,8 @@ public class TestManager : MonoBehaviour
     public void NextQuestion()
     {
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
+        correctionSkipButton.GetComponent<Button>().interactable = false;
+        correctSkipButton.GetComponent<Button>().interactable = false;
         QnA.RemoveAt(currentQuestion);
         UITransitionUtility.Instance.PopUp(quizPanel);
         UITransitionUtility.Instance.PopDown(correctPanel, LeanTweenType.easeInBack, 0.25f);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,8 +23,15 @@ public class UITransitionUtility : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
-    
+
+    private void Start()
+    {
+        Initialize(GameManager.Instance.gameplayPanel,Vector2.zero);
+        Initialize(GameManager.Instance.tutorialPanel,Vector2.zero);
+    }
+
     public void Initialize(GameObject target, Vector2 targetPosition)
     {
         RectTransform rectTransform = target.GetComponent<RectTransform>();
@@ -51,6 +59,8 @@ public class UITransitionUtility : MonoBehaviour
         if (!targetPositions.ContainsKey(target))
         {
             Debug.LogWarning($"[UITransitionUtility] Target position not initialized for {target.name}!");
+            Initialize(target, Vector2.zero);
+            MoveIn(target);
             return;
         }
 

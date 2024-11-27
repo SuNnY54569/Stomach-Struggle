@@ -45,35 +45,9 @@ public class FoodVisual : MonoBehaviour
         bool isTopOvercooked = foodCooking.IsTopSideOvercooked();
         bool isBottomOvercooked = foodCooking.IsBottomSideOvercooked();
         
-        if (isTopOvercooked && isBottomOvercooked)
+        if (isTopOvercooked || isBottomOvercooked)
         {
             spriteRenderer.sprite = overcookedSprite; 
-            return;
-        }
-        
-        if (isTopOvercooked)
-        {
-            if (isBottomCooked) 
-            {
-                spriteRenderer.sprite = isTopCooking ? cookedSprite : overcookedSprite; 
-            }
-            else 
-            {
-                spriteRenderer.sprite = isTopCooking ? rawSprite : overcookedSprite; 
-            }
-            return;
-        }
-        
-        if (isBottomOvercooked)
-        {
-            if (isTopCooked) 
-            {
-                spriteRenderer.sprite = isTopCooking ? overcookedSprite : cookedSprite; 
-            }
-            else 
-            {
-                spriteRenderer.sprite = !isTopCooking ? overcookedSprite : rawSprite; 
-            }
             return;
         }
         

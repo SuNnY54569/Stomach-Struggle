@@ -72,7 +72,10 @@ public class DragFood : MonoBehaviour
         
         if (isOnGrill)
         {
-            foodCooking.FlipFood();
+            if (!foodCooking.IsBottomSideOvercooked() && !foodCooking.IsTopSideOvercooked())
+            {
+                foodCooking.FlipFood();
+            }
             isDragging = true;
             wasOnGrillBeforeDrag = isOnGrill;
             foodCooking.StopCooking();
@@ -116,12 +119,6 @@ public class DragFood : MonoBehaviour
         else
         {
             ResetPosition();
-            if (!hasBeenActivate)
-            {
-                spriteRenderer.enabled = false;
-                mainCollider.enabled = false;
-                spawnCollider.enabled = true;
-            }
         }
         col.enabled = true;
     }
@@ -149,12 +146,6 @@ public class DragFood : MonoBehaviour
                 break;
             default:
                 ResetPosition();
-                if (!hasBeenActivate)
-                {
-                    spriteRenderer.enabled = false;
-                    mainCollider.enabled = false;
-                    spawnCollider.enabled = true;
-                }
 
                 break;
         }
@@ -174,11 +165,8 @@ public class DragFood : MonoBehaviour
         hasBeenActivate = true;
         foodCooking.PlaceOnPlate();
         startPosition = transform.position;
-        if (foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked())
-        {
-            isInteractable = false;
-            Destroy(col);
-        }
+        isInteractable = false;
+        Destroy(col);
     }
 
     private void PlaceOnTrash()
@@ -188,12 +176,31 @@ public class DragFood : MonoBehaviour
 
     private void ResetPosition()
     {
-        transform.position = startPosition;
-        if (wasOnGrillBeforeDrag)
-        {
-            isOnGrill = true;
-            foodCooking.StartCooking();
-        }
+        LeanTween.move(gameObject, startPosition, 0.5f) // 0.5 seconds for the animation
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                if (wasOnGrillBeforeDrag)
+                {
+                    isOnGrill = true;
+                    foodCooking?.StartCooking();
+                    LeanTween.scale(gameObject, initialScale, 0.2f).setEase(LeanTweenType.easeOutBounce);
+                }
+                if (!hasBeenActivate)
+                {
+                    LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+                        .setEase(LeanTweenType.easeOutBack) // Set easing type
+                        .setIgnoreTimeScale(true)
+                        .setOnComplete(() =>
+                        {
+                            spriteRenderer.enabled = false;
+                            mainCollider.enabled = false;
+                            spawnCollider.enabled = true;
+                            transform.localScale = initialScale;
+                        });
+                }
+            });
+        LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
     }
     #endregion
     
@@ -231,6 +238,13 @@ public class DragFood : MonoBehaviour
         }
 
         bool isBothSidesCooked = foodCooking.IsBottomSideCooked() && foodCooking.IsTopSideCooked();
+        
+        bool isOvercooked = foodCooking.IsBottomSideOvercooked() || foodCooking.IsTopSideOvercooked();
+        
+        if (isOvercooked)
+        {
+            return true;
+        }
 
         if (Tools.Instance.currentTool == Tools.ToolType.Spatula)
         {
@@ -259,6 +273,7 @@ public class DragFood : MonoBehaviour
         LeanTween.scale(gameObject, initialScale, 0.2f)
             .setEase(LeanTweenType.easeOutBack) // Set easing type
             .setIgnoreTimeScale(true); // Use unscaled time
+        LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
     }
     #endregion
 }
