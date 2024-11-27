@@ -38,8 +38,14 @@ public class WashHandManager : MonoBehaviour
     [SerializeField, Tooltip("Start Button")]
     private GameObject startButton;
 
+    [SerializeField, Tooltip("Warning Text")]
+    private GameObject warningText;
+
     [SerializeField, Tooltip("Hand Gameobject")]
     private GameObject hand;
+
+    [SerializeField, Tooltip("Canvas")] 
+    private GameObject canvas;
     
     #endregion
     
@@ -48,6 +54,9 @@ public class WashHandManager : MonoBehaviour
     private List<GameObject> startPositions = new List<GameObject>();
     private bool isBlinking = false;
     private bool isAppear;
+    private bool isPopUp;
+    private bool isPause;
+    private bool isUnpause;
 
     #endregion
 
@@ -64,6 +73,7 @@ public class WashHandManager : MonoBehaviour
         }
         
         UITransitionUtility.Instance.Initialize(startButton, Vector2.zero);
+        UITransitionUtility.Instance.Initialize(warningText, Vector2.zero);
         GameManager.Instance.SetScoreTextActive(false);
     }
 
@@ -75,16 +85,9 @@ public class WashHandManager : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.tutorialPanel.activeSelf && !isAppear)
-        {
-            UITransitionUtility.Instance.PopUp(startButton);
-            hand.SetActive(true);
-            hand.transform.localScale = Vector3.zero;
-            LeanTween.scale(hand, new Vector3(0.64f,0.64f,0.64f), 0.5f)
-                .setEase(LeanTweenType.easeOutBack);
-            isAppear = true;
-        }
+        HandlePopUp();
         HandleObjectBlinking();
+        HandlePauseState();
     }
     
     #endregion
@@ -111,6 +114,7 @@ public class WashHandManager : MonoBehaviour
         }
 
         UITransitionUtility.Instance.PopDown(startButton);
+        UITransitionUtility.Instance.PopDown(warningText);
         
         centralImage.SetActive(true);
         centralImage.transform.localScale = Vector3.zero;
@@ -281,6 +285,59 @@ public class WashHandManager : MonoBehaviour
             {
                 collider.enabled = true;
                 collider.isTrigger = true;
+            }
+        }
+    }
+
+    private IEnumerator PopUpUI()
+    {
+        UITransitionUtility.Instance.PopUp(warningText);
+        yield return new WaitForSeconds(2f);
+        UITransitionUtility.Instance.PopUp(startButton);
+    }
+
+    private IEnumerator WaitToPop()
+    {
+        yield return new WaitForSeconds(1f);
+        UITransitionUtility.Instance.PopUp(warningText);
+        UITransitionUtility.Instance.PopUp(startButton);
+    }
+    
+    private void HandlePopUp()
+    {
+        if (!GameManager.Instance.tutorialPanel.activeSelf && !isAppear)
+        {
+            StartCoroutine(PopUpUI());
+            isPopUp = true;
+            hand.SetActive(true);
+            hand.transform.localScale = Vector3.zero;
+            LeanTween.scale(hand, new Vector3(0.64f, 0.64f, 0.64f), 0.5f)
+                .setEase(LeanTweenType.easeOutBack).setOnComplete((() =>
+                { ;
+                }));
+            isAppear = true;
+        }
+    }
+    
+    private void HandlePauseState()
+    {
+        if (GameManager.Instance.isGamePaused && isPopUp)
+        {
+            if (!isPause)
+            {
+                UITransitionUtility.Instance.PopDown(startButton);
+                UITransitionUtility.Instance.PopDown(warningText);
+                isPause = true;
+                isUnpause = false;
+            }
+        }
+        else if (!GameManager.Instance.isGamePaused && isPopUp)
+        {
+            if (!isUnpause)
+            {
+                StartCoroutine(WaitToPop());
+                isUnpause = true;
+                isPause = false;
             }
         }
     }

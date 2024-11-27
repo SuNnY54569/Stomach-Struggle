@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     
     public bool isGamePaused;
     public bool isBlurEnabled;
+    private Coroutine blurCoroutine;
     
     #region Health Settings
     
@@ -408,17 +409,19 @@ public class GameManager : MonoBehaviour
     #region Utility Functions
     public void PauseGame()
     {
-        isGamePaused = !isGamePaused;
         if (isGamePaused)
         {
-            SoundManager.PauseAllSounds();
+            // If the game is currently paused, start the unblur coroutine to unpause.
+            StartCoroutine(UnblurBeforeResume());
         }
         else
         {
-            SoundManager.ResumeAllSounds();
+            // If the game is not paused, pause the game immediately and apply blur.
+            isGamePaused = true;
+            SoundManager.PauseAllSounds();
+            BlurBackGround();
+            Time.timeScale = 0f;
         }
-        BlurBackGround();
-        Time.timeScale = isGamePaused ? 0f : 1f;
     }
 
     public void SetScoreTextActive(bool isActive)
@@ -482,9 +485,66 @@ public class GameManager : MonoBehaviour
 
     public void BlurBackGround()
     {
+        if (blurCoroutine != null)
+        {
+            StopCoroutine(blurCoroutine);
+            blurCoroutine = null; // Clear the reference
+        }
+
+        blurCoroutine = StartCoroutine(isBlurEnabled ?
+            // Disable blur smoothly
+            SmoothBlurTransition(false) :
+            // Enable blur smoothly
+            SmoothBlurTransition(true));
+
         isBlurEnabled = !isBlurEnabled;
-        _depthOfField.enabled.Override(isBlurEnabled);
-        _colorGrading.enabled.Override(isBlurEnabled);
+    }
+    
+    private IEnumerator SmoothBlurTransition(bool enableBlur)
+    {
+        float startBlurIntensity = _depthOfField.active ? _depthOfField.focalLength.value : 0f;
+        float targetBlurIntensity = enableBlur ? 10f : 1f;
+
+        float elapsedTime = 0f;
+
+        _depthOfField.enabled.Override(true);
+        _colorGrading.enabled.Override(true);
+
+        while (elapsedTime < 0.5f)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+            float t = elapsedTime / 0.5f;
+
+            float currentBlurIntensity = Mathf.Lerp(startBlurIntensity, targetBlurIntensity, t);
+
+            _depthOfField.focalLength.Override(currentBlurIntensity);
+
+            yield return null;
+        }
+
+        _depthOfField.focalLength.Override(targetBlurIntensity);
+
+        if (!enableBlur)
+        {
+            _depthOfField.enabled.Override(false);
+        }
+
+        // Clear the reference once the coroutine finishes
+        blurCoroutine = null;
+    }
+    
+    private IEnumerator UnblurBeforeResume()
+    {
+        // Unblur the background.
+        BlurBackGround();
+
+        // Wait for the unblur transition to complete.
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        // Resume the game.
+        isGamePaused = false;
+        SoundManager.ResumeAllSounds();
+        Time.timeScale = 1f;
     }
     
     private void SetupPostProcessing()
