@@ -190,7 +190,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        
         SetupPostProcessing();
     }
     

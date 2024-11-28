@@ -26,6 +26,7 @@ public class Steak : MonoBehaviour
     private Vector2 originalPosition;
     private Tools.ToolType currentTool;
     private SteakSpawner steakSpawner;
+    private Camera mainCamera;
     #endregion
 
     private void Awake()
@@ -33,6 +34,7 @@ public class Steak : MonoBehaviour
         steakSpawner = FindObjectOfType<SteakSpawner>().GetComponent<SteakSpawner>();
         panCenter = GameObject.FindGameObjectWithTag("PanCenter").transform;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        mainCamera = Camera.main;
     }
 
     private void Start()
@@ -75,9 +77,10 @@ public class Steak : MonoBehaviour
             (currentTool == Tools.ToolType.Spatula && isCooking && IsCooked()))
         {
             StopCooking();
+            LeanTween.move(gameObject, MouseWorldPosition(), 0.05f);
             isDragging = true;
         }
-        else if (currentTool == Tools.ToolType.Spatula && isCooking && IsOnPan())
+        else if (currentTool == Tools.ToolType.Spatula && isCooking && IsDroppedOnLayer("PanLayer"))
         {
             if (!IsBottomSideOvercooked() && !IsTopSideOvercooked())
             {
@@ -107,7 +110,7 @@ public class Steak : MonoBehaviour
 
         if (currentTool == Tools.ToolType.Tongs || currentTool == Tools.ToolType.Spatula)
         {
-            if (IsDroppedOnTrashCan())
+            if (IsDroppedOnLayer("TrashLayer"))
             {
                 DestroySteak();
                 SoundManager.PlaySound(SoundType.PlaceOnTrash,VolumeType.SFX);
@@ -116,7 +119,7 @@ public class Steak : MonoBehaviour
             }
             else if (currentTool == Tools.ToolType.Tongs)
             {
-                if (IsDroppedOnPan())
+                if (IsDroppedOnLayer("PanLayer"))
                 {
                     if (Tools.Instance.currentlyCookingSteak != null)
                     {
@@ -128,7 +131,7 @@ public class Steak : MonoBehaviour
                     StartCooking();
                     Tools.Instance.DeselectTool();
                 }
-                else if (IsDroppedOnPlate())
+                else if (IsDroppedOnLayer("PlateLayer"))
                 {
                     PlaceOnPlate();
                 }
@@ -139,11 +142,11 @@ public class Steak : MonoBehaviour
             }
             else if (currentTool == Tools.ToolType.Spatula)
             {
-                if (IsDroppedOnPlate())
+                if (IsDroppedOnLayer("PlateLayer"))
                 {
                     PlaceOnPlate();
                 }
-                else if (IsOnPan()) // Check if it's still on the pan
+                else if (IsDroppedOnLayer("PanLayer")) // Check if it's still on the pan
                 {
                     SnapToPanCenter();
                     originalPosition = transform.position;
@@ -155,6 +158,7 @@ public class Steak : MonoBehaviour
                     ResetPosition();
                     StartCooking();
                 }
+                
             }
         }
     }
@@ -162,8 +166,7 @@ public class Steak : MonoBehaviour
     private void SnapToPanCenter()
     {
         // Assuming your pan has a Collider2D to find its position
-        Collider2D panCollider = GameObject.FindWithTag("Pan").GetComponent<Collider2D>();
-        if (panCollider != null)
+        if (panCenter != null)
         {
             LeanTween.move(gameObject, panCenter.position, 0.5f) // 0.5 seconds for the animation
                 .setEase(LeanTweenType.easeInOutQuad)
@@ -174,23 +177,9 @@ public class Steak : MonoBehaviour
         }
     }
     
-    private bool IsDroppedOnPan()
+    private bool IsDroppedOnLayer(string layerName)
     {
-        return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("PanLayer")) != null;;
-    }
-    private bool IsDroppedOnPlate()
-    {
-        return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("PlateLayer")) != null;
-    }
-    
-    private bool IsOnPan()
-    {
-        return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("PanLayer")) != null;
-    }
-    
-    private bool IsDroppedOnTrashCan()
-    {
-        return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask("TrashLayer")) != null;
+        return Physics2D.OverlapCircle(transform.position, 0.1f, LayerMask.GetMask(layerName)) != null;
     }
     
     private void UpdateCookingProgress()
@@ -210,10 +199,6 @@ public class Steak : MonoBehaviour
         if (currentTimer >= overcookedTime)
         {
             MarkAsOvercooked();
-        }
-        else if (currentTimer >= cookingTime)
-        {
-            //MarkAsCooked();
         }
     }
     
@@ -303,7 +288,7 @@ public class Steak : MonoBehaviour
     {
         GameManager.Instance.DecreaseHealth(1);
         ResetPosition();
-        if (Tools.Instance.currentlyCookingSteak == gameObject && IsOnPan())
+        if (Tools.Instance.currentlyCookingSteak == gameObject && IsDroppedOnLayer("PanLayer"))
         {
             StartCooking();
         }
@@ -359,6 +344,13 @@ public class Steak : MonoBehaviour
     public bool IsCooking()
     {
         return isCooking; // Return whether the steak is currently cooking
+    }
+    
+    private Vector3 MouseWorldPosition()
+    {
+        var mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = mainCamera.WorldToScreenPoint(transform.position).z;
+        return mainCamera.ScreenToWorldPoint(mouseScreenPos);
     }
     
     public bool IsTopSideCooked() => topSideCookingTimer >= cookingTime && topSideCookingTimer < overcookedTime;

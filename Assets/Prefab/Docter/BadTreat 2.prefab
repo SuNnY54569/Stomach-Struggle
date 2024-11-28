@@ -102,6 +102,7 @@ MonoBehaviour:
   scaleDuration: 0.2
   targetScale: {x: 0, y: 0, z: 0}
   Text: {fileID: 8444783418894323253}
+  showCoolDown: 1
 --- !u!61 &6891403199303445869
 BoxCollider2D:
   m_ObjectHideFlags: 0

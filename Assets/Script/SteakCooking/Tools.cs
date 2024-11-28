@@ -78,7 +78,6 @@ public class Tools : MonoBehaviour
                 break;
             case ToolType.None:
             default:
-                // Revert to the system's default cursor
                 Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
                 break;
         }
