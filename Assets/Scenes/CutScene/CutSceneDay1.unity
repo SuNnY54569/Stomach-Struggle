@@ -3673,6 +3673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSkip: 0
   skipButton: {fileID: 1831595035}
+  timeline: {fileID: 448632473}
 --- !u!4 &4545651079893368027
 Transform:
   m_ObjectHideFlags: 0

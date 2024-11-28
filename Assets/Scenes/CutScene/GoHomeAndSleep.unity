@@ -2668,9 +2668,9 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1982960571}
-          m_TargetAssemblyTypeName: nextScene, Assembly-CSharp
-          m_MethodName: LoadNextScene
+        - m_Target: {fileID: 1982960572}
+          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
+          m_MethodName: StopAllSoundsInCutScene
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2680,9 +2680,9 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1982960572}
-          m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
-          m_MethodName: StopAllSoundsInCutScene
+        - m_Target: {fileID: 1982960571}
+          m_TargetAssemblyTypeName: nextScene, Assembly-CSharp
+          m_MethodName: LoadNextScene
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2862,6 +2862,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSkip: 0
   skipButton: {fileID: 691696541}
+  timeline: {fileID: 1936734219}
 --- !u!114 &1982960572
 MonoBehaviour:
   m_ObjectHideFlags: 0
