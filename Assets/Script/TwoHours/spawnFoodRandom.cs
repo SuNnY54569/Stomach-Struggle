@@ -48,45 +48,30 @@ public class spawnFoodRandom : MonoBehaviour
         clockGameObject.SetActive(!GameManager.Instance.isGamePaused);
         spawnCountText.gameObject.SetActive(!GameManager.Instance.isGamePaused);
         guideText.SetActive(!GameManager.Instance.isGamePaused);
-        
-        if (spawnCount >= maxSpawns)
-        {
-            timerText.gameObject.SetActive(false);
-            clockGameObject.SetActive(false);
-            UITransitionUtility.Instance.MoveOut(panel,LeanTweenType.easeInOutQuad, 0.2f);
-            
-            if (isGameOver) return;
-                
-            if (GameManager.Instance.currentHealth <= 0)
-            {
-                GameManager.Instance.GameOver();
-            }
-            else 
-            {
-                GameManager.Instance.WinGame();
-            }
-            spawnCount = 3;
-            timerText.gameObject.SetActive(false);
-            clockGameObject.SetActive(false);
-            spawnCountText.gameObject.SetActive(false);
-
-            foreach (var text in instructionText)
-            {
-                text.gameObject.SetActive(false);
-            }
-
-            isGameOver = true;
-
-            return;
-        }
 
         if (GameManager.Instance.currentHealth <= 0)
         {
-            timerText.gameObject.SetActive(false);
-            spawnCountText.gameObject.SetActive(false);
+            if (!isGameOver)
+            {
+                GameManager.Instance.GameOver();
+                isGameOver = true;
+            }
             return;
         }
 
+        if (spawnCount == maxSpawns && GameManager.Instance.currentHealth >= 0)
+        {
+            timerText.gameObject.SetActive(false);
+            clockGameObject.SetActive(false);
+            UITransitionUtility.Instance.MoveOut(panel, LeanTweenType.easeInOutQuad, 0.2f);
+
+            if (!isGameOver)
+            {
+                GameManager.Instance.WinGame();
+                isGameOver = true;
+            }
+            return;
+        }
 
         GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
 
@@ -110,6 +95,7 @@ public class spawnFoodRandom : MonoBehaviour
             HandleTimeUp();
         }
     }
+
 
     private void SpawnAllFood()
     {
