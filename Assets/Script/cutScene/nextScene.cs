@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class nextScene : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class nextScene : MonoBehaviour
 
     public void LoadNextScene()
     {
+        skipButton.GetComponent<Button>().interactable = false;
         
         if (timeline != null && timeline.state == PlayState.Playing)
         {
