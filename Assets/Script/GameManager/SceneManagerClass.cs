@@ -27,7 +27,7 @@ public class SceneManagerClass : MonoBehaviour
     #region Scene Management
     public void LoadMenuScene()
     {
-        TransitionManager.Instance.LoadLevel("StartScene", 0.5f);
+        TransitionManager.Instance.LoadLevel("StartScene", 1f);
     }
 
     public void LoadNextScene()
@@ -37,7 +37,7 @@ public class SceneManagerClass : MonoBehaviour
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
             string nextSceneName = SceneUtility.GetScenePathByBuildIndex(nextSceneIndex);
-            TransitionManager.Instance.LoadLevel(nextSceneName, 0.5f);
+            TransitionManager.Instance.LoadLevel(nextSceneName, 1f);
         }
         else
         {
@@ -51,7 +51,7 @@ public class SceneManagerClass : MonoBehaviour
         
         if (SceneExists(currentSceneName))
         {
-            TransitionManager.Instance.LoadLevel(currentSceneName, 0.5f);
+            TransitionManager.Instance.LoadLevel(currentSceneName, 1f);
         }
         else
         {
@@ -63,7 +63,7 @@ public class SceneManagerClass : MonoBehaviour
     {
         if (SceneExists(sceneName))
         {
-            TransitionManager.Instance.LoadLevel(sceneName, 0.5f);
+            TransitionManager.Instance.LoadLevel(sceneName, 1f);
         }
         else
         {

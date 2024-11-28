@@ -19,10 +19,6 @@ public class FoodCooking : MonoBehaviour
     
     public bool isTopSideCooking = true;
     
-    [SerializeField, Tooltip("Cooldown time in seconds before the food can be flipped again.")]
-    private float flipCooldownDuration = 0.5f; // Example: 2 seconds cooldown
-    private float flipCooldownTimer = 0f;
-    
     private bool isFlipped;
     #endregion
     
@@ -58,10 +54,6 @@ public class FoodCooking : MonoBehaviour
 
     private void Update()
     {
-        if (flipCooldownTimer > 0)
-        {
-            flipCooldownTimer -= Time.deltaTime;
-        }
         
         if (!isCooking) return;
         
@@ -131,36 +123,36 @@ public class FoodCooking : MonoBehaviour
     
     public void FlipFood()
     {
-        if (flipCooldownTimer > 0)
-        {
-            Debug.Log("Flip is on cooldown. Please wait.");
-            return;
-        }
-        
         isTopSideCooking = !isTopSideCooking;
         cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
         progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
+
+        PerformFlipAnimation();
         
-        flipCooldownTimer = flipCooldownDuration;
-        
-        float originalY = transform.position.y;
+        SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
+    }
+    private void PerformFlipAnimation()
+    {
         float bounceHeight = 0.2f;
         float bounceDuration = 0.2f;
         float halfwayDuration = bounceDuration / 2f;
+        float delayBeforeBounce = 0.11f;
 
-        // Move up
-        LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration)
-            .setEase(LeanTweenType.easeOutQuad)
-            .setOnComplete(() =>
-            {
-                spriteRenderer.flipY = !spriteRenderer.flipY;
-                
-                LeanTween.moveY(gameObject, originalY, halfwayDuration)
-                    .setEase(LeanTweenType.easeInQuad);
-            });
-        SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
+        LeanTween.delayedCall(gameObject, delayBeforeBounce, () =>
+        {
+            float originalY = gameObject.transform.position.y;
+            // Move up
+            LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration)
+                .setEase(LeanTweenType.easeOutQuad)
+                .setOnComplete(() =>
+                {
+                    spriteRenderer.flipY = !spriteRenderer.flipY;
+
+                    LeanTween.moveY(gameObject, originalY, halfwayDuration)
+                        .setEase(LeanTweenType.easeInQuad);
+                });
+        });
     }
-    
 
     public void StartCooking()
     {

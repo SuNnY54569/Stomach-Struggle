@@ -36,12 +36,8 @@ public class slotCanEat : MonoBehaviour
 
         foodObject.transform.position = transform.position;
         
-        LeanTween.scale(foodObject.gameObject, Vector3.zero, 0.2f)
-            .setEase(LeanTweenType.easeInOutQuad)
-            .setOnComplete(() =>
-            {
-                Destroy(foodObject.gameObject);
-            });
+        LeanTween.rotateZ(gameObject, 5f, 0.1f)
+            .setLoopPingPong(1);
     }
     
     private void ScaleAnimation()

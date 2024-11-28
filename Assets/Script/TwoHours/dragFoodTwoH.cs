@@ -55,6 +55,7 @@ public class dragFoodTwoH : MonoBehaviour
                 FoodRandom foodRandom = GetComponent<FoodRandom>();
                 slotEat.OnDrop(this, foodRandom);
                 droppedInSlot = true;
+                OnDropInSlot();
                 break;
             }
             else if (slotWarm != null)
@@ -62,13 +63,25 @@ public class dragFoodTwoH : MonoBehaviour
                 FoodRandom foodRandom = GetComponent<FoodRandom>();
                 slotWarm.OnDrop(this, foodRandom);
                 droppedInSlot = true;
+                OnDropInSlot();
                 break;
             }
-            if (!droppedInSlot)
-            {
-                transform.position = _startPosition;
-            }
-
         }
+        if (!droppedInSlot)
+        {
+            LeanTween.move(gameObject, _startPosition, 0.3f).setEase(LeanTweenType.easeInOutQuad);
+        }
+    }
+
+    private void OnDropInSlot()
+    {
+        LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
+        LeanTween.rotateZ(gameObject, 5f, 0.1f)
+            .setLoopPingPong(1);
     }
 }

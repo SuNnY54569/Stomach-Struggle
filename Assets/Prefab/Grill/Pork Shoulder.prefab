@@ -177,6 +177,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4600698423219108069}
   isOnGrill: 0
   hasBeenActivate: 0
+  flipCooldownDuration: 0.3
 --- !u!114 &8349774986328864771
 MonoBehaviour:
   m_ObjectHideFlags: 0

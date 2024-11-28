@@ -34,14 +34,10 @@ public class slotWarm : MonoBehaviour
         }
         ScaleAnimation();
         
-        foodObject.transform.position = transform.position;
+        LeanTween.rotateZ(gameObject, 5f, 0.1f)
+            .setLoopPingPong(1);
         
-        LeanTween.scale(foodObject.gameObject, Vector3.zero, 0.2f)
-            .setEase(LeanTweenType.easeInOutQuad)
-            .setOnComplete(() =>
-            {
-                Destroy(foodObject.gameObject);
-            });
+        foodObject.transform.position = transform.position;
     }
     
     private void ScaleAnimation()

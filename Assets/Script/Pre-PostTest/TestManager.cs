@@ -44,10 +44,14 @@ public class TestManager : MonoBehaviour
     private TMP_Text qNumberText;
     [SerializeField, Tooltip("Canvas of all panel")]
     private GameObject canvas;
-    [SerializeField, Tooltip("Skip Button")]
+    [SerializeField, Tooltip("Correction Skip Button")]
     private GameObject correctionSkipButton;
-    [SerializeField, Tooltip("Skip Button")]
+    [SerializeField, Tooltip("Correct Skip Button")]
     private GameObject correctSkipButton;
+    [SerializeField, Tooltip("Yes Button")]
+    private GameObject yesButton;
+    [SerializeField, Tooltip("No Button")]
+    private GameObject noButton;
 
     [Header("Infos")]
     [SerializeField, Tooltip("Current question number")]
@@ -215,6 +219,8 @@ public class TestManager : MonoBehaviour
 
     public void Correct()
     {
+        yesButton.GetComponent<Button>().interactable = false;
+        noButton.GetComponent<Button>().interactable = false;
         score += 1;
         scoreText.text = $"{score} / {totalQuestion}";
         correctSkipButton.GetComponent<Button>().interactable = true;
@@ -224,6 +230,8 @@ public class TestManager : MonoBehaviour
 
     public void Wrong()
     {
+        yesButton.GetComponent<Button>().interactable = false;
+        noButton.GetComponent<Button>().interactable = false;
         IncrementWrongCount();
         corretOrNotText.text = "ผิดนะครับ";
         correctionText.text = QnA[currentQuestion].correction;
@@ -269,6 +277,8 @@ public class TestManager : MonoBehaviour
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         correctionSkipButton.GetComponent<Button>().interactable = false;
         correctSkipButton.GetComponent<Button>().interactable = false;
+        yesButton.GetComponent<Button>().interactable = true;
+        noButton.GetComponent<Button>().interactable = true;
         QnA.RemoveAt(currentQuestion);
         UITransitionUtility.Instance.PopUp(quizPanel);
         UITransitionUtility.Instance.PopDown(correctPanel, LeanTweenType.easeInBack, 0.25f);

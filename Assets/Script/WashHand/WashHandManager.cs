@@ -38,16 +38,26 @@ public class WashHandManager : MonoBehaviour
     [SerializeField, Tooltip("Start Button")]
     private GameObject startButton;
 
+    [SerializeField, Tooltip("Warning Text")]
+    private GameObject warningText;
+
     [SerializeField, Tooltip("Hand Gameobject")]
     private GameObject hand;
+
+    [SerializeField, Tooltip("Canvas")] 
+    private GameObject canvas;
     
     #endregion
     
     #region Private Fields
 
     private List<GameObject> startPositions = new List<GameObject>();
-    private bool isBlinking = false;
+    private bool isBlinking;
     private bool isAppear;
+    private bool isPause;
+    private bool isUnpause = true;
+    private bool isPopUpComplete;
+    private bool isGameStart;
 
     #endregion
 
@@ -64,6 +74,7 @@ public class WashHandManager : MonoBehaviour
         }
         
         UITransitionUtility.Instance.Initialize(startButton, Vector2.zero);
+        UITransitionUtility.Instance.Initialize(warningText, Vector2.zero);
         GameManager.Instance.SetScoreTextActive(false);
     }
 
@@ -75,16 +86,9 @@ public class WashHandManager : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.tutorialPanel.activeSelf && !isAppear)
-        {
-            UITransitionUtility.Instance.PopUp(startButton);
-            hand.SetActive(true);
-            hand.transform.localScale = Vector3.zero;
-            LeanTween.scale(hand, new Vector3(0.64f,0.64f,0.64f), 0.5f)
-                .setEase(LeanTweenType.easeOutBack);
-            isAppear = true;
-        }
+        HandlePopUp();
         HandleObjectBlinking();
+        HandlePauseState();
     }
     
     #endregion
@@ -110,7 +114,8 @@ public class WashHandManager : MonoBehaviour
             StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
         }
 
-        UITransitionUtility.Instance.PopDown(startButton);
+        isGameStart = true;
+        StartCoroutine(PopDownAfterStart());
         
         centralImage.SetActive(true);
         centralImage.transform.localScale = Vector3.zero;
@@ -281,6 +286,65 @@ public class WashHandManager : MonoBehaviour
             {
                 collider.enabled = true;
                 collider.isTrigger = true;
+            }
+        }
+    }
+
+    private IEnumerator PopUpUI()
+    {
+        UITransitionUtility.Instance.PopUp(warningText);
+        yield return new WaitForSeconds(2f);
+        UITransitionUtility.Instance.PopUp(startButton);
+    }
+    
+    private void HandlePopUp()
+    {
+        if (!GameManager.Instance.tutorialPanel.activeSelf && !isAppear)
+        {
+            StartCoroutine(PopUpUI());
+            hand.SetActive(true);
+            isPopUpComplete = true;
+            hand.transform.localScale = Vector3.zero;
+            LeanTween.scale(hand, new Vector3(0.64f, 0.64f, 0.64f), 0.5f)
+                .setEase(LeanTweenType.easeOutBack);
+            isAppear = true;
+        }
+    }
+
+    private IEnumerator PopDownAfterStart()
+    {
+        UITransitionUtility.Instance.PopDown(startButton);
+        UITransitionUtility.Instance.PopDown(warningText);
+
+        yield return new WaitForSecondsRealtime(0.75f);
+        
+        Destroy(startButton);
+        Destroy(warningText);
+    }
+    
+    private void HandlePauseState()
+    {
+        if (warningText != null || startButton != null)
+        {
+            if (GameManager.Instance.isGamePaused && isPopUpComplete)
+            {
+                if (!isPause)
+                {
+                    UITransitionUtility.Instance.PopDown(startButton,LeanTweenType.easeInBack, 0.2f);
+                    UITransitionUtility.Instance.PopDown(warningText,LeanTweenType.easeInBack, 0.2f);
+                    isPause = true;
+                    isUnpause = false;
+                }
+            }
+            else if (!GameManager.Instance.isGamePaused && isPopUpComplete)
+            {
+                if (!isUnpause)
+                {
+                    UITransitionUtility.Instance.PopUp(warningText);
+                    UITransitionUtility.Instance.PopUp(startButton);
+                    isUnpause = true;
+                    isPause = false;
+                }
             }
         }
     }
