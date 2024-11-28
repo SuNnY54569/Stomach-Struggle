@@ -35,6 +35,8 @@ TagManager:
   - BadWater
   - GoodTreat
   - BadTreat
+  - Setting
+  - TutorialVideoManager
   layers:
   - Default
   - TransparentFX
@@ -46,7 +48,7 @@ TagManager:
   - PlateLayer
   - Dragging
   - TrashLayer
-  - 
+  - FoodLayer
   - 
   - 
   - 

@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class Treatment : MonoBehaviour
 {
+    [SerializeField] private float scaleDuration = 0.2f;
+    [SerializeField] private Vector3 targetScale = Vector3.zero;
+    [SerializeField] private GameObject Text;
+    [SerializeField] private float showCoolDown = 1f;
     private SpriteRenderer sprite;
     private Color originalColor;
+    private bool canShow = true;
+    private Vector3 initialScale;
 
     private void Awake()
     {
+        initialScale = Text.transform.localScale;
+        UITransitionUtility.Instance.Initialize(Text, Vector2.zero);
+        Text.SetActive(false);
         sprite = GetComponent<SpriteRenderer>();
         originalColor = sprite.color;
     }
@@ -18,13 +27,13 @@ public class Treatment : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
 
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
         if (gameObject.CompareTag("GoodTreat"))
         {
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.IncreaseScore(1);
             }
-            Destroy(gameObject);
         }
         else if (gameObject.CompareTag("BadTreat"))
         {
@@ -32,18 +41,51 @@ public class Treatment : MonoBehaviour
             {
                 GameManager.Instance.DecreaseHealth(1);
             }
-            Destroy(gameObject);
         }
+        LeanTween.scale(gameObject, targetScale, scaleDuration)
+            .setEase(LeanTweenType.easeInOutQuad) // Optional: Customize easing
+            .setOnComplete(() =>
+            {
+                // Optionally destroy the object or trigger other actions
+                gameObject.SetActive(false);
+            });
     }
 
     private void OnMouseOver()
     {
+        if (GameManager.Instance.isGamePaused) return;
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         sprite.color = Color.gray;
     }
 
     private void OnMouseExit()
     {
+        if (GameManager.Instance.isGamePaused) return;
+        UITransitionUtility.Instance.PopDown(Text, LeanTweenType.easeInBack, 0.1f);
         sprite.color = originalColor;
+    }
+
+    private void OnMouseEnter()
+    {
+        if (GameManager.Instance.isGamePaused) return;
+        if (!canShow) return;
+        
+        Text.SetActive(true); // Ensure the panel is active
+        Text.transform.localScale = Vector3.zero; // Start from zero scale
+        LeanTween.scale(Text, initialScale, 0.2f)
+            .setEase(LeanTweenType.easeOutBack) // Set easing type
+            .setIgnoreTimeScale(true); // Use unscaled time
+        LeanTween.rotateZ(gameObject, 5f, 0.1f)
+            .setLoopPingPong(1).setOnComplete(() =>
+            {
+                StartCoroutine(ResetCanShow());
+            });
+    }
+
+    private IEnumerator ResetCanShow()
+    {
+        canShow = false;
+        yield return new WaitForSeconds(showCoolDown);
+        canShow = true;
     }
 }

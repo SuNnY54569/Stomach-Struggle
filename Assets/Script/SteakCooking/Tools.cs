@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Tools : MonoBehaviour
@@ -20,6 +21,15 @@ public class Tools : MonoBehaviour
     [SerializeField] private Texture2D spatulaCursor;
     [SerializeField] private Vector2 tongsCursorHotspot;
     [SerializeField] private Vector2 spatulaCursorHotspot;
+    
+    [Header("Warning Setting")]
+    [SerializeField] private TextMeshProUGUI warningMessageText;
+    [SerializeField] private string warningMessage;
+    [SerializeField] private string tongsWarning = "อันนี้ต้องใช้ตะหลิวนะ";
+    [SerializeField] private string spatulaWarning = "อันนี้ต้องใช้ทีคีบนะ";
+    [SerializeField] private float warningFadeDuration = 1.5f;
+    [SerializeField] private float warningCooldown = 1.5f;
+    private float lastWarningTime = -Mathf.Infinity; 
 
     public Steak currentlyCookingSteak;
 
@@ -35,12 +45,12 @@ public class Tools : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+        UITransitionUtility.Instance.Initialize(warningMessageText.gameObject,Vector2.zero);
     }
 
     private void Update()
     {
-        if (GameManager.Instance.isGamePaused) 
+        if (GameManager.Instance != null && GameManager.Instance.isGamePaused) 
         {
             DeselectTool();
         }
@@ -96,5 +106,34 @@ public class Tools : MonoBehaviour
     {
         // Check if the provided steak is the one currently being cooked
         return currentlyCookingSteak == steak;
+    }
+    
+    public void ShowWarning(ToolType toolType)
+    {
+        if (Time.time - lastWarningTime < warningCooldown) return;
+        if (warningMessageText == null) return;
+        
+        lastWarningTime = Time.time;
+        switch (toolType)
+        {
+            case ToolType.Spatula :
+                warningMessageText.text = spatulaWarning;
+                break;
+            case ToolType.Tongs:
+                warningMessageText.text = tongsWarning;
+                break;
+            default:
+                warningMessageText.text = warningMessage;
+                break;
+        }
+        UITransitionUtility.Instance.PopUp(warningMessageText.gameObject);
+
+        StartCoroutine(FadeOutWarning());
+    }
+    
+    private IEnumerator FadeOutWarning()
+    {
+        yield return new WaitForSeconds(warningFadeDuration);
+        UITransitionUtility.Instance.PopDown(warningMessageText.gameObject);
     }
 }

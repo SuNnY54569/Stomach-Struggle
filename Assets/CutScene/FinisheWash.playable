@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8504174736975218331
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
+  m_Name: Signal Emitter
+  m_EditorClassIdentifier: 
+  m_Time: 0.16666666666666666
+  m_Retroactive: 0
+  m_EmitOnce: 0
+  m_Asset: {fileID: 11400000, guid: e7a5ddf644aa99945aaef51ea0306e74, type: 2}
 --- !u!114 &-7867654527566220301
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12,7 +28,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 030f85c3f73729f4f976f66ffb23b875, type: 3}
   m_Name: AnimationPlayableAsset(Clone)(Clone)
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 7400000, guid: ce40d7e4a9e3bcc48937a96f8ff4d963, type: 2}
+  m_Clip: {fileID: 7400000, guid: 76083043587d2f341a1ebd8350a76fa2, type: 2}
   m_Position: {x: 0, y: 0, z: 0}
   m_EulerAngles: {x: 0, y: 0, z: 0}
   m_UseTrackMatchFields: 1
@@ -34,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 7.016666666666667
+  m_Time: 8
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: 253f2bf3a7dfa5348b13a86630954901, type: 2}
@@ -50,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
   m_Name: Signal Emitter
   m_EditorClassIdentifier: 
-  m_Time: 6.400000000000002
+  m_Time: 7.016666666666667
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: ca361ab7f8c298a4ea0db3b66719fd76, type: 2}
@@ -102,6 +118,8 @@ MonoBehaviour:
     - {fileID: 8792963063989817821}
     - {fileID: -6428022816135969222}
     - {fileID: -7006741775876050019}
+    - {fileID: -8504174736975218331}
+    - {fileID: 8617178896769907617}
 --- !u!114 &-548844403976993152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -171,7 +189,7 @@ MonoBehaviour:
     m_Start: 0.16666666666666666
     m_ClipIn: 0.9333333333333333
     m_Asset: {fileID: -2237554009456307963}
-    m_Duration: 5.733333333333334
+    m_Duration: 6.85
     m_TimeScale: 1
     m_ParentTrack: {fileID: 1420240860772905300}
     m_EaseInDuration: 0
@@ -252,10 +270,10 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: Idle
   - m_Version: 1
-    m_Start: 5.900000000000001
+    m_Start: 7.016666666666667
     m_ClipIn: 0
     m_Asset: {fileID: -7867654527566220301}
-    m_Duration: 0.8333333333333348
+    m_Duration: 0.9833333333333334
     m_TimeScale: 1
     m_ParentTrack: {fileID: 1420240860772905300}
     m_EaseInDuration: 0
@@ -283,7 +301,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 1
     m_PostExtrapolationTime: Infinity
     m_PreExtrapolationTime: 0
-    m_DisplayName: Idle
+    m_DisplayName: Idle0.2
   m_Markers:
     m_Objects: []
   m_InfiniteClipPreExtrapolation: 0
@@ -365,7 +383,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: -2.3, y: -2.38, z: -0.00000020107238}
+        value: {x: -2.11, y: -0.74, z: -0.00000018446205}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -373,8 +391,8 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 5.9
-        value: {x: 6.84, y: -2.38, z: 0.0000005979718}
+        time: 7.016667
+        value: {x: 7.1, y: -0.74, z: 0.0000006207017}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -410,7 +428,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 5.9
+    m_StopTime: 7.016667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -432,7 +450,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -2.3
+        value: -2.11
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -440,8 +458,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 5.9
-        value: 6.84
+        time: 7.016667
+        value: 7.1
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -462,7 +480,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -2.38
+        value: -0.74
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -470,8 +488,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 5.9
-        value: -2.38
+        time: 7.016667
+        value: -0.74
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -492,7 +510,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.00000020107238
+        value: -0.00000018446205
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -500,8 +518,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 5.9
-        value: 0.0000005979718
+        time: 7.016667
+        value: 0.0000006207017
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -520,6 +538,22 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events: []
+--- !u!114 &8617178896769907617
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15c38f6fa1940124db1ab7f6fe7268d1, type: 3}
+  m_Name: Signal Emitter
+  m_EditorClassIdentifier: 
+  m_Time: 5
+  m_Retroactive: 0
+  m_EmitOnce: 0
+  m_Asset: {fileID: 11400000, guid: 115c1df8d2b32a34ca08a8d3cad00335, type: 2}
 --- !u!114 &8792963063989817821
 MonoBehaviour:
   m_ObjectHideFlags: 1

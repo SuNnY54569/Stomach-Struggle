@@ -7,14 +7,17 @@ public class FoodVisual : MonoBehaviour
 {
     #region Visual Settings
     [Header("Food Colors")]
-    [SerializeField,Tooltip("Color for the raw food state.")]
-    private Color rawSprite;
+    [SerializeField,Tooltip("Sprite for the raw food state.")]
+    private Sprite rawSprite;
     
-    [SerializeField,Tooltip("Color for the cooked food state (for either side).")]
-    private Color cookedSprite;
+    [SerializeField, Tooltip("Sprite for the cooking food state.")]
+    private Sprite cookingSprite;
     
-    [SerializeField,Tooltip("Color for the overcooked food state.")]
-    private Color overcookedSprite;
+    [SerializeField, Tooltip("Sprite for the fully cooked state.")]
+    private Sprite cookedSprite;
+    
+    [SerializeField, Tooltip("Sprite for the overcooked state.")]
+    private Sprite overcookedSprite;
     
     private SpriteRenderer spriteRenderer;
     private FoodCooking foodCooking;
@@ -22,9 +25,9 @@ public class FoodVisual : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         foodCooking = GetComponent<FoodCooking>();
-        spriteRenderer.color = rawSprite;
+        spriteRenderer.sprite = rawSprite;
     }
 
     private void Update()
@@ -33,6 +36,7 @@ public class FoodVisual : MonoBehaviour
     }
     
     #region Update Visuals
+    
     private void UpdateFoodVisual()
     {
         bool isTopCooked = foodCooking.IsTopSideCooked();
@@ -41,53 +45,30 @@ public class FoodVisual : MonoBehaviour
         bool isTopOvercooked = foodCooking.IsTopSideOvercooked();
         bool isBottomOvercooked = foodCooking.IsBottomSideOvercooked();
         
-        if (isTopOvercooked && isBottomOvercooked)
+        if (isTopOvercooked || isBottomOvercooked)
         {
-            spriteRenderer.color = overcookedSprite; 
+            spriteRenderer.sprite = overcookedSprite; 
             return;
         }
         
-        if (isTopOvercooked)
-        {
-            if (isBottomCooked) 
-            {
-                spriteRenderer.color = isTopCooking ? cookedSprite : overcookedSprite; 
-            }
-            else 
-            {
-                spriteRenderer.color = isTopCooking ? rawSprite : overcookedSprite; 
-            }
-            return;
-        }
-        
-        if (isBottomOvercooked)
-        {
-            if (isTopCooked) 
-            {
-                spriteRenderer.color = isTopCooking ? overcookedSprite : cookedSprite; 
-            }
-            else 
-            {
-                spriteRenderer.color = !isTopCooking ? overcookedSprite : rawSprite; 
-            }
-            return;
-        }
-        
+        // If both sides are fully cooked
         if (isTopCooked && isBottomCooked)
         {
-            spriteRenderer.color = cookedSprite; 
+            spriteRenderer.sprite = cookedSprite;
         }
+        // If one side is fully cooked
         else if (isTopCooked)
         {
-            spriteRenderer.color = isTopCooking ? rawSprite : cookedSprite; 
+            spriteRenderer.sprite = isTopCooking ? cookingSprite : cookedSprite; 
         }
         else if (isBottomCooked)
         {
-            spriteRenderer.color = isTopCooking ? cookedSprite : rawSprite; 
+            spriteRenderer.sprite = isTopCooking ? cookedSprite : cookingSprite; 
         }
+        // Neither side is cooked
         else
         {
-            spriteRenderer.color = rawSprite; 
+            spriteRenderer.sprite = rawSprite;
         }
     }
     #endregion

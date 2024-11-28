@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System;
 using UnityEngine;
 using TMPro;
 
@@ -9,27 +8,65 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
 
     [Header("Typewriter Settings")]
-    [SerializeField] private float typingSpeed = 0.05f;
+    [SerializeField] private float typingSpeed = 0.015f;
 
-    [SerializeField]private string characterName;
-    [SerializeField]private string dialogueContent;
+    [SerializeField] private string characterName;
+    [SerializeField] private string dialogueContent;
+
+    private bool isDialogueDisplayed = false;
+    private bool hasClicked = false;
+
+    private Coroutine currentDialogueCoroutine = null;
 
     private void Start()
     {
-        //PauseGame();
-        StartCoroutine(ShowDialogue(characterName, dialogueContent));
+        currentDialogueCoroutine = StartCoroutine(ShowDialogue(characterName, dialogueContent));
+    }
+
+    private void Update()
+    {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && !hasClicked)
+        {
+            ShowFullDialogue();
+            hasClicked = true;
+        }
     }
 
     private IEnumerator ShowDialogue(string name, string content)
     {
-        dialogueText.text = name;
+        if (isDialogueDisplayed)
+        {
+            yield break; 
+        }
+
+        string currentText = name + "";
+        dialogueText.text = currentText;
 
         yield return new WaitForSecondsRealtime(0.5f);
 
         foreach (char letter in content.ToCharArray())
         {
-            dialogueText.text += letter;
+            currentText += letter; 
+            dialogueText.text = currentText;
+
             yield return new WaitForSecondsRealtime(typingSpeed);
+        }
+
+        isDialogueDisplayed = true;
+    }
+
+    private void ShowFullDialogue()
+    {
+        if (!isDialogueDisplayed)
+        {
+            dialogueText.text = characterName + "" + dialogueContent;
+            isDialogueDisplayed = true;
+
+            if (currentDialogueCoroutine != null)
+            {
+                StopCoroutine(currentDialogueCoroutine);
+                currentDialogueCoroutine = null;
+            }
         }
     }
 

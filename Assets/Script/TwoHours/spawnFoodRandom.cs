@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -18,73 +19,53 @@ public class spawnFoodRandom : MonoBehaviour
 
     [Header("UI Settings")]
     [SerializeField] private TextMeshProUGUI spawnCountText;
+    [SerializeField] private GameObject clockGameObject;
+    [SerializeField] private GameObject guideText;
+    [SerializeField] private GameObject panel;
 
     private bool isGameOver = false;
+    public bool isTickingSoundPlaying = false;
 
     private float timeLeft;
     private int spawnCount = 0;
     private const int maxSpawns = 4;
+
+    private void Awake()
+    {
+        UITransitionUtility.Instance.Initialize(panel,Vector2.zero);
+    }
 
     private void Start()
     {
         GameManager.Instance.SetScoreTextActive(false);
         timeLeft = countdownTime;
         UpdateSpawnCountUI();
+        UITransitionUtility.Instance.MoveIn(panel,LeanTweenType.easeInOutQuad, 0.2f);
     }
 
     private void Update()
     {
-        if (spawnCount >= maxSpawns)
+        
+        clockGameObject.SetActive(!GameManager.Instance.isGamePaused);
+        spawnCountText.gameObject.SetActive(!GameManager.Instance.isGamePaused);
+        guideText.SetActive(!GameManager.Instance.isGamePaused);
+        
+        if (isGameOver) return;
+        
+        if (spawnCount >= maxSpawns && GameManager.Instance.currentHealth > 0)
         {
-            if (isGameOver) return;
-                
-            if (GameManager.Instance.currentHealth <= 0)
-            {
-                GameManager.Instance.GameOver();
-            }
-            else 
-            {
-                GameManager.Instance.WinGame();
-            }
-
-            timerText.gameObject.SetActive(false);
-            spawnCountText.gameObject.SetActive(false);
-
-            foreach (var text in instructionText)
-            {
-                text.gameObject.SetActive(false);
-            }
-
-            isGameOver = true;
-
+            WinGame();
+            Debug.Log("Win");
+            //GameManager.Instance.PauseGame();
             return;
         }
-
+        
         if (GameManager.Instance.currentHealth <= 0)
         {
-            timerText.gameObject.SetActive(false);
-            spawnCountText.gameObject.SetActive(false);
-            return;
+            GameOver();
         }
-
-
-        GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
-
-        if (foodObjects.Length == 0)
-        {
-            SpawnAllFood();
-            timeLeft = countdownTime;
-        }
-
-        if (timeLeft > 0)
-        {
-            timeLeft -= Time.deltaTime;
-            timerText.text = Mathf.Ceil(timeLeft).ToString();
-        }
-        else
-        {
-            HandleTimeUp();
-        }
+        
+        HandleFoodAndTimer();
     }
 
     private void SpawnAllFood()
@@ -103,6 +84,7 @@ public class spawnFoodRandom : MonoBehaviour
             }
         }
         spawnCount++;
+        
         UpdateSpawnCountUI();
     }
 
@@ -124,6 +106,7 @@ public class spawnFoodRandom : MonoBehaviour
 
         if (spawnCount < maxSpawns)
         {
+            spawnCount -= 1;
             SpawnAllFood();
         }
     }
@@ -134,5 +117,74 @@ public class spawnFoodRandom : MonoBehaviour
         {
             spawnCountText.text = $"{spawnCount} / 3";
         }
+    }
+
+    IEnumerator PlayClockTickingSound()
+    {
+        isTickingSoundPlaying = true;
+        SoundManager.PlaySound(SoundType.ClockTicking, VolumeType.SFX);
+
+        yield return new WaitForSeconds(1f);
+        isTickingSoundPlaying = false;
+    }
+    
+    private void HandleFoodAndTimer()
+    {
+        // Spawn new food if all food objects are gone
+        GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
+
+        if (foodObjects.Length == 0)
+        {
+            SpawnAllFood();
+            timeLeft = countdownTime;
+        }
+
+        // Handle timer countdown
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            timerText.text = Mathf.Ceil(timeLeft).ToString();
+
+            if (!isTickingSoundPlaying)
+            {
+                StartCoroutine(PlayClockTickingSound());
+            }
+        }
+        else
+        {
+            HandleTimeUp();
+        }
+    }
+    
+    private void GameOver()
+    {
+        if (isGameOver) return;
+
+        timerText.gameObject.SetActive(false);
+        spawnCountText.gameObject.SetActive(false);
+        clockGameObject.SetActive(false);
+
+        UITransitionUtility.Instance.MoveOut(panel, LeanTweenType.easeInOutQuad, 0.2f);
+        
+        isGameOver = true;
+    }
+    
+    private void WinGame()
+    {
+        if (isGameOver) return;
+
+        timerText.gameObject.SetActive(false);
+        spawnCountText.gameObject.SetActive(false);
+        clockGameObject.SetActive(false);
+
+        foreach (var text in instructionText)
+        {
+            text.gameObject.SetActive(false);
+        }
+
+        UITransitionUtility.Instance.MoveOut(panel, LeanTweenType.easeInOutQuad, 0.2f);
+
+        GameManager.Instance.WinGame();
+        isGameOver = true;
     }
 }

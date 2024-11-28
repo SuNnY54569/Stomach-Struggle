@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ToolButton : MonoBehaviour
 {
+    
     [SerializeField] private Tools.ToolType toolType;
     [SerializeField] private SpriteRenderer sprite;
 
@@ -17,15 +19,18 @@ public class ToolButton : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
         Tools.Instance.SetCurrentTool(toolType);
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
     private void OnMouseOver()
     {
+        if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.gray;
     }
     
     private void OnMouseExit()
     {
+        if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.white;
     }
 }

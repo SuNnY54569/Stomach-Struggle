@@ -9,15 +9,16 @@ public class FoodCooking : MonoBehaviour
     #region Cooking Settings
     [Header("Cooking Settings")]
     [SerializeField, Tooltip("Time it takes to cook the food.")]
-    private float cookingTime;
+    public float cookingTime;
     
     [SerializeField, Tooltip("Time after which the food is considered overcooked.")]
     private float overcookedTime;
     
-    private float topSideCookingTimer;
-    private float bottomSideCookingTimer;
+    public float topSideCookingTimer;
+    public float bottomSideCookingTimer;
     
     public bool isTopSideCooking = true;
+    
     private bool isFlipped;
     #endregion
     
@@ -35,10 +36,16 @@ public class FoodCooking : MonoBehaviour
     [Tooltip("Is the food currently cooking?")]
     public bool isCooking;
 
+    private SpriteRenderer spriteRenderer;
     private Color rawColor = Color.red;
     private Color cookedColor = Color.green;
     private Color overcookedColor = Color.black;
     #endregion
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -47,6 +54,7 @@ public class FoodCooking : MonoBehaviour
 
     private void Update()
     {
+        
         if (!isCooking) return;
         
         if (isTopSideCooking)
@@ -58,10 +66,6 @@ public class FoodCooking : MonoBehaviour
             {
                 MarkAsOvercooked();
             }
-            else if (topSideCookingTimer >= cookingTime && topSideCookingTimer < overcookedTime)
-            {
-                MarkAsCooked();
-            }
         }
         else
         {
@@ -71,10 +75,6 @@ public class FoodCooking : MonoBehaviour
             if (bottomSideCookingTimer >= overcookedTime)
             {
                 MarkAsOvercooked();
-            }
-            else if (bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime)
-            {
-                MarkAsCooked();
             }
         }
     }
@@ -115,22 +115,9 @@ public class FoodCooking : MonoBehaviour
     #endregion
     
     #region Cooking State Methods
-    
-    private void MarkAsCooked()
-    {
-        if (isTopSideCooking)
-        {
-            gameObject.tag = "TopCooked";
-        }
-        else
-        {
-            gameObject.tag = "BottomCooked";
-        }
-    }
 
     private void MarkAsOvercooked()
     {
-        gameObject.tag = "Overcooked";
         StopCooking();
     }
     
@@ -139,6 +126,32 @@ public class FoodCooking : MonoBehaviour
         isTopSideCooking = !isTopSideCooking;
         cookingProgressBar.value = isTopSideCooking ? topSideCookingTimer : bottomSideCookingTimer;
         progressBarFill.color = isTopSideCooking ? CalculateProgressColor(topSideCookingTimer) : CalculateProgressColor(bottomSideCookingTimer);
+
+        PerformFlipAnimation();
+        
+        SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
+    }
+    private void PerformFlipAnimation()
+    {
+        float bounceHeight = 0.2f;
+        float bounceDuration = 0.2f;
+        float halfwayDuration = bounceDuration / 2f;
+        float delayBeforeBounce = 0.11f;
+
+        LeanTween.delayedCall(gameObject, delayBeforeBounce, () =>
+        {
+            float originalY = gameObject.transform.position.y;
+            // Move up
+            LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration)
+                .setEase(LeanTweenType.easeOutQuad)
+                .setOnComplete(() =>
+                {
+                    spriteRenderer.flipY = !spriteRenderer.flipY;
+
+                    LeanTween.moveY(gameObject, originalY, halfwayDuration)
+                        .setEase(LeanTweenType.easeInQuad);
+                });
+        });
     }
 
     public void StartCooking()
@@ -184,7 +197,7 @@ public class FoodCooking : MonoBehaviour
     public void PlaceOnTrash()
     {
         StopCooking();
-        Destroy(gameObject);
+        PopDownFood();
     }
     
     private void HandleUndercooked()
@@ -207,5 +220,15 @@ public class FoodCooking : MonoBehaviour
     public bool IsBottomSideCooked() => bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime;
     public bool IsTopSideOvercooked() => topSideCookingTimer >= overcookedTime;
     public bool IsBottomSideOvercooked() => bottomSideCookingTimer >= overcookedTime;
+
+    private void PopDownFood()
+    {
+        LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
+    }
     
 }

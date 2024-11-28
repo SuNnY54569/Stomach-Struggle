@@ -17,6 +17,10 @@ public class Steak : MonoBehaviour
     public bool isTopSideCooking = true;
     [SerializeField] private Transform panCenter;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField, Tooltip("Cooldown time in seconds before the food can be flipped again.")]
+    private float flipCooldownDuration = 0.5f; // Example: 2 seconds cooldown
+    private float flipCooldownTimer = 0f;
+    
     private bool isCooking = false;
     private bool isDragging = false;
     private Vector2 originalPosition;
@@ -38,6 +42,11 @@ public class Steak : MonoBehaviour
     
     private void Update()
     {
+        if (flipCooldownTimer > 0)
+        {
+            flipCooldownTimer -= Time.deltaTime;
+        }
+        
         // Update current tool
         currentTool = Tools.Instance.currentTool;
 
@@ -51,6 +60,17 @@ public class Steak : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.Instance.isGamePaused) return;
+        
+        if (IsTopSideOvercooked() || IsBottomSideOvercooked())
+        {
+            if (currentTool == Tools.ToolType.Tongs || currentTool == Tools.ToolType.Spatula)
+            {
+                StopCooking();
+                isDragging = true;
+                return; // Skip the rest of the logic
+            }
+        }
+        
         if ((currentTool == Tools.ToolType.Tongs && !isCooking) ||
             (currentTool == Tools.ToolType.Spatula && isCooking && IsCooked()))
         {
@@ -59,8 +79,15 @@ public class Steak : MonoBehaviour
         }
         else if (currentTool == Tools.ToolType.Spatula && isCooking && IsOnPan())
         {
-            FlipFood();
+            if (!IsBottomSideOvercooked() && !IsTopSideOvercooked())
+            {
+                FlipFood();
+            }
             StartCooking();
+        }
+        else
+        {
+            Tools.Instance.ShowWarning(currentTool);
         }
     }
     
@@ -83,6 +110,7 @@ public class Steak : MonoBehaviour
             if (IsDroppedOnTrashCan())
             {
                 DestroySteak();
+                SoundManager.PlaySound(SoundType.PlaceOnTrash,VolumeType.SFX);
                 steakSpawner.HandleSteakLost();
                 Tools.Instance.DeselectTool();
             }
@@ -131,23 +159,18 @@ public class Steak : MonoBehaviour
         }
     }
 
-    private void OnMouseOver()
-    {
-        spriteRenderer.color = Color.gray;
-    }
-
-    private void OnMouseExit()
-    {
-        spriteRenderer.color = Color.white;
-    }
-
     private void SnapToPanCenter()
     {
         // Assuming your pan has a Collider2D to find its position
         Collider2D panCollider = GameObject.FindWithTag("Pan").GetComponent<Collider2D>();
         if (panCollider != null)
         {
-            transform.position = panCenter.position; // Snap to the center of the pan
+            LeanTween.move(gameObject, panCenter.position, 0.5f) // 0.5 seconds for the animation
+                .setEase(LeanTweenType.easeInOutQuad)
+                .setOnComplete(() =>
+                {
+                    Debug.Log("Steak reset to original position.");
+                });
         }
     }
     
@@ -190,7 +213,7 @@ public class Steak : MonoBehaviour
         }
         else if (currentTimer >= cookingTime)
         {
-            MarkAsCooked();
+            //MarkAsCooked();
         }
     }
     
@@ -215,15 +238,45 @@ public class Steak : MonoBehaviour
     
     public void FlipFood()
     {
+        if (flipCooldownTimer > 0)
+        {
+            Debug.Log("Flip is on cooldown. Please wait.");
+            return;
+        }
+        
         isTopSideCooking = !isTopSideCooking;
+        flipCooldownTimer = flipCooldownDuration;
+        SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
+        
+        float originalY = transform.position.y;
+        float bounceHeight = 0.2f;
+        float bounceDuration = 0.2f;
+        float halfwayDuration = bounceDuration / 2f;
+
+        // Move up
+        LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration)
+            .setEase(LeanTweenType.easeOutQuad)
+            .setOnComplete(() =>
+            {
+                spriteRenderer.flipY = !spriteRenderer.flipY;
+                
+                LeanTween.moveY(gameObject, originalY, halfwayDuration)
+                    .setEase(LeanTweenType.easeInQuad);
+            });
     }
     
     public void ResetPosition()
     {
-        transform.position = originalPosition;
+        LeanTween.move(gameObject, originalPosition, 0.5f) // 0.5 seconds for the animation
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Debug.Log("Steak reset to original position.");
+            });
+        LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
     }
-    
-    public void PlaceOnPlate()
+
+    private void PlaceOnPlate()
     {
         StopCooking();
 
@@ -231,6 +284,7 @@ public class Steak : MonoBehaviour
             topSideCookingTimer < overcookedTime && bottomSideCookingTimer < overcookedTime)
         {
             HandleCooked();
+            SoundManager.PlaySound(SoundType.PlaceOnPlate,VolumeType.SFX);
         }
         else if (topSideCookingTimer < cookingTime || bottomSideCookingTimer < cookingTime)
         {
@@ -268,15 +322,9 @@ public class Steak : MonoBehaviour
         GameManager.Instance.DecreaseHealth(1);
         ResetPosition();
     }
-    
-    private void MarkAsCooked()
-    {
-        gameObject.tag = "Cooked";
-    }
 
     private void MarkAsOvercooked()
     {
-        gameObject.tag = "Overcooked";
         isCooking = false;
     }
     
@@ -293,7 +341,13 @@ public class Steak : MonoBehaviour
     
     private void DestroySteak()
     {
-        Destroy(gameObject);
+        LeanTween.scale(gameObject, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
+        LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
     }
     
     public float GetTotalCookingProgress()

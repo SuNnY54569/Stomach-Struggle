@@ -143,5 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec442d424b34af34b9fe5f4b49cfda0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 7038739045476834099}
   waterSprites:
   - {fileID: 21300000, guid: 19de1c9859b394b41bd3d37d33ef8220, type: 3}

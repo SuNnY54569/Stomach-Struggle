@@ -20,6 +20,7 @@ public class ReturnMeat : MonoBehaviour
             Debug.Log("Return Meat");
         }
         
+        SoundManager.PlaySound(SoundType.PickUpMeat,VolumeType.SFX);
         clawController.SetDefaultSprite();
     }
 }

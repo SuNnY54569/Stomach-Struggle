@@ -7,11 +7,13 @@ public class dragFoodTwoH : MonoBehaviour
     private DragControllerGuitar _dragController;
     private bool _isDragging;
     private FoodRandom _foodRandom;
+    private Vector3 _startPosition;
 
     private void Awake()
     {
         _dragController = FindObjectOfType<DragControllerGuitar>();
         _foodRandom = GetComponent<FoodRandom>();
+        _startPosition = transform.position;
     }
 
     private void Update()
@@ -40,6 +42,7 @@ public class dragFoodTwoH : MonoBehaviour
     private void Drop()
     {
         _isDragging = false;
+        bool droppedInSlot = false;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);
 
         foreach (Collider2D collider in colliders)
@@ -51,16 +54,40 @@ public class dragFoodTwoH : MonoBehaviour
             {
                 FoodRandom foodRandom = GetComponent<FoodRandom>();
                 slotEat.OnDrop(this, foodRandom);
+                droppedInSlot = true;
+                OnDropInSlot(slotEat.transform);
                 break;
             }
             else if (slotWarm != null)
             {
                 FoodRandom foodRandom = GetComponent<FoodRandom>();
                 slotWarm.OnDrop(this, foodRandom);
+                droppedInSlot = true;
+                OnDropInSlot(slotWarm.transform);
                 break;
             }
-
-
         }
+        if (!droppedInSlot)
+        {
+            LeanTween.move(gameObject, _startPosition, 0.3f).setEase(LeanTweenType.easeInOutQuad);
+        }
+    }
+
+    private void OnDropInSlot(Transform slot)
+    {
+        LeanTween.move(gameObject, slot.position, 0.3f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete((() =>
+            {
+                transform.position = slot.position;
+                LeanTween.scale(gameObject, Vector3.zero, 0.3f)
+                    .setEase(LeanTweenType.easeInOutQuad)
+                    .setOnComplete(() =>
+                    {
+                        Destroy(gameObject);
+                    });
+                LeanTween.rotateZ(gameObject, 5f, 0.15f)
+                    .setLoopPingPong(1);
+            }));
     }
 }

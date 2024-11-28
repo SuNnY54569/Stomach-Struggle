@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "183131609540",
+    "firebase_url": "https://stomachstruggle-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "stomachstruggle",
+    "storage_bucket": "stomachstruggle.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183131609540:android:77b07dd9582e9c15bc6c91",
+        "android_client_info": {
+          "package_name": "com.Somsan.StomachStruggle"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnq3rvfUahqS1gmdgp_q6pd_93ta8d9OQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

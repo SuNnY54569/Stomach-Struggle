@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class itemClickWater : MonoBehaviour
 {
-
+    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Sprite[] waterSprites;
+    [SerializeField] private float scaleDuration = 0.2f;
+    [SerializeField] private Vector3 targetScale = Vector3.zero;
     private SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -23,6 +27,18 @@ public class itemClickWater : MonoBehaviour
         }
     }
 
+    private void OnMouseOver()
+    {
+        if (GameManager.Instance.isGamePaused) return;
+        sprite.color = Color.gray;
+    }
+
+    private void OnMouseExit()
+    {
+        if (GameManager.Instance.isGamePaused) return;
+        sprite.color = Color.white;
+    }
+
     private void OnMouseDown()
     {
         if (GameManager.Instance.isGamePaused) return;
@@ -35,7 +51,6 @@ public class itemClickWater : MonoBehaviour
             {
                 GameManager.Instance.DecreaseHealth(1);
             }
-            Destroy(gameObject);
         }
         else if (gameObject.CompareTag("BadWater"))
         {
@@ -43,7 +58,14 @@ public class itemClickWater : MonoBehaviour
             {
                 GameManager.Instance.IncreaseScore(1);
             }
-            Destroy(gameObject);
         }
+        LeanTween.scale(gameObject, targetScale, scaleDuration)
+            .setEase(LeanTweenType.easeInOutQuad) // Optional: Customize easing
+            .setOnComplete(() =>
+            {
+                // Optionally destroy the object or trigger other actions
+                gameObject.SetActive(false);
+            });
+        SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 }

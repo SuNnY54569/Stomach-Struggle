@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ClawController : MonoBehaviour
 {
@@ -21,6 +23,10 @@ public class ClawController : MonoBehaviour
     private Sprite defaultClawSprite;
     [SerializeField, Tooltip("Max Score for this scene")]
     private int maxScore;
+    [SerializeField, Tooltip("return button")]
+    private GameObject returnButton;
+
+    private Vector3 initialScale;
 
     [Header("Movement Settings")]
     [SerializeField,Tooltip("Speed of horizontal movement for the claw.")]
@@ -30,7 +36,7 @@ public class ClawController : MonoBehaviour
     [SerializeField,Tooltip("Y position where the claw reaches down to pick items.")]
     private float clawDownPositionY; 
     [SerializeField,Tooltip("Initial position of the claw when the game starts.")]
-    private Vector2 startPosition;
+    private Vector2 startPosition = new Vector2(0, 1.95f);
     [SerializeField, Tooltip("The minimum X position the claw can reach.")]
     private float minMovementLimitX;
     [SerializeField, Tooltip("The maximum X position the claw can reach.")]
@@ -46,9 +52,13 @@ public class ClawController : MonoBehaviour
     private bool isMovingDown = false;  // Tracks if claw is moving down
     private bool isReturning = false; // Tracks if claw is returning up
 
+    private void Awake()
+    {
+        initialScale = returnButton.transform.localScale;
+    }
+
     void Start()
     {
-        startPosition = claw.transform.position;
         GameManager.Instance.SetMaxScore(maxScore);
         GameManager.Instance.SetScoreTextActive(true);
     }
@@ -175,6 +185,7 @@ public class ClawController : MonoBehaviour
         {
             Debug.Log("Hit box");
             GenerateItem();
+            SoundManager.PlaySound(SoundType.PickUpMeat,VolumeType.SFX);
         }
     }
     
@@ -204,5 +215,26 @@ public class ClawController : MonoBehaviour
     public void SetDefaultSprite()
     {
         clawSprite.sprite = defaultClawSprite;
+    }
+
+    public void PopReturnButtonUp()
+    {
+        returnButton.SetActive(true); // Ensure the panel is active
+        returnButton.transform.localScale = Vector3.zero; // Start from zero scale
+        LeanTween.scale(returnButton, initialScale, 0.5f)
+            .setEase(LeanTweenType.easeOutBack) // Set easing type
+            .setIgnoreTimeScale(true); // Use unscaled time
+
+    }
+    
+    public void PopReturnButtonDown()
+    {
+        LeanTween.scale(returnButton, Vector3.zero, 0.5f)
+            .setEase(LeanTweenType.easeInBack) // Set easing type
+            .setIgnoreTimeScale(true) // Use unscaled time
+            .setOnComplete(() =>
+            {
+                returnButton.SetActive(false);
+            });
     }
 }
