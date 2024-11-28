@@ -30,14 +30,8 @@ public class slotWarm : MonoBehaviour
         else
         {
             SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
-            GameManager.Instance.IncreaseScore(0);
         }
         ScaleAnimation();
-        
-        LeanTween.rotateZ(gameObject, 5f, 0.1f)
-            .setLoopPingPong(1);
-        
-        foodObject.transform.position = transform.position;
     }
     
     private void ScaleAnimation()
@@ -53,5 +47,8 @@ public class slotWarm : MonoBehaviour
                 LeanTween.scale(gameObject, originalScale, animationDuration / 2)
                     .setEase(LeanTweenType.easeInQuad);
             });
+        
+        LeanTween.rotateZ(gameObject, 5f, 0.15f)
+            .setLoopPingPong(1);
     }
 }

@@ -22,7 +22,6 @@ public class slotCanEat : MonoBehaviour
         if (isWithinTimeRange)
         {
             SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
-            GameManager.Instance.IncreaseScore(0);
         }
         else
         {
@@ -33,11 +32,6 @@ public class slotCanEat : MonoBehaviour
         }
 
         ScaleAnimation();
-
-        foodObject.transform.position = transform.position;
-        
-        LeanTween.rotateZ(gameObject, 5f, 0.1f)
-            .setLoopPingPong(1);
     }
     
     private void ScaleAnimation()
@@ -53,5 +47,8 @@ public class slotCanEat : MonoBehaviour
                 LeanTween.scale(gameObject, originalScale, animationDuration / 2)
                     .setEase(LeanTweenType.easeInQuad);
             });
+        
+        LeanTween.rotateZ(gameObject, 5f, 0.15f)
+            .setLoopPingPong(1);
     }
 }
