@@ -1380,9 +1380,11 @@ MonoBehaviour:
     - "\u0E16\u0E39\u0E01"
     - "\u0E1C\u0E34\u0E14"
     correctAnswers: 1
-    correction: "\u0E23\u0E49\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E15\u0E31\u0E27\u0E23\u0E49\u0E32\u0E19\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E0A\u0E48\u0E27\u0E22\u0E25\u0E14\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E01\u0E34\u0E14\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
+    correction: "\u0E23\u0E49\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E15\u0E31\u0E27\u0E23\u0E49\u0E32\u0E19\u0E2A\u0E30\u0E2D\u0E32\u0E14 
+      \u0E0A\u0E48\u0E27\u0E22\u0E25\u0E14\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E01\u0E34\u0E14\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
   - name: Question2
-    question: "\u0E01\u0E32\u0E23\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E38\u0E01\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E17\u0E31\u0E48\u0E27\u0E16\u0E36\u0E07\u0E08\u0E30\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22\u0E08\u0E32\u0E01\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
+    question: "\u0E01\u0E32\u0E23\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E38\u0E01\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E17\u0E31\u0E48\u0E27\u0E16\u0E36\u0E07 
+      \u0E08\u0E30\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22\u0E08\u0E32\u0E01\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
     answers:
     - "\u0E16\u0E39\u0E01"
     - "\u0E1C\u0E34\u0E14"
@@ -1667,7 +1669,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Which Answer Is Correct
+  m_text: "\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
+    \u0E04\u0E25\u0E37\u0E48\u0E19\u0E44\u0E2A\u0E49\u0E2D\u0E32\u0E40\u0E08\u0E35\u0E22\u0E19
+    \u0E04\u0E27\u0E23\u0E23\u0E35\u0E1A\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E22\u0E32\u0E2B\u0E22\u0E38\u0E14\u0E16\u0E48\u0E32\u0E22\u0E17\u0E31\u0E19\u0E17\u0E35\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
   m_sharedMaterial: {fileID: 4640881436553943417, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
@@ -1695,14 +1699,14 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontSize: 72
-  m_fontSizeBase: 36
+  m_fontSizeBase: 65
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2272,15 +2276,15 @@ RectTransform:
   m_GameObject: {fileID: 979193651}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.69633335, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.55706674, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 219004930}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.595}
-  m_AnchoredPosition: {x: 0, y: 41.233704}
-  m_SizeDelta: {x: -120, y: 94.6758}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -68}
+  m_SizeDelta: {x: 1350, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &979193653
 MonoBehaviour:
@@ -2302,11 +2306,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0E2B\u0E32\u0E01\u0E2A\u0E27\u0E21\u0E16\u0E38\u0E07\u0E21\u0E37\u0E2D\u0E41\u0E25\u0E49\u0E27\u0E15\u0E49\u0E2D\u0E07\u0E44\u0E1B\u0E2A\u0E31\u0E21\u0E1C\u0E31\u0E2A\u0E2B\u0E23\u0E37\u0E2D\u0E2B\u0E22\u0E34\u0E1A\u0E08\u0E31\u0E1A\u0E2A\u0E34\u0E48\u0E07\u0E02\u0E2D\u0E07\u0E2D\u0E37\u0E48\u0E19
-    \u0E46 \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E07\u0E34\u0E19 \u0E04\u0E27\u0E23\u0E16\u0E2D\u0E14\u0E16\u0E38\u0E07\u0E21\u0E37\u0E2D\u0E2D\u0E2D\u0E01\u0E01\u0E48\u0E2D\u0E19\u0E17\u0E38\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07
-    \u0E40\u0E1E\u0E23\u0E32\u0E30\u0E2D\u0E32\u0E08\u0E08\u0E30\u0E1B\u0E19\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E41\u0E25\u0E30\u0E40\u0E1B\u0E47\u0E19\u0E41\u0E2B\u0E25\u0E48\u0E07
-    \u0E19\u0E33\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E41\u0E25\u0E30\u0E2A\u0E34\u0E48\u0E07\u0E2A\u0E01\u0E1B\u0E23\u0E01\u0E15\u0E48\u0E32\u0E07
-    \u0E46  \u0E21\u0E32\u0E2A\u0E39\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E14\u0E49 "
+  m_text: "\u0E2B\u0E32\u0E01\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22\u0E44\u0E21\u0E48\u0E04\u0E27\u0E23\u0E01\u0E34\u0E19\u0E22\u0E32\u0E2B\u0E22\u0E38\u0E14\u0E16\u0E48\u0E32\u0E22
+    \u0E04\u0E27\u0E23\u0E14\u0E37\u0E48\u0E21\u0E19\u0E49\u0E33\u0E40\u0E01\u0E25\u0E37\u0E2D\u0E41\u0E23\u0E48\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E04\u0E19\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
+    \u0E41\u0E25\u0E30\u0E2B\u0E32\u0E01\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E2B\u0E19\u0E31\u0E01\u0E43\u0E2B\u0E49\u0E23\u0E35\u0E1A\u0E44\u0E1B\u0E1E\u0E1A\u0E41\u0E1E\u0E17\u0E22\u0E4C\u0E17\u0E31\u0E19\u0E17\u0E35\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
   m_sharedMaterial: {fileID: 4640881436553943417, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
@@ -2333,15 +2335,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 75
+  m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 40
+  m_fontSizeMax: 75
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2369,7 +2371,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 101.48732}
+  m_margin: {x: 0, y: 4.195114, z: 0, w: 84.99733}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
