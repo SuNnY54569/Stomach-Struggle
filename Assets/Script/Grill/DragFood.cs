@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DragFood : MonoBehaviour
@@ -26,6 +28,8 @@ public class DragFood : MonoBehaviour
 
     [SerializeField, Tooltip("Tracks if the food has been activated or placed.")]
     private bool hasBeenActivate;
+    
+    [SerializeField] private float flipCooldownDuration = 0.3f;
 
     private Collider2D col;
     private Vector3 offset;
@@ -36,6 +40,10 @@ public class DragFood : MonoBehaviour
     private FoodCooking foodCooking;
     private Tools.ToolType currentTool;
     private Vector3 initialScale;
+    private bool isFirstTimeOnGrill = true;
+    private float lastFlipTime = -Mathf.Infinity;
+    private bool canFlip => Time.time >= lastFlipTime + flipCooldownDuration;
+    
     #endregion
 
     private void Awake()
@@ -67,29 +75,22 @@ public class DragFood : MonoBehaviour
         if (GameManager.Instance.isGamePaused || !isInteractable) return;
         
         offset = transform.position - MouseWorldPosition();
-        
         if (!ValidateToolForCookingState()) return;
+        isDragging = true;
+        wasOnGrillBeforeDrag = isOnGrill;
         
         if (isOnGrill)
         {
-            if (!foodCooking.IsBottomSideOvercooked() && !foodCooking.IsTopSideOvercooked())
-            {
-                foodCooking.FlipFood();
-            }
-            isDragging = true;
-            wasOnGrillBeforeDrag = isOnGrill;
             foodCooking.StopCooking();
         }
         else
         {
-            isDragging = true;
-            wasOnGrillBeforeDrag = isOnGrill;
             spriteRenderer.enabled = true;
             PopUpFood();
             mainCollider.enabled = true;
             spawnCollider.enabled = false;
-            foodCooking.StopCooking();
         }
+        
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
@@ -121,6 +122,29 @@ public class DragFood : MonoBehaviour
             ResetPosition();
         }
         col.enabled = true;
+        
+        if (isOnGrill)
+        {
+            if (isFirstTimeOnGrill)
+            {
+                isFirstTimeOnGrill = false;
+                return;
+            }
+            
+            if (canFlip)
+            {
+                if (!foodCooking.IsBottomSideOvercooked() && !foodCooking.IsTopSideOvercooked())
+                {
+                    foodCooking.FlipFood();
+                    lastFlipTime = Time.time;
+                    SoundManager.PlaySound(SoundType.flipMeat, VolumeType.SFX);
+                }
+            }
+            else
+            {
+                Debug.Log("Flip is on cooldown. Please wait.");
+            }
+        }
     }
     #endregion
     
@@ -162,6 +186,7 @@ public class DragFood : MonoBehaviour
 
     private void PlaceOnPlate()
     {
+        isOnGrill = false;
         hasBeenActivate = true;
         foodCooking.PlaceOnPlate();
         startPosition = transform.position;
@@ -171,12 +196,13 @@ public class DragFood : MonoBehaviour
 
     private void PlaceOnTrash()
     {
+        isOnGrill = false;
         foodCooking.PlaceOnTrash();
     }
 
     private void ResetPosition()
     {
-        LeanTween.move(gameObject, startPosition, 0.5f) // 0.5 seconds for the animation
+        LeanTween.move(gameObject, startPosition, 0.1f) // 0.5 seconds for the animation
             .setEase(LeanTweenType.easeInOutQuad)
             .setOnComplete(() =>
             {
@@ -275,5 +301,6 @@ public class DragFood : MonoBehaviour
             .setIgnoreTimeScale(true); // Use unscaled time
         LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
     }
+    
     #endregion
 }
