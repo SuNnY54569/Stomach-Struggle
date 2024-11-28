@@ -10,6 +10,10 @@ public class itemClickWater : MonoBehaviour
     [SerializeField] private Sprite[] waterSprites;
     [SerializeField] private float scaleDuration = 0.2f;
     [SerializeField] private Vector3 targetScale = Vector3.zero;
+    
+    public Collider2D col;
+    public spawnWatertwo spawnWatertwo;
+    
     private SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -30,6 +34,7 @@ public class itemClickWater : MonoBehaviour
     private void OnMouseOver()
     {
         if (GameManager.Instance.isGamePaused) return;
+        
         sprite.color = Color.gray;
     }
 
@@ -43,8 +48,6 @@ public class itemClickWater : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
 
-        if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax) return;
-
         if (gameObject.CompareTag("GoodWater"))
         {
             if (GameManager.Instance != null)
@@ -57,6 +60,10 @@ public class itemClickWater : MonoBehaviour
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.IncreaseScore(1);
+                if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax)
+                {
+                    spawnWatertwo.DisableAllCollider();
+                }
             }
         }
         LeanTween.scale(gameObject, targetScale, scaleDuration)

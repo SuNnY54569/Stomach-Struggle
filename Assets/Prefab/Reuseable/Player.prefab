@@ -1987,7 +1987,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1428899252732378367}
+  m_TargetGraphic: {fileID: 1867698147023416257}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:

@@ -580,6 +580,7 @@ MonoBehaviour:
   - {fileID: 714424587}
   - {fileID: 1452593726}
   - {fileID: 1302151384}
+  waterBottles: []
 --- !u!1 &699900336
 GameObject:
   m_ObjectHideFlags: 0

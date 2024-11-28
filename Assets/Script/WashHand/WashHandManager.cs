@@ -75,7 +75,6 @@ public class WashHandManager : MonoBehaviour
         
         UITransitionUtility.Instance.Initialize(startButton, Vector2.zero);
         UITransitionUtility.Instance.Initialize(warningText, Vector2.zero);
-        GameManager.Instance.SetScoreTextActive(false);
     }
 
     private void Start()
@@ -124,7 +123,10 @@ public class WashHandManager : MonoBehaviour
         
         LeanTween.scale(hand, Vector3.zero, 0.5f)
             .setEase(LeanTweenType.easeInBack)
-            .setOnComplete(() => { hand.SetActive(false); });
+            .setOnComplete(() =>
+            {
+                hand.SetActive(false);
+            });
         
         SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
         centralAnimator = centralImage.GetComponent<Animator>();
@@ -239,6 +241,8 @@ public class WashHandManager : MonoBehaviour
     private IEnumerator WaitToWin()
     {
         yield return new WaitForSeconds(3f);
+        centralAnimator.SetTrigger("WashWater");
+        yield return new WaitForSeconds(3f);
         GameManager.Instance.WinGame();
     }
     #endregion
@@ -273,19 +277,6 @@ public class WashHandManager : MonoBehaviour
             if (obj.TryGetComponent<Collider2D>(out Collider2D collider))
             {
                 collider.enabled = false;
-            }
-        }
-    }
-
-    public void OpenAllColliders()
-    {
-        foreach (var obj in objects)
-        {
-            var collider = obj.GetComponent<Collider2D>();
-            if (collider != null)
-            {
-                collider.enabled = true;
-                collider.isTrigger = true;
             }
         }
     }

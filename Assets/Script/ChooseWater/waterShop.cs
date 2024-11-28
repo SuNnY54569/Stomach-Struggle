@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,10 @@ public class waterShop : MonoBehaviour
     [SerializeField] private GameObject[] objectsToOpen;
     [SerializeField] private bool isReturnButton;
 
+    private void Start()
+    {
+        GameManager.Instance.SetScoreTextActive(false);
+    }
 
     private void OnMouseOver()
     {
