@@ -838,6 +838,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: ca361ab7f8c298a4ea0db3b66719fd76, type: 2}
     - {fileID: 11400000, guid: 253f2bf3a7dfa5348b13a86630954901, type: 2}
     - {fileID: 11400000, guid: e7a5ddf644aa99945aaef51ea0306e74, type: 2}
+    - {fileID: 11400000, guid: 115c1df8d2b32a34ca08a8d3cad00335, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -911,6 +912,20 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
           m_MethodName: Playwalk
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 853113105}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

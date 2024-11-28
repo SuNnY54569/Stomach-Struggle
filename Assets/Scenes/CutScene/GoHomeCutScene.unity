@@ -2231,6 +2231,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 40fe4b4ee32025a448356058195dad7b, type: 2}
     - {fileID: 11400000, guid: 70a3e6c17105a0c43b709dd864c008eb, type: 2}
     - {fileID: 11400000, guid: 6132e852689d9e94f8dc92751cdbf66e, type: 2}
+    - {fileID: 11400000, guid: 115c1df8d2b32a34ca08a8d3cad00335, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls: []
@@ -2442,6 +2443,20 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
           m_MethodName: PlayBgInHome
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1644455828}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
