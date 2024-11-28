@@ -51,4 +51,10 @@ public class nextScene : MonoBehaviour
         UITransitionUtility.Instance.MoveIn(GameManager.Instance.gameplayPanel);
         UITransitionUtility.Instance.PopUp(skipButton);
     }
+
+    public void DisableSkipButton()
+    {
+        skipButton.GetComponent<Button>().interactable = false;
+        UITransitionUtility.Instance.PopDown(skipButton);
+    }
 }
