@@ -41,6 +41,7 @@ public class DragFood : MonoBehaviour
     private Tools.ToolType currentTool;
     private Vector3 initialScale;
     private bool isFirstTimeOnGrill = true;
+    private bool isFirstTimeDrag = true;
     private float lastFlipTime = -Mathf.Infinity;
     private bool canFlip => Time.time >= lastFlipTime + flipCooldownDuration;
     
@@ -74,7 +75,14 @@ public class DragFood : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused || !isInteractable) return;
         
-        offset = transform.position - MouseWorldPosition();
+        if (isFirstTimeDrag)
+        {
+            transform.position = MouseWorldPosition();
+        }
+        else
+        {
+            offset = transform.position - MouseWorldPosition();
+        }
         if (!ValidateToolForCookingState()) return;
         isDragging = true;
         wasOnGrillBeforeDrag = isOnGrill;
@@ -82,6 +90,7 @@ public class DragFood : MonoBehaviour
         if (isOnGrill)
         {
             foodCooking.StopCooking();
+            isOnGrill = false;
         }
         else
         {
@@ -98,8 +107,16 @@ public class DragFood : MonoBehaviour
     {
         if (!isDragging || GameManager.Instance.isGamePaused || !isInteractable) return;
         if (!ValidateToolForCookingState()) return;
+
+        if (!isFirstTimeDrag)
+        {
+            transform.position = MouseWorldPosition() + offset;
+        }
+        else
+        {
+            transform.position = MouseWorldPosition();
+        }
         
-        transform.position = MouseWorldPosition() + offset;
         
     }
     
@@ -157,16 +174,19 @@ public class DragFood : MonoBehaviour
                 PlaceOnGrill();
                 SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
                 foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
+                isFirstTimeDrag = false;
                 break;
             case "Plate":
                 PlaceOnPlate();
                 SoundManager.PlaySound(SoundType.PlaceOnPlate,VolumeType.SFX);
                 foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
+                isFirstTimeDrag = false;
                 break;
             case "Trash":
                 PlaceOnTrash();
                 SoundManager.PlaySound(SoundType.PlaceOnTrash,VolumeType.SFX);
                 foodSpawners.gameObject.GetComponent<FoodSpawner>().SpawnFood();
+                isFirstTimeDrag = false;
                 break;
             default:
                 ResetPosition();
