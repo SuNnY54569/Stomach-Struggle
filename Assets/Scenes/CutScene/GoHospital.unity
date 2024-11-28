@@ -3744,6 +3744,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e3dcd8dc6b61f924a97700282f95c55a, type: 2}
     - {fileID: 11400000, guid: fbfa90bfa6ad6b349ab1be77e784bcf2, type: 2}
     - {fileID: 11400000, guid: bfc68ac5c312e0a4f8e76cb571010ddb, type: 2}
+    - {fileID: 11400000, guid: 115c1df8d2b32a34ca08a8d3cad00335, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -4435,6 +4436,20 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
           m_MethodName: NewChaTalk2
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1264924648}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

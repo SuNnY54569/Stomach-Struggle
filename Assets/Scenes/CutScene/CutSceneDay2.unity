@@ -639,6 +639,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c61b0c6ed14b95842b166b56ea2697f8, type: 2}
     - {fileID: 11400000, guid: 70a6cf5fcfc66c9429c55767a9143030, type: 2}
     - {fileID: 11400000, guid: b4e2e9863bdf90742a4ecce1f797a329, type: 2}
+    - {fileID: 11400000, guid: 115c1df8d2b32a34ca08a8d3cad00335, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -994,6 +995,20 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: SoundCutScene, Assembly-CSharp
           m_MethodName: PlayBusRun
           m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1195168349}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
