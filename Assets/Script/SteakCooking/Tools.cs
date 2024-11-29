@@ -48,7 +48,14 @@ public class Tools : MonoBehaviour
         }
         UITransitionUtility.Instance.Initialize(warningMessageText.gameObject,Vector2.zero);
     }
-    
+
+    private void Update()
+    {
+        if (GameManager.Instance.GetScore() != GameManager.Instance.scoreMax) return;
+        lastTool = ToolType.None;
+        currentTool = ToolType.None;
+    }
+
     private void OnEnable()
     {
         GameManager.OnGamePaused += HandleGamePaused;

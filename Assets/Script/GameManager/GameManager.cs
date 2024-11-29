@@ -188,6 +188,7 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
         SoundManager.instance.UpdateLevelBGM();
         SetMaxScoreForLevel(scene.name);
         UITransitionUtility.Instance.MoveIn(gameplayPanel);

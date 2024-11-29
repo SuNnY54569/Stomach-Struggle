@@ -240,7 +240,7 @@ public class Steak : MonoBehaviour
             .setEase(LeanTweenType.easeOutQuad)
             .setOnComplete(() =>
             {
-                spriteRenderer.flipY = !spriteRenderer.flipY;
+                spriteRenderer.flipX = !spriteRenderer.flipX;
                 
                 LeanTween.moveY(gameObject, originalY, halfwayDuration)
                     .setEase(LeanTweenType.easeInQuad);
