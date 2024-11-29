@@ -42,6 +42,7 @@ public class FoodCooking : MonoBehaviour
     private Color overcookedColor = Color.black;
     #endregion
 
+    #region Unity Life Cycle
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -78,6 +79,7 @@ public class FoodCooking : MonoBehaviour
             }
         }
     }
+    #endregion
     
     #region Progress Bar Methods
     private void InitializeProgressBar()
@@ -215,7 +217,8 @@ public class FoodCooking : MonoBehaviour
         GameManager.Instance.DecreaseHealth(1);
     }
     #endregion
-    
+
+    #region Utility Method
     public bool IsTopSideCooked() => topSideCookingTimer >= cookingTime && topSideCookingTimer < overcookedTime;
     public bool IsBottomSideCooked() => bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime;
     public bool IsTopSideOvercooked() => topSideCookingTimer >= overcookedTime;
@@ -230,5 +233,6 @@ public class FoodCooking : MonoBehaviour
                 Destroy(gameObject);
             });
     }
+    #endregion
     
 }

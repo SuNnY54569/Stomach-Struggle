@@ -11,7 +11,6 @@ public class WashHandManager : MonoBehaviour
     public static WashHandManager Instance;
     
     #region Serialized Fields with Tooltips
-
     [Header("Position and Object Settings")]
     [SerializeField, Tooltip("List of positions where the objects can be placed.")]
     private List<GameObject> positions;
@@ -46,19 +45,15 @@ public class WashHandManager : MonoBehaviour
 
     [SerializeField, Tooltip("Canvas")] 
     private GameObject canvas;
-    
     #endregion
     
     #region Private Fields
-
     private List<GameObject> startPositions = new List<GameObject>();
     private bool isBlinking;
     private bool isAppear;
     private bool isPause;
     private bool isUnpause = true;
     private bool isPopUpComplete;
-    private bool isGameStart;
-
     #endregion
 
     #region Unity Lifecycle
@@ -87,9 +82,19 @@ public class WashHandManager : MonoBehaviour
     {
         HandlePopUp();
         HandleObjectBlinking();
-        HandlePauseState();
     }
     
+    private void OnEnable()
+    {
+        GameManager.OnGamePaused += HandleGamePaused;
+        GameManager.OnGameUnpaused += HandleGameUnpaused;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGamePaused -= HandleGamePaused;
+        GameManager.OnGameUnpaused -= HandleGameUnpaused;
+    }
     #endregion
     
     #region Game Start and Setup
@@ -106,14 +111,13 @@ public class WashHandManager : MonoBehaviour
         startPositions.Clear();
         List<GameObject> shuffledPositions = new List<GameObject>(positions);
         ShuffleList(shuffledPositions);
-        
+
         for (int i = 0; i < objects.Count; i++)
         {
             startPositions.Add(shuffledPositions[i]);
             StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
         }
 
-        isGameStart = true;
         StartCoroutine(PopDownAfterStart());
         
         centralImage.SetActive(true);
@@ -133,7 +137,7 @@ public class WashHandManager : MonoBehaviour
     }
     #endregion
     
-    #region Object Positioning and Movement
+    #region Object Positioning and Movement Methods
     private void ShuffleList(List<GameObject> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
@@ -204,7 +208,6 @@ public class WashHandManager : MonoBehaviour
     
     private IEnumerator MoveToBondedPosition()
     {
-        
         // Step 1: Move objects to their bonded positions simultaneously
         List<Coroutine> coroutines = new List<Coroutine>();
         for (int i = 0; i < objects.Count; i++)
@@ -313,34 +316,35 @@ public class WashHandManager : MonoBehaviour
         Destroy(warningText);
     }
     
-    private void HandlePauseState()
+    private void HandleGamePaused()
     {
-        if (warningText != null || startButton != null)
-        {
-            if (GameManager.Instance.isGamePaused && isPopUpComplete)
-            {
-                if (!isPause)
-                {
-                    UITransitionUtility.Instance.PopDown(startButton,LeanTweenType.easeInBack, 0.2f);
-                    UITransitionUtility.Instance.PopDown(warningText,LeanTweenType.easeInBack, 0.2f);
-                    isPause = true;
-                    isUnpause = false;
-                }
-            }
-            else if (!GameManager.Instance.isGamePaused && isPopUpComplete)
-            {
-                if (!isUnpause)
-                {
-                    UITransitionUtility.Instance.PopUp(warningText);
-                    UITransitionUtility.Instance.PopUp(startButton);
-                    isUnpause = true;
-                    isPause = false;
-                }
-            }
-        }
+        if (warningText == null && startButton == null) return;
+        if (isPause || !isPopUpComplete) return;
+        UITransitionUtility.Instance.PopDown(startButton, LeanTweenType.easeInBack, 0.2f);
+        UITransitionUtility.Instance.PopDown(warningText, LeanTweenType.easeInBack, 0.2f);
+                
+        isPause = true;
+        isUnpause = false;
+    }
+    
+    private void HandleGameUnpaused()
+    {
+        if (warningText == null && startButton == null) return;
+        if (isUnpause || !isPopUpComplete) return;
+        StartCoroutine(WaitToPopUp());
+        
+        isUnpause = true;
+        isPause = false;
     }
 
     #endregion
+
+    private IEnumerator WaitToPopUp()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        UITransitionUtility.Instance.PopUp(warningText);
+        UITransitionUtility.Instance.PopUp(startButton);
+    }
 }
 
 public static class ColliderExtensions

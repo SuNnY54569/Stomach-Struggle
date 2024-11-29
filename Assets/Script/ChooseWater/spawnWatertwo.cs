@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class spawnWatertwo : MonoBehaviour
 {
-    [SerializeField] private GameObject goodWaterPrefab;
+    [Header("Water Bottle Prefabs")]
+    [SerializeField] private GameObject goodWaterPrefab;  
     [SerializeField] private GameObject badWaterPrefab;
+
+    [Header("Spawn Settings")]
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private List<GameObject> waterBottles;
 
-    private int badWaterCount = 5;
+    [Header("Spawn Control")]
+    [SerializeField] private int badWaterCount = 5;
 
     void Start()
     {
@@ -25,7 +29,8 @@ public class spawnWatertwo : MonoBehaviour
         {
             GameObject bottle = Instantiate(badWaterPrefab, spawnList[i].position, Quaternion.identity);
             waterBottles.Add(bottle);
-            bottle.GetComponent<itemClickWater>().spawnWatertwo = gameObject.GetComponent<spawnWatertwo>();
+            itemClickWater itemClick = bottle.GetComponent<itemClickWater>();
+            itemClick.spawnWatertwo = this;
         }
 
         for (int i = badWaterCount; i < spawnList.Count; i++)
@@ -41,7 +46,11 @@ public class spawnWatertwo : MonoBehaviour
         {
             if (waterBottle.activeSelf)
             {
-                waterBottle.GetComponent<itemClickWater>().col.enabled = false;
+                itemClickWater itemClick = waterBottle.GetComponent<itemClickWater>();
+                if (itemClick != null)
+                {
+                    itemClick.col.enabled = false;
+                }
             }
         }
     }

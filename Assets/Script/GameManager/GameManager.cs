@@ -16,6 +16,7 @@ public class LevelSettings
 {
     [Tooltip("The name of the level.")]
     public string levelName;
+    
     [Tooltip("The maximum score required to win this level.")]
     public int maxScore;
 }
@@ -24,12 +25,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     
+    public static event Action OnGamePaused;
+    public static event Action OnGameUnpaused;
+    
     public bool isGamePaused;
     public bool isBlurEnabled;
     private Coroutine blurCoroutine;
     
     #region Health Settings
-    
     [Header("Health Settings")]
     [Tooltip("The maximum health the player can have.")]
     public int maxHealth = 3;
@@ -46,10 +49,11 @@ public class GameManager : MonoBehaviour
     [SerializeField, Tooltip("Sprite to represent an empty heart.")]
     private Sprite emptyHeart;
     
+    [Header("Win Heart")]
+    [SerializeField] private Image heartFill;
     #endregion
 
     #region Score Settings
-    
     [Header("Score Settings")]
     [SerializeField,Tooltip("The current score of the player.")]
     private int scoreValue = 0;
@@ -65,11 +69,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField, Tooltip("List of level settings to configure max score for each level.")]
     private List<LevelSettings> levelSettings;
-    
     #endregion
     
     #region Panel Settings
-    
     [Header("Win/Lose Panel")]
     [SerializeField, Tooltip("Panel to display when the game is over.")]
     private GameObject gameOverPanel;
@@ -85,16 +87,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject pauseButton;
 
-    [SerializeField] private GameObject normalPause;
-
-    [SerializeField] private GameObject cutScenePause;
+    [SerializeField] private GameObject[] normalPause;
+    [SerializeField] private GameObject[] cutScenePause;
     
     [SerializeField] private List<GameObject> uiPanels;
-    
     #endregion
 
     #region Tutorial Settings
-    
     [Header("Tutorial")] 
     [SerializeField, Tooltip("Panel to display Tutorial when scene start")] 
     public GameObject tutorialPanel;
@@ -103,11 +102,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField, Tooltip("Tutorial Video Manager Script")]
     private TutorialVideoManager tutorialVideoManager;
-    
     #endregion
 
     #region Total Health Tracking
-    
     [Header("Health Tracking")]
     [Tooltip("Total hearts the player has accumulated.")]
     public int totalHeart;
@@ -115,23 +112,15 @@ public class GameManager : MonoBehaviour
     public int totalHeartLeft;
     
     [Tooltip("Health stats for specific levels or checkpoints.")]
-    public int totalHeart1;
-    public int totalHeartLeft1;
-    
-    public int totalHeart2;
-    public int totalHeartLeft2;
-    
-    public int totalHeart3;
-    public int totalHeartLeft3;
+    public int totalHeart1, totalHeartLeft1;
+    public int totalHeart2, totalHeartLeft2;
+    public int totalHeart3, totalHeartLeft3;
     #endregion
     
     #region Scene Management
-
     public enum SceneCategory { Gameplay, Cutscene, Test, Summary, StartScene}
 
     [Header("Scenes to Deactivate object")]
-    
-    [Header("Scene Categories")]
     [SerializeField] private List<string> gameplayScenes;
     [SerializeField] private List<string> cutScenes;
     [SerializeField] private List<string> testScenes;
@@ -141,11 +130,9 @@ public class GameManager : MonoBehaviour
     private List<GameObject> objectsToDeactivate;
     
     private SceneCategory currentSceneCategory;
-    
     #endregion
     
     #region Post Processing Effects
-    
     [Header("Post Processing")]
     [SerializeField] private PostProcessVolume volume;
     [SerializeField] private float fadeDuration = 0.3f;
@@ -156,11 +143,9 @@ public class GameManager : MonoBehaviour
     private Vignette _vignette;
     private DepthOfField _depthOfField;
     private ColorGrading _colorGrading;
-    
     #endregion
 
     #region Player Information
-    
     [Header("Player Info")]
     [Tooltip("The name of the player.")]
     public string playerName = "Player";
@@ -170,11 +155,7 @@ public class GameManager : MonoBehaviour
     
     [Tooltip("Score after the test.")]
     public int postTestScore;
-    
     #endregion
-
-    [Header("Win Heart")]
-    [SerializeField] private Image heartFill; 
     
     #region Unity Lifecycle
     private void Awake()
@@ -217,28 +198,40 @@ public class GameManager : MonoBehaviour
         foreach (var obj in objectsToDeactivate)
             obj.SetActive(isGameplayScene);
 
-        normalPause.SetActive(isGameplayScene);
-        cutScenePause.SetActive(!isGameplayScene);
+        foreach (var button in normalPause)
+        {
+            button.SetActive(isGameplayScene);
+        }
+        
+        foreach (var button in cutScenePause)
+        {
+            button.SetActive(!isGameplayScene);
+        }
+        
+        bool isTestScene = currentSceneCategory == SceneCategory.Test;
+        
+        foreach (var button in normalPause)
+        {
+            button.SetActive(!isTestScene);
+        }
+        
+        foreach (var button in cutScenePause)
+        {
+            button.SetActive(isTestScene);
+        }
 
-        pauseButton.SetActive(
-            currentSceneCategory is SceneCategory.Gameplay or SceneCategory.Cutscene or SceneCategory.Test
-        );
+        pauseButton.SetActive(currentSceneCategory is SceneCategory.Gameplay or SceneCategory.Cutscene or SceneCategory.Test);
         
         SetupTutorial(scene.name);
     }
     
     public SceneCategory DetermineSceneCategory(string sceneName)
     {
-        if (gameplayScenes.Contains(sceneName))
-            return SceneCategory.Gameplay;
-        if (cutScenes.Contains(sceneName))
-            return SceneCategory.Cutscene;
-        if (testScenes.Contains(sceneName))
-            return SceneCategory.Test;
-        if (summaryScenes.Contains(sceneName))
-            return SceneCategory.Summary;
+        if (gameplayScenes.Contains(sceneName)) return SceneCategory.Gameplay;
+        if (cutScenes.Contains(sceneName)) return SceneCategory.Cutscene;
+        if (testScenes.Contains(sceneName)) return SceneCategory.Test;
+        if (summaryScenes.Contains(sceneName)) return SceneCategory.Summary;
 
-        // Default category
         return SceneCategory.StartScene;
     }
     
@@ -265,7 +258,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
     #endregion
     
     #region Health Management
@@ -413,6 +405,7 @@ public class GameManager : MonoBehaviour
         {
             // If the game is currently paused, start the unblur coroutine to unpause.
             StartCoroutine(UnblurBeforeResume());
+            OnGameUnpaused?.Invoke();
         }
         else
         {
@@ -421,6 +414,7 @@ public class GameManager : MonoBehaviour
             SoundManager.PauseAllSounds();
             Time.timeScale = 0f;
             BlurBackGround();
+            OnGamePaused?.Invoke();
         }
     }
 
@@ -576,22 +570,18 @@ public class GameManager : MonoBehaviour
 
     public void MovePanelIn(GameObject panel)
     {
-        UITransitionUtility.Instance.MoveIn(panel);
+        SetActivePauseButton(false);
+        
+        UITransitionUtility.Instance.MoveIn
+            (panel, LeanTweenType.easeInOutQuad , 1f, () => { SetActivePauseButton(true);});
     }
 
     public void MovePanelOut(GameObject panel)
     {
-        UITransitionUtility.Instance.MoveOut(panel);
-    }
-
-    public void PopUpButton(GameObject button)
-    {
-        UITransitionUtility.Instance.PopUp(button);
-    }
-    
-    public void PopDownButton(GameObject button)
-    {
-        UITransitionUtility.Instance.PopDown(button);
+        SetActivePauseButton(false);
+        
+        UITransitionUtility.Instance.MoveOut
+            (panel, LeanTweenType.easeInOutQuad , 1f, () => { SetActivePauseButton(true);});
     }
     
     public void MoveAllPanelOut()
@@ -602,6 +592,19 @@ public class GameManager : MonoBehaviour
         UITransitionUtility.Instance.MoveOut(tutorialPanel);
         UITransitionUtility.Instance.MoveOut(gameplayPanel);
         UITransitionUtility.Instance.MoveOut(settingPanel);
+    }
+
+    private void SetActivePauseButton(bool isActive)
+    {
+        foreach (var button in normalPause)
+        {
+            button.GetComponent<Button>().interactable = isActive;
+        }
+
+        foreach (var button in cutScenePause)
+        {
+            button.GetComponent<Button>().interactable = isActive;
+        }
     }
 
     #endregion

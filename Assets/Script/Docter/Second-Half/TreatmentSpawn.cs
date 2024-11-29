@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class TreatmentSpawn : MonoBehaviour
 {
-    [SerializeField] private GameObject[] treatments; // Combine good and bad treatments into one array
+    [SerializeField] private GameObject[] treatments;
     [SerializeField] private Transform[] spawnpoints;
 
     private void Start()
@@ -18,11 +18,9 @@ public class TreatmentSpawn : MonoBehaviour
     
     private void SpawnTreatments()
     {
-        // Shuffle the spawnpoints array to randomize treatment placement
         Transform[] shuffledSpawnpoints = (Transform[])spawnpoints.Clone();
         ShuffleArray(shuffledSpawnpoints);
-
-        // Make sure we don't exceed the number of spawnpoints
+        
         int maxSpawnCount = Mathf.Min(treatments.Length, shuffledSpawnpoints.Length);
 
         for (int i = 0; i < maxSpawnCount; i++)

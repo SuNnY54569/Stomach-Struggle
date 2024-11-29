@@ -6,14 +6,16 @@ using Random = UnityEngine.Random;
 
 public class itemClickWater : MonoBehaviour
 {
+    [Header("Visuals")]
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Sprite[] waterSprites;
     [SerializeField] private float scaleDuration = 0.2f;
     [SerializeField] private Vector3 targetScale = Vector3.zero;
-    
+
+    [Header("References")]
     public Collider2D col;
-    public spawnWatertwo spawnWatertwo;
-    
+    public spawnWatertwo spawnWatertwo; 
+
     private SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -34,7 +36,6 @@ public class itemClickWater : MonoBehaviour
     private void OnMouseOver()
     {
         if (GameManager.Instance.isGamePaused) return;
-        
         sprite.color = Color.gray;
     }
 
@@ -50,29 +51,25 @@ public class itemClickWater : MonoBehaviour
 
         if (gameObject.CompareTag("GoodWater"))
         {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.DecreaseHealth(1);
-            }
+            GameManager.Instance.DecreaseHealth(1);
         }
         else if (gameObject.CompareTag("BadWater"))
         {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.IncreaseScore(1);
-                if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax)
-                {
-                    spawnWatertwo.DisableAllCollider();
-                }
+            GameManager.Instance.IncreaseScore(1);
+            if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax) 
+            { 
+                spawnWatertwo.DisableAllCollider();
             }
+            
         }
+        
         LeanTween.scale(gameObject, targetScale, scaleDuration)
-            .setEase(LeanTweenType.easeInOutQuad) // Optional: Customize easing
+            .setEase(LeanTweenType.easeInOutQuad)
             .setOnComplete(() =>
             {
-                // Optionally destroy the object or trigger other actions
                 gameObject.SetActive(false);
             });
+        
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 }

@@ -43,10 +43,9 @@ public class Treatment : MonoBehaviour
             }
         }
         LeanTween.scale(gameObject, targetScale, scaleDuration)
-            .setEase(LeanTweenType.easeInOutQuad) // Optional: Customize easing
+            .setEase(LeanTweenType.easeInOutQuad)
             .setOnComplete(() =>
             {
-                // Optionally destroy the object or trigger other actions
                 gameObject.SetActive(false);
             });
     }
@@ -70,11 +69,11 @@ public class Treatment : MonoBehaviour
         if (GameManager.Instance.isGamePaused) return;
         if (!canShow) return;
         
-        Text.SetActive(true); // Ensure the panel is active
-        Text.transform.localScale = Vector3.zero; // Start from zero scale
+        Text.SetActive(true);
+        Text.transform.localScale = Vector3.zero;
         LeanTween.scale(Text, initialScale, 0.2f)
-            .setEase(LeanTweenType.easeOutBack) // Set easing type
-            .setIgnoreTimeScale(true); // Use unscaled time
+            .setEase(LeanTweenType.easeOutBack)
+            .setIgnoreTimeScale(true);
         LeanTween.rotateZ(gameObject, 5f, 0.1f)
             .setLoopPingPong(1).setOnComplete(() =>
             {

@@ -42,14 +42,21 @@ public class spawnFoodRandom : MonoBehaviour
         UpdateSpawnCountUI();
         UITransitionUtility.Instance.MoveIn(panel,LeanTweenType.easeInOutQuad, 0.2f);
     }
+    
+    private void OnEnable()
+    {
+        GameManager.OnGamePaused += HandlePause;
+        GameManager.OnGameUnpaused += HandleUnpause;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGamePaused -= HandlePause;
+        GameManager.OnGameUnpaused -= HandleUnpause;
+    }
 
     private void Update()
     {
-        
-        clockGameObject.SetActive(!GameManager.Instance.isGamePaused);
-        spawnCountText.gameObject.SetActive(!GameManager.Instance.isGamePaused);
-        guideText.SetActive(!GameManager.Instance.isGamePaused);
-        
         if (isGameOver) return;
         
         if (spawnCount >= maxSpawns && GameManager.Instance.currentHealth > 0)
@@ -66,6 +73,20 @@ public class spawnFoodRandom : MonoBehaviour
         }
         
         HandleFoodAndTimer();
+    }
+    
+    private void HandlePause()
+    {
+        LeanTween.scale(clockGameObject, Vector3.zero, 0.2f).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true);
+        LeanTween.scale(spawnCountText.gameObject, Vector3.zero, 0.2f).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true);
+        LeanTween.scale(guideText, Vector3.zero, 0.2f).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true);
+    }
+
+    private void HandleUnpause()
+    {
+        LeanTween.scale(clockGameObject, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuad).setDelay(0.5f).setIgnoreTimeScale(true);
+        LeanTween.scale(spawnCountText.gameObject, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuad).setDelay(0.5f).setIgnoreTimeScale(true);
+        LeanTween.scale(guideText, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuad).setDelay(0.5f).setIgnoreTimeScale(true);
     }
 
     private void SpawnAllFood()

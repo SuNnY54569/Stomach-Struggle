@@ -21,7 +21,7 @@ public class ShopButton : MonoBehaviour
     [Range(0,1)] [SerializeField] private float clawChance;
     [SerializeField] private ClawController clawController;
     [SerializeField] private bool isReturnButton;
-    [SerializeField] private Collider2D collider;
+    [SerializeField] private Collider2D col;
     
     private const float AnimationDuration = 0.5f;
     private const LeanTweenType CloseEaseType = LeanTweenType.easeInBack;
@@ -47,9 +47,26 @@ public class ShopButton : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        collider.enabled = !GameManager.Instance.isGamePaused;
+        GameManager.OnGamePaused += HandleGamePause;
+        GameManager.OnGameUnpaused += HandleGameUnPause;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGamePaused -= HandleGamePause;
+        GameManager.OnGameUnpaused -= HandleGameUnPause;
+    }
+
+    private void HandleGamePause()
+    {
+        col.enabled = false;
+    }
+    
+    private void HandleGameUnPause()
+    {
+        col.enabled = true;
     }
 
     private void OnMouseOver()

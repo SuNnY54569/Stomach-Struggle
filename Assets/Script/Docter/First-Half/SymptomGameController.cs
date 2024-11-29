@@ -45,7 +45,6 @@ public class SymptomGameController : MonoBehaviour
         SetupSymptoms();
         SetRandomSymptom();
         ShuffleToggles();
-        // Assign CheckAnswer() to each checkbox's OnValueChanged event
         foreach (Toggle toggle in symptomCheckboxes)
         {
             toggle.onValueChanged.AddListener(delegate { CheckAnswer(toggle); });
@@ -55,8 +54,7 @@ public class SymptomGameController : MonoBehaviour
     private void SetupSymptoms()
     {
         activeSymptoms = new List<Symptom> { fixedSymptom1, fixedSymptom2 };
-
-        // Choose one random symptom that isn’t fixedSymptom1 or fixedSymptom2
+        
         List<Symptom> availableSymptoms = new List<Symptom>(symptomsList);
         availableSymptoms.Remove(fixedSymptom1);
         availableSymptoms.Remove(fixedSymptom2);
@@ -92,18 +90,16 @@ public class SymptomGameController : MonoBehaviour
             shuffledToggles[i] = shuffledToggles[randomIndex];
             shuffledToggles[randomIndex] = temp;
         }
-
-        // Remove current toggles from the layout group and re-add in shuffled order
+        
         foreach (Toggle toggle in shuffledToggles)
         {
-            toggle.transform.SetParent(null); // Temporarily remove from layout
+            toggle.transform.SetParent(null); 
         }
         foreach (Toggle toggle in shuffledToggles)
         {
-            toggle.transform.SetParent(layoutGroup.transform); // Re-add in new order
+            toggle.transform.SetParent(layoutGroup.transform);
         }
-
-        // Refresh the layout group to apply the new order
+        
         LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
     }
 
@@ -116,10 +112,10 @@ public class SymptomGameController : MonoBehaviour
 
         if (toggleLabel.text == currentSymptom.symptomDescription)
         {
-            activeSymptoms.Remove(currentSymptom); // Remove matched symptom
-            selectedToggle.interactable = false; // Disable toggle
+            activeSymptoms.Remove(currentSymptom);
+            selectedToggle.interactable = false;
             UITransitionUtility.Instance.PopDown(talkObject);
-            SetRandomSymptom(); // Set the next symptom or end the game
+            SetRandomSymptom();
         }
         else
         {
