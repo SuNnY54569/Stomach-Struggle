@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &263767224
 RectTransform:
   m_ObjectHideFlags: 0
@@ -158,9 +158,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 30, y: -30}
+  m_AnchoredPosition: {x: 129.99994, y: -129.99995}
   m_SizeDelta: {x: 200, y: 200}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &263767225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,9 +309,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6831690669236110215, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -564,7 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1543239218}
-  remainingTime: 30
+  remainingTime: 0
   clockGameObject: {fileID: 263767223}
   isGameOver: 0
 --- !u!1 &1543239216

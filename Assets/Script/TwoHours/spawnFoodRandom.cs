@@ -23,11 +23,11 @@ public class spawnFoodRandom : MonoBehaviour
     [SerializeField] private GameObject guideText;
     [SerializeField] private GameObject panel;
 
-    private bool isGameOver = false;
-    public bool isTickingSoundPlaying = false;
+    private bool isGameOver;
+    public bool isTickingSoundPlaying;
 
     private float timeLeft;
-    private int spawnCount = 0;
+    private int spawnCount;
     private const int maxSpawns = 4;
 
     private void Awake()
@@ -63,7 +63,6 @@ public class spawnFoodRandom : MonoBehaviour
         {
             WinGame();
             Debug.Log("Win");
-            //GameManager.Instance.PauseGame();
             return;
         }
         
