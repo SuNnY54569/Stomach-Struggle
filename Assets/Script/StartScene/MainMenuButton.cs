@@ -8,18 +8,11 @@ public class MainMenuButton : MonoBehaviour
     [SerializeField] private GameObject picturePanel;
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] private GameObject settingPanel;
-
-    private void Awake()
-    {
-    }
-
+    [SerializeField] private GameObject creditPanel;
+    
     private void Start()
     {
-        UITransitionUtility.Instance.Initialize(picturePanel, new Vector2(0,0));
-        UITransitionUtility.Instance.Initialize(buttonPanel, new Vector2(0,0));
-        UITransitionUtility.Instance.Initialize(settingPanel, new Vector2(0,0));
-        UITransitionUtility.Instance.MoveIn(picturePanel, LeanTweenType.easeOutBounce, 2f);
-        UITransitionUtility.Instance.MoveIn(buttonPanel,LeanTweenType.easeOutBounce, 2f);
+        Initialize();
     }
 
     public void StartGame()
@@ -43,8 +36,18 @@ public class MainMenuButton : MonoBehaviour
     {
         PlayUIClick();
         UITransitionUtility.Instance.MoveOut(settingPanel, LeanTweenType.easeInQuad, 0.5f);
+        UITransitionUtility.Instance.MoveOut(creditPanel, LeanTweenType.easeInQuad, 0.5f);
         UITransitionUtility.Instance.MoveIn(picturePanel, LeanTweenType.easeOutBounce);
         UITransitionUtility.Instance.MoveIn(buttonPanel, LeanTweenType.easeOutBounce);
+        GameManager.Instance.BlurBackGround();
+    }
+
+    public void Credit()
+    {
+        PlayUIClick();
+        UITransitionUtility.Instance.MoveIn(creditPanel, LeanTweenType.easeInQuad, 0.5f);
+        UITransitionUtility.Instance.MoveOut(picturePanel, LeanTweenType.easeOutBounce);
+        UITransitionUtility.Instance.MoveOut(buttonPanel, LeanTweenType.easeOutBounce);
         GameManager.Instance.BlurBackGround();
     }
 
@@ -57,5 +60,15 @@ public class MainMenuButton : MonoBehaviour
     public void PlayUIClick()
     {
         SoundManager.instance.PlayUIClick();
+    }
+
+    private void Initialize()
+    {
+        UITransitionUtility.Instance.Initialize(picturePanel, Vector2.zero);
+        UITransitionUtility.Instance.Initialize(buttonPanel, Vector2.zero);
+        UITransitionUtility.Instance.Initialize(settingPanel, Vector2.zero);
+        UITransitionUtility.Instance.Initialize(creditPanel, Vector2.zero);
+        UITransitionUtility.Instance.MoveIn(picturePanel, LeanTweenType.easeOutBounce, 2f);
+        UITransitionUtility.Instance.MoveIn(buttonPanel,LeanTweenType.easeOutBounce, 2f);
     }
 }
