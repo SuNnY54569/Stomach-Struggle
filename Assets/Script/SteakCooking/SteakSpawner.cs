@@ -5,28 +5,25 @@ using UnityEngine;
 public class SteakSpawner : MonoBehaviour
 {
     [Header("Steak Settings")]
-    [SerializeField] private GameObject steakPrefab; // Prefab to spawn
-    [SerializeField] private Transform[] spawnPoints; // Where to spawn the new steak
-    [SerializeField] private int maxSteakCount = 4; // Total number of steaks to spawn
-    [SerializeField] private int previousMaxScore; // Max score to win the game
+    [SerializeField] private GameObject steakPrefab;
+    [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private int maxSteakCount = 4;
     [SerializeField] private int maxScore = 3;
     
     private int remainingSteaks;
+    private bool isGameOverTriggered = false;
 
     private void Start()
     {
-        previousMaxScore = GameManager.Instance.scoreMax;
         GameManager.Instance.SetMaxScore(maxScore);
         GameManager.Instance.SetScoreTextActive(true);
         GameManager.Instance.UpdateScoreText();
         remainingSteaks = maxSteakCount;
         SpawnInitialSteaks();
-        //SoundManager.PlaySound();
     }
 
     private void SpawnInitialSteaks()
     {
-        // Spawn steaks at each spawn point, up to the maxSteakCount
         for (int i = 0; i < maxSteakCount && i < spawnPoints.Length; i++)
         {
             Instantiate(steakPrefab, spawnPoints[i].position, Quaternion.identity);
@@ -35,15 +32,35 @@ public class SteakSpawner : MonoBehaviour
 
     public void HandleSteakLost()
     {
+        if (isGameOverTriggered) return;
+
         remainingSteaks--;
-        if (remainingSteaks <= 0)
+        CheckGameOverConditions();
+    }
+    
+    private void CheckGameOverConditions()
+    {
+        // Centralized game-over logic
+        if (isGameOverTriggered) return;
+
+        if (GameManager.Instance.currentHealth == 0)
         {
-            if (GameManager.Instance.GetScore() < GameManager.Instance.scoreMax)
-            {
-                GameManager.Instance.GameOver();
-            }
-            
-            GameManager.Instance.scoreMax = previousMaxScore;
+            isGameOverTriggered = true;
         }
+
+        if (remainingSteaks < maxScore && 
+            (GameManager.Instance.GetScore() < GameManager.Instance.scoreMax || 
+             GameManager.Instance.currentHealth == 0))
+        {
+            TriggerGameOver();
+        }
+    }
+    
+    private void TriggerGameOver()
+    {
+        if (isGameOverTriggered) return;
+
+        isGameOverTriggered = true;
+        GameManager.Instance.GameOver();
     }
 }

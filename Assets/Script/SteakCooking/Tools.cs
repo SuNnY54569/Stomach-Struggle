@@ -101,7 +101,7 @@ public class Tools : MonoBehaviour
         }
     }
     
-    private void StoreAndDeselectTool()
+    public void StoreAndDeselectTool()
     {
         lastTool = currentTool;
         DeselectTool();

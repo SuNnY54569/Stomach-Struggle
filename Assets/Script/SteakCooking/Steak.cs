@@ -20,9 +20,11 @@ public class Steak : MonoBehaviour
     public bool isTopSideCooking = true;
     private bool isCooking = false;
     private bool isDragging = false;
+    private bool isOnCooldown = false;
 
     [SerializeField] private Transform panCenter;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Collider2D col;
 
     private Vector2 originalPosition;
     private Tools.ToolType currentTool;
@@ -64,6 +66,11 @@ public class Steak : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.Instance.isGamePaused) return;
+        
+        if (Tools.Instance.currentlyCookingSteak != null && Tools.Instance.currentlyCookingSteak != this)
+        {
+            return;
+        }
         
         if (IsTopSideOvercooked() || IsBottomSideOvercooked())
         {
@@ -122,7 +129,6 @@ public class Steak : MonoBehaviour
             DestroySteak();
             SoundManager.PlaySound(SoundType.PlaceOnTrash, VolumeType.SFX);
             steakSpawner.HandleSteakLost();
-            Tools.Instance.DeselectTool();
         }
         else if (currentTool == Tools.ToolType.Tongs)
         {
@@ -138,15 +144,13 @@ public class Steak : MonoBehaviour
     {
         if (IsDroppedOnLayer("PanLayer"))
         {
-            if (Tools.Instance.currentlyCookingSteak != null)
+            if (Tools.Instance.currentlyCookingSteak != null && Tools.Instance.currentlyCookingSteak != this)
             {
                 ResetPosition();
                 return;
             }
             SnapToPanCenter();
-            originalPosition = transform.position;
             StartCooking();
-            Tools.Instance.DeselectTool();
         }
         else if (IsDroppedOnLayer("PlateLayer"))
         {
@@ -167,7 +171,6 @@ public class Steak : MonoBehaviour
         else if (IsDroppedOnLayer("PanLayer"))
         {
             SnapToPanCenter();
-            originalPosition = transform.position;
             StartCooking();
         }
         else
@@ -209,7 +212,6 @@ public class Steak : MonoBehaviour
         }
         else if(Tools.Instance.IsCurrentlyCookingSteak(this) && isCooking == false)
         {
-            ResetPosition();
             isCooking = true;
         }
     }
@@ -225,6 +227,16 @@ public class Steak : MonoBehaviour
         {
             Debug.Log("Flip is on cooldown. Please wait.");
             return;
+        }
+        
+        switch (isTopSideCooking)
+        {
+            case true when !IsTopSideCooked():
+                Debug.Log("Top side is not cooked yet. Cannot flip.");
+                return;
+            case false when !IsBottomSideCooked():
+                Debug.Log("Bottom side is not cooked yet. Cannot flip.");
+                return;
         }
         
         isTopSideCooking = !isTopSideCooking;
@@ -257,7 +269,7 @@ public class Steak : MonoBehaviour
             HandleCooked();
             SoundManager.PlaySound(SoundType.PlaceOnPlate,VolumeType.SFX);
         }
-        else if (topSideCookingTimer < cookingTime || bottomSideCookingTimer < cookingTime)
+        else if (topSideCookingTimer < cookingTime && bottomSideCookingTimer < cookingTime)
         {
             HandleUndercooked();
         }
@@ -267,31 +279,28 @@ public class Steak : MonoBehaviour
         }
         
         Tools.Instance.ClearCurrentlyCookingSteak();
-        Tools.Instance.DeselectTool();
     }
     
     private void HandleUndercooked()
     {
         GameManager.Instance.DecreaseHealth(1);
         ResetPosition();
-        if (Tools.Instance.currentlyCookingSteak == gameObject && IsDroppedOnLayer("PanLayer"))
-        {
-            StartCooking();
-        }
     }
 
     private void HandleCooked()
     {
         GameManager.Instance.IncreaseScore(1);
         Tools.Instance.ClearCurrentlyCookingSteak();
-        gameObject.GetComponent<Collider2D>().enabled = false;
-        steakSpawner.HandleSteakLost();
+        col.enabled = false;
     }
 
     private void HandleOvercooked()
     {
+        isCooking = false;
+        Tools.Instance.ClearCurrentlyCookingSteak();
         GameManager.Instance.DecreaseHealth(1);
-        ResetPosition();
+        steakSpawner.HandleSteakLost();
+        col.enabled = false;
     }
 
     private void MarkAsOvercooked()
@@ -317,7 +326,7 @@ public class Steak : MonoBehaviour
         {
             LeanTween.move(gameObject, panCenter.position, 0.5f)
                 .setEase(LeanTweenType.easeInOutQuad)
-                .setOnComplete(() => Debug.Log("Steak reset to original position."));
+                .setOnComplete(() => originalPosition = transform.position);
         }
     }
     

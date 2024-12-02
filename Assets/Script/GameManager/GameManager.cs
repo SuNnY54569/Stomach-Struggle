@@ -191,6 +191,7 @@ public class GameManager : MonoBehaviour
         
         SoundManager.instance.UpdateLevelBGM();
         SetMaxScoreForLevel(scene.name);
+        UpdateScoreText();
         UITransitionUtility.Instance.MoveIn(gameplayPanel);
         
         currentSceneCategory = DetermineSceneCategory(scene.name);
@@ -472,6 +473,7 @@ public class GameManager : MonoBehaviour
     public void RestartScene(Button button)
     {
         ResetHealth();
+        ResetTotalHeart();
         ResetScore();
         MoveAllPanelOut();
         SceneManagerClass.Instance.ReloadScene();
