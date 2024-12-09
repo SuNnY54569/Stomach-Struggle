@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class ToolButton : MonoBehaviour
+public class ToolButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     
     [Header("Tool Button Settings")]
@@ -24,7 +25,7 @@ public class ToolButton : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    private void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused) return;
         
@@ -39,13 +40,13 @@ public class ToolButton : MonoBehaviour
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
-    private void OnMouseOver()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !gameObject.activeSelf) return;
         sprite.color = Color.gray;
     }
     
-    private void OnMouseExit()
+    public void OnPointerExit(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !gameObject.activeSelf) return;
         sprite.color = Color.white;

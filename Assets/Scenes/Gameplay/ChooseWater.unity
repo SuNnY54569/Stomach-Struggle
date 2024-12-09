@@ -581,6 +581,7 @@ MonoBehaviour:
   - {fileID: 1452593726}
   - {fileID: 1302151384}
   waterBottles: []
+  badWaterCount: 5
 --- !u!1 &699900336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,7 +1742,6 @@ MonoBehaviour:
   - {fileID: 1766179758}
   - {fileID: 586958987}
   - {fileID: 737970003}
-  isReturnButton: 0
 --- !u!61 &1932236089
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -2,89 +2,48 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 
-public class waterShop : MonoBehaviour
+public class waterShop : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Water Shop Button Settings")]
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private GameObject[] objectsToClose;
     [SerializeField] private GameObject[] objectsToOpen;
-    [SerializeField] private bool isReturnButton;
-    
-    private bool isPointerOver = false;
 
     private void Start()
     {
         GameManager.Instance.SetScoreTextActive(false);
     }
-    
-    private void Update()
+
+    // Called when the pointer clicks or taps the object
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused) return;
 
-        // Detect touch or mouse click
-        if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
-        {
-            HandlePointerDown();
-        }
+        ToggleObjects();
 
-        // Check hover-like behavior
-        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
-        {
-            HandleMouseHover();
-        }
+        SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
+        sprite.color = Color.white;
     }
 
-    private void HandlePointerDown()
+    // Called when the pointer enters the object (hover effect)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        // Check if the pointer is over this object
-        Vector2 pointerPosition = GetPointerPosition();
-        RaycastHit2D hit = Physics2D.Raycast(pointerPosition, Vector2.zero);
+        if (GameManager.Instance.isGamePaused) return;
 
-        if (hit.collider != null && hit.collider.gameObject == gameObject)
-        {
-            ToggleObjects();
-            SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
-            sprite.color = Color.white;
-        }
+        sprite.color = Color.gray;
     }
 
-    private void HandleMouseHover()
+    // Called when the pointer exits the object
+    public void OnPointerExit(PointerEventData eventData)
     {
-        Vector2 pointerPosition = GetPointerPosition();
-        RaycastHit2D hit = Physics2D.Raycast(pointerPosition, Vector2.zero);
+        if (GameManager.Instance.isGamePaused) return;
 
-        if (hit.collider != null && hit.collider.gameObject == gameObject)
-        {
-            if (!isPointerOver)
-            {
-                sprite.color = Color.gray;
-                isPointerOver = true;
-            }
-        }
-        else
-        {
-            if (isPointerOver)
-            {
-                sprite.color = Color.white;
-                isPointerOver = false;
-            }
-        }
+        sprite.color = Color.white;
     }
-    
-    private Vector2 GetPointerPosition()
-    {
-        if (Input.touchCount > 0)
-        {
-            return Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-        }
-        else
-        {
-            return Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-    }
-    
+
     private void ToggleObjects()
     {
         // Close all specified objects

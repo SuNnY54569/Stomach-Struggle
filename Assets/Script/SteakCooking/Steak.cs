@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Steak : MonoBehaviour
+public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     #region Cooking Settings
     [Header("Cooking Settings")]
@@ -62,8 +63,8 @@ public class Steak : MonoBehaviour
     }
     #endregion
     
-    #region Mouse Interaction
-    private void OnMouseDown()
+    #region Pointer Events
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused) return;
         
@@ -102,7 +103,7 @@ public class Steak : MonoBehaviour
         }
     }
     
-    private void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !isDragging) return;
         
@@ -110,7 +111,7 @@ public class Steak : MonoBehaviour
         transform.position = mousePosition;
     }
     
-    private void OnMouseUp()
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !isDragging) return;
         
