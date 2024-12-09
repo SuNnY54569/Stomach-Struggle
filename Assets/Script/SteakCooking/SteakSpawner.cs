@@ -15,9 +15,8 @@ public class SteakSpawner : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.SetMaxScore(maxScore);
-        GameManager.Instance.SetScoreTextActive(true);
-        GameManager.Instance.UpdateScoreText();
+        //GameManager.Instance.SetScoreTextActive(true);
+        GameManager.Instance.scoreManager.UpdateScoreText();
         remainingSteaks = maxSteakCount;
         SpawnInitialSteaks();
     }
@@ -43,14 +42,14 @@ public class SteakSpawner : MonoBehaviour
         // Centralized game-over logic
         if (isGameOverTriggered) return;
 
-        if (GameManager.Instance.currentHealth == 0)
+        if (GameManager.Instance.healthManager.currentHealth == 0)
         {
             isGameOverTriggered = true;
         }
 
         if (remainingSteaks < maxScore && 
-            (GameManager.Instance.GetScore() < GameManager.Instance.scoreMax || 
-             GameManager.Instance.currentHealth == 0))
+            (GameManager.Instance.scoreManager.GetScore() < GameManager.Instance.scoreManager.scoreMax || 
+             GameManager.Instance.healthManager.currentHealth == 0))
         {
             TriggerGameOver();
         }
@@ -61,6 +60,6 @@ public class SteakSpawner : MonoBehaviour
         if (isGameOverTriggered) return;
 
         isGameOverTriggered = true;
-        GameManager.Instance.GameOver();
+        GameManager.Instance.healthManager.GameOver();
     }
 }

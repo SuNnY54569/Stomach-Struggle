@@ -6041,6 +6041,8 @@ GameObject:
   - component: {fileID: 4656033396446134791}
   - component: {fileID: 4016435654707868921}
   - component: {fileID: 6330731320766605027}
+  - component: {fileID: 5349750920861133716}
+  - component: {fileID: 522290302895963774}
   m_Layer: 0
   m_Name: Player
   m_TagString: Respawn
@@ -6082,28 +6084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe6209c919425a4986ba92e218eef03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthManager: {fileID: 5349750920861133716}
+  scoreManager: {fileID: 522290302895963774}
   isGamePaused: 0
   isBlurEnabled: 0
-  maxHealth: 3
-  currentHealth: 0
-  hearts:
-  - {fileID: 4415705684470853587}
-  - {fileID: 79594371720720842}
-  - {fileID: 612236002009804672}
-  fullHeart: {fileID: -1319838257, guid: 75b444b137b06c048862cd3f13c1635a, type: 3}
-  emptyHeart: {fileID: -1741624826, guid: 75b444b137b06c048862cd3f13c1635a, type: 3}
-  heartFill: {fileID: 2340206247906188036}
-  scoreValue: 0
-  scoreMax: 5
-  scoreGameObject: {fileID: 8611649445219423923}
-  scoreText: {fileID: 8850102741101602797}
-  levelSettings:
-  - levelName: Grill
-    maxScore: 5
-  - levelName: ChooseWater
-    maxScore: 5
-  - levelName: Claw machine
-    maxScore: 5
   gameOverPanel: {fileID: 7869578107665225231}
   winPanel: {fileID: 2498101482384833761}
   pausePanel: {fileID: 9164563958850804555}
@@ -6171,9 +6155,9 @@ MonoBehaviour:
   - {fileID: 3731210161795545461}
   - {fileID: 8611649445219423923}
   volume: {fileID: 4719851792561678198}
-  fadeDuration: 0.5
-  shakeIntensity: 0.3
-  intensity: 0.4
+  _vignette: {fileID: 0}
+  _depthOfField: {fileID: 0}
+  _colorGrading: {fileID: 0}
   playerName: Player
   preTestScore: 0
   postTestScore: 0
@@ -6189,6 +6173,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4759f68cdb64bb647a0a03b18e3e0498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5349750920861133716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6831690669236110215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63a6259f3946ca409d59dac15a668e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  currentHealth: 0
+  hearts:
+  - {fileID: 4415705684470853587}
+  - {fileID: 79594371720720842}
+  - {fileID: 612236002009804672}
+  heartFill: {fileID: 2340206247906188036}
+  fullHeart: {fileID: -1319838257, guid: 75b444b137b06c048862cd3f13c1635a, type: 3}
+  emptyHeart: {fileID: 172391591, guid: 75b444b137b06c048862cd3f13c1635a, type: 3}
+  fadeDuration: 0.5
+  shakeIntensity: 0.3
+  intensity: 0.4
+--- !u!114 &522290302895963774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6831690669236110215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073c962b7c893ea498ce33d20bb9c4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreValue: 0
+  scoreMax: 5
+  scoreGameObject: {fileID: 8611649445219423923}
+  scoreText: {fileID: 8850102741101602797}
+  levelSettings:
+  - levelName: Grill
+    maxScore: 5
+  - levelName: ChooseWater
+    maxScore: 5
+  - levelName: Claw machine
+    maxScore: 5
+  scenesToShowScoreGameObject:
+  - ChooseWater
+  - Claw machine
 --- !u!1 &6907168009907296281
 GameObject:
   m_ObjectHideFlags: 0

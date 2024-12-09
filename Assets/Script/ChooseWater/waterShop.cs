@@ -11,51 +11,65 @@ public class waterShop : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private GameObject[] objectsToClose;
     [SerializeField] private GameObject[] objectsToOpen;
+    
+    private static readonly Color DefaultColor = Color.white;
+    private static readonly Color HoverColor = Color.gray;
 
     private void Start()
     {
-        GameManager.Instance.SetScoreTextActive(false);
+        //GameManager.Instance.SetScoreTextActive(false);
     }
 
     // Called when the pointer clicks or taps the object
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (GameManager.Instance.isGamePaused) return;
+        if (GameManager.Instance.isGamePaused == true) return;
 
         ToggleObjects();
-
-        SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
-        sprite.color = Color.white;
+        PlayClickSound();
+        SetSpriteColor(DefaultColor);
     }
 
     // Called when the pointer enters the object (hover effect)
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (GameManager.Instance.isGamePaused) return;
+        if (GameManager.Instance.isGamePaused == true) return;
 
-        sprite.color = Color.gray;
+        SetSpriteColor(HoverColor);
     }
 
     // Called when the pointer exits the object
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (GameManager.Instance.isGamePaused) return;
+        if (GameManager.Instance.isGamePaused == true) return;
 
-        sprite.color = Color.white;
+        SetSpriteColor(DefaultColor);
     }
 
     private void ToggleObjects()
     {
-        // Close all specified objects
-        foreach (var objectToClose in objectsToClose)
+        // Use a single method to toggle object states for clarity and maintainability
+        SetActiveState(objectsToClose, false);
+        SetActiveState(objectsToOpen, true);
+    }
+    
+    private void SetActiveState(IEnumerable<GameObject> objects, bool state)
+    {
+        foreach (var obj in objects)
         {
-            objectToClose.SetActive(false);
+            if (obj.activeSelf != state)
+                obj.SetActive(state);
         }
+    }
 
-        // Open all specified objects
-        foreach (var objectToOpen in objectsToOpen)
-        {
-            objectToOpen.SetActive(true);
-        }
+    private void SetSpriteColor(Color color)
+    {
+        if (sprite != null)
+            sprite.color = color;
+    }
+
+    private void PlayClickSound()
+    {
+        SoundManager.PlaySound(SoundType.UIClick, VolumeType.SFX);
     }
 }

@@ -7,9 +7,15 @@ public class UITransitionUtility : MonoBehaviour
 {
     public static UITransitionUtility Instance { get; private set; }
     
-    private Dictionary<GameObject, Vector2> initialPositions = new Dictionary<GameObject, Vector2>();
-    private Dictionary<GameObject, Vector2> targetPositions = new Dictionary<GameObject, Vector2>();
-    private Dictionary<GameObject, Vector3> initialScales = new Dictionary<GameObject, Vector3>();
+    private class UIElementState
+    {
+        public Vector2 InitialPosition;
+        public Vector2 TargetPosition;
+        public Vector3 InitialScale;
+        public RectTransform RectTransform;
+    }
+
+    private Dictionary<GameObject, UIElementState> uiElements = new Dictionary<GameObject, UIElementState>();
     
     private void Awake()
     {
@@ -26,132 +32,117 @@ public class UITransitionUtility : MonoBehaviour
         
     }
 
-    private void Start()
-    {
-        Initialize(GameManager.Instance.gameplayPanel,Vector2.zero);
-        Initialize(GameManager.Instance.tutorialPanel,Vector2.zero);
-    }
-
     public void Initialize(GameObject target, Vector2 targetPosition)
     {
-        RectTransform rectTransform = target.GetComponent<RectTransform>();
-        if (rectTransform == null)
+        if (target == null)
         {
-            Debug.LogWarning($"[UITransitionUtility] GameObject {target.name} is missing a RectTransform!");
-            return;
-        }
-
-        if (!initialPositions.ContainsKey(target))
-        {
-            initialPositions[target] = rectTransform.anchoredPosition;
-        }
-        
-        if (!initialScales.ContainsKey(target))
-        {
-            initialScales[target] = rectTransform.localScale;
-        }
-
-        targetPositions[target] = targetPosition;
-    }
-    
-    public void MoveIn(GameObject target, LeanTweenType easeType = LeanTweenType.easeInOutQuad, float duration = 1f, System.Action onComplete = null)
-    {
-        if (!targetPositions.ContainsKey(target))
-        {
-            Debug.LogWarning($"[UITransitionUtility] Target position not initialized for {target.name}!");
-            Initialize(target, Vector2.zero);
-            MoveIn(target);
+            Debug.LogWarning($"[UITransitionUtility] Target is null!");
             return;
         }
 
         RectTransform rectTransform = target.GetComponent<RectTransform>();
         if (rectTransform == null)
         {
-            Debug.LogWarning($"[UITransitionUtility] GameObject {target.name} is missing a RectTransform!");
+            Debug.LogWarning($"[UITransitionUtility] {target.name} is missing a RectTransform!");
             return;
         }
 
-        Vector2 targetPosition = targetPositions[target];
-        target.SetActive(true); // Ensure the UI element is active
-
-        LeanTween.move(rectTransform, targetPosition, duration)
-            .setIgnoreTimeScale(true) // Use unscaled time
-            .setEase(easeType)        // Set the easing type
-            .setOnComplete(() =>
+        if (!uiElements.ContainsKey(target))
+        {
+            uiElements[target] = new UIElementState
             {
-                onComplete?.Invoke();
-            });
+                InitialPosition = rectTransform.anchoredPosition,
+                TargetPosition = targetPosition,
+                InitialScale = rectTransform.localScale,
+                RectTransform = rectTransform
+            };
+        }
     }
     
-    public void MoveOut(GameObject target, LeanTweenType easeType = LeanTweenType.easeInOutQuad, float duration = 1f, System.Action onComplete = null)
+    public void MoveIn(GameObject target, LeanTweenType easeType = LeanTweenType.easeInOutQuad, float duration = 1f, Action onComplete = null)
     {
-        if (!initialPositions.ContainsKey(target))
+        if (!uiElements.TryGetValue(target, out var state))
+        {
+            Debug.LogWarning($"[UITransitionUtility] Target not initialized for {target.name}!");
+            return;
+        }
+
+        if (LeanTween.isTweening(target))
+        {
+            LeanTween.cancel(target);
+        }
+
+        target.SetActive(true);
+        LeanTween.move(state.RectTransform, state.TargetPosition, duration)
+            .setIgnoreTimeScale(true)
+            .setEase(easeType)
+            .setOnComplete(() => onComplete?.Invoke());
+    }
+    
+    public void MoveOut(GameObject target, LeanTweenType easeType = LeanTweenType.easeInOutQuad, float duration = 1f, Action onComplete = null)
+    {
+        if (!uiElements.TryGetValue(target, out var state))
         {
             Debug.LogWarning($"[UITransitionUtility] Initial position not initialized for {target.name}!");
             return;
         }
 
-        RectTransform rectTransform = target.GetComponent<RectTransform>();
-        if (rectTransform == null)
+        if (LeanTween.isTweening(target))
         {
-            Debug.LogWarning($"[UITransitionUtility] GameObject {target.name} is missing a RectTransform!");
-            return;
+            LeanTween.cancel(target);
         }
 
-        Vector2 initialPosition = initialPositions[target];
-        LeanTween.move(rectTransform, initialPosition, duration)
-            .setIgnoreTimeScale(true) // Use unscaled time
-            .setEase(easeType)        // Set the easing type
+        LeanTween.move(state.RectTransform, state.InitialPosition, duration)
+            .setIgnoreTimeScale(true)
+            .setEase(easeType)
             .setOnComplete(() =>
             {
-                target.SetActive(false); // Deactivate UI element
+                target.SetActive(false);
                 onComplete?.Invoke();
             });
     }
     
-    public void PopUp(GameObject target, LeanTweenType easeType = LeanTweenType.easeOutBack, float duration = 0.5f, System.Action onComplete = null)
+    public void PopUp(GameObject target, LeanTweenType easeType = LeanTweenType.easeOutBack, float duration = 0.5f, Action onComplete = null)
     {
-        if (!initialScales.ContainsKey(target))
+        if (!uiElements.TryGetValue(target, out var state))
         {
             Debug.LogWarning($"[UITransitionUtility] Target scale not initialized for {target.name}!");
             return;
         }
-        
-        RectTransform rectTransform = target.GetComponent<RectTransform>();
-        if (rectTransform == null)
+
+        if (LeanTween.isTweening(target))
         {
-            Debug.LogWarning($"[UITransitionUtility] GameObject {target.name} is missing a RectTransform!");
-            return;
+            LeanTween.cancel(target);
         }
 
-        target.SetActive(true); // Ensure the panel is active
-        rectTransform.localScale = Vector3.zero; // Start from zero scale
+        target.SetActive(true);
+        state.RectTransform.localScale = Vector3.zero;
 
-        Vector3 initialScale = initialScales[target];
-        LeanTween.scale(rectTransform,initialScale, duration)
-            .setEase(easeType) // Set easing type
-            .setIgnoreTimeScale(true) // Use unscaled time
-            .setOnComplete(() =>
-            {
-                onComplete?.Invoke();
-            });
+        LeanTween.scale(state.RectTransform, state.InitialScale, duration)
+            .setEase(easeType)
+            .setIgnoreTimeScale(true)
+            .setOnComplete(() => onComplete?.Invoke());
     }
     
-    public void PopDown(GameObject target, LeanTweenType easeType = LeanTweenType.easeInBack, float duration = 0.5f, System.Action onComplete = null)
+    public void PopDown(GameObject target, LeanTweenType easeType = LeanTweenType.easeInBack, float duration = 0.5f, Action onComplete = null)
     {
-        RectTransform rectTransform = target.GetComponent<RectTransform>();
-        if (rectTransform == null)
+        if (!uiElements.TryGetValue(target, out var state))
         {
-            Debug.LogWarning($"[UITransitionUtility] GameObject {target.name} is missing a RectTransform!");
+            Debug.LogWarning($"[UITransitionUtility] Target not initialized for {target.name}!");
             return;
         }
 
-        LeanTween.scale(rectTransform, Vector3.zero, duration)
-            .setEase(easeType) // Set easing type
-            .setIgnoreTimeScale(true) // Use unscaled time
+        if (LeanTween.isTweening(target))
+        {
+            LeanTween.cancel(target);
+        }
+
+        LeanTween.scale(state.RectTransform, Vector3.zero, duration)
+            .setEase(easeType)
+            .setIgnoreTimeScale(true)
             .setOnComplete(() =>
             {
-                target.SetActive(false); // Deactivate the panel after scaling down
+                target.SetActive(false);
                 onComplete?.Invoke();
             });
     }

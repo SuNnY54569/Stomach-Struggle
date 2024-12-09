@@ -51,7 +51,7 @@ public class Tools : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.GetScore() != GameManager.Instance.scoreMax) return;
+        if (GameManager.Instance.scoreManager.GetScore() != GameManager.Instance.scoreManager.scoreMax) return;
         lastTool = ToolType.None;
         currentTool = ToolType.None;
     }

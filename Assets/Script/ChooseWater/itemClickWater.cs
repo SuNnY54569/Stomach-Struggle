@@ -51,12 +51,12 @@ public class itemClickWater : MonoBehaviour
 
         if (gameObject.CompareTag("GoodWater"))
         {
-            GameManager.Instance.DecreaseHealth(1);
+            GameManager.Instance.healthManager.DecreaseHealth(1);
         }
         else if (gameObject.CompareTag("BadWater"))
         {
-            GameManager.Instance.IncreaseScore(1);
-            if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax) 
+            GameManager.Instance.scoreManager.IncreaseScore(1);
+            if (GameManager.Instance.scoreManager.GetScore() == GameManager.Instance.scoreManager.scoreMax) 
             { 
                 spawnWatertwo.DisableAllCollider();
             }

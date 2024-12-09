@@ -1,77 +1,83 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class dragFoodTwoH : MonoBehaviour
+public class dragFoodTwoH : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    private DragControllerGuitar _dragController;
-    private bool _isDragging;
     private FoodRandom _foodRandom;
     private Vector3 _startPosition;
+    private bool isDragging;
+    
+    private Collider2D[] _colliderBuffer = new Collider2D[10];
+    private const float DragRadius = 0.1f;
 
     private void Awake()
     {
-        _dragController = FindObjectOfType<DragControllerGuitar>();
         _foodRandom = GetComponent<FoodRandom>();
         _startPosition = transform.position;
     }
 
-    private void Update()
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (GameManager.Instance.isGamePaused) return;
+
+        LeanTween.move(gameObject, MouseWorldPosition(eventData), 0.05f);
+        isDragging = true;
+    }
+    
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (GameManager.Instance.isGamePaused || !isDragging) return;
+        
+        Vector3 mouseWorldPosition = MouseWorldPosition(eventData);
+        mouseWorldPosition.z = transform.position.z;
+        transform.position = mouseWorldPosition;
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused) return;
         
-        if (_isDragging)
-        {
-            Vector3 mousePos = Input.mousePosition;
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
-            transform.position = new Vector2(worldPosition.x, worldPosition.y);
-        }
-
-        if (Input.GetMouseButtonUp(0) && _isDragging)
-        {
-            Drop();
-        }
+        isDragging = false;
+        HandleDrop();
     }
-
-    private void OnMouseDown()
+    
+    private void HandleDrop()
     {
-        if (GameManager.Instance.isGamePaused) return;
-        _isDragging = true;
-    }
-
-    private void Drop()
-    {
-        _isDragging = false;
         bool droppedInSlot = false;
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);
 
-        foreach (Collider2D collider in colliders)
+        int colliderCount = Physics2D.OverlapCircleNonAlloc(transform.position, DragRadius, _colliderBuffer);
+
+        for (int i = 0; i < colliderCount; i++)
         {
-
+            var collider = _colliderBuffer[i];
             slotCanEat slotEat = collider.GetComponent<slotCanEat>();
             slotWarm slotWarm = collider.GetComponent<slotWarm>();
+
             if (slotEat != null)
             {
-                FoodRandom foodRandom = GetComponent<FoodRandom>();
-                slotEat.OnDrop(this, foodRandom);
+                slotEat.OnDrop(this, _foodRandom);
                 droppedInSlot = true;
                 OnDropInSlot(slotEat.transform);
                 break;
             }
             else if (slotWarm != null)
             {
-                FoodRandom foodRandom = GetComponent<FoodRandom>();
-                slotWarm.OnDrop(this, foodRandom);
+                slotWarm.OnDrop(this, _foodRandom);
                 droppedInSlot = true;
                 OnDropInSlot(slotWarm.transform);
                 break;
             }
         }
+
+        // If not dropped in any valid slot, return to starting position
         if (!droppedInSlot)
         {
             LeanTween.move(gameObject, _startPosition, 0.3f).setEase(LeanTweenType.easeInOutQuad);
         }
     }
+
 
     private void OnDropInSlot(Transform slot)
     {
@@ -80,14 +86,23 @@ public class dragFoodTwoH : MonoBehaviour
             .setOnComplete((() =>
             {
                 transform.position = slot.position;
-                LeanTween.scale(gameObject, Vector3.zero, 0.3f)
-                    .setEase(LeanTweenType.easeInOutQuad)
-                    .setOnComplete(() =>
-                    {
-                        Destroy(gameObject);
-                    });
-                LeanTween.rotateZ(gameObject, 5f, 0.15f)
-                    .setLoopPingPong(1);
+                AnimateFoodDestruction();
             }));
+    }
+    
+    private void AnimateFoodDestruction()
+    {
+        LeanTween.scale(gameObject, Vector3.zero, 0.3f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() => { Destroy(gameObject); });
+
+        LeanTween.rotateZ(gameObject, 5f, 0.15f)
+            .setLoopPingPong(1);
+    }
+    
+    private Vector3 MouseWorldPosition(PointerEventData eventData)
+    {
+        Vector3 inputPosition = eventData.position;
+        return Camera.main.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, transform.position.z - Camera.main.transform.position.z));
     }
 }

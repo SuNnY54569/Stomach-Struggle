@@ -17,7 +17,7 @@ public class spawnPointdown : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.SetScoreTextActive(false);
+        //GameManager.Instance.SetScoreTextActive(false);
         StartCoroutine(itemSpawn());
     }
 

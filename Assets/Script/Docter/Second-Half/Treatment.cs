@@ -32,14 +32,14 @@ public class Treatment : MonoBehaviour
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.IncreaseScore(1);
+                GameManager.Instance.scoreManager.IncreaseScore(1);
             }
         }
         else if (gameObject.CompareTag("BadTreat"))
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.DecreaseHealth(1);
+                GameManager.Instance.healthManager.DecreaseHealth(1);
             }
         }
         LeanTween.scale(gameObject, targetScale, scaleDuration)

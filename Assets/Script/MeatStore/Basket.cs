@@ -24,20 +24,20 @@ public class Basket : MonoBehaviour
         if (collision.CompareTag("BadMeat"))
         {
             Destroy(collision.gameObject);
-            GameManager.Instance.DecreaseHealth(1);
+            GameManager.Instance.healthManager.DecreaseHealth(1);
         }
         else if (collision.CompareTag("GoodMeat"))
         {
             Destroy(collision.gameObject);
             SoundManager.PlaySound(SoundType.meatInBag,VolumeType.SFX);
-            GameManager.Instance.IncreaseScore(1);
+            GameManager.Instance.scoreManager.IncreaseScore(1);
         }
         clawController.SetDefaultSprite();
     }
 
     private void UpdateVisual()
     {
-        switch (GameManager.Instance.GetScore())
+        switch (GameManager.Instance.scoreManager.GetScore())
         {
             case 0:
                 objectSprite.sprite = BasketSprite[0];

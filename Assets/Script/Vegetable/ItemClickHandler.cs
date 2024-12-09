@@ -7,12 +7,12 @@ public class ItemClickHandler : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.Instance.isGamePaused) return;
-        if (GameManager.Instance.GetScore() == GameManager.Instance.scoreMax) return;
+        if (GameManager.Instance.scoreManager.GetScore() == GameManager.Instance.scoreManager.scoreMax) return;
         else if (gameObject.CompareTag("BadVegetable"))
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.DecreaseHealth(1);
+                GameManager.Instance.healthManager.DecreaseHealth(1);
             }
         }
         
@@ -29,7 +29,7 @@ public class ItemClickHandler : MonoBehaviour
     {
         if (gameObject.CompareTag("GoodVegetable"))
         {
-            GameManager.Instance.DecreaseHealth(1);
+            GameManager.Instance.healthManager.DecreaseHealth(1);
         }
 
         LeanTween.scale(gameObject, Vector3.zero, 0.2f)

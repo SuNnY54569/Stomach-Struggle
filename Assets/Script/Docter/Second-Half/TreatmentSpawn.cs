@@ -12,8 +12,7 @@ public class TreatmentSpawn : MonoBehaviour
     private void Start()
     {
         SpawnTreatments();
-        GameManager.Instance.SetMaxScore(3);
-        GameManager.Instance.UpdateScoreText();
+        GameManager.Instance.scoreManager.UpdateScoreText();
     }
     
     private void SpawnTreatments()

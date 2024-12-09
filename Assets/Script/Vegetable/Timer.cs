@@ -39,7 +39,7 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.currentHealth <= 0)
+        if (GameManager.Instance.healthManager.currentHealth <= 0)
         {
             if (!isGameOver)
             {
@@ -50,7 +50,7 @@ public class Timer : MonoBehaviour
             return;
         }
         
-        if (!isGameOver && GameManager.Instance.currentHealth > 0)
+        if (!isGameOver && GameManager.Instance.healthManager.currentHealth > 0)
         {
             if (remainingTime > 0)
             {
@@ -59,7 +59,7 @@ public class Timer : MonoBehaviour
             else
             {
                 remainingTime = 0;
-                GameManager.Instance.WinGame();
+                GameManager.Instance.healthManager.WinGame();
                 isGameOver = true;
                 timerText.gameObject.SetActive(false);
             }

@@ -12,15 +12,15 @@ public class ScoreVisual : MonoBehaviour
     private void Start()
     {
         slider.fillRect.gameObject.SetActive(false);
-        GameManager.Instance.SetScoreTextActive(false);
-        slider.maxValue = GameManager.Instance.scoreMax;
+        //GameManager.Instance.SetScoreTextActive(false);
+        slider.maxValue = GameManager.Instance.scoreManager.scoreMax;
         slider.minValue = 0;
     }
 
     // Update is called once per frame
     private void LateUpdate()
     {
-        slider.value = GameManager.Instance.GetScore();
+        slider.value = GameManager.Instance.scoreManager.GetScore();
         if (slider.value > 0)
         {
             slider.fillRect.gameObject.SetActive(true);

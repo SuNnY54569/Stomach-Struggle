@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     #region Cooking Settings
     [Header("Cooking Settings")]
@@ -21,7 +21,6 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     public bool isTopSideCooking = true;
     private bool isCooking = false;
     private bool isDragging = false;
-    private bool isOnCooldown = false;
 
     [SerializeField] private Transform panCenter;
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -107,8 +106,7 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     {
         if (GameManager.Instance.isGamePaused || !isDragging) return;
         
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = mousePosition;
+        transform.position = MouseWorldPosition();
     }
     
     public void OnPointerUp(PointerEventData eventData)
@@ -284,13 +282,13 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     
     private void HandleUndercooked()
     {
-        GameManager.Instance.DecreaseHealth(1);
+        GameManager.Instance.healthManager.DecreaseHealth(1);
         ResetPosition();
     }
 
     private void HandleCooked()
     {
-        GameManager.Instance.IncreaseScore(1);
+        GameManager.Instance.scoreManager.IncreaseScore(1);
         Tools.Instance.ClearCurrentlyCookingSteak();
         col.enabled = false;
     }
@@ -299,7 +297,7 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     {
         isCooking = false;
         Tools.Instance.ClearCurrentlyCookingSteak();
-        GameManager.Instance.DecreaseHealth(1);
+        GameManager.Instance.healthManager.DecreaseHealth(1);
         steakSpawner.HandleSteakLost();
         col.enabled = false;
     }
@@ -327,7 +325,11 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
         {
             LeanTween.move(gameObject, panCenter.position, 0.5f)
                 .setEase(LeanTweenType.easeInOutQuad)
-                .setOnComplete(() => originalPosition = transform.position);
+                .setOnComplete(() =>
+                {
+                    originalPosition = transform.position;
+                    SoundManager.PlaySound(SoundType.flipMeat, VolumeType.SFX);
+                });
         }
     }
     
@@ -347,9 +349,16 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDra
     
     private Vector3 MouseWorldPosition()
     {
-        var mouseScreenPos = Input.mousePosition;
-        mouseScreenPos.z = mainCamera.WorldToScreenPoint(transform.position).z;
-        return mainCamera.ScreenToWorldPoint(mouseScreenPos);
+        Vector3 inputPosition;
+        if (Application.isMobilePlatform)
+        {
+            inputPosition = Input.GetTouch(0).position;
+        }
+        else
+        {
+            inputPosition = Input.mousePosition;
+        }
+        return Camera.main.ScreenToWorldPoint(new Vector3(inputPosition.x, inputPosition.y, Camera.main.nearClipPlane));
     }
     
     public float GetTotalCookingProgress()

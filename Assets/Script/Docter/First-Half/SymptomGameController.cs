@@ -41,7 +41,7 @@ public class SymptomGameController : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.SetScoreTextActive(false);
+        //GameManager.Instance.SetScoreTextActive(false);
         SetupSymptoms();
         SetRandomSymptom();
         ShuffleToggles();
@@ -75,7 +75,7 @@ public class SymptomGameController : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.WinGame();
+            GameManager.Instance.healthManager.WinGame();
             ClearToggleListeners();
         }
     }
@@ -119,7 +119,7 @@ public class SymptomGameController : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.DecreaseHealth(1);
+            GameManager.Instance.healthManager.DecreaseHealth(1);
             selectedToggle.isOn = false;
         }
         SoundManager.PlaySound(SoundType.CheckBox,VolumeType.SFX);

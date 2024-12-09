@@ -15,19 +15,18 @@ public class spawnFoodRandom : MonoBehaviour
     [Header("Timer Settings")]
     [SerializeField] private float countdownTime = 30f;
     [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private TextMeshProUGUI[] instructionText;
 
     [Header("UI Settings")]
     [SerializeField] private TextMeshProUGUI spawnCountText;
+    [SerializeField] private TextMeshProUGUI[] instructionText;
     [SerializeField] private GameObject clockGameObject;
     [SerializeField] private GameObject guideText;
     [SerializeField] private GameObject panel;
 
-    private bool isGameOver;
-    public bool isTickingSoundPlaying;
-
+    private bool isGameOver = false;
+    private bool isTickingSoundPlaying = false;
     private float timeLeft;
-    private int spawnCount;
+    private int spawnCount = 0;
     private const int maxSpawns = 4;
 
     private void Awake()
@@ -37,7 +36,7 @@ public class spawnFoodRandom : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.SetScoreTextActive(false);
+        //GameManager.Instance.SetScoreTextActive(false);
         timeLeft = countdownTime;
         UpdateSpawnCountUI();
         UITransitionUtility.Instance.MoveIn(panel,LeanTweenType.easeInOutQuad, 0.2f);
@@ -58,112 +57,96 @@ public class spawnFoodRandom : MonoBehaviour
     private void Update()
     {
         if (isGameOver) return;
-        
-        if (spawnCount >= maxSpawns && GameManager.Instance.currentHealth > 0)
+
+        if (spawnCount >= maxSpawns && GameManager.Instance.healthManager.currentHealth > 0)
         {
             WinGame();
-            Debug.Log("Win");
             return;
         }
-        
-        if (GameManager.Instance.currentHealth <= 0)
+
+        if (GameManager.Instance.healthManager.currentHealth <= 0)
         {
             GameOver();
+            return;
         }
-        
+
         HandleFoodAndTimer();
     }
     
     private void HandlePause()
     {
-        LeanTween.scale(clockGameObject, Vector3.zero, 0.2f).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true);
-        LeanTween.scale(spawnCountText.gameObject, Vector3.zero, 0.2f).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true);
-        LeanTween.scale(guideText, Vector3.zero, 0.2f).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(true);
+        ScaleUI(Vector3.zero, 0.2f, true);
     }
 
     private void HandleUnpause()
     {
-        LeanTween.scale(clockGameObject, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuad).setDelay(0.5f).setIgnoreTimeScale(true);
-        LeanTween.scale(spawnCountText.gameObject, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuad).setDelay(0.5f).setIgnoreTimeScale(true);
-        LeanTween.scale(guideText, Vector3.one, 0.5f).setEase(LeanTweenType.easeInOutQuad).setDelay(0.5f).setIgnoreTimeScale(true);
+        ScaleUI(Vector3.one, 0.5f, true, 0.5f);
+    }
+    
+    private void ScaleUI(Vector3 scale, float duration, bool ignoreTimeScale, float delay = 0f)
+    {
+        LeanTween.scale(clockGameObject, scale, duration).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(ignoreTimeScale).setDelay(delay);
+        LeanTween.scale(spawnCountText.gameObject, scale, duration).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(ignoreTimeScale).setDelay(delay);
+        LeanTween.scale(guideText, scale, duration).setEase(LeanTweenType.easeInOutQuad).setIgnoreTimeScale(ignoreTimeScale).setDelay(delay);
     }
 
     private void SpawnAllFood()
     {
         foreach (Transform spawnPoint in spawnPoints)
         {
-            if (spawnPoint != null)
-            {
-                GameObject newFood = Instantiate(foodPrefab, spawnPoint.position, spawnPoint.rotation);
-                FoodRandom foodRandomScript = newFood.GetComponent<FoodRandom>();
+            if (spawnPoint == null) continue;
 
-                if (foodRandomScript != null)
-                {
-                    foodRandomScript.RandomizeFoodAndTime();
-                }
-            }
+            var newFood = Instantiate(foodPrefab, spawnPoint.position, spawnPoint.rotation);
+            newFood.GetComponent<FoodRandom>()?.RandomizeFoodAndTime();
         }
+
         spawnCount++;
-        
         UpdateSpawnCountUI();
     }
 
     private void HandleTimeUp()
     {
-        GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
-
-        foreach (GameObject food in foodObjects)
+        foreach (var food in GameObject.FindGameObjectsWithTag("Food"))
         {
             Destroy(food);
         }
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.DecreaseHealth(1);
-        }
+        GameManager.Instance.healthManager.DecreaseHealth(1);
 
         timeLeft = countdownTime;
 
         if (spawnCount < maxSpawns)
         {
-            spawnCount -= 1;
+            spawnCount--;
             SpawnAllFood();
         }
     }
 
     private void UpdateSpawnCountUI()
     {
-        if (spawnCountText != null)
-        {
-            spawnCountText.text = $"{spawnCount} / 3";
-        }
+        spawnCountText.text = $"{spawnCount} / {maxSpawns - 1}";
     }
 
     IEnumerator PlayClockTickingSound()
     {
         isTickingSoundPlaying = true;
         SoundManager.PlaySound(SoundType.ClockTicking, VolumeType.SFX);
-
         yield return new WaitForSeconds(1f);
         isTickingSoundPlaying = false;
     }
     
     private void HandleFoodAndTimer()
     {
-        // Spawn new food if all food objects are gone
-        GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
-
-        if (foodObjects.Length == 0)
+        if (GameObject.FindGameObjectsWithTag("Food").Length == 0)
         {
             SpawnAllFood();
             timeLeft = countdownTime;
         }
 
-        // Handle timer countdown
         if (timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
-            timerText.text = Mathf.Ceil(timeLeft).ToString();
+            timerText.text = Mathf.CeilToInt(timeLeft).ToString();
 
             if (!isTickingSoundPlaying)
             {
@@ -180,12 +163,8 @@ public class spawnFoodRandom : MonoBehaviour
     {
         if (isGameOver) return;
 
-        timerText.gameObject.SetActive(false);
-        spawnCountText.gameObject.SetActive(false);
-        clockGameObject.SetActive(false);
-
-        UITransitionUtility.Instance.MoveOut(panel, LeanTweenType.easeInOutQuad, 0.2f);
-        
+        HideUIElements();
+        UITransitionUtility.Instance?.MoveOut(panel, LeanTweenType.easeInOutQuad, 0.2f);
         isGameOver = true;
     }
     
@@ -193,6 +172,14 @@ public class spawnFoodRandom : MonoBehaviour
     {
         if (isGameOver) return;
 
+        HideUIElements();
+        UITransitionUtility.Instance?.MoveOut(panel, LeanTweenType.easeInOutQuad, 0.2f);
+        GameManager.Instance.healthManager.WinGame();
+        isGameOver = true;
+    }
+    
+    private void HideUIElements()
+    {
         timerText.gameObject.SetActive(false);
         spawnCountText.gameObject.SetActive(false);
         clockGameObject.SetActive(false);
@@ -201,10 +188,5 @@ public class spawnFoodRandom : MonoBehaviour
         {
             text.gameObject.SetActive(false);
         }
-
-        UITransitionUtility.Instance.MoveOut(panel, LeanTweenType.easeInOutQuad, 0.2f);
-
-        GameManager.Instance.WinGame();
-        isGameOver = true;
     }
 }

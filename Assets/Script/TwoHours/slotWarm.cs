@@ -24,7 +24,7 @@ public class slotWarm : MonoBehaviour
         {
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.DecreaseHealth(1);
+                GameManager.Instance.healthManager.DecreaseHealth(1);
             }
         }
         else

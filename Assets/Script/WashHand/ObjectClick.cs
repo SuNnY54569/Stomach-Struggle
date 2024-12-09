@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class ObjectClick : MonoBehaviour
 {
-    public int objectIndex; // The order of this object
+    public int objectIndex;
     [SerializeField] private GameObject picture;
     [SerializeField] private float amp;
     [SerializeField] private float freq;
     [SerializeField] private string animationName;
-    [SerializeField] private SpriteRenderer objectRenderer; // Renderer to control object color
-    [SerializeField] private Color blinkColor = Color.red; // Color to blink
-    [SerializeField] private float blinkDuration = 1f; // Duration of each blink cycle
+    [SerializeField] private SpriteRenderer objectRenderer; 
+    [SerializeField] private Color blinkColor = Color.red;
+    [SerializeField] private float blinkDuration = 1f;
     [SerializeField] private float scaleAmount = 1.25f;
     [SerializeField] private Animator animator;
-
-    private bool isMoving;
+    
     private Color originalColor;
     private Vector3 initPos;
 
@@ -30,14 +29,6 @@ public class ObjectClick : MonoBehaviour
         originalColor = objectRenderer.material.color;
     }
 
-    private void Update()
-    {
-        if (isMoving)
-        {
-            picture.transform.localPosition = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, 0);
-        }
-    }
-
     private void OnMouseDown()
     {
         if (GameManager.Instance.isGamePaused) return;
@@ -47,54 +38,47 @@ public class ObjectClick : MonoBehaviour
 
     public void BlinkObject()
     {
-        StartCoroutine(BlinkAndScaleObject());
+        BlinkAndScaleObject();
     }
 
-    private IEnumerator BlinkAndScaleObject()
+    private void BlinkAndScaleObject()
     {
-        Vector3 originalScale = gameObject.transform.localScale;
-        Color originalColor = objectRenderer.material.color;
+        LeanTween.scale(gameObject, gameObject.transform.localScale * scaleAmount, blinkDuration / 2f)
+            .setLoopPingPong()
+            .setEaseInOutSine();
 
-        float blinkTime = 0; // Time tracker for smooth scaling
-
-        while (GameManager.Instance.currentHealth == 1) // Continue blinking while health == 1
-        {
-            if (gameObject.activeSelf)
+        LeanTween.value(gameObject, UpdateColor, originalColor, blinkColor, blinkDuration / 2f)
+            .setLoopPingPong()
+            .setEaseInOutSine()
+            .setOnUpdate((float t) =>
             {
-                SoundManager.PlaySound(SoundType.BBWarning,VolumeType.SFX, 0.1f);
-            }
-            float duration = blinkDuration / 2f;
-
-            // Smoothly scale up and down during the blink
-            while (blinkTime < duration)
-            {
-                // Use Mathf.Sin() for smooth transitions
-                float scaleFactor = 1 + Mathf.Sin(blinkTime * Mathf.PI / duration) * (scaleAmount - 1);
-                gameObject.transform.localScale = originalScale * scaleFactor;
-
-                // Change color to the hint color while scaling
-                objectRenderer.material.color = blinkColor;
-
-                blinkTime += Time.deltaTime;
-                yield return null;
-            }
-
-            // Reset the scale and color after blinking
-            gameObject.transform.localScale = originalScale;
-            objectRenderer.material.color = originalColor;
-
-            // Reset the time tracker
-            blinkTime = 0;
-            yield return new WaitForSeconds(blinkDuration / 2f);
-        }
-
-        // Ensure object returns to original state if health is no longer 1
+                // Play sound at the start of each color transition
+                if (Mathf.Approximately(t, 1f))
+                {
+                    if (gameObject.activeSelf)
+                    {
+                        SoundManager.PlaySound(SoundType.BBWarning, VolumeType.SFX, 0.1f);
+                    }
+                }
+            });;
+    }
+    
+    private void UpdateColor(Color color)
+    {
+        objectRenderer.material.color = color;
+    }
+    
+    public void StopBlinkWithLeanTween()
+    {
+        LeanTween.cancel(gameObject);
+        gameObject.transform.localScale = Vector3.one;
         objectRenderer.material.color = originalColor;
-        gameObject.transform.localScale = originalScale;
     }
-
-    public void MovingObject()
+    
+    public void MovingObjectWithLeanTween()
     {
-        isMoving = true;
+        LeanTween.moveLocalY(picture, initPos.y + amp, freq)
+            .setEaseInOutSine()
+            .setLoopPingPong();
     }
 }

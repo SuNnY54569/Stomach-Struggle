@@ -59,8 +59,7 @@ public class ClawController : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.SetMaxScore(maxScore);
-        GameManager.Instance.SetScoreTextActive(true);
+        //GameManager.Instance.scoreManager.SetScoreTextActive(true);
     }
 
     void Update()

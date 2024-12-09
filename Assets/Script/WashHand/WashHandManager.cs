@@ -8,13 +8,21 @@ using Random = UnityEngine.Random;
 
 public class WashHandManager : MonoBehaviour
 {
+    
+    [Serializable]
+    public class BondedPosition
+    {
+        public Transform position;
+        public Transform bondedPosition;
+    }
+    
     public static WashHandManager Instance;
     
     #region Serialized Fields with Tooltips
     [Header("Position and Object Settings")]
-    [SerializeField, Tooltip("List of positions where the objects can be placed.")]
-    private List<GameObject> positions;
 
+    public List<BondedPosition> bondedPositions;
+    
     [SerializeField, Tooltip("Objects that need to be placed at random positions.")]
     private List<GameObject> objects;
 
@@ -48,7 +56,7 @@ public class WashHandManager : MonoBehaviour
     #endregion
     
     #region Private Fields
-    private List<GameObject> startPositions = new List<GameObject>();
+    private List<BondedPosition> startPositions = new List<BondedPosition>();
     private bool isBlinking;
     private bool isAppear;
     private bool isPause;
@@ -74,7 +82,6 @@ public class WashHandManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.SetScoreTextActive(false);
         CloseAllColliders();
     }
 
@@ -102,20 +109,26 @@ public class WashHandManager : MonoBehaviour
     {
         if (GameManager.Instance.isGamePaused) return;
         
-        if (positions.Count != objects.Count)
+        if (bondedPositions.Count != objects.Count)
         {
             Debug.LogError("The number of positions and objects must be equal.");
             return;
         }
         
         startPositions.Clear();
-        List<GameObject> shuffledPositions = new List<GameObject>(positions);
+        List<BondedPosition> shuffledPositions = new List<BondedPosition>();
+        for (int i = 0; i < bondedPositions.Count; i++)
+        {
+            
+            shuffledPositions.Add(bondedPositions[i]);
+        }
         ShuffleList(shuffledPositions);
 
         for (int i = 0; i < objects.Count; i++)
         {
             startPositions.Add(shuffledPositions[i]);
-            StartCoroutine(MoveObjectToPosition(objects[i], shuffledPositions[i]));
+            MoveObjectToPosition(objects[i], shuffledPositions[i].position);
+            objects[i].GetComponent<ObjectClick>().MovingObjectWithLeanTween();
         }
 
         StartCoroutine(PopDownAfterStart());
@@ -138,7 +151,7 @@ public class WashHandManager : MonoBehaviour
     #endregion
     
     #region Object Positioning and Movement Methods
-    private void ShuffleList(List<GameObject> list)
+    private void ShuffleList(List<BondedPosition> list)
     {
         for (int i = list.Count - 1; i > 0; i--)
         {
@@ -147,28 +160,21 @@ public class WashHandManager : MonoBehaviour
         }
     }
     
-    private IEnumerator MoveObjectToPosition(GameObject obj, GameObject targetPosition)
+    private void MoveObjectToPosition(GameObject obj, Transform targetPosition)
     {
         Collider2D objCollider = obj.GetComponent<Collider2D>();
         objCollider?.Disable();
 
-        float elapsedTime = 0f;
-        Vector3 startingPosition = obj.transform.position;
-        Vector3 targetScale = new Vector3(1.5f, 1.5f, 1.5f);
-
-        while (elapsedTime < 1f)
-        {
-            float t = elapsedTime * moveSpeed;
-            obj.transform.position = Vector3.Lerp(startingPosition, targetPosition.transform.position, t);
-            obj.transform.localScale = Vector3.Lerp(obj.transform.localScale, targetScale, t);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        obj.transform.position = targetPosition.transform.position;
-        obj.transform.localScale = targetScale;
-
-        objCollider?.Enable();
+        // Use LeanTween to move the object to the target position and scale it
+        LeanTween.move(obj, targetPosition.position, 1f)
+            .setEase(LeanTweenType.easeInOutQuad)
+            .setOnComplete(() => 
+            {
+                // Once the movement is complete, scale the object
+                LeanTween.scale(obj, new Vector3(1.5f, 1.5f, 1.5f), 1f)
+                    .setEase(LeanTweenType.easeInOutQuad)
+                    .setOnComplete(() => objCollider?.Enable());
+            });
     }
     #endregion
     
@@ -187,7 +193,7 @@ public class WashHandManager : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.DecreaseHealth(1);
+            GameManager.Instance.healthManager.DecreaseHealth(1);
         }
 
         if (currentObjectIndex > objects.Count)
@@ -200,43 +206,66 @@ public class WashHandManager : MonoBehaviour
     #region Animation and Coroutines
     private IEnumerator WaitForAnimation(Animator animator, string animationName, Func<IEnumerator> coroutineToStart, GameObject obj)
     {
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(animationName));
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-        yield return StartCoroutine(coroutineToStart());
-        obj.SetActive(false);
+        float timeout = 1.5f; // Maximum time to wait
+        float timer = 0f;
+
+        yield return new WaitUntil(() =>
+        {
+            timer += Time.deltaTime;
+            return animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) || timer >= timeout;
+        });
+
+        if (timer < timeout)
+        {
+            yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+            obj.SetActive(false);
+            yield return StartCoroutine(coroutineToStart());
+        }
+        else
+        {
+            Debug.LogWarning($"Animation '{animationName}' timed out.");
+        }
     }
     
     private IEnumerator MoveToBondedPosition()
     {
         // Step 1: Move objects to their bonded positions simultaneously
-        List<Coroutine> coroutines = new List<Coroutine>();
+        List<LTDescr> tweens = new List<LTDescr>();
         for (int i = 0; i < objects.Count; i++)
         {
-            GameObject bondedPosition = startPositions[i].GetComponent<PositionBond>().bondedPosition;
-            coroutines.Add(StartCoroutine(MoveObjectToPosition(objects[i], bondedPosition)));
-        }
+            Vector3 bondedPosition = startPositions[i].bondedPosition.position;
 
-        // Wait for all coroutines to finish
-        foreach (var coroutine in coroutines)
-        {
-            yield return coroutine;
+            // Disable collider during movement
+            Collider2D objCollider = objects[i].GetComponent<Collider2D>();
+            objCollider?.Disable();
+
+            // Use LeanTween to move the object and scale it
+            tweens.Add(LeanTween.move(objects[i], bondedPosition, 3f)
+                .setEase(LeanTweenType.easeInOutQuad));
+            tweens.Add(LeanTween.scale(objects[i], new Vector3(1f, 1f, 1f), 3f)
+                .setEase(LeanTweenType.easeInOutQuad)
+                .setOnComplete(() => objCollider?.Enable()));
         }
 
         // Wait for a delay after all objects have reached their bonded positions
         yield return new WaitForSeconds(3f);
 
-        // Step 2: Move objects back to their start positions simultaneously
-        coroutines.Clear();
+        tweens.Clear();
         for (int i = 0; i < objects.Count; i++)
         {
-            coroutines.Add(StartCoroutine(MoveObjectToPosition(objects[i], startPositions[i])));
+            Collider2D objCollider = objects[i].GetComponent<Collider2D>();
+            objCollider?.Disable();
+
+            // Use LeanTween to move the object and reset its scale
+            tweens.Add(LeanTween.move(objects[i], startPositions[i].position.position, 3f)
+                .setEase(LeanTweenType.easeInOutQuad));
+            tweens.Add(LeanTween.scale(objects[i], new Vector3(1.5f, 1.5f, 1.5f), 3f)
+                .setEase(LeanTweenType.easeInOutQuad)
+                .setOnComplete(() => objCollider?.Enable()));
         }
 
-        // Wait for all coroutines to finish
-        foreach (var coroutine in coroutines)
-        {
-            yield return coroutine;
-        }
+        // Wait for all tweens to complete
+        yield return new WaitForSeconds(3f);
 
         isBlinking = false;
     }
@@ -246,7 +275,7 @@ public class WashHandManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         centralAnimator.SetTrigger("WashWater");
         yield return new WaitForSeconds(3f);
-        GameManager.Instance.WinGame();
+        GameManager.Instance.healthManager.WinGame();
     }
     #endregion
     
@@ -254,7 +283,7 @@ public class WashHandManager : MonoBehaviour
 
     private void HandleObjectBlinking()
     {
-        if (GameManager.Instance.currentHealth > 1)
+        if (GameManager.Instance.healthManager.currentHealth > 1)
         {
             isBlinking = false;
             return;
