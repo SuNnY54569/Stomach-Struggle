@@ -26,10 +26,6 @@ public class WashHandManager : MonoBehaviour
     [SerializeField, Tooltip("Objects that need to be placed at random positions.")]
     private List<GameObject> objects;
 
-    [Header("Movement Settings")]
-    [SerializeField, Tooltip("The speed at which the objects move to their positions.")]
-    private float moveSpeed = 2f;
-
     [Header("Central Image Settings")]
     [SerializeField, Tooltip("The image in the center that plays animations.")]
     private GameObject centralImage;

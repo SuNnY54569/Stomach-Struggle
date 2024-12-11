@@ -10,19 +10,28 @@ public class ToolButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     
     [Header("Tool Button Settings")]
     [SerializeField] private Tools.ToolType toolType;
-    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject otherButton;
 
     private Vector3 initialScale;
     private Vector3 otherButtonInitialScale;
+    
+    private static readonly Color HoverColor = Color.gray;
+    private static readonly Color NormalColor = Color.white;
+    private const float AnimationDuration = 0.3f;
+    
     private void Awake()
     {
-        initialScale = gameObject.transform.localScale;
+        initialScale = transform.localScale;
         if (otherButton != null)
         {
             otherButtonInitialScale = otherButton.transform.localScale;
         }
-        sprite = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -43,22 +52,32 @@ public class ToolButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !gameObject.activeSelf) return;
-        sprite.color = Color.gray;
+        spriteRenderer.color = HoverColor;
     }
     
     public void OnPointerExit(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !gameObject.activeSelf) return;
-        sprite.color = Color.white;
+        spriteRenderer.color = NormalColor;
     }
     
     private void AnimateButton(GameObject button, bool isPoppingUp, Vector3 originalScale)
     {
+        if (button == null) return;
+        
         Vector3 targetScale = isPoppingUp ? originalScale : Vector3.zero;
-        float duration = 0.3f;
         
-        if (isPoppingUp) button.SetActive(true);
+        if (isPoppingUp && !button.activeSelf)
+        {
+            button.SetActive(true);
+        }
         
-        LeanTween.scale(button, targetScale, duration);
+        LeanTween.scale(button, targetScale, AnimationDuration).setOnComplete(() =>
+        {
+            if (!isPoppingUp)
+            {
+                button.SetActive(false);
+            }
+        });
     }
 }

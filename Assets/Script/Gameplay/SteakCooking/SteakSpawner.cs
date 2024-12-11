@@ -8,14 +8,12 @@ public class SteakSpawner : MonoBehaviour
     [SerializeField] private GameObject steakPrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private int maxSteakCount = 4;
-    [SerializeField] private int maxScore = 3;
     
     private int remainingSteaks;
     private bool isGameOverTriggered = false;
 
     private void Start()
     {
-        //GameManager.Instance.SetScoreTextActive(true);
         GameManager.Instance.scoreManager.UpdateScoreText();
         remainingSteaks = maxSteakCount;
         SpawnInitialSteaks();
@@ -39,7 +37,6 @@ public class SteakSpawner : MonoBehaviour
     
     private void CheckGameOverConditions()
     {
-        // Centralized game-over logic
         if (isGameOverTriggered) return;
 
         if (GameManager.Instance.healthManager.currentHealth == 0)
@@ -47,7 +44,7 @@ public class SteakSpawner : MonoBehaviour
             isGameOverTriggered = true;
         }
 
-        if (remainingSteaks < maxScore && 
+        if (remainingSteaks < GameManager.Instance.scoreManager.scoreMax && 
             (GameManager.Instance.scoreManager.GetScore() < GameManager.Instance.scoreManager.scoreMax || 
              GameManager.Instance.healthManager.currentHealth == 0))
         {

@@ -22,6 +22,7 @@ public class spawnFoodRandom : MonoBehaviour
     [SerializeField] private GameObject clockGameObject;
     [SerializeField] private GameObject guideText;
     [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject _canvas;
 
     private bool isGameOver = false;
     private bool isTickingSoundPlaying = false;
@@ -32,6 +33,11 @@ public class spawnFoodRandom : MonoBehaviour
     private void Awake()
     {
         UITransitionUtility.Instance.Initialize(panel,Vector2.zero);
+        
+        Canvas canvas = _canvas.gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+        canvas.planeDistance = 1;
     }
 
     private void Start()

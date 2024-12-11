@@ -8,6 +8,7 @@ public class Tools : MonoBehaviour
 {
     public static Tools Instance { get; private set; }
     
+    #region Enum & Fields
     public enum ToolType
     {
         None,
@@ -18,24 +19,27 @@ public class Tools : MonoBehaviour
     [Header("Tool Settings")]
     public ToolType currentTool = ToolType.None;
     private ToolType lastTool = ToolType.None;
-    
+
     [SerializeField] private Texture2D tongsCursor;
     [SerializeField] private Texture2D spatulaCursor;
     [SerializeField] private Vector2 tongsCursorHotspot;
     [SerializeField] private Vector2 spatulaCursorHotspot;
-    
-    [Header("Warning Setting")]
+
+    [Header("Warning Settings")]
     [SerializeField] private TextMeshProUGUI warningMessageText;
-    [SerializeField] private string warningMessage;
+    [SerializeField] private string defaultWarningMessage = "โปรดใช้เครื่องมือที่เหมาะสม!";
     [SerializeField] private string tongsWarning = "อันนี้ต้องใช้ตะหลิวนะ";
     [SerializeField] private string spatulaWarning = "อันนี้ต้องใช้ทีคีบนะ";
     [SerializeField] private float warningFadeDuration = 1.5f;
     [SerializeField] private float warningCooldown = 1.5f;
-    
-    private float lastWarningTime = -Mathf.Infinity; 
 
+    private float lastWarningTime = -Mathf.Infinity;
+
+    [Header("Cooking Management")]
     public Steak currentlyCookingSteak;
+    #endregion
     
+    #region Unity Lifecycle
     private void Awake()
     {
         if (Instance == null)
@@ -46,16 +50,10 @@ public class Tools : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
         UITransitionUtility.Instance.Initialize(warningMessageText.gameObject,Vector2.zero);
     }
-
-    private void Update()
-    {
-        if (GameManager.Instance.scoreManager.GetScore() != GameManager.Instance.scoreManager.scoreMax) return;
-        lastTool = ToolType.None;
-        currentTool = ToolType.None;
-    }
-
+    
     private void OnEnable()
     {
         GameManager.OnGamePaused += HandleGamePaused;
@@ -68,22 +66,21 @@ public class Tools : MonoBehaviour
         GameManager.OnGameUnpaused -= HandleGameUnpaused;
     }
 
-    private void HandleGamePaused()
+    private void Update()
     {
-        StoreAndDeselectTool();
+        if (GameManager.Instance.scoreManager.GetScore() != GameManager.Instance.scoreManager.scoreMax) return;
+        lastTool = ToolType.None;
+        currentTool = ToolType.None;
     }
-
-    private void HandleGameUnpaused()
-    {
-        ResumeLastTool();
-    }
-
+    #endregion
+    
+    #region Tool Management
     public void SetCurrentTool(ToolType tool)
     {
         currentTool = tool;
         UpdateCursorIcon(tool);
     }
-
+    
     private void UpdateCursorIcon(ToolType tool)
     {
         switch (tool)
@@ -100,8 +97,8 @@ public class Tools : MonoBehaviour
                 break;
         }
     }
-    
-    public void StoreAndDeselectTool()
+
+    private void StoreAndDeselectTool()
     {
         lastTool = currentTool;
         DeselectTool();
@@ -114,54 +111,72 @@ public class Tools : MonoBehaviour
             SetCurrentTool(lastTool);
         }
     }
-    
-    public void DeselectTool()
+
+    private void DeselectTool()
     {
         currentTool = ToolType.None;
         UpdateCursorIcon(ToolType.None);
     }
+    #endregion
     
+    #region Cooking Management
     public void SetCurrentlyCookingSteak(Steak steak)
     {
         currentlyCookingSteak = steak;
     }
-    
+
     public void ClearCurrentlyCookingSteak()
     {
         currentlyCookingSteak = null;
     }
-    
+
     public bool IsCurrentlyCookingSteak(Steak steak)
     {
         return currentlyCookingSteak == steak;
     }
+    #endregion
     
+    #region Warning System
     public void ShowWarning(ToolType toolType)
     {
         if (Time.time - lastWarningTime < warningCooldown || warningMessageText == null) return;
-        
+
         lastWarningTime = Time.time;
-        
+
         switch (toolType)
         {
-            case ToolType.Spatula :
+            case ToolType.Spatula:
                 warningMessageText.text = spatulaWarning;
                 break;
             case ToolType.Tongs:
                 warningMessageText.text = tongsWarning;
                 break;
             default:
-                warningMessageText.text = warningMessage;
+                warningMessageText.text = defaultWarningMessage;
                 break;
         }
-        
+
         UITransitionUtility.Instance.PopUp(warningMessageText.gameObject);
         StartCoroutine(FadeOutWarning());
     }
-    
+
     private IEnumerator FadeOutWarning()
     {
         yield return new WaitForSeconds(warningFadeDuration);
         UITransitionUtility.Instance.PopDown(warningMessageText.gameObject);
     }
+    #endregion
+    
+    #region Game State Handlers
+    private void HandleGamePaused()
+    {
+        StoreAndDeselectTool();
+    }
+
+    private void HandleGameUnpaused()
+    {
+        ResumeLastTool();
+    }
+    #endregion
+    
 }

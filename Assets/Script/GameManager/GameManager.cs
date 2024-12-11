@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
     public Vignette _vignette;
     public DepthOfField _depthOfField;
     public ColorGrading _colorGrading;
+    public Camera noPostCamera;
     #endregion
 
     #region Player Information

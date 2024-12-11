@@ -20,13 +20,14 @@ public class SteakVisual : MonoBehaviour
     
     private SpriteRenderer spriteRenderer;
     private Steak steak;
+    private Sprite currentSprite;
     #endregion
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         steak = GetComponent<Steak>();
-        spriteRenderer.sprite = rawSprite;
+        SetSprite(rawSprite);
     }
 
     private void Update()
@@ -43,28 +44,40 @@ public class SteakVisual : MonoBehaviour
         bool isTopOvercooked = steak.IsTopSideOvercooked();
         bool isBottomOvercooked = steak.IsBottomSideOvercooked();
         
+        Sprite newSprite;
+        
         if (isTopOvercooked || isBottomOvercooked)
         {
-            spriteRenderer.sprite = overcookedSprite; 
-            return;
+            newSprite = overcookedSprite;
         }
-        
-        if (isTopCooked && isBottomCooked)
+        else if (isTopCooked && isBottomCooked)
         {
-            spriteRenderer.sprite = cookedSprite; 
+            newSprite = cookedSprite;
         }
         else if (isTopCooked)
         {
-            spriteRenderer.sprite = isTopCooking ? rawSprite : almostCookedSprite;
+            newSprite = isTopCooking ? rawSprite : almostCookedSprite;
         }
         else if (isBottomCooked)
         {
-            spriteRenderer.sprite = isTopCooking ? almostCookedSprite : rawSprite; 
+            newSprite = isTopCooking ? almostCookedSprite : rawSprite;
         }
         else
         {
-            spriteRenderer.sprite = rawSprite; 
+            newSprite = rawSprite;
+        }
+        
+        SetSprite(newSprite);
+    }
+    
+    private void SetSprite(Sprite newSprite)
+    {
+        if (currentSprite != newSprite)
+        {
+            currentSprite = newSprite;
+            spriteRenderer.sprite = newSprite;
         }
     }
+    
     #endregion
 }

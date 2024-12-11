@@ -18,6 +18,11 @@ public class Timer : MonoBehaviour
     {
         isPopDown = false;
         initialClockScale = clockGameObject.transform.localScale;
+        
+        Canvas canvas = gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+        canvas.planeDistance = 1;
     }
 
     private void Start()

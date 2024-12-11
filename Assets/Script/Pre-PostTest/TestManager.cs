@@ -53,6 +53,8 @@ public class TestManager : MonoBehaviour
     [SerializeField, Tooltip("No Button")]
     private GameObject noButton;
 
+    [SerializeField] private GameObject _canvas;
+
     [Header("Infos")]
     [SerializeField, Tooltip("Current question number")]
     private int questionNumber;
@@ -93,7 +95,12 @@ public class TestManager : MonoBehaviour
         }
         
         originalQnA = new List<QandA>(QnA);
-
+        
+        Canvas canvas = _canvas.gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = GameManager.Instance.noPostCamera;
+        canvas.planeDistance = 1;
+        
         Initialize();
     }
     

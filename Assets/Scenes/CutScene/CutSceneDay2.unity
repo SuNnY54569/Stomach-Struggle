@@ -1708,6 +1708,7 @@ MonoBehaviour:
   isSkip: 0
   skipButton: {fileID: 1195168349}
   timeline: {fileID: 448632473}
+  _canvas: {fileID: 1314227105}
 --- !u!114 &959543867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1961,7 +1962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1195168350
 RectTransform:
   m_ObjectHideFlags: 0

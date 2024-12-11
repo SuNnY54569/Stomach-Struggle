@@ -1098,6 +1098,7 @@ MonoBehaviour:
   isSkip: 0
   skipButton: {fileID: 1774763467}
   timeline: {fileID: 1065100125}
+  _canvas: {fileID: 1335441639}
 --- !u!4 &2031280258
 Transform:
   m_ObjectHideFlags: 0

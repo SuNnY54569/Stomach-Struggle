@@ -27,6 +27,8 @@ public class DatabaseManager : MonoBehaviour
     private GameObject enterNamePanel;
     [SerializeField, Tooltip("Player Data panel")]
     private GameObject dataPanel;
+
+    [SerializeField] private GameObject _canvas;
     #endregion
     
     #region Private Fields
@@ -41,6 +43,11 @@ public class DatabaseManager : MonoBehaviour
     {
         UITransitionUtility.Instance.Initialize(enterNamePanel, enterNamePanel.transform.position);
         UITransitionUtility.Instance.Initialize(dataPanel, enterNamePanel.transform.position);
+        
+        Canvas canvas = _canvas.gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+        canvas.planeDistance = 1;
     }
 
     void Start()

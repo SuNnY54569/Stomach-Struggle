@@ -13,6 +13,10 @@ public class MainMenuButton : MonoBehaviour
     private void Start()
     {
         Initialize();
+        Canvas canvas = gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = GameManager.Instance.noPostCamera;
+        canvas.planeDistance = 1;
     }
 
     public void StartGame()

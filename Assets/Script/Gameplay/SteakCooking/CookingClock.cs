@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CookingClock : MonoBehaviour
 {
@@ -14,54 +15,35 @@ public class CookingClock : MonoBehaviour
     [Header("Shake Setting")] 
     [SerializeField] private float duration = 0.5f;
     [SerializeField]private float strength = 0.2f;
-    [SerializeField]private int vibrato = 20;
-    [SerializeField]private float randomness = 90;
+    [SerializeField] private int vibrato = 20;
+    [SerializeField] private float randomness = 90;
     
     private Steak currentlyCookingSteak;
     private Tween shakeTween;
     private Vector3 clockOriginalPos;
     private bool isClockSoundPlaying;
+    
+    private const float ShakeStartThreshold = 5f;
+    private const float ShakeStopThreshold = 10f;
 
     private void Start()
     {
-        clockOriginalPos = clock.transform.position;
+        clockOriginalPos = clock.transform.localPosition;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         currentlyCookingSteak = Tools.Instance.currentlyCookingSteak;
 
         if (currentlyCookingSteak != null)
         {
             UpdateCookingTime();
-            
-            float elapsed = currentlyCookingSteak.CookingTimeElapsed();
-
-            if (elapsed >= 5f && elapsed < 10f)
-            {
-                if (!isClockSoundPlaying)
-                {
-                    StartCoroutine(PlayClockSound());
-                }
-                if (shakeTween == null || !shakeTween.IsActive())
-                {
-                    StartShake(); // Start shaking if not already shaking
-                }
-            }
-            else if (elapsed >= 10f && shakeTween != null)
-            {
-                StopShake(); // Stop shaking once elapsed time is 10 seconds or more
-            }
-            else if (elapsed < 5f && shakeTween != null)
-            {
-                StopShake();
-            }
+            ManageClockEffects(currentlyCookingSteak.CookingTimeElapsed());
         }
         else
         {
-            cookingTimeText.text = "00:00";
-            StopShake(); // Ensure shake stops if no steak is cooking
+            ResetClockUI();
         }
     }
     
@@ -70,14 +52,29 @@ public class CookingClock : MonoBehaviour
         if (currentlyCookingSteak != null)
         {
             float timeElapsed = currentlyCookingSteak.CookingTimeElapsed();
-            
             int minutes = Mathf.FloorToInt(timeElapsed); // Treat elapsed seconds as minutes
             int seconds = 0;
-            cookingTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            cookingTimeText.text = $"{minutes:00}:{seconds:00}";
         }
-        else
+    }
+    
+    private void ManageClockEffects(float elapsed)
+    {
+        if (elapsed >= ShakeStartThreshold && elapsed < ShakeStopThreshold)
         {
-            cookingTimeText.text = "00:00";
+            if (!isClockSoundPlaying)
+            {
+                StartCoroutine(PlayClockSound());
+            }
+
+            if (shakeTween == null || !shakeTween.IsActive())
+            {
+                StartShake();
+            }
+        }
+        else if (elapsed >= ShakeStopThreshold || elapsed < ShakeStartThreshold)
+        {
+            StopShake();
         }
     }
     
@@ -104,5 +101,11 @@ public class CookingClock : MonoBehaviour
 
         yield return new WaitForSeconds(0.75f);
         isClockSoundPlaying = false;
+    }
+    
+    private void ResetClockUI()
+    {
+        cookingTimeText.text = "00:00";
+        StopShake();
     }
 }

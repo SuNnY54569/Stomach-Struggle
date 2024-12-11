@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum ShopType
 {
@@ -11,7 +12,7 @@ public enum ShopType
     BadShop
 }
 
-public class ShopButton : MonoBehaviour
+public class ShopButton : MonoBehaviour, IPointerDownHandler,IPointerEnterHandler,IPointerExitHandler
 {
 
     [SerializeField] private ShopType shopType;
@@ -22,6 +23,7 @@ public class ShopButton : MonoBehaviour
     [SerializeField] private ClawController clawController;
     [SerializeField] private bool isReturnButton;
     [SerializeField] private Collider2D col;
+    [SerializeField] private GameObject buttonPanel;
     
     private const float AnimationDuration = 0.5f;
     private const LeanTweenType CloseEaseType = LeanTweenType.easeInBack;
@@ -45,6 +47,8 @@ public class ShopButton : MonoBehaviour
                 objectScales[obj] = obj.transform.localScale;
             }
         }
+        
+        UITransitionUtility.Instance.Initialize(buttonPanel, Vector2.zero);
     }
 
     private void OnEnable()
@@ -62,26 +66,34 @@ public class ShopButton : MonoBehaviour
     private void HandleGamePause()
     {
         col.enabled = false;
+        if (clawController.isInGame)
+        {
+            UITransitionUtility.Instance.MoveOut(buttonPanel);
+        }
     }
     
     private void HandleGameUnPause()
     {
         col.enabled = true;
+        if (clawController.isInGame)
+        {
+            UITransitionUtility.Instance.MoveIn(buttonPanel);
+        }
     }
 
-    private void OnMouseOver()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.gray;
     }
 
-    private void OnMouseExit()
+    public void OnPointerExit(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused) return;
         sprite.color = Color.white;
     }
 
-    private void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused) return;
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
@@ -125,12 +137,16 @@ public class ShopButton : MonoBehaviour
         {
             clawController.SetChance0to1(clawChance);
             clawController.PopReturnButtonUp();
+            clawController.isInGame = true;
+            UITransitionUtility.Instance.MoveIn(buttonPanel);
         }
         else
         {
             clawController.PopReturnButtonDown();
             clawController.RePosition();
             clawController.SetDefaultSprite();
+            clawController.isInGame = false;
+            UITransitionUtility.Instance.MoveOut(buttonPanel);
         }
     }
 

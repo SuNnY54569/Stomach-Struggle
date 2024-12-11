@@ -71,35 +71,9 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
         {
             return;
         }
-        
-        if (IsTopSideOvercooked() || IsBottomSideOvercooked())
-        {
-            if (currentTool == Tools.ToolType.Tongs || currentTool == Tools.ToolType.Spatula)
-            {
-                StopCooking();
-                isDragging = true;
-                return;
-            }
-        }
-        
-        if ((currentTool == Tools.ToolType.Tongs && !isCooking) || (currentTool == Tools.ToolType.Spatula && isCooking && IsCooked()))
-        {
-            StopCooking();
-            LeanTween.move(gameObject, MouseWorldPosition(), 0.05f);
-            isDragging = true;
-        }
-        else if (currentTool == Tools.ToolType.Spatula && isCooking && IsDroppedOnLayer("PanLayer"))
-        {
-            if (!IsBottomSideOvercooked() && !IsTopSideOvercooked())
-            {
-                FlipFood();
-            }
-            StartCooking();
-        }
-        else
-        {
-            Tools.Instance.ShowWarning(currentTool);
-        }
+
+        OverCookedHandle();
+        ToolsHandle();
     }
     
     public void OnDrag(PointerEventData eventData)
@@ -118,6 +92,41 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
         if (currentTool == Tools.ToolType.Tongs || currentTool == Tools.ToolType.Spatula)
         {
             HandleDrop();
+        }
+    }
+
+    private void OverCookedHandle()
+    {
+        if (IsTopSideOvercooked() || IsBottomSideOvercooked())
+        {
+            if (currentTool == Tools.ToolType.Tongs || currentTool == Tools.ToolType.Spatula)
+            {
+                StopCooking();
+                isDragging = true;
+                return;
+            }
+        }
+    }
+
+    private void ToolsHandle()
+    {
+        if ((currentTool == Tools.ToolType.Tongs && !isCooking) || (currentTool == Tools.ToolType.Spatula && isCooking && IsCooked()))
+        {
+            StopCooking();
+            LeanTween.move(gameObject, MouseWorldPosition(), 0.05f);
+            isDragging = true;
+        }
+        else if (currentTool == Tools.ToolType.Spatula && isCooking && IsDroppedOnLayer("PanLayer"))
+        {
+            if (!IsBottomSideOvercooked() && !IsTopSideOvercooked())
+            {
+                FlipFood();
+            }
+            StartCooking();
+        }
+        else
+        {
+            Tools.Instance.ShowWarning(currentTool);
         }
     }
     
@@ -219,8 +228,8 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
     {
         isCooking = false;
     }
-    
-    public void FlipFood()
+
+    private void FlipFood()
     {
         if (flipCooldownTimer > 0)
         {
@@ -231,31 +240,28 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
         switch (isTopSideCooking)
         {
             case true when !IsTopSideCooked():
-                Debug.Log("Top side is not cooked yet. Cannot flip.");
                 return;
             case false when !IsBottomSideCooked():
-                Debug.Log("Bottom side is not cooked yet. Cannot flip.");
                 return;
         }
         
         isTopSideCooking = !isTopSideCooking;
         flipCooldownTimer = flipCooldownDuration;
         SoundManager.PlaySound(SoundType.flipMeat,VolumeType.SFX);
-        
+        FlipAnimation();
+    }
+
+    private void FlipAnimation()
+    {
         float originalY = transform.position.y;
         float bounceHeight = 0.2f;
         float bounceDuration = 0.2f;
         float halfwayDuration = bounceDuration / 2f;
         
-        LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration)
-            .setEase(LeanTweenType.easeOutQuad)
-            .setOnComplete(() =>
-            {
-                spriteRenderer.flipX = !spriteRenderer.flipX;
-                
-                LeanTween.moveY(gameObject, originalY, halfwayDuration)
-                    .setEase(LeanTweenType.easeInQuad);
-            });
+        LeanTween.sequence()
+            .append(LeanTween.moveY(gameObject, originalY + bounceHeight, halfwayDuration).setEaseOutQuad())
+            .append(() => spriteRenderer.flipX = !spriteRenderer.flipX)
+            .append(LeanTween.moveY(gameObject, originalY, halfwayDuration).setEaseInQuad());
     }
     
     private void PlaceOnPlate()
@@ -382,5 +388,6 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
     public bool IsBottomSideCooked() => bottomSideCookingTimer >= cookingTime && bottomSideCookingTimer < overcookedTime;
     public bool IsTopSideOvercooked() => topSideCookingTimer >= overcookedTime;
     public bool IsBottomSideOvercooked() => bottomSideCookingTimer >= overcookedTime;
+    
     #endregion
 }

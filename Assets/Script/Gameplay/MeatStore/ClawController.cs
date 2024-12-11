@@ -47,54 +47,98 @@ public class ClawController : MonoBehaviour
     [Range(0f, 1f)]
     private float goodItemChance = 0.5f;
     
-    private GameObject currentItem;  // Item currently attached to the claw
-    private bool hasItem = false;  // Tracks if an item is held
-    private bool isMovingDown = false;  // Tracks if claw is moving down
-    private bool isReturning = false; // Tracks if claw is returning up
+    private GameObject currentItem;  
+    private bool hasItem = false;  
+    private bool isMovingLeft = false;
+    private bool isMovingRight = false;
+    private bool isMovingDown = false;
+    private bool isReturning = false;
+    public bool isInGame;
 
     private void Awake()
     {
         initialScale = returnButton.transform.localScale;
     }
 
-    void Start()
+    private void Start()
     {
-        //GameManager.Instance.scoreManager.SetScoreTextActive(true);
+        claw.transform.position = startPosition;
     }
 
     void Update()
     {
+        HandlePCInput();
         HandleHorizontalMovement();
-        HandleClawAction();
-
-        if (currentItem == null && !isMovingDown && !isReturning)//test
+        
+        if (currentItem == null && !isMovingDown && !isReturning)
         {
             hasItem = false;
             returnBox.SetActive(false);
         }
     }
     
+    private void HandlePCInput()
+    {
+        if (!isMovingDown && !isReturning)
+        {
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                isMovingLeft = true;
+                isMovingRight = false;
+            }
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                isMovingRight = true;
+                isMovingLeft = false;
+            }
+
+            // Detect Key Release for Instant Stop
+            if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                isMovingLeft = false;
+            }
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                isMovingRight = false;
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartClawAction();
+            }
+        }
+    }
+    
     private void HandleHorizontalMovement()
     {
-        if (!isMovingDown && !isReturning) 
+        if (!isMovingDown && !isReturning)
         {
-            float moveX = Input.GetAxis("Horizontal") * clawSpeed * Time.deltaTime;
+            float moveX = 0;
+            if (isMovingLeft)
+                moveX = -clawSpeed * Time.deltaTime;
+            if (isMovingRight)
+                moveX = clawSpeed * Time.deltaTime;
 
-            // Get current position and apply movement
             Vector2 newPosition = claw.transform.position;
             newPosition.x += moveX;
-
-            // Clamp the X position to stay within the minX and maxX limits
             newPosition.x = Mathf.Clamp(newPosition.x, minMovementLimitX, maxMovementLimitX);
-
-            // Apply the clamped position back to the claw
             claw.transform.position = newPosition;
         }
     }
     
-    private void HandleClawAction()
+    public void MoveLeft(bool move)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isMovingDown && !isReturning)
+        isMovingLeft = move;
+    }
+
+    public void MoveRight(bool move)
+    {
+        isMovingRight = move;
+    }
+    
+    public void StartClawAction()
+    {
+        if (!isMovingDown && !isReturning && claw.activeInHierarchy)
         {
             StartCoroutine(MoveClawDown());
         }
@@ -103,7 +147,6 @@ public class ClawController : MonoBehaviour
     private IEnumerator MoveClawDown()
     {
         isMovingDown = true;
-        
         while (claw.transform.position.y > clawDownPositionY)
         {
             claw.transform.Translate(Vector2.down * verticalMoveSpeed * Time.deltaTime);
@@ -116,7 +159,6 @@ public class ClawController : MonoBehaviour
     private IEnumerator MoveClawUp()
     {
         isReturning = true;
-
         while (claw.transform.position.y < startPosition.y)
         {
             claw.transform.Translate(Vector2.up * verticalMoveSpeed * Time.deltaTime);
@@ -136,30 +178,18 @@ public class ClawController : MonoBehaviour
     {
         if (!hasItem)
         {
-            
             bool isGoodItem = Random.Range(0f, 1f) < goodItemChance;
-            if (isGoodItem)
-            {
-                int randomIndex = Random.Range(0, goodItemPrefabs.Length);
-                currentItem = Instantiate(goodItemPrefabs[randomIndex], itemSpawnPoint.transform.position, Quaternion.identity);
-            }
-            else
-            {
-                int randomIndex = Random.Range(0, badItemPrefabs.Length);
-                currentItem = Instantiate(badItemPrefabs[randomIndex], itemSpawnPoint.transform.position, Quaternion.identity);
-            }
+            GameObject itemPrefab = isGoodItem
+                ? goodItemPrefabs[Random.Range(0, goodItemPrefabs.Length)]
+                : badItemPrefabs[Random.Range(0, badItemPrefabs.Length)];
 
+            currentItem = Instantiate(itemPrefab, itemSpawnPoint.transform.position, Quaternion.identity);
             if (claw.activeInHierarchy)
             {
                 StartCoroutine(SetItemParentAfterFrame());
             }
-            else
-            {
-                Debug.LogWarning("Claw is inactive, cannot start coroutine.");
-            }
-            
-            MeatObject meat = currentItem.GetComponent<MeatObject>();
 
+            MeatObject meat = currentItem.GetComponent<MeatObject>();
             clawSprite.sprite = meat.meatSprite;
         }
     }
@@ -182,7 +212,6 @@ public class ClawController : MonoBehaviour
     {
         if (collision.CompareTag("ItemBox"))
         {
-            Debug.Log("Hit box");
             GenerateItem();
             SoundManager.PlaySound(SoundType.PickUpMeat,VolumeType.SFX);
         }
@@ -196,7 +225,6 @@ public class ClawController : MonoBehaviour
     public void RePosition()
     {
         StopAllCoroutines();
-         
         isMovingDown = false;
         isReturning = false;
         
@@ -218,19 +246,19 @@ public class ClawController : MonoBehaviour
 
     public void PopReturnButtonUp()
     {
-        returnButton.SetActive(true); // Ensure the panel is active
-        returnButton.transform.localScale = Vector3.zero; // Start from zero scale
+        returnButton.SetActive(true);
+        returnButton.transform.localScale = Vector3.zero; 
         LeanTween.scale(returnButton, initialScale, 0.5f)
-            .setEase(LeanTweenType.easeOutBack) // Set easing type
-            .setIgnoreTimeScale(true); // Use unscaled time
+            .setEase(LeanTweenType.easeOutBack)
+            .setIgnoreTimeScale(true);
 
     }
     
     public void PopReturnButtonDown()
     {
         LeanTween.scale(returnButton, Vector3.zero, 0.5f)
-            .setEase(LeanTweenType.easeInBack) // Set easing type
-            .setIgnoreTimeScale(true) // Use unscaled time
+            .setEase(LeanTweenType.easeInBack)
+            .setIgnoreTimeScale(true)
             .setOnComplete(() =>
             {
                 returnButton.SetActive(false);
