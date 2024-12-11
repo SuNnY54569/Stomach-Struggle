@@ -25,7 +25,8 @@ public class Tools : MonoBehaviour
     [SerializeField] private Vector2 tongsCursorHotspot;
     [SerializeField] private Vector2 spatulaCursorHotspot;
 
-    [Header("Warning Settings")]
+    [Header("Warning Settings")] 
+    [SerializeField] private GameObject _canvas;
     [SerializeField] private TextMeshProUGUI warningMessageText;
     [SerializeField] private string defaultWarningMessage = "โปรดใช้เครื่องมือที่เหมาะสม!";
     [SerializeField] private string tongsWarning = "อันนี้ต้องใช้ตะหลิวนะ";
@@ -53,7 +54,15 @@ public class Tools : MonoBehaviour
         
         UITransitionUtility.Instance.Initialize(warningMessageText.gameObject,Vector2.zero);
     }
-    
+
+    private void Start()
+    {
+        Canvas canvas = _canvas.gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+        canvas.planeDistance = 1;
+    }
+
     private void OnEnable()
     {
         GameManager.OnGamePaused += HandleGamePaused;

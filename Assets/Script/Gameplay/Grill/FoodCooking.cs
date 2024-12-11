@@ -35,6 +35,8 @@ public class FoodCooking : MonoBehaviour
     [Header("Cooking State")]
     [Tooltip("Is the food currently cooking?")]
     public bool isCooking;
+    
+    [SerializeField] private ScoreVisual scoreVisual;
 
     private SpriteRenderer spriteRenderer;
     private Color rawColor = Color.red;
@@ -46,6 +48,7 @@ public class FoodCooking : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        scoreVisual = GameObject.FindGameObjectWithTag("Plate").GetComponent<ScoreVisual>();
     }
 
     private void Start()
@@ -210,6 +213,7 @@ public class FoodCooking : MonoBehaviour
     private void HandleCooked()
     {
         GameManager.Instance.scoreManager.IncreaseScore(1);
+        scoreVisual.SetScore(GameManager.Instance.scoreManager.GetScore());
     }
 
     private void HandleOvercooked()

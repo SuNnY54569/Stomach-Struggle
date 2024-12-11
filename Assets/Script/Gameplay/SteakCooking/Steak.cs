@@ -26,7 +26,7 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Collider2D col;
 
-    private Vector2 originalPosition;
+    private Vector3 originalPosition;
     private Tools.ToolType currentTool;
     private SteakSpawner steakSpawner;
     private Camera mainCamera;
@@ -342,11 +342,7 @@ public class Steak : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerU
     private void ResetPosition()
     {
         LeanTween.move(gameObject, originalPosition, 0.5f) // 0.5 seconds for the animation
-            .setEase(LeanTweenType.easeInOutQuad)
-            .setOnComplete(() =>
-            {
-                Debug.Log("Steak reset to original position.");
-            });
+            .setEase(LeanTweenType.easeInOutQuad);
         LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
     }
     

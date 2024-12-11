@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class DragFood : MonoBehaviour
+public class DragFood : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     #region Drag Settings
     [Header("Food and Spawner Settings")]
@@ -71,7 +72,7 @@ public class DragFood : MonoBehaviour
     }
 
     #region Mouse Events
-    private void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !isInteractable) return;
         
@@ -103,7 +104,7 @@ public class DragFood : MonoBehaviour
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
 
-    private void OnMouseDrag()
+    public void OnDrag(PointerEventData eventData)
     {
         if (!isDragging || GameManager.Instance.isGamePaused || !isInteractable) return;
         if (!ValidateToolForCookingState()) return;
@@ -120,7 +121,7 @@ public class DragFood : MonoBehaviour
         
     }
     
-    private void OnMouseUp()
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (GameManager.Instance.isGamePaused || !isInteractable) return;
         if (!ValidateToolForCookingState()) return;
@@ -156,10 +157,6 @@ public class DragFood : MonoBehaviour
                     lastFlipTime = Time.time;
                     SoundManager.PlaySound(SoundType.flipMeat, VolumeType.SFX);
                 }
-            }
-            else
-            {
-                Debug.Log("Flip is on cooldown. Please wait.");
             }
         }
     }
@@ -245,8 +242,15 @@ public class DragFood : MonoBehaviour
                             transform.localScale = initialScale;
                         });
                 }
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             });
-        LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
+        LeanTween.rotateZ(gameObject, 5f, 0.1f)
+            .setLoopPingPong(1)
+            .setOnComplete(() =>
+            {
+                // Reset the rotation to 0 when the animation finishes
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            });;
     }
     #endregion
     
@@ -314,11 +318,11 @@ public class DragFood : MonoBehaviour
     
     private void PopUpFood()
     {
-        gameObject.SetActive(true); // Ensure the panel is active
-        gameObject.transform.localScale = Vector3.zero; // Start from zero scale
+        gameObject.SetActive(true);
+        gameObject.transform.localScale = Vector3.zero;
         LeanTween.scale(gameObject, initialScale, 0.2f)
-            .setEase(LeanTweenType.easeOutBack) // Set easing type
-            .setIgnoreTimeScale(true); // Use unscaled time
+            .setEase(LeanTweenType.easeOutBack)
+            .setIgnoreTimeScale(true);
         LeanTween.rotateZ(gameObject, 5f, 0.1f).setLoopPingPong(1);
     }
     
