@@ -569,7 +569,7 @@ PlayerSettings:
   m_TemplateCustomTags:
     PRODUCT_DESCRIPTION: 
   mobileMTRendering:
-    Android: 1
+    Android: 0
     iPhone: 1
     tvOS: 1
   m_BuildTargetGroupLightmapEncodingQuality: []
