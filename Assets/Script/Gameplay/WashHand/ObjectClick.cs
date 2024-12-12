@@ -18,14 +18,9 @@ public class ObjectClick : MonoBehaviour
     private Color originalColor;
     private Vector3 initPos;
 
-    private void Start()
+    private void Awake()
     {
         initPos = picture.transform.localPosition;
-        if (objectRenderer == null)
-        {
-            objectRenderer = picture.GetComponent<SpriteRenderer>();
-        }
-
         originalColor = objectRenderer.material.color;
     }
 

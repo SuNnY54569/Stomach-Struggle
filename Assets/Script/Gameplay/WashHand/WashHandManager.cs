@@ -12,8 +12,8 @@ public class WashHandManager : MonoBehaviour
     [Serializable]
     public class BondedPosition
     {
-        public Transform position;
-        public Transform bondedPosition;
+        public Vector3 position;
+        public Vector3 bondedPosition;
     }
     
     public static WashHandManager Instance;
@@ -74,10 +74,6 @@ public class WashHandManager : MonoBehaviour
         
         UITransitionUtility.Instance.Initialize(startButton, Vector2.zero);
         UITransitionUtility.Instance.Initialize(warningText, Vector2.zero);
-    }
-
-    private void Start()
-    {
         CloseAllColliders();
     }
 
@@ -115,7 +111,6 @@ public class WashHandManager : MonoBehaviour
         List<BondedPosition> shuffledPositions = new List<BondedPosition>();
         for (int i = 0; i < bondedPositions.Count; i++)
         {
-            
             shuffledPositions.Add(bondedPositions[i]);
         }
         ShuffleList(shuffledPositions);
@@ -156,13 +151,13 @@ public class WashHandManager : MonoBehaviour
         }
     }
     
-    private void MoveObjectToPosition(GameObject obj, Transform targetPosition)
+    private void MoveObjectToPosition(GameObject obj, Vector3 targetPosition)
     {
         Collider2D objCollider = obj.GetComponent<Collider2D>();
         objCollider?.Disable();
 
         // Use LeanTween to move the object to the target position and scale it
-        LeanTween.move(obj, targetPosition.position, 1f)
+        LeanTween.move(obj, targetPosition, 1f)
             .setEase(LeanTweenType.easeInOutQuad)
             .setOnComplete(() => 
             {
@@ -229,7 +224,7 @@ public class WashHandManager : MonoBehaviour
         List<LTDescr> tweens = new List<LTDescr>();
         for (int i = 0; i < objects.Count; i++)
         {
-            Vector3 bondedPosition = startPositions[i].bondedPosition.position;
+            Vector3 bondedPosition = startPositions[i].bondedPosition;
 
             // Disable collider during movement
             Collider2D objCollider = objects[i].GetComponent<Collider2D>();
@@ -253,7 +248,7 @@ public class WashHandManager : MonoBehaviour
             objCollider?.Disable();
 
             // Use LeanTween to move the object and reset its scale
-            tweens.Add(LeanTween.move(objects[i], startPositions[i].position.position, 3f)
+            tweens.Add(LeanTween.move(objects[i], startPositions[i].position, 3f)
                 .setEase(LeanTweenType.easeInOutQuad));
             tweens.Add(LeanTween.scale(objects[i], new Vector3(1.5f, 1.5f, 1.5f), 3f)
                 .setEase(LeanTweenType.easeInOutQuad)
@@ -311,9 +306,9 @@ public class WashHandManager : MonoBehaviour
 
     private IEnumerator PopUpUI()
     {
-        UITransitionUtility.Instance.PopUp(warningText);
+        if (warningText != null) UITransitionUtility.Instance.PopUp(warningText);
         yield return new WaitForSeconds(2f);
-        UITransitionUtility.Instance.PopUp(startButton);
+        if (startButton != null) UITransitionUtility.Instance.PopUp(startButton);
     }
     
     private void HandlePopUp()

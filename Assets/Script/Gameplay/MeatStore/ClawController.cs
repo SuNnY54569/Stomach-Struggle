@@ -47,6 +47,11 @@ public class ClawController : MonoBehaviour
     [Range(0f, 1f)]
     private float goodItemChance = 0.5f;
     
+    [Header("UI Setting")]
+    [SerializeField] private GameObject _canvas;
+    public GameObject buttonPanel;
+    [SerializeField] private GameObject clawGameObject;
+    
     private GameObject currentItem;  
     private bool hasItem = false;  
     private bool isMovingLeft = false;
@@ -57,7 +62,12 @@ public class ClawController : MonoBehaviour
 
     private void Awake()
     {
+        Canvas canvas = _canvas.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+        canvas.planeDistance = 1;
         initialScale = returnButton.transform.localScale;
+        clawGameObject.SetActive(false);
     }
 
     private void Start()

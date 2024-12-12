@@ -198,6 +198,7 @@ MonoBehaviour:
   cookingProgressBar: {fileID: 3140450211251715927}
   progressBarFill: {fileID: 1583009579106544498}
   isCooking: 0
+  scoreVisual: {fileID: 0}
 --- !u!114 &7061499889016792865
 MonoBehaviour:
   m_ObjectHideFlags: 0

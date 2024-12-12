@@ -23,7 +23,6 @@ public class ShopButton : MonoBehaviour, IPointerDownHandler,IPointerEnterHandle
     [SerializeField] private ClawController clawController;
     [SerializeField] private bool isReturnButton;
     [SerializeField] private Collider2D col;
-    [SerializeField] private GameObject buttonPanel;
     
     private const float AnimationDuration = 0.5f;
     private const LeanTweenType CloseEaseType = LeanTweenType.easeInBack;
@@ -48,7 +47,7 @@ public class ShopButton : MonoBehaviour, IPointerDownHandler,IPointerEnterHandle
             }
         }
         
-        UITransitionUtility.Instance.Initialize(buttonPanel, Vector2.zero);
+        UITransitionUtility.Instance.Initialize(clawController.buttonPanel, Vector2.zero);
     }
 
     private void OnEnable()
@@ -68,7 +67,7 @@ public class ShopButton : MonoBehaviour, IPointerDownHandler,IPointerEnterHandle
         col.enabled = false;
         if (clawController.isInGame)
         {
-            UITransitionUtility.Instance.MoveOut(buttonPanel);
+            UITransitionUtility.Instance.MoveOut(clawController.buttonPanel);
         }
     }
     
@@ -77,7 +76,7 @@ public class ShopButton : MonoBehaviour, IPointerDownHandler,IPointerEnterHandle
         col.enabled = true;
         if (clawController.isInGame)
         {
-            UITransitionUtility.Instance.MoveIn(buttonPanel);
+            UITransitionUtility.Instance.MoveIn(clawController.buttonPanel);
         }
     }
 
@@ -138,7 +137,7 @@ public class ShopButton : MonoBehaviour, IPointerDownHandler,IPointerEnterHandle
             clawController.SetChance0to1(clawChance);
             clawController.PopReturnButtonUp();
             clawController.isInGame = true;
-            UITransitionUtility.Instance.MoveIn(buttonPanel);
+            UITransitionUtility.Instance.MoveIn(clawController.buttonPanel);
         }
         else
         {
@@ -146,7 +145,7 @@ public class ShopButton : MonoBehaviour, IPointerDownHandler,IPointerEnterHandle
             clawController.RePosition();
             clawController.SetDefaultSprite();
             clawController.isInGame = false;
-            UITransitionUtility.Instance.MoveOut(buttonPanel);
+            UITransitionUtility.Instance.MoveOut(clawController.buttonPanel);
         }
     }
 

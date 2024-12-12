@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] cutScenePause;
     
     [SerializeField] private List<GameObject> uiPanels;
+    
     #endregion
 
     #region Tutorial Settings
@@ -204,13 +205,13 @@ public class GameManager : MonoBehaviour
     {
         if (tutorialVideoManager == null) return;
 
-        VideoClip videoClip = tutorialVideoManager.GetVideoForScene(sceneName);
-        if (videoClip != null)
+        string videoPath = tutorialVideoManager.GetVideoForScene(sceneName);
+        if (videoPath != null)
         {
             tutorialVideoManager.SetupVideoForScene(sceneName);
-            UITransitionUtility.Instance.MoveIn(tutorialPanel);
+            UITransitionUtility.Instance.MoveIn
+                (tutorialPanel, LeanTweenType.easeInOutQuad, 1f, () => tutorialVideoManager.StartVideo());
             UITransitionUtility.Instance.MoveOut(gameplayPanel);
-            tutorialVideoManager.StartVideo();
             PauseGame();
         }
         else
@@ -223,37 +224,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    #endregion
-    
-    #region Score Management
-    /*public void IncreaseScore(int amount)
-    {
-        scoreValue += amount;
-        UpdateScoreText();
-        if (scoreValue >= scoreMax) healthManager.WinGame();
-    }
-
-    public int GetScore()
-    {
-        return scoreValue;
-    }
-
-    public void UpdateScoreText()
-    {
-        scoreText.text = $"{scoreValue}/{scoreMax}";
-    }
-
-    public void ResetScore()
-    {
-        scoreValue = 0;
-        UpdateScoreText();
-    }
-    
-    private void SetMaxScoreForLevel(string levelName)
-    {
-        var level = levelSettings.FirstOrDefault(l => l.levelName == levelName);
-        scoreMax = level?.maxScore ?? 3;
-    }*/
     #endregion
     
     #region Game End States

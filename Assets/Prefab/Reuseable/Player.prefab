@@ -2765,8 +2765,8 @@ VideoPlayer:
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
   m_RenderMode: 2
-  m_AspectRatio: 2
-  m_DataSource: 0
+  m_AspectRatio: 3
+  m_DataSource: 1
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 1
@@ -2799,35 +2799,35 @@ MonoBehaviour:
   videoPlayer: {fileID: 8939078656716128124}
   tutorialScenes:
   - sceneName: Claw machine
-    videoClip: {fileID: 32900000, guid: 1872af9c25594e24aab18bf31349272a, type: 3}
+    videoPath: 001.mp4
     tutorialText: "\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21\u0E25\u0E39\u0E01\u0E28\u0E23\u0E0B\u0E49\u0E32\u0E22\u0E02\u0E27\u0E32\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E02\u0E22\u0E31\u0E1A\u0E17\u0E35\u0E48\u0E04\u0E35\u0E1A\u0E01\u0E14\u0E1B\u0E38\u0E48\u0E21
       space bar \u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E2B\u0E22\u0E34\u0E1A/\u0E1B\u0E25\u0E48\u0E2D\u0E22\u0E40\u0E19\u0E37\u0E49\u0E2D"
   - sceneName: Vegetable
-    videoClip: {fileID: 32900000, guid: 053de441a0eeb3349bfe4678713105ad, type: 3}
+    videoPath: 002.mp4
     tutorialText: "\u0E43\u0E0A\u0E49\u0E40\u0E21\u0E32\u0E2A\u0E4C\u0E0A\u0E35\u0E49\u0E1C\u0E31\u0E01\u0E41\u0E25\u0E30\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E1C\u0E31\u0E01"
   - sceneName: WashHand
-    videoClip: {fileID: 32900000, guid: da31f33151baabf4d8a335c985adcdf2, type: 3}
+    videoPath: 003.mp4
     tutorialText: "\u0E43\u0E0A\u0E49\u0E40\u0E21\u0E32\u0E2A\u0E4C\u0E0A\u0E35\u0E49\u0E1F\u0E2D\u0E07\u0E2A\u0E1A\u0E39\u0E48
       \u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E37\u0E2D\u0E01"
   - sceneName: SteakCooking
-    videoClip: {fileID: 32900000, guid: 0314dc7649f266b468d7414433138c74, type: 3}
+    videoPath: 004.mp4
     tutorialText: "\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E17\u0E35\u0E48\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E43\u0E0A\u0E49
       \u0E04\u0E25\u0E34\u0E01\u0E04\u0E49\u0E32\u0E07\u0E17\u0E35\u0E48\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E02\u0E22\u0E31\u0E1A\u0E2B\u0E23\u0E37\u0E2D\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E17\u0E35\u0E48\u0E40\u0E19\u0E37\u0E49\u0E2D\u0E43\u0E19\u0E01\u0E23\u0E30\u0E17\u0E30\u0E01\u0E25\u0E31\u0E1A\u0E14\u0E49\u0E32\u0E19"
   - sceneName: Twohours
-    videoClip: {fileID: 32900000, guid: f848d34134f03694a8fa348d16d68a7f, type: 3}
+    videoPath: 005.mp4
     tutorialText: "\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E04\u0E49\u0E32\u0E07\u0E17\u0E35\u0E48\u0E23\u0E39\u0E1B\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E25\u0E32\u0E01\u0E44\u0E1B\u0E43\u0E2A\u0E48\u0E01\u0E32\u0E23\u0E4C\u0E14\u0E02\u0E49\u0E32\u0E07\u0E25\u0E48\u0E32\u0E07\u0E41\u0E25\u0E49\u0E27\u0E1B\u0E25\u0E48\u0E2D\u0E22"
   - sceneName: Grill
-    videoClip: {fileID: 32900000, guid: a60b8177dd83c0944b708babcffd47cb, type: 3}
+    videoPath: 006.mp4
     tutorialText: "\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E17\u0E35\u0E48\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E43\u0E0A\u0E49\u0E19\u0E33\u0E44\u0E1B\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E04\u0E49\u0E32\u0E07\u0E17\u0E35\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E25\u0E32\u0E01\u0E1B\u0E25\u0E48\u0E2D\u0E22\u0E43\u0E19\u0E40\u0E15\u0E32/\u0E08\u0E32\u0E19
       \u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E17\u0E35\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E43\u0E19\u0E40\u0E15\u0E32\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E01\u0E25\u0E31\u0E1A\u0E14\u0E49\u0E32\u0E19"
   - sceneName: ChooseWater
-    videoClip: {fileID: 32900000, guid: 554a8ecb1d9576349b885f6cf65d07e4, type: 3}
+    videoPath: 007.mp4
     tutorialText: "\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E02\u0E27\u0E14\u0E19\u0E49\u0E33\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E19\u0E33\u0E2D\u0E2D\u0E01"
   - sceneName: Docter
-    videoClip: {fileID: 32900000, guid: 8af78e7acd4210a4ca4a146286c0bd44, type: 3}
+    videoPath: 008.mp4
     tutorialText: "\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E43\u0E19\u0E0A\u0E48\u0E2D\u0E07\u0E2A\u0E35\u0E48\u0E40\u0E2B\u0E25\u0E35\u0E48\u0E22\u0E21\u0E2B\u0E19\u0E49\u0E32\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E40\u0E1E\u0E37\u0E48\u0E2D\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E2D\u0E32\u0E01\u0E32\u0E23"
   - sceneName: Docter 2
-    videoClip: {fileID: 32900000, guid: f036940e79813ab45b1f15717b5c648f, type: 3}
+    videoPath: 009.mp4
     tutorialText: "\u0E04\u0E25\u0E34\u0E01\u0E0B\u0E49\u0E32\u0E22\u0E17\u0E35\u0E48\u0E2D\u0E38\u0E1B\u0E01\u0E23\u0E13\u0E4C\u0E17\u0E35\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E23\u0E31\u0E01\u0E29\u0E32"
   replayButton: {fileID: 8292771327219512057}
   skipButton: {fileID: 723946657801768396}
@@ -8001,6 +8001,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4656033396446134791}
     m_Modifications:
+    - target: {fileID: 5269141612039296978, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535617460511522779, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 710848275019586795}
+    - target: {fileID: 5535617460511522779, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535617460511522779, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5768483221496632770, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8214762668433716099, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8746815213132877900, guid: 60e223b373cd9a347945535b62afe6ed, type: 3}
       propertyPath: m_Name
       value: TransitionManager

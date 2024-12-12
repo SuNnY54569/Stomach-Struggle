@@ -33,6 +33,13 @@ public class Tools : MonoBehaviour
     [SerializeField] private string spatulaWarning = "อันนี้ต้องใช้ทีคีบนะ";
     [SerializeField] private float warningFadeDuration = 1.5f;
     [SerializeField] private float warningCooldown = 1.5f;
+    
+    [Header("Tool Image Settings")]
+    [SerializeField] private GameObject tongsImageObject; 
+    [SerializeField] private GameObject spatulaImageObject; 
+    [SerializeField] private GameObject defaultImageObject;
+    [SerializeField] private float animationDuration = 0.5f; 
+    private GameObject currentToolObject;
 
     private float lastWarningTime = -Mathf.Infinity;
 
@@ -51,8 +58,12 @@ public class Tools : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+        UITransitionUtility.Instance.Initialize(tongsImageObject, tongsImageObject.GetComponent<RectTransform>().anchoredPosition);
+        UITransitionUtility.Instance.Initialize(spatulaImageObject, spatulaImageObject.GetComponent<RectTransform>().anchoredPosition);
+        UITransitionUtility.Instance.Initialize(defaultImageObject, defaultImageObject.GetComponent<RectTransform>().anchoredPosition);
         UITransitionUtility.Instance.Initialize(warningMessageText.gameObject,Vector2.zero);
+        
+        SetCurrentTool(ToolType.None);
     }
 
     private void Start()
@@ -86,6 +97,30 @@ public class Tools : MonoBehaviour
     #region Tool Management
     public void SetCurrentTool(ToolType tool)
     {
+        GameObject newToolObject;
+        
+        switch (tool)
+        {
+            case ToolType.Tongs:
+                newToolObject = tongsImageObject;
+                break;
+            case ToolType.Spatula:
+                newToolObject = spatulaImageObject;
+                break;
+            case ToolType.None:
+            default:
+                newToolObject = defaultImageObject;
+                break;
+        }
+        
+        if (currentToolObject != null)
+        {
+            UITransitionUtility.Instance.PopDown(currentToolObject, LeanTweenType.easeInBack, animationDuration,
+                () => UITransitionUtility.Instance.PopUp(newToolObject, LeanTweenType.easeOutBack, animationDuration));
+        }
+        
+        currentToolObject = newToolObject;
+        
         currentTool = tool;
         UpdateCursorIcon(tool);
     }

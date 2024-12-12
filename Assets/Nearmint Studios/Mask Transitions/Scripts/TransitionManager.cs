@@ -151,9 +151,9 @@ namespace MaskTransitions
             {
                 yield return null;
             }
-
+            
             asyncLoad.allowSceneActivation = true;
-
+            
             yield return new WaitForSecondsRealtime(0.1f); // Optional for smoother transition
 
             EndAnimation();
