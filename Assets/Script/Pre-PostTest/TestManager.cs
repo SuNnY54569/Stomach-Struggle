@@ -53,6 +53,8 @@ public class TestManager : MonoBehaviour
     [SerializeField, Tooltip("No Button")]
     private GameObject noButton;
 
+    [SerializeField] private GameObject _canvas;
+
     [Header("Infos")]
     [SerializeField, Tooltip("Current question number")]
     private int questionNumber;
@@ -81,13 +83,7 @@ public class TestManager : MonoBehaviour
 
     private void Awake()
     {
-        Vector2 targetPosition = Vector2.zero;
-        UITransitionUtility.Instance.Initialize(startPanel, targetPosition);
-        UITransitionUtility.Instance.Initialize(quizPanel, targetPosition);
-        UITransitionUtility.Instance.Initialize(correctionPanel, targetPosition);
-        UITransitionUtility.Instance.Initialize(correctPanel, targetPosition);
-        UITransitionUtility.Instance.Initialize(goPanel, targetPosition);
-        UITransitionUtility.Instance.Initialize(canvas, targetPosition);
+        InitializeAllPanel();
     }
 
     private void Start()
@@ -99,8 +95,25 @@ public class TestManager : MonoBehaviour
         }
         
         originalQnA = new List<QandA>(QnA);
-
+        
+        Canvas canvas = _canvas.gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = GameManager.Instance.noPostCamera;
+        canvas.planeDistance = 1;
+        
         Initialize();
+    }
+    
+    private void OnEnable()
+    {
+        GameManager.OnGamePaused += HandleGamePause;
+        GameManager.OnGameUnpaused += HandleGameUnpause;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGamePaused -= HandleGamePause;
+        GameManager.OnGameUnpaused -= HandleGameUnpause;
     }
 
     private void LateUpdate()
@@ -113,22 +126,16 @@ public class TestManager : MonoBehaviour
                 UITransitionUtility.Instance.PopDown(quizPanel);
             }
         }
+    }
+    
+    private void HandleGamePause()
+    {
+        UITransitionUtility.Instance.PopDown(canvas);
+    }
 
-        if (previousPauseState != GameManager.Instance.isGamePaused)
-        {
-            // Update the pause state tracker
-            previousPauseState = GameManager.Instance.isGamePaused;
-
-            // Perform the appropriate UI transition
-            if (GameManager.Instance.isGamePaused)
-            {
-                UITransitionUtility.Instance.PopDown(canvas);
-            }
-            else
-            {
-                UITransitionUtility.Instance.PopUp(canvas, LeanTweenType.easeOutBack, 1f);
-            }
-        }
+    private void HandleGameUnpause()
+    {
+        UITransitionUtility.Instance.PopUp(canvas, LeanTweenType.easeOutBack, 1f);
     }
 
     private void Initialize()
@@ -144,6 +151,17 @@ public class TestManager : MonoBehaviour
         qNumberText.text = $"{questionNumber}";
         GenerateQuestion();
         scoreText.text = $"{score} / {totalQuestion}";
+    }
+
+    private void InitializeAllPanel()
+    {
+        Vector2 targetPosition = Vector2.zero;
+        UITransitionUtility.Instance.Initialize(startPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(quizPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(correctionPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(correctPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(goPanel, targetPosition);
+        UITransitionUtility.Instance.Initialize(canvas, targetPosition);
     }
 
     public void Next(string sceneName)

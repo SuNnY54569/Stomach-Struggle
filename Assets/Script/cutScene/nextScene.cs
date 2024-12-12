@@ -11,11 +11,17 @@ public class nextScene : MonoBehaviour
     public bool isSkip;
     public GameObject skipButton;
     public PlayableDirector timeline;
+    public GameObject _canvas;
 
     public void Awake()
     {
         UITransitionUtility.Instance.Initialize(skipButton, new Vector2(0, 0));
         isSkip = false;
+        
+        Canvas canvas = _canvas.gameObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+        canvas.planeDistance = 1;
     }
 
     public void Start()

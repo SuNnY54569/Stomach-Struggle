@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,47 @@ public class SoundCutScene : MonoBehaviour
     private nextScene _nextScene;
     [SerializeField] private GameObject dialogCanvas;
 
+    private Vector3 initialScale;
+
     public void Awake()
     {
         _nextScene = GetComponent<nextScene>();
+        UITransitionUtility.Instance.Initialize(dialogCanvas, Vector2.zero);
     }
 
-    public void LateUpdate()
+    public void Start()
     {
-        dialogCanvas.SetActive(!GameManager.Instance.isGamePaused);
+        initialScale = dialogCanvas.transform.localScale;
+    }
+
+    private void OnEnable()
+    {
+        GameManager.OnGamePaused += HandleGamePause;
+        GameManager.OnGameUnpaused += HandleGameUnPause;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGamePaused -= HandleGamePause;
+        GameManager.OnGameUnpaused -= HandleGameUnPause;
+    }
+    
+    private void HandleGamePause()
+    {
+        LeanTween.scale(dialogCanvas, Vector3.zero, 0.2f)
+            .setEase(LeanTweenType.easeInBack)
+            .setIgnoreTimeScale(true)
+            .setOnComplete((() => {dialogCanvas.SetActive(false);}));
+    }
+    
+    private void HandleGameUnPause()
+    {
+        dialogCanvas.SetActive(true);
+        dialogCanvas.transform.localScale = Vector3.zero;
+        LeanTween.scale(dialogCanvas, initialScale, 0.2f)
+            .setEase(LeanTweenType.easeOutBack)
+            .setIgnoreTimeScale(true)
+            .setOnComplete((() => { dialogCanvas.transform.localScale = initialScale;}));
     }
 
     private void PlaySound(SoundType soundType, VolumeType volumeType = VolumeType.Dialog)

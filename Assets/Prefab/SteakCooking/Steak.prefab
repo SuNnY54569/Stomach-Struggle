@@ -101,11 +101,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cookingTime: 5
   overcookedTime: 10
-  topSideCookingTimer: 0
-  bottomSideCookingTimer: 0
+  flipCooldownDuration: 0.5
   isTopSideCooking: 1
   panCenter: {fileID: 0}
   spriteRenderer: {fileID: 7780819487706636082}
+  col: {fileID: 1292308943898910900}
 --- !u!114 &7585456705528663838
 MonoBehaviour:
   m_ObjectHideFlags: 0

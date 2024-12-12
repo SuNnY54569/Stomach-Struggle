@@ -62,17 +62,28 @@ public class TutorialVideoManager : MonoBehaviour
 
     public void SetupVideoForScene(string sceneName)
     {
-        VideoClip videoClip = GetVideoForScene(sceneName);
-        if (videoClip != null)
+        string videoPath = GetVideoForScene(sceneName);
+        if (videoPath != null)
         {
-            videoPlayer.clip = videoClip;
-            StartCoroutine(ShowSkipButtonWithDelay(1f));
+            videoPlayer.url = videoPath;
+            videoPlayer.Prepare();
+            StartCoroutine(WaitForVideoPrepared());
         }
+    }
+    
+    private IEnumerator WaitForVideoPrepared()
+    {
+        while (!videoPlayer.isPrepared)
+        {
+            yield return null; // Wait for the video to be prepared
+        }
+        StartCoroutine(ShowSkipButtonWithDelay(1f));
+        StartVideo();
     }
     
     public void StartVideo()
     {
-        if (videoPlayer.clip != null)
+        if (videoPlayer.url != null)
         {
             videoPlayer.Play();
             videoPlayer.loopPointReached += OnVideoEnd;
@@ -98,13 +109,14 @@ public class TutorialVideoManager : MonoBehaviour
         GameManager.Instance.PauseGame();
     }
     
-    public VideoClip GetVideoForScene(string sceneName)
+    public string GetVideoForScene(string sceneName)
     {
         foreach (var tutorialScene in tutorialScenes)
         {
             if (tutorialScene.sceneName != sceneName) continue;
             tutorialText.text = tutorialScene.tutorialText;
-            return tutorialScene.videoClip;
+            string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, tutorialScene.videoPath);
+            return videoPath;
         }
         return null;
     }
@@ -134,7 +146,7 @@ public class TutorialSceneData
     public string sceneName;
 
     [Tooltip("The video clip associated with this scene.")]
-    public VideoClip videoClip;
+    public string videoPath;
     
     [Tooltip("tutorial text")] 
     public string tutorialText;

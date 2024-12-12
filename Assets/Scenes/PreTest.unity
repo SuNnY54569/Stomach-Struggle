@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 46827588}
   - component: {fileID: 46827590}
   - component: {fileID: 46827589}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 162244352}
   - component: {fileID: 162244354}
   - component: {fileID: 162244353}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,13 +407,13 @@ GameObject:
   - component: {fileID: 253449081}
   - component: {fileID: 253449084}
   - component: {fileID: 253449083}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Correction Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &253449081
 RectTransform:
   m_ObjectHideFlags: 0
@@ -432,7 +432,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -144, y: 76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &253449083
 MonoBehaviour:
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 303313777}
   - component: {fileID: 303313779}
   - component: {fileID: 303313778}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Question Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,10 +529,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E2B\u0E23\u0E37\u0E2D\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E2D\u0E32\u0E2B\u0E32\u0E23
-    \u0E1C\u0E39\u0E49\u0E40\u0E2A\u0E23\u0E34\u0E1F\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
-    \u0E2B\u0E23\u0E37\u0E2D\u0E40\u0E1B\u0E47\u0E19\u0E2B\u0E27\u0E31\u0E14 \u0E44\u0E2D\u0E08\u0E32\u0E21
-    \u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E1B\u0E23\u0E38\u0E07\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E15\u0E48\u0E2D\u0E44\u0E21\u0E48\u0E15\u0E49\u0E2D\u0E07\u0E2B\u0E22\u0E38\u0E14\u0E07\u0E32\u0E19"
+  m_text: "\u0E40\u0E21\u0E37\u0E48\u0E2D\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
+    \u0E04\u0E25\u0E37\u0E48\u0E19\u0E44\u0E2A\u0E49\u0E2D\u0E32\u0E40\u0E08\u0E35\u0E22\u0E19
+    \u0E04\u0E27\u0E23\u0E23\u0E35\u0E1A\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E22\u0E32\u0E2B\u0E22\u0E38\u0E14\u0E16\u0E48\u0E32\u0E22\u0E17\u0E31\u0E19\u0E17\u0E35\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
   m_sharedMaterial: {fileID: 4640881436553943417, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
@@ -559,15 +558,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 65
+  m_fontSize: 72
   m_fontSizeBase: 65
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -620,7 +619,7 @@ GameObject:
   - component: {fileID: 343520066}
   - component: {fileID: 343520068}
   - component: {fileID: 343520067}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Score Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +753,7 @@ GameObject:
   - component: {fileID: 393366778}
   - component: {fileID: 393366780}
   - component: {fileID: 393366779}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -836,7 +835,7 @@ GameObject:
   - component: {fileID: 450593317}
   - component: {fileID: 450593316}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -881,7 +880,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &450593318
 Canvas:
   m_ObjectHideFlags: 0
@@ -891,7 +890,7 @@ Canvas:
   m_GameObject: {fileID: 450593315}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -903,7 +902,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &450593319
 RectTransform:
@@ -914,8 +913,8 @@ RectTransform:
   m_GameObject: {fileID: 450593315}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.0093, y: 0.0093, z: 0.0093}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 176090299}
   m_Father: {fileID: 0}
@@ -923,8 +922,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_SizeDelta: {x: 2064.558, y: 1004.37964}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &526280241
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,7 +935,7 @@ GameObject:
   - component: {fileID: 526280242}
   - component: {fileID: 526280244}
   - component: {fileID: 526280243}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Correction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -952,15 +951,15 @@ RectTransform:
   m_GameObject: {fileID: 526280241}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.69633335, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.55706674, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2056897472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.595}
-  m_AnchoredPosition: {x: 0, y: 25}
-  m_SizeDelta: {x: -110, y: 114.11}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -68}
+  m_SizeDelta: {x: 1350, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526280243
 MonoBehaviour:
@@ -982,11 +981,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0E2B\u0E32\u0E01\u0E2A\u0E27\u0E21\u0E16\u0E38\u0E07\u0E21\u0E37\u0E2D\u0E41\u0E25\u0E49\u0E27\u0E15\u0E49\u0E2D\u0E07\u0E44\u0E1B\u0E2A\u0E31\u0E21\u0E1C\u0E31\u0E2A\u0E2B\u0E23\u0E37\u0E2D\u0E2B\u0E22\u0E34\u0E1A\u0E08\u0E31\u0E1A\u0E2A\u0E34\u0E48\u0E07\u0E02\u0E2D\u0E07\u0E2D\u0E37\u0E48\u0E19
-    \u0E46 \u0E40\u0E0A\u0E48\u0E19 \u0E40\u0E07\u0E34\u0E19  \u0E04\u0E27\u0E23\u0E16\u0E2D\u0E14\u0E16\u0E38\u0E07\u0E21\u0E37\u0E2D\u0E2D\u0E2D\u0E01\u0E01\u0E48\u0E2D\u0E19\u0E17\u0E38\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07
-    \u0E40\u0E1E\u0E23\u0E32\u0E30\u0E2D\u0E32\u0E08\u0E08\u0E30\u0E1B\u0E19\u0E40\u0E1B\u0E37\u0E49\u0E2D\u0E19\u0E41\u0E25\u0E30\u0E40\u0E1B\u0E47\u0E19\u0E41\u0E2B\u0E25\u0E48\u0E07
-    \u0E19\u0E33\u0E40\u0E0A\u0E37\u0E49\u0E2D\u0E42\u0E23\u0E04\u0E41\u0E25\u0E30\u0E2A\u0E34\u0E48\u0E07\u0E2A\u0E01\u0E1B\u0E23\u0E01\u0E15\u0E48\u0E32\u0E07
-    \u0E46  \u0E21\u0E32\u0E2A\u0E39\u0E48\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E44\u0E14\u0E49 "
+  m_text: "\u0E2B\u0E32\u0E01\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22\u0E44\u0E21\u0E48\u0E04\u0E27\u0E23\u0E01\u0E34\u0E19\u0E22\u0E32\u0E2B\u0E22\u0E38\u0E14\u0E16\u0E48\u0E32\u0E22
+    \u0E04\u0E27\u0E23\u0E14\u0E37\u0E48\u0E21\u0E19\u0E49\u0E33\u0E40\u0E01\u0E25\u0E37\u0E2D\u0E41\u0E23\u0E48\u0E2A\u0E33\u0E2B\u0E23\u0E31\u0E1A\u0E04\u0E19\u0E17\u0E49\u0E2D\u0E07\u0E40\u0E2A\u0E35\u0E22
+    \u0E41\u0E25\u0E30\u0E2B\u0E32\u0E01\u0E21\u0E35\u0E2D\u0E32\u0E01\u0E32\u0E23\u0E2B\u0E19\u0E31\u0E01\u0E43\u0E2B\u0E49\u0E23\u0E35\u0E1A\u0E44\u0E1B\u0E1E\u0E1A\u0E41\u0E1E\u0E17\u0E22\u0E4C\u0E17\u0E31\u0E19\u0E17\u0E35\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
   m_sharedMaterial: {fileID: 4640881436553943417, guid: 0ee1a4e341921ff498f7430f9d5b466b, type: 2}
@@ -1013,15 +1010,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 75
+  m_fontSizeBase: 50
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 40
+  m_fontSizeMax: 75
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1049,7 +1046,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 101.48732}
+  m_margin: {x: 0, y: 4.195114, z: 0, w: 84.99733}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1101,9 +1098,11 @@ MonoBehaviour:
     - "\u0E16\u0E39\u0E01"
     - "\u0E1C\u0E34\u0E14"
     correctAnswers: 1
-    correction: "\u0E23\u0E49\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E15\u0E31\u0E27\u0E23\u0E49\u0E32\u0E19\u0E2A\u0E30\u0E2D\u0E32\u0E14\u0E0A\u0E48\u0E27\u0E22\u0E25\u0E14\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E01\u0E34\u0E14\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
+    correction: "\u0E23\u0E49\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1C\u0E39\u0E49\u0E1B\u0E23\u0E38\u0E07\u0E1B\u0E23\u0E30\u0E01\u0E2D\u0E1A\u0E41\u0E25\u0E30\u0E15\u0E31\u0E27\u0E23\u0E49\u0E32\u0E19\u0E2A\u0E30\u0E2D\u0E32\u0E14 
+      \u0E0A\u0E48\u0E27\u0E22\u0E25\u0E14\u0E04\u0E27\u0E32\u0E21\u0E40\u0E2A\u0E35\u0E48\u0E22\u0E07\u0E02\u0E2D\u0E07\u0E01\u0E32\u0E23\u0E40\u0E01\u0E34\u0E14\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
   - name: Question2
-    question: "\u0E01\u0E32\u0E23\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E38\u0E01\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E17\u0E31\u0E48\u0E27\u0E16\u0E36\u0E07\u0E08\u0E30\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22\u0E08\u0E32\u0E01\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
+    question: "\u0E01\u0E32\u0E23\u0E23\u0E31\u0E1A\u0E1B\u0E23\u0E30\u0E17\u0E32\u0E19\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E17\u0E35\u0E48\u0E1B\u0E23\u0E38\u0E07\u0E2A\u0E38\u0E01\u0E2D\u0E22\u0E48\u0E32\u0E07\u0E17\u0E31\u0E48\u0E27\u0E16\u0E36\u0E07  
+      \u0E08\u0E30\u0E1B\u0E25\u0E2D\u0E14\u0E20\u0E31\u0E22\u0E08\u0E32\u0E01\u0E42\u0E23\u0E04\u0E2D\u0E32\u0E2B\u0E32\u0E23\u0E40\u0E1B\u0E47\u0E19\u0E1E\u0E34\u0E29"
     answers:
     - "\u0E16\u0E39\u0E01"
     - "\u0E1C\u0E34\u0E14"
@@ -1225,6 +1224,7 @@ MonoBehaviour:
   correctSkipButton: {fileID: 1582567809}
   yesButton: {fileID: 677761495}
   noButton: {fileID: 1436713495}
+  _canvas: {fileID: 1789545713}
   questionNumber: 0
   currentQuestion: 0
   totalQuestion: 0
@@ -1257,7 +1257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 637001538}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: GO Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1279,10 +1279,10 @@ RectTransform:
   - {fileID: 2066421553}
   m_Father: {fileID: 393366778}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: -1964, y: -904}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &645407173
 GameObject:
@@ -1297,7 +1297,7 @@ GameObject:
   - component: {fileID: 645407177}
   - component: {fileID: 645407176}
   - component: {fileID: 645407175}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Next
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1445,7 +1445,7 @@ GameObject:
   - component: {fileID: 672264553}
   - component: {fileID: 672264552}
   - component: {fileID: 672264551}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Next
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1594,7 @@ GameObject:
   - component: {fileID: 677761499}
   - component: {fileID: 677761498}
   - component: {fileID: 677761497}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Correct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1755,7 +1755,7 @@ GameObject:
   - component: {fileID: 765246097}
   - component: {fileID: 765246099}
   - component: {fileID: 765246098}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Correct or Not
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1890,7 +1890,7 @@ GameObject:
   - component: {fileID: 846194346}
   - component: {fileID: 846194345}
   - component: {fileID: 846194344}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Question Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1914,10 +1914,10 @@ RectTransform:
   - {fileID: 1446475576}
   m_Father: {fileID: 1334164675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05647884, y: 0.2911336}
-  m_AnchorMax: {x: 0.94200003, y: 0.96400005}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.5, y: 137.5}
+  m_SizeDelta: {x: 1701, y: 727}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &846194344
 MonoBehaviour:
@@ -1983,7 +1983,7 @@ GameObject:
   - component: {fileID: 863182128}
   - component: {fileID: 863182130}
   - component: {fileID: 863182129}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2117,7 +2117,7 @@ GameObject:
   - component: {fileID: 1070091251}
   - component: {fileID: 1070091253}
   - component: {fileID: 1070091252}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Question Number Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2253,7 +2253,7 @@ GameObject:
   - component: {fileID: 1201874823}
   - component: {fileID: 1201874822}
   - component: {fileID: 1201874821}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2399,7 +2399,7 @@ GameObject:
   - component: {fileID: 1334164675}
   - component: {fileID: 1334164677}
   - component: {fileID: 1334164676}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Quiz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2425,7 +2425,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 1000}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -144, y: 76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1334164676
 MonoBehaviour:
@@ -2476,7 +2476,7 @@ GameObject:
   - component: {fileID: 1370789997}
   - component: {fileID: 1370790000}
   - component: {fileID: 1370789999}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Correct Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2501,7 +2501,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -144, y: 76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1370789999
 MonoBehaviour:
@@ -2552,13 +2552,13 @@ GameObject:
   - component: {fileID: 1404333591}
   - component: {fileID: 1404333593}
   - component: {fileID: 1404333592}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: StartPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1404333591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2576,8 +2576,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1000}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -1245}
+  m_SizeDelta: {x: -144, y: 76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1404333592
 MonoBehaviour:
@@ -2631,7 +2631,7 @@ GameObject:
   - component: {fileID: 1436713499}
   - component: {fileID: 1436713498}
   - component: {fileID: 1436713497}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Wrong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2792,7 +2792,7 @@ GameObject:
   - component: {fileID: 1446475576}
   - component: {fileID: 1446475578}
   - component: {fileID: 1446475577}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Question Number
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2868,7 +2868,7 @@ GameObject:
   - component: {fileID: 1465781873}
   - component: {fileID: 1465781875}
   - component: {fileID: 1465781874}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Correct or Not
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2891,7 +2891,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.595}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -66}
+  m_AnchoredPosition: {x: 0, y: -57.231995}
   m_SizeDelta: {x: 0, y: -114.11261}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1465781874
@@ -2980,7 +2980,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1465781875
@@ -3002,7 +3002,7 @@ GameObject:
   - component: {fileID: 1466573019}
   - component: {fileID: 1466573021}
   - component: {fileID: 1466573020}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Correction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3136,7 +3136,7 @@ GameObject:
   - component: {fileID: 1559782173}
   - component: {fileID: 1559782175}
   - component: {fileID: 1559782174}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3271,7 +3271,7 @@ GameObject:
   - component: {fileID: 1582567813}
   - component: {fileID: 1582567812}
   - component: {fileID: 1582567811}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Skip Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3403,7 +3403,7 @@ GameObject:
   - component: {fileID: 1753374431}
   - component: {fileID: 1753374430}
   - component: {fileID: 1753374429}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: 'Skip Button '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3426,7 +3426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -222}
+  m_AnchoredPosition: {x: 0, y: -217}
   m_SizeDelta: {x: 238, y: 247}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1753374429
@@ -3534,7 +3534,7 @@ GameObject:
   - component: {fileID: 1765907570}
   - component: {fileID: 1765907572}
   - component: {fileID: 1765907571}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3558,10 +3558,10 @@ RectTransform:
   - {fileID: 1582567810}
   m_Father: {fileID: 1370789997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -500, y: -500}
+  m_SizeDelta: {x: 1420, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1765907571
 MonoBehaviour:
@@ -3613,7 +3613,7 @@ GameObject:
   - component: {fileID: 1789545716}
   - component: {fileID: 1789545715}
   - component: {fileID: 1789545714}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3714,7 +3714,7 @@ GameObject:
   - component: {fileID: 1889714879}
   - component: {fileID: 1889714881}
   - component: {fileID: 1889714880}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Final Score Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3845,6 +3845,66 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 140956116435908154, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140956116435908154, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 140956116435908154, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801754818886462416, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801754818886462416, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2461793366935924712, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2461793366935924712, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588761941499897029, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588761941499897029, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588761941499897029, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2755740091302841875, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2755740091302841875, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2755740091302841875, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389667231238728510, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389667231238728510, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4656033396446134791, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3885,9 +3945,77 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266954144622686861, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6831690669236110215, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7007975768264432847, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7007975768264432847, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603171379509646168, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603171379509646168, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603171379509646168, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8221714908664166691, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8340878720058305855, guid: 82eef7e5b75756d43b3d2030bd6fcc6f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3905,7 +4033,7 @@ GameObject:
   - component: {fileID: 2056897472}
   - component: {fileID: 2056897474}
   - component: {fileID: 2056897473}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3929,10 +4057,10 @@ RectTransform:
   - {fileID: 1753374428}
   m_Father: {fileID: 253449081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -500, y: -500}
+  m_SizeDelta: {x: 1420, y: 580}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2056897473
 MonoBehaviour:
@@ -3983,7 +4111,7 @@ GameObject:
   - component: {fileID: 2066421553}
   - component: {fileID: 2066421555}
   - component: {fileID: 2066421554}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4062,7 +4190,7 @@ GameObject:
   - component: {fileID: 2112054600}
   - component: {fileID: 2112054602}
   - component: {fileID: 2112054601}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4139,7 +4267,7 @@ GameObject:
   - component: {fileID: 2126240777}
   - component: {fileID: 2126240779}
   - component: {fileID: 2126240778}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Button Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4162,10 +4290,10 @@ RectTransform:
   - {fileID: 1436713496}
   m_Father: {fileID: 1334164675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.05647884, y: 0.07229429}
-  m_AnchorMax: {x: 0.94200003, y: 0.22258858}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.5, y: -381}
+  m_SizeDelta: {x: 1701, y: 162}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2126240778
 MonoBehaviour:

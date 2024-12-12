@@ -37,6 +37,7 @@ TagManager:
   - BadTreat
   - Setting
   - TutorialVideoManager
+  - NoPostCam
   layers:
   - Default
   - TransparentFX
@@ -49,7 +50,7 @@ TagManager:
   - Dragging
   - TrashLayer
   - FoodLayer
-  - 
+  - No Post
   - 
   - 
   - 
