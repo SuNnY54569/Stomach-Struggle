@@ -40,6 +40,10 @@ public class Tools : MonoBehaviour
     [SerializeField] private GameObject defaultImageObject;
     [SerializeField] private float animationDuration = 0.5f; 
     private GameObject currentToolObject;
+    
+    [Header("Tool Cooldown Settings")]
+    public float toolChangeCooldown = 1.0f;
+    public float lastToolChangeTime = -Mathf.Infinity;
 
     private float lastWarningTime = -Mathf.Infinity;
 
@@ -97,6 +101,14 @@ public class Tools : MonoBehaviour
     #region Tool Management
     public void SetCurrentTool(ToolType tool)
     {
+        if (Time.time - lastToolChangeTime < toolChangeCooldown)
+        {
+            Debug.Log("Tool change is on cooldown!");
+            return;
+        }
+        
+        lastToolChangeTime = Time.time;
+        
         GameObject newToolObject;
         
         switch (tool)

@@ -12,6 +12,7 @@ public class ToolButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     [SerializeField] private Tools.ToolType toolType;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject otherButton;
+    [SerializeField] private Collider2D buttonCollider;
 
     private Vector3 initialScale;
     private Vector3 otherButtonInitialScale;
@@ -38,6 +39,8 @@ public class ToolButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
     {
         if (GameManager.Instance.isGamePaused) return;
         
+        if (Time.time - Tools.Instance.lastToolChangeTime < Tools.Instance.toolChangeCooldown) return;
+        
         Tools.Instance.SetCurrentTool(toolType);
         
         AnimateButton(gameObject, false, initialScale);
@@ -45,6 +48,8 @@ public class ToolButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         {
             AnimateButton(otherButton, true, otherButtonInitialScale);
         }
+        
+        StartCoroutine(DisableButtonsTemporarily());
         
         SoundManager.PlaySound(SoundType.UIClick,VolumeType.SFX);
     }
@@ -71,13 +76,22 @@ public class ToolButton : MonoBehaviour, IPointerClickHandler, IPointerEnterHand
         {
             button.SetActive(true);
         }
-        
-        LeanTween.scale(button, targetScale, AnimationDuration).setOnComplete(() =>
+
+        LeanTween.scale(button, targetScale, AnimationDuration);
+    }
+    
+    private IEnumerator DisableButtonsTemporarily()
+    {
+        SetButtonsInteractable(false);
+        yield return new WaitForSeconds(Tools.Instance.toolChangeCooldown);
+        SetButtonsInteractable(true);
+    }
+
+    private void SetButtonsInteractable(bool interactable)
+    {
+        if (buttonCollider != null)
         {
-            if (!isPoppingUp)
-            {
-                button.SetActive(false);
-            }
-        });
+            buttonCollider.enabled = interactable;
+        }
     }
 }

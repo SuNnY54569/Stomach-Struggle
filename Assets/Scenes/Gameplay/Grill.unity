@@ -780,6 +780,7 @@ MonoBehaviour:
   toolType: 2
   spriteRenderer: {fileID: 0}
   otherButton: {fileID: 1656094913}
+  buttonCollider: {fileID: 295864932}
 --- !u!212 &295864930
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2863,6 +2864,7 @@ MonoBehaviour:
   toolType: 1
   spriteRenderer: {fileID: 0}
   otherButton: {fileID: 295864927}
+  buttonCollider: {fileID: 1656094918}
 --- !u!212 &1656094916
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3383,6 +3385,8 @@ MonoBehaviour:
   spatulaImageObject: {fileID: 1448978007}
   defaultImageObject: {fileID: 472030230}
   animationDuration: 0.25
+  toolChangeCooldown: 0.5
+  lastToolChangeTime: -Infinity
   currentlyCookingSteak: {fileID: 0}
 --- !u!4 &1855595138
 Transform:
