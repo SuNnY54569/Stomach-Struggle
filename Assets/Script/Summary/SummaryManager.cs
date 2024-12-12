@@ -24,6 +24,8 @@ public class SummaryManager : MonoBehaviour
     private Image heartSpriteFill;
     [SerializeField, Tooltip("Panel")]
     private GameObject panel;
+
+    [SerializeField] private GameObject _canvas;
     
 
     [Header("Health Condition Texts")]
@@ -44,6 +46,11 @@ public class SummaryManager : MonoBehaviour
 
     private void Awake()
     {
+        Canvas canvas = _canvas.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = Camera.main;
+        canvas.planeDistance = 1;
+        
         UITransitionUtility.Instance.Initialize(panel, new Vector2(0,0));
     }
 
